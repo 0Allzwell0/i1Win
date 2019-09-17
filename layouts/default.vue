@@ -1,0 +1,41 @@
+<template>
+    <div class="body-wrapper">
+        <Header />
+        <Menu />
+        <nuxt />
+        <Footer />
+    </div>
+</template>
+<script>
+import Header from '~/components/MyHeader';
+import Menu from '~/components/MyMenu';
+import Footer from '~/components/MyFooter';
+
+export default {
+    components: {
+        Header,
+        Menu,
+        Footer
+    },
+    mounted() {
+        // Show Loading Animation
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start();
+
+            setTimeout(() => this.$nuxt.$loading.finish(), 500);
+        });
+    }
+};
+</script>
+<style lang="scss">
+body {
+    width: 100%;
+    height: 100%;
+}
+.body-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+</style>

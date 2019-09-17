@@ -1,0 +1,184 @@
+{
+  "menu": {
+    "logout": "Logout",
+    "account": "Account",
+    "edit_profile": "Edit Profile",
+    "change_password": "Change Password",
+    "infor_center": "Info Center",
+    "about_us": "About Us",
+    "how_to_join": "How to Join",
+    "support": "Support",
+    "responsible_gaming": "Responsible Gaming",
+    "terms_of_use": "Terms Of Use",
+    "privacy_policy": "Privacy Policy",
+    "download": "Download",
+    "language": "Language",
+    "follow_us": "Follow Us"
+  },
+  "footer": {
+    "home": "Home",
+    "promotions": "Promotions",
+    "wallet": "Wallet"
+  },
+  "home": {
+    "tab": {
+      "livecasino": "Casino",
+      "sports": "Sports",
+      "slots": "Slots",
+      "lottery": "Lottery",
+      "fishing": "Fishing"
+    },
+    "jackpot": "JACKPOT",
+    "livecasino": "Live Casino",
+    "livecasino_msg": "Experience the best live online casino in Thailand.",
+    "sport_events": "Sport Events",
+    "sport_events_msg": "Bet on your favorites, watch live streams and win.",
+    "slot_games": "Slots Games",
+    "slot_games_msg": "So easy to play hurry up and get your money.",
+    "online_lottery": "Online Lottery",
+    "cash_fishing": "Cash Fishing",
+    "cash_rebate": "Cash Rebate"
+  },
+  "login": {
+    "login_msg1": "Sign in Now",
+    "login_msg2": "Play the game and get the bonus.",
+    "login_msg3": "Don't have an account ? ",
+    "forgot_password": "Forgot Password ?",
+    "forgot_password_msg": "Please contact our online customer service. Click the live chat at the bottom right.",
+    "login_error_mg": "Usename or Password is incorrect."
+  },
+  "register": {
+    "registration": "REGISTRATION",
+    "confirm_password": "Confirm Password",
+    "select_bank": "Please select withdrawal bank",
+    "bank_account_num": "Bank Account Number",
+    "mobile_number": "Mobile Number",
+    "terms_of_use": "Terms Of Use",
+    "register_msg1_1": "By clicking“ Join now” I hereby acknowledge that I am above 18 years old and have read and accepted the ",
+    "register_msg1_2": "apply.",
+    "register_msg2": "Already have an account ? "
+  },
+  "promotions": {
+    "detail": "Detail",
+    "deposit": "Deposit"
+  },
+  "livecasino": {
+    "plt_msg": "Download fast and convenient, have dollar ball and free games.",
+    "ag_msg": "Quality table game and playing game with beautiful anchor.",
+    "dg_msg": "Best table casino live with Asian live dealers.",
+    "sa_msg": "The best in Asian-themed games with the hottest girl.",
+    "gpi_msg": "Join the game and win the best bonus.",
+    "evo_msg": "The best casinos have classic game and high-quality video, come and join it."
+  },
+  "sports": {
+    "sbo_msg": "Easy bets. Win easily. Match bets to choose from. Every league. Don't miss the chance to grab money from us!",
+    "ibc_msg": "Enjoy betting while wahtching live matches. From various kinds of sports and must not miss the chance to win big prizes!"
+  },
+  "lottery": {
+    "thailottery": "Thai Lottery",
+    "thailottery_msg": "Have fun anytime, anywhere on your mobile 3 digits up to 751x and 2 digits up to 91x",
+    "diamond": "Diamond",
+    "diamond_msg": "Diamond games, Win faster and up to 751x!",
+    "ruby": "Ruby",
+    "ruby_msg": "Easy bet and win with 2D & 3D lottos!",
+    "sapphire": "Sapphire",
+    "sapphire_msg": "Bet anytime, anywhere every 3 minutes!"
+  },
+  "fishing": {
+    "cf_msg": "Use 3 powerful weapons to capture up to 20 species of sea creatures and earn a big bonus.",
+    "fg_msg": "Professional tools for all level of fish hunters, easy to bet, next generation fishing game."
+  },
+  "slots": {
+    "all": "All",
+    "popular": "Popular",
+    "new": "New",
+    "jackpot": "Jackpot",
+    "table": "Table",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "download": {
+    "title": "Mobile Download",
+    "message": "Play anytime , anywhere !",
+    "livecasino": "Live Casino",
+    "slots": "Slots",
+    "login_id": "Login ID",
+    "application": "Mobile Application"
+  },
+  "edit_profile": {
+    "title": "Edit Profile",
+    "mobile_number": "Mobile Number",
+    "email": "Email",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female"
+  },
+  "change_password": {
+    "title": "Change Password",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm Password"
+  },
+  "wallet": {
+    "deposit": "Deposit",
+    "withdrawal": "Withdrawal",
+    "transfer": "Transfer",
+    "history": "History",
+    "total": "Total",
+    "expand_wallet": "Expand Wallet",
+    "close_wallet": "Close Wallet",
+    "main_wallet": "Main Wallet",
+    "account_number": "Account Number : ",
+    "amount": "Amount",
+    "available_balance": "Available Balance"
+  },
+  "deposit": {
+    "deposit_to": "Deposit To",
+    "bank_detail": "Bank Detail",
+    "name": "Name : ",
+    "copy_account_number": "Copy Account Number",
+    "transfer_time": "Transfer Time",
+    "reference_number": "Reference Number",
+    "reference_msg": "Enter the transaction reference number",
+    "file_input": "File Input",
+    "no_file_select": "No File Select",
+    "agree_certify": "I certify that I have read and agreed to the Promotions Terms & Conditions."
+  },
+  "withdrawal": {
+    "withdrawal_to": "Withdrawal To",
+    "minimum_withdrawal": "Minimum Withdrawal THB 500",
+    "withdrawal_msg": "Please make sure that you fill up accurate bank account details to avoid any inconveniences & using third-party withdrawal is NOT accepted by us."
+  },
+  "transfer": {
+    "transfer_from": "Transfer From",
+    "transfer_to": "Transfer To",
+    "lottery": "Lottery"
+  },
+  "history": {
+    "transaction": "Transaction",
+    "statement": "Statement",
+    "transfer": "Transfer",
+    "search": "Search",
+    "type": "Type",
+    "status": "Status",
+    "remark": "Remark",
+    "turnover": "Turnover",
+    "winloss": "Win/Loss",
+    "active_bet": "Active Bet",
+    "date": "Date",
+    "from": "From",
+    "to": "To"
+  },
+  "common": {
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "fullname": "Full Name",
+    "play_now": "Play Now",
+    "try_now": "Try Now",
+    "submit": "Submit",
+    "please_select": "Please select..."
+  }
+}

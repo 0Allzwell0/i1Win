@@ -1,0 +1,329 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: middle;
+    text-decoration: none;
+    list-style: none;
+}
+
+span {
+    display: block;
+}
+
+a:hover {
+    text-decoration: none;
+    list-style: none;
+}
+
+a:active {
+    text-decoration: none;
+    list-style: none;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 18px;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+button,
+input {
+    border: 0;
+    outline: none !important;
+    list-style: none !important;
+    line-height: 18px !important;
+    margin: 0;
+    padding: 0;
+}
+
+/* 箭頭樣式清除 */
+select {
+    -moz-appearance: none;
+    /* Firefox */
+    -webkit-appearance: none;
+    /* Safari 和 Chrome */
+    appearance: none;
+    outline: none;
+}
+
+option {
+    -moz-appearance: none;
+    /* Firefox */
+    -webkit-appearance: none;
+    /* Safari 和 Chrome */
+    appearance: none;
+}
+
+input::-webkit-input-placeholder {
+    /* WebKit browsers
+    color: #bbbbbb; */
+}
+
+input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18
+    color: #bbbbbb; */
+}
+
+input::-moz-placeholder {
+    /* Mozilla Firefox 19+
+    color: #bbbbbb; */
+}
+
+input:-ms-input-placeholder {
+    /* Internet Explorer 10+
+    color: #bbbbbb; */
+}
+
+/* !Scroll Bar Disable */
+html {
+    /*overflow-y: auto;*/
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+body::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+body.freezePage,
+html.freezePage {
+    position: fixed;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+[id*="iPhone"] body .body-wrapper,
+[id*="iPad"] body .body-wrapper {
+    overflow-y: hidden;
+}
+
+[id*="iPhone"] .modal-open,
+[id*="iPad"] .modal-open {
+    overflow-y: hidden;
+}
+
+body #chat-widget-container {
+    z-index: 1000 !important;
+    bottom: -10px !important;
+    right: 0 !important;
+}
+
+/* Loading Animation */
+body.loading,
+html.loading {
+    position: fixed;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+
+    0%,
+    80%,
+    100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    40% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes sk-bouncedelay {
+
+    0%,
+    80%,
+    100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    40% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes sk-bouncedelay {
+
+    0%,
+    80%,
+    100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        transform: scale(0);
+    }
+
+    40% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.spinner-container .spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #f80707;
+    border-radius: 100%;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner-container .spinner:nth-child(1) {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner-container .spinner:nth-child {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+.spinner-backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9998;
+}
+
+/* Loading Animation End */
