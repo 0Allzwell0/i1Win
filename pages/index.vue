@@ -186,6 +186,7 @@ export default {
                     line-height: 25px;
                     font-weight: bold;
                     white-space: nowrap;
+                    margin-top: 3px;
                 }
                 .jackpot-currency {
                     font-size: 14px;

@@ -1,6 +1,12 @@
+import {
+    LOCALES,
+    DEFAULT_LOCALE
+} from '../environment.js'
+
 export const state = () => ({
-    locales: ['en-US', 'th-TH'],
-    locale: 'en-US'
+    locales: LOCALES,
+    locale: DEFAULT_LOCALE, // 當前語系
+    fallbackLocale: DEFAULT_LOCALE // 預設語系
 })
 
 export const getters = {

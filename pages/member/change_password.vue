@@ -11,6 +11,7 @@
                     class="change-password-input current-input"
                     type="password"
                     :placeholder="$t('change_password.current_password')"
+                    v-model="myCurrentPSW"
                 />
                 <img class="change-password-eye current-eye" src="/images/close_eye.png" @click="showPassword('current')" />
             </div>
@@ -18,7 +19,12 @@
             <!-- New Password -->
             <h3 class="change-password-samall-title">{{ $t('change_password.new_password') }}</h3>
             <div class="change-password-input-wrapper">
-                <input class="change-password-input new-input" type="password" :placeholder="$t('change_password.new_password')" />
+                <input
+                    class="change-password-input new-input"
+                    type="password"
+                    :placeholder="$t('change_password.new_password')"
+                    v-model="myNewPSW"
+                />
                 <img class="change-password-eye new-eye" src="/images/close_eye.png" @click="showPassword('new')" />
             </div>
 
@@ -29,22 +35,33 @@
                     class="change-password-input confirm-input"
                     type="password"
                     :placeholder="$t('change_password.confirm_password')"
+                    v-model="myConfirmNewPSW"
                 />
                 <img class="change-password-eye confirm-eye" src="/images/close_eye.png" @click="showPassword('confirm')" />
             </div>
 
             <!-- Change Button -->
-            <button class="change-password-btn" type="submit">{{ $t('common.submit') }}</button>
+            <button class="change-password-btn" type="submit" @click="changePassword()">{{ $t('common.submit') }}</button>
         </div>
     </main>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
+    computed: {
+        ...mapGetters('auth', {
+            accessToken: 'GetAccessToken'
+        })
+    },
     data() {
         return {
             showCurrent: false,
             showNew: false,
-            showConfirm: false
+            showConfirm: false,
+            myCurrentPSW: null,
+            myNewPSW: null,
+            myConfirmNewPSW: null
         };
     },
     methods: {
@@ -80,6 +97,15 @@ export default {
                     this.showConfirm = false;
                 }
             }
+        },
+
+        // Change Password
+        changePassword() {
+            this.$store.dispatch('auth/changePassword', {
+                accessToken: this.accessToken,
+                currentPassword: this.myCurrentPSW,
+                newPassword: this.myNewPSW
+            });
         }
     }
 };

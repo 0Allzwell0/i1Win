@@ -97,7 +97,7 @@
             </p>
 
             <!-- Register Button -->
-            <button class="register-button" type="submit">{{ $t('common.register') }}</button>
+            <button class="register-button" type="submit" @click="register()">{{ $t('common.register') }}</button>
 
             <!-- Remind Message -->
             <p class="register-remind-message2">
@@ -187,6 +187,16 @@ export default {
             } else {
                 $('#reg-bank').html(`${this.$t('register.select_bank')}`);
             }
+        },
+
+        // Register
+        register() {
+            this.$store.dispatch('auth/register', {
+                username: this.myUsername,
+                password: this.myPassword,
+                fullname: this.myFullname,
+                mobile: this.myMobile
+            });
         }
     }
 };

@@ -6,11 +6,11 @@
 
             <!-- Full Name -->
             <h3 class="edit-profile-small-title">{{ $t('common.fullname') }}</h3>
-            <p class="edit-profile-unchange-text">{{ fullname }}</p>
+            <p class="edit-profile-unchange-text">{{ userData.fullname }}</p>
 
             <!-- Mobile Number -->
             <h3 class="edit-profile-small-title">{{ $t('edit_profile.mobile_number') }}</h3>
-            <p class="edit-profile-unchange-text">{{ mobile }}</p>
+            <p class="edit-profile-unchange-text">{{ userData.mobile }}</p>
 
             <!-- Line ID -->
             <h3 class="edit-profile-small-title">LINE ID</h3>
@@ -57,12 +57,7 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined',
-            mobile: 'GetMobile',
-            line_id: 'GetLineID',
-            fullname: 'GetFullname',
-            birthday: 'GetBirthday',
-            email: 'GetEmail',
-            gender: 'GetGender'
+            userData: 'GetUserData'
         })
     },
     data() {
@@ -75,11 +70,11 @@ export default {
         };
     },
     mounted() {
-        this.myLineID = this.line_id;
-        this.myEmail = this.email;
-        this.myBirthday = this.birthday;
+        this.myLineID = this.userData.line_id;
+        this.myEmail = this.userData.email;
+        this.myBirthday = this.userData.birthday;
 
-        this.changeGender(this.gender);
+        this.changeGender(this.userData.gender);
     },
     methods: {
         // Change Gender

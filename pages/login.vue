@@ -44,7 +44,7 @@
             </span>
 
             <!-- Login Button -->
-            <button class="login-button" type="submit">{{ $t('common.login') }}</button>
+            <button class="login-button" type="submit" @click="login()">{{ $t('common.login') }}</button>
 
             <!-- Remind Message -->
             <p class="login-remind-message">
@@ -81,6 +81,14 @@ export default {
                 this.passwordEyes = '/images/close_eye.png';
                 $('#loginPassword').attr('type', 'password');
             }
+        },
+
+        // Login
+        login() {
+            this.$store.dispatch('auth/login', {
+                username: this.myUsername,
+                password: this.myPassword
+            });
         }
     }
 };

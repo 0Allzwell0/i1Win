@@ -7,11 +7,18 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import Header from '~/components/MyHeader';
 import Menu from '~/components/MyMenu';
 import Footer from '~/components/MyFooter';
 
 export default {
+    computed: {
+        ...mapGetters('auth', {
+            isLogined: 'GetLogined',
+            accessToken: 'GetAccessToken'
+        })
+    },
     components: {
         Header,
         Menu,
@@ -24,6 +31,14 @@ export default {
 
             setTimeout(() => this.$nuxt.$loading.finish(), 500);
         });
+
+        // If Is Logined, Set Data
+        if (window.localStorage.getItem('isLogined') === 'true') {
+            this.$store.commit('auth/SUCCESS_AUTH', {
+                data: window.localStorage.getItem('accessToken'),
+                status: 200
+            });
+        }
     }
 };
 </script>

@@ -25,9 +25,10 @@ module.exports = {
     script: [
 
     ],
-    link: [
-
-    ]
+    link: [{
+      href: "/favicon.png",
+      rel: "icon"
+    }]
   },
 
   /*
