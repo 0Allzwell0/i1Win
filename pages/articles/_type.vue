@@ -98,7 +98,9 @@
     </main>
 </template>
 <script>
-export default {};
+export default {
+    beforeMount() {}
+};
 </script>
 <style lang="scss" scoped>
 .article-wrapper {

@@ -101,7 +101,7 @@ export default {
 
         // Change Password
         changePassword() {
-            this.$store.dispatch('auth/changePassword', {
+            this.$store.dispatch('user/changePassword', {
                 accessToken: this.accessToken,
                 currentPassword: this.myCurrentPSW,
                 newPassword: this.myNewPSW

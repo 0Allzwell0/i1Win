@@ -58,29 +58,6 @@ class AuthService {
 
         return response
     }
-
-    static async changePassword(accessToken, currentPassword, newPassword) {
-        let response = null
-        try {
-            response = await axios.post('/api/v1/members/changePassword', {
-                currentPassword,
-                newPassword
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
-                }
-            })
-        } catch (error) {
-            return error.response
-        }
-
-        return response
-    }
 }
-
-/*function getLocalLanguage() {
-    return window.localStorage.getItem('LANGUAGE')
-}*/
 
 export { AuthService }

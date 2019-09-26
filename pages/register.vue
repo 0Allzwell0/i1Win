@@ -115,8 +115,6 @@ export default {
             myPassword: null,
             myConfirmPassword: null,
             myFullname: null,
-            myBank: null,
-            myBankAccountNumber: null,
             myMobile: null,
             myLineID: null,
             passwordEyes: '/images/close_eye.png',
@@ -125,35 +123,7 @@ export default {
         };
     },
     mounted() {
-        // Expand or Close Banks List
-        $(document).click(function(el) {
-            let tagName = $(el.target)[0].tagName;
-            let className = null;
-
-            // If Not Click Down Icon
-            if (tagName !== 'path' && tagName !== 'svg') {
-                className = $(el.target)[0].className;
-
-                if (className.indexOf('bank-input-text') === -1 && className.indexOf('selected-bank-img') === -1) {
-                    $('.register-banks-list').removeClass('expand');
-                    this.expandBanksList = false;
-                } else if (this.expandBanksList) {
-                    $('.register-banks-list').removeClass('expand');
-                    this.expandBanksList = !this.expandBanksList;
-                } else {
-                    $('.register-banks-list').addClass('expand');
-                    this.expandBanksList = !this.expandBanksList;
-                }
-            } else {
-                if (!this.expandBanksList) {
-                    $('.register-banks-list').addClass('expand');
-                } else {
-                    $('.register-banks-list').removeClass('expand');
-                }
-
-                this.expandBanksList = !this.expandBanksList;
-            }
-        });
+        
     },
     methods: {
         // Show or Hidden Password
@@ -177,15 +147,6 @@ export default {
             } else if (pswInputType === 'text') {
                 this.confirmPasswordEyes = '/images/close_eye.png';
                 $('#reg-confirm-password').attr('type', 'password');
-            }
-        },
-
-        // Select Bank
-        selectBank(bankCode) {
-            if (bankCode !== 'none') {
-                $('#reg-bank').html(`<img class="selected-bank-img" src="/images/bank_${bankCode}.png" style="width: 43%"/>`);
-            } else {
-                $('#reg-bank').html(`${this.$t('register.select_bank')}`);
             }
         },
 

@@ -2,7 +2,7 @@
     <section class="carousel-wrapper">
         <div class="carousel-container swiper-container">
             <ul class="carousel-list swiper-wrapper">
-                <li class="carousel-item-wrapper swiper-slide" v-for="(item, index) in bannerList" :key="`banner-${index}`">
+                <li class="carousel-item-wrapper swiper-slide" v-for="(item, index) in bannersList" :key="`banner-${index}`">
                     <nuxt-link class="carousel-item" :to="$i18n.path('promotions')">
                         <img class="carousel-item-img swiper-lazy" :src="item.src" />
                         <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
@@ -19,7 +19,7 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters('user', {
-            bannerList: 'GetBanner'
+            bannersList: 'GetBanners'
         })
     },
     mounted() {

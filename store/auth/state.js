@@ -1,26 +1,14 @@
 const state = () => ({
-    isLogined: false,
+    isLogined: true,
     accessToken: null,
     userData: {
-        username: null,
-        password: null,
-        mobile: null,
-        line_id: null,
-        fullname: null,
-        birthday: null,
-        email: null,
-        gender: null
+        username: 'Alexander',
+        fullname: "Allzwell",
+        birthday: "1990-09-16",
+        email: "jxfrontend@gmail.com",
+        mobile: "0800956956",
+        gender: "Male"
     },
-    /*userData: {
-    	username: 'alexander',
-    	password: null,
-    	mobile: '0800956956',
-    	line_id: 'Y3club',
-    	fullname: 'Allzwell',
-    	birthday: '1990-09-16',
-    	email: 'jiexun@gamil.com',
-    	gender: 'male'
-    },*/
     httpStatus: null,
     failMessage: null
 })
