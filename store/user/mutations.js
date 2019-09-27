@@ -5,7 +5,7 @@ const mutations = {
     // Request Edit Profile
     [type.REQUEST_EDIT_PROFILE](state) {
         state.profileToken = null
-        state.requestState = false
+        state.requestState = true
         state.failMessage = null
         state.httpStatus = null
     },
@@ -29,7 +29,7 @@ const mutations = {
     // =========================================================== Change Passowrd
     // Request Change Password
     [type.REQUEST_CHANGE_PASSWORD](state) {
-        state.requestState = false
+        state.requestState = true
         state.failMessage = null
         state.httpStatus = null
     },

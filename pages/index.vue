@@ -65,15 +65,15 @@
                 <li class="bottom-games-wrapper">
                     <div class="bottom-games-container">
                         <nuxt-link class="bottom-game-item" :to="$i18n.path('lottery')">
-                            <img class="bottom-game-image" src="/images/home_online_lottery.png" />
+                            <img class="bottom-game-image" src="/images/home_lottery.png" />
                             <span class="bottom-game-name">{{ $t('home.online_lottery') }}</span>
                         </nuxt-link>
                         <nuxt-link class="bottom-game-item" :to="$i18n.path('fishing')">
-                            <img class="bottom-game-image" src="/images/home_cash_fishing.png" />
+                            <img class="bottom-game-image" src="/images/home_fishing.png" />
                             <span class="bottom-game-name">{{ $t('home.cash_fishing') }}</span>
                         </nuxt-link>
                         <nuxt-link class="bottom-game-item" :to="$i18n.path('promotions')">
-                            <img class="bottom-game-image" src="/images/home_cash_rebate.png" />
+                            <img class="bottom-game-image" src="/images/home_promotion.png" />
                             <span class="bottom-game-name">{{ $t('home.cash_rebate') }}</span>
                         </nuxt-link>
                     </div>

@@ -2,7 +2,7 @@ import * as type from './type'
 import jwt from 'vue-jwt-decode'
 
 const mutations = {
-    // Initial Status
+    // ================================================================ Initial Status
     [type.INITIAL_STATE](state) {
         state.isLogined = false
         state.accessToken = null
@@ -10,7 +10,7 @@ const mutations = {
         state.httpStatus = null
     },
 
-    // Request Login && Request Register
+    // ================================================================ Request Login && Request Register
     [type.REQUEST_AUTH](state) {
         state.isLogined = false
         state.accessToken = null
@@ -18,7 +18,7 @@ const mutations = {
         state.httpStatus = null
     },
 
-    // Login Success && Register Success
+    // ================================================================ Login Success && Register Success
     [type.SUCCESS_AUTH](state, { data, status }) {
         state.isLogined = true
         state.accessToken = data.token
@@ -31,7 +31,8 @@ const mutations = {
         setLocalStorage('userData', state.userData)
     },
 
-    // Login Fail && Logout && Register Fail
+
+    // ================================================================ Login Fail && Register Fail && Logout
     [type.FAIL_AUTH](state, { data, status }) {
         state.isLogined = false
         state.accessToken = null
@@ -39,7 +40,8 @@ const mutations = {
         state.httpStatus = status
     },
 
-    // Refresh Token
+    // ================================================================ Refresh Token
+    // Refresh Token Success
     [type.REFRESH_TOKEN_SUCCESS](state, { data, status }) {
         state.accessToken = data.token
         state.httpStatus = status
@@ -47,7 +49,7 @@ const mutations = {
         setLocalStorage('accessToken', state.accessToken)
     },
 
-    // Refresh Token
+    // Refresh Token Fail
     [type.REFRESH_TOKEN_FAIL](state, status) {
         state.accessToken = localStorage.getItem('accessToken')
         state.httpStatus = status

@@ -148,12 +148,13 @@
   "withdrawal": {
     "withdrawal_to": "Withdrawal To",
     "minimum_withdrawal": "Minimum Withdrawal THB 500",
-    "withdrawal_msg": "Please make sure that you fill up accurate bank account details to avoid any inconveniences & using third-party withdrawal is NOT accepted by us."
+    "withdrawal_msg": "Please make sure that you fill up accurate bank account details to avoid any inconveniences & using third-party withdrawal is NOT accepted by us.",
+    "account_number": "Account Number",
+    "account_number_placeholder": "Please provide bank account with matching full name"
   },
   "transfer": {
     "transfer_from": "Transfer From",
-    "transfer_to": "Transfer To",
-    "lottery": "Lottery"
+    "transfer_to": "Transfer To"
   },
   "history": {
     "transaction": "Transaction",

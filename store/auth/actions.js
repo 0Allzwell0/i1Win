@@ -1,5 +1,5 @@
 import * as types from './type'
-import { AuthService } from '~/service/auth'
+import AuthService from '~/service/auth'
 
 const actions = {
     // Refresh Token

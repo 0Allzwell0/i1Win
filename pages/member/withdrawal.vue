@@ -35,8 +35,8 @@
             <div class="withdrawal-content-text">Allzwell</div>
 
             <!-- Account Number -->
-            <h3 class="withdrawal-title-text">{{ $t('wallet.account_number') }}</h3>
-            <input class="withdrawal-input" type="text" :placeholder="$t('wallet.account_number')" />
+            <h3 class="withdrawal-title-text">{{ $t('withdrawal.account_number') }}</h3>
+            <input class="withdrawal-input" type="text" :placeholder="$t('withdrawal.account_number_placeholder')" />
 
             <!-- Amount -->
             <h3 class="withdrawal-title-text">{{ $t('wallet.amount') }} (THB)</h3>
@@ -59,7 +59,7 @@ export default {
     computed: {
         ...mapGetters('wallet', {
             wallets: 'GetWallets',
-            banksList: 'GetBanks'
+            banksList: 'GetBanksList'
         })
     },
     components: {

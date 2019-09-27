@@ -1,13 +1,15 @@
 import axios from '~/plugins/axios'
-import { CREDENTIAL } from '~/environment'
 import Language from '~/middleware/getLanguage'
 
-class AuthService {
-
-    static async refreshToken(accessToken) {
+class HistoryService {
+    // Get Transaction Data
+    static async getTransactionData(accessToken, fromDate, toDate) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/refresh-token`, {
+            response = await axios.post('/api/v1/members/getTransactionHistory', {
+                fromDate,
+                toDate
+            }, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -20,35 +22,36 @@ class AuthService {
         return response
     }
 
-    static async login(username, password) {
+    // Get Statement Data
+    static async getStatementData(accessToken, fromDate, toDate) {
         let response = null
         try {
-            response = await axios.post('/api/v1/members/login', {
-                username,
-                password
+            response = await axios.post('/api/v1/members/getStatementHistory', {
+                fromDate,
+                toDate
             }, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
         } catch (error) {
             return error.response
         }
+
         return response
     }
 
-    static async register(username, password, fullname, mobile) {
+    // Get Transfer Data
+    static async getTransferData(accessToken, fromDate, toDate) {
         let response = null
         try {
-            response = await axios.post('/api/v1/members/register', {
-                username,
-                password,
-                fullname,
-                mobile
+            response = await axios.post('/api/v1/members/getTransferHistory', {
+                fromDate,
+                toDate
             }, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -60,4 +63,4 @@ class AuthService {
     }
 }
 
-export default AuthService
+export default HistoryService

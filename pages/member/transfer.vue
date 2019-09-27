@@ -25,21 +25,16 @@
                     <li class="transfer-game-item" @click="selectGame('from', 'none')">{{ $t('common.please_select') }}</li>
                     <li
                         class="transfer-game-item"
-                        :class="{'active': selectedToGame === 'main'}"
-                        @click="selectGame('from', 'main')"
-                    >
-                        <img class="transfer-game-img" src="/images/wallet_main.png" />
-                        <span class="transfer-game-text" :class="{'active': true}">{{ $t('wallet.main_wallet') }}</span>
-                    </li>
-                    <li
-                        class="transfer-game-item"
-                        :class="{'active': selectedToGame === item}"
-                        v-for="(item, index) in gamesList"
+                        :class="{'active': selectedToGame === item.name.toLowerCase()}"
+                        v-for="(item, index) in wallets"
                         :key="`transfer_game_${index}`"
-                        @click="selectGame('from', item)"
+                        @click="selectGame('from', item.name.toLowerCase())"
                     >
-                        <img class="transfer-game-img" :src="`/images/wallet_${item}.png`" />
-                        <span class="transfer-game-text" :class="{'active': item === 'lottery'}">{{ $t('transfer.lottery') }}</span>
+                        <img class="transfer-game-img" :src="`/images/wallet_${item.name.toLowerCase()}.png`" />
+                        <span
+                            class="transfer-game-text"
+                            :class="{'active': (item.name === 'Main')}"
+                        >{{ $t('wallet.main_wallet') }}</span>
                     </li>
                 </ul>
             </div>
@@ -57,21 +52,16 @@
                     <li class="transfer-game-item" @click="selectGame('to', 'none')">{{ $t('common.please_select') }}</li>
                     <li
                         class="transfer-game-item"
-                        :class="{'active': selectedFromGame === 'main'}"
-                        @click="selectGame('to', 'main')"
-                    >
-                        <img class="transfer-game-img" src="/images/wallet_main.png" />
-                        <span class="transfer-game-text" :class="{'active': true}">{{ $t('wallet.main_wallet') }}</span>
-                    </li>
-                    <li
-                        class="transfer-game-item"
-                        :class="{'active': selectedFromGame === item}"
-                        v-for="(item, index) in gamesList"
+                        :class="{'active': selectedFromGame === item.name.toLowerCase()}"
+                        v-for="(item, index) in wallets"
                         :key="`transfer_game_${index}`"
-                        @click="selectGame('to', item)"
+                        @click="selectGame('to', item.name.toLowerCase())"
                     >
-                        <img class="transfer-game-img" :src="`/images/wallet_${item}.png`" />
-                        <span class="transfer-game-text" :class="{'active': item === 'lottery'}">{{ $t('transfer.lottery') }}</span>
+                        <img class="transfer-game-img" :src="`/images/wallet_${item.name.toLowerCase()}.png`" />
+                        <span
+                            class="transfer-game-text"
+                            :class="{'active': (item.name === 'Main')}"
+                        >{{ $t('wallet.main_wallet') }}</span>
                     </li>
                 </ul>
             </div>
@@ -93,8 +83,7 @@ import MyWalletList from '~/components/MyWalletList';
 export default {
     computed: {
         ...mapGetters('wallet', {
-            wallets: 'GetWallets',
-            gamesList: 'GetGames'
+            wallets: 'GetWallets'
         })
     },
     components: {
@@ -166,13 +155,13 @@ export default {
                     <span class="transfer-game-text">${this.$t('wallet.main_wallet')}</span>
                     `
                 );
-            } else if (game === 'lottery') {
+            } /* else if (game === 'lottery') {
                 $(`.transfer-game-input.transfer-${type}`).html(
                     `<img class="transfer-game-img" src="/images/wallet_lottery.png" />
                     <span class="transfer-game-text">${this.$t('transfer.lottery')}</span>
                     `
                 );
-            } else {
+            } */ else {
                 $(`.transfer-game-input.transfer-${type}`).html(`<img class="transfer-game-img" src="/images/wallet_${game}.png" />`);
             }
 

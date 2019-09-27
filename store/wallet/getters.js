@@ -1,8 +1,10 @@
 const getters = {
+    GetLimits: state => state.limits,
     GetWallets: state => state.wallets,
-    GetBanks: state => state.banks,
-    GetGames: state => state.games,
-    GetBonus: state => state.bonus
+    GetBanksList: state => state.banksList,
+    GetAmount: state => state.amount,
+    GetBonus: state => state.bonus,
+    GetShowPromptMsg: state => state.showPromptMsg
 }
 
 export default getters

@@ -143,7 +143,7 @@ import MyWalletList from '~/components/MyWalletList';
 export default {
     computed: {
         ...mapGetters('wallet', {
-            banksList: 'GetBanks',
+            banksList: 'GetBanksList',
             bonusList: 'GetBonus'
         })
     },

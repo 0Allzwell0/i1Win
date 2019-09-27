@@ -1,5 +1,5 @@
 import * as type from './type'
-import { UserService } from '~/service/user'
+import UserService from '~/service/user'
 
 const actions = {
     // Edit Profile
@@ -28,9 +28,7 @@ const actions = {
     async getBanners({ commit }, bannerType) {
         const response = await UserService.getBanners(bannerType)
         if (response.status === 200) {
-            const data = response.data
-            const banners = data.map(banner => new Banners(banner))
-            commit(type.GET_BANNERS_SUCCESS, { data: banners, status: response.status })
+            commit(type.GET_BANNERS_SUCCESS, { data: response.data, status: response.status })
         } else {
             commit(type.GET_BANNERS_FAIL, response.status)
         }
@@ -60,9 +58,7 @@ const actions = {
     async getPromotions({ commit }) {
         const response = await UserService.getPromotions()
         if (response.status === 200) {
-            const data = response.data
-            const promotions = data.map(promotion => new Promotions(promotion))
-            commit(type.GET_PROMOTIONS_SUCCESS, { data: promotions, status: response.status })
+            commit(type.GET_PROMOTIONS_SUCCESS, { data: response.data, status: response.status })
         } else {
             commit(type.GET_PROMOTIONS_FAIL, response.status)
         }
