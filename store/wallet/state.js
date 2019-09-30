@@ -16,7 +16,43 @@ const state = () => ({
         { name: 'IFUN', amount: 73.51 },
         { name: 'SB', amount: 128.91 }
     ],
-    banksList: ['bangkok', 'kasikorn', 'krungsri', 'krungthai', 'scb', 'thanachart', 'tmb'],
+    banksList: [
+        {
+            name: 'scb',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '729-244408-8'
+        },
+        {
+            name: 'bangkok',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '411-5-142681'
+        },
+        {
+            name: 'kasikorn',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '173-1-66629-7'
+        },
+        {
+            name: 'krungsri',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '678-2-80906-0'
+        },
+        {
+            name: 'krungthai',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '729-244408-8'
+        },
+        {
+            name: 'thanachart',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '056-8-82327-3'
+        },
+        {
+            name: 'tmb',
+            bank: 'Daraporn Sirikate',
+            accountNumber: '729-244408-8'
+        }
+    ],
     limits: null,
     amount: (0).toFixed(2),
     bonus: [

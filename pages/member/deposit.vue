@@ -14,14 +14,14 @@
                 <button class="deposit-input bank-input" type="button" @click="showBankList()">{{ $t('common.please_select') }}</button>
                 <fa :icon="['fas', 'caret-down']" class="deposit-down" />
                 <ul class="deposit-banks-list" :class="{'show': isShowBankList}">
-                    <li class="deposit-bank-item" @click="selectBank('none')">{{ $t('common.please_select') }}</li>
+                    <li class="deposit-bank-item" @click="selectBank(null, 'none', 'none')">{{ $t('common.please_select') }}</li>
                     <li
                         class="deposit-bank-item"
                         v-for="(item, index) in banksList"
                         :key="`deposit_bank_${index}`"
-                        @click="selectBank(item)"
+                        @click="selectBank(item.accountNumber, item.bank, item.name)"
                     >
-                        <img class="deposit-bank-img" :src="`/images/bank_${item}.png`" />
+                        <img class="deposit-bank-img" :src="`/images/bank_${item.name}.png`" />
                     </li>
                 </ul>
             </div>
@@ -65,17 +65,25 @@
                 <div class="deposit-transfer-time-container">
                     <client-only>
                         <date-picker
+                            id="transfer-date"
                             class="deposit-transfer-date-time"
                             :format="format"
                             :language="language"
-                            :value="currentDate"
+                            v-model="currentDate"
                         />
                     </client-only>
                     <fa :icon="['fas', 'caret-down']" class="deposit-down" />
                 </div>
                 <div class="deposit-transfer-time-container">
                     <client-only>
-                        <time-picker class="deposit-transfer-date-time" format="HH : mm" v-model="currentTime" hide-clear-button />
+                        <time-picker
+                            id="transfer-time"
+                            class="deposit-transfer-date-time"
+                            format="HH : mm"
+                            v-model="currentTime"
+                            :value="currentTime"
+                            hide-clear-button
+                        />
                     </client-only>
                     <fa :icon="['fas', 'caret-down']" class="deposit-down" />
                 </div>
@@ -84,42 +92,40 @@
             <!-- Reference Number -->
             <h3 class="deposit-title-text">{{ $t('deposit.reference_number') }}</h3>
             <div class="deposit-input-wrapper">
-                <input class="deposit-input" type="text" :placeholder="$t('deposit.reference_msg')" />
+                <input
+                    class="deposit-input reference-input"
+                    type="text"
+                    :placeholder="$t('deposit.reference_msg')"
+                    v-model="referenceNo"
+                />
             </div>
 
             <!-- Upload File -->
             <h3 class="deposit-title-text">{{ $t('deposit.file_input') }}</h3>
-            <div class="deposit-input-wrapper">
-                <input class="deposit-input upload-file-input" type="file" :placeholder="$t('deposit.no_file_select')" />
-            </div>
+            <form action class="deposit-input-wrapper" enctype="multipart/form-data">
+                <input id="upload-file-input" class="deposit-input" type="file" :placeholder="$t('deposit.no_file_select')" />
+            </form>
 
-            <!-- Promotion -->
+            <!-- Bonus -->
             <h3 class="deposit-title-text">{{ $t('footer.promotions') }}</h3>
             <div class="deposit-input-wrapper">
-                <button
-                    class="deposit-input promotion-input"
-                    type="button"
-                    @click="showPromotionList()"
-                >{{ $t('common.please_select') }}</button>
+                <button class="deposit-input bonus-input" type="button" @click="showBonusList()">{{ $t('common.please_select') }}</button>
                 <fa :icon="['fas', 'caret-down']" class="deposit-down" />
-                <ul class="deposit-promotions-list-wrapper" :class="{'show': isShowPromotionList}">
+                <ul class="deposit-bonus-list-wrapper" :class="{'show': isShowBonusList}">
+                    <li class="deposit-bonus-list-item select-item" @click="selectBonus('none')">{{ $t('common.please_select') }}</li>
                     <li
-                        class="deposit-promotions-list-item select-item"
-                        @click="selectPromotion('none')"
-                    >{{ $t('common.please_select') }}</li>
-                    <li
-                        class="deposit-promotions-list-item type-item"
+                        class="deposit-bonus-list-item type-item"
                         v-for="(typeItem, index) in bonusList"
-                        :key="`promotions_type_${index}`"
+                        :key="`bonus_type_${index}`"
                         :label="typeItem.type"
                     >
                         {{ typeItem.type }}
                         <ul>
                             <li
-                                class="deposit-promotions-list-item promotion-item"
+                                class="deposit-bonus-list-item bonus-item"
                                 v-for="(item, index) in typeItem.data"
-                                :key="`promotions_item_${index}`"
-                                @click="selectPromotion(item)"
+                                :key="`bonus_item_${index}`"
+                                @click="selectBonus(item)"
                             >{{ item }}</li>
                         </ul>
                     </li>
@@ -130,7 +136,7 @@
             <p class="deposit-warning-msg">{{ $t('deposit.agree_certify') }}</p>
 
             <!-- Deposit Button -->
-            <button class="deposit-button" type="submit">{{ $t('wallet.deposit') }}</button>
+            <button class="deposit-button" type="submit" @click="deposit()" disabled>{{ $t('wallet.deposit') }}</button>
         </div>
     </main>
 </template>
@@ -142,9 +148,13 @@ import MyWalletList from '~/components/MyWalletList';
 
 export default {
     computed: {
+        ...mapGetters('auth', {
+            accessToken: 'GetAccessToken'
+        }),
         ...mapGetters('wallet', {
             banksList: 'GetBanksList',
-            bonusList: 'GetBonus'
+            bonusList: 'GetBonus',
+            limits: 'GetLimits'
         })
     },
     components: {
@@ -159,8 +169,20 @@ export default {
             totalAmount: 0,
             currentDate: null,
             currentTime: null,
+            selectedPromotion: null,
+            accountNumber: null,
+            referenceNo: null,
+            upLoadFile: null,
+            isShowDateList: false,
+            isShowTimeList: false,
             isShowBankList: false,
-            isShowPromotionList: false
+            isShowBonusList: false,
+            bankOK: false,
+            amountOK: false,
+            dateTimeOK: false,
+            referenceOK: false,
+            uploadFileOK: false,
+            bonusOK: false
         };
     },
     mounted() {
@@ -169,24 +191,75 @@ export default {
         this.getCurrentTime();
 
         // When Touch Others Place, "Bank" List Or "Promotion" List Will Close
+        // Check Date、Time
         $(document).click(function(el) {
             let touchEl = $(el.target)[0].className;
 
-            if (
-                touchEl.indexOf('bank-input') === -1 &&
-                touchEl.indexOf('deposit-bank-item') === -1 &&
-                touchEl.indexOf('deposit-bank-img') === -1
-            ) {
-                _this.isShowBankList = false;
-            }
+            // 因為點擊日期或時間的箭頭時，沒有"Class Name"，且取到的資料是物件型態。所以要先判斷
+            if (typeof touchEl === 'string') {
+                if (
+                    touchEl.indexOf('bank-input') === -1 &&
+                    touchEl.indexOf('deposit-bank-item') === -1 &&
+                    touchEl.indexOf('deposit-bank-img') === -1
+                ) {
+                    _this.isShowBankList = false;
+                }
 
-            if (touchEl.indexOf('promotion-input') === -1 && touchEl.indexOf('promotion-item') === -1) {
-                _this.isShowPromotionList = false;
+                if (touchEl.indexOf('bonus-input') === -1 && touchEl.indexOf('bonus-item') === -1) {
+                    _this.isShowBonusList = false;
+                }
+
+                // Check Date
+                if ($(el.target)[0].id === 'transfer-date') {
+                    this.isShowDateList = !this.isShowDateList;
+                    _this.checkDateTime();
+                }
+
+                // Check Time
+                if (touchEl.indexOf('deposit-transfer-date-time') !== -1) {
+                    this.isShowTimeList = !this.isShowTimeList;
+                    _this.checkDateTime();
+                }
             }
+        });
+
+        // Check Date、Time
+        this.checkDateTime();
+
+        // Check Amount Input
+        $('.deposit-amount-input').keyup(function() {
+            if (parseFloat($(this).val()) > 0) {
+                _this.amountOK = true;
+            } else {
+                _this.amountOK = false;
+            }
+            _this.checkInfo();
+        });
+
+        // Check Reference Input
+        $('.reference-input').keyup(function() {
+            let referenceNum = $('.reference-input').val();
+            if (referenceNum.length > 0) {
+                _this.referenceOK = true;
+            } else {
+                _this.referenceOK = false;
+            }
+            _this.checkInfo();
+        });
+
+        // Check Upload File
+        $('#upload-file-input').change(function() {
+            _this.uploadFile = $('#upload-file-input').val();
+            if (_this.uploadFile.length > 0) {
+                _this.uploadFileOK = true;
+            } else {
+                _this.uploadFileOK = false;
+            }
+            _this.checkInfo();
         });
     },
     methods: {
-        // Get Now Date
+        // Get Current Date
         getCurrentDate() {
             this.currentDate = new Date();
             let year = this.currentDate.getFullYear();
@@ -203,13 +276,22 @@ export default {
             this.currentDate = `${year}-${month}-${date}`;
         },
 
-        // Get Now Time
+        // Get Current Time
         getCurrentTime() {
             this.currentTime = new Date();
             let hour = this.currentTime.getHours();
             let minute = this.currentTime.getMinutes();
+            this.currentTime = `${hour} : ${minute}`;
+        },
 
-            this.currentTime = { HH: hour, mm: minute };
+        // Check Date、Time
+        checkDateTime() {
+            if (this.currentDate && this.currentTime) {
+                this.dateTimeOK = true;
+            } else {
+                this.dateTimeOK = false;
+            }
+            this.checkInfo();
         },
 
         // Show Or Close Bank List
@@ -218,16 +300,20 @@ export default {
         },
 
         // Select Deposit Bank
-        selectBank(bank) {
+        selectBank(accountNumber, bank, name) {
             if (bank !== 'none') {
-                $('.bank-input').html(`<img class="deposit-bank-img" src="/images/bank_${bank}.png" />`);
+                $('.bank-input').html(`<img class="deposit-bank-img" src="/images/bank_${name}.png" />`);
                 $('.deposit-detail-container').addClass('show');
+                this.bankOK = true;
             } else {
                 $('.bank-input').text(this.$t('common.please_select'));
                 $('.deposit-detail-container').removeClass('show');
+                this.bankOK = false;
             }
 
+            this.accountNumber = accountNumber;
             this.isShowBankList = false;
+            this.checkInfo();
         },
 
         // Set Deposit Amount
@@ -240,22 +326,60 @@ export default {
                 this.totalAmount = this.totalAmount + amount;
                 $('.deposit-amount-input').val(this.totalAmount);
             }
+
+            this.amountOK = true;
+            this.checkInfo();
         },
 
         // Sjow Or Close Promotions List
-        showPromotionList() {
-            this.isShowPromotionList = !this.isShowPromotionList;
+        showBonusList() {
+            this.isShowBonusList = !this.isShowBonusList;
         },
 
         // Select Promotion
-        selectPromotion(promotion) {
+        selectBonus(promotion) {
             if (promotion !== 'none') {
-                $('.promotion-input').text(promotion);
+                $('.bonus-input').text(promotion);
+                this.bonusOK = true;
             } else {
-                $('.promotion-input').text(this.$t('common.please_select'));
+                $('.bonus-input').text(this.$t('common.please_select'));
+                this.bonusOK = false;
             }
 
-            this.isShowPromotionList = false;
+            this.selectedPromotion = promotion;
+            this.isShowBonusList = false;
+            this.checkInfo();
+        },
+
+        // Check Info
+        checkInfo() {
+            $('.deposit-button').removeClass('allow');
+            if (this.bankOK && this.amountOK && this.dateTimeOK && this.referenceOK && this.uploadFileOK && this.bonusOK) {
+                $('.deposit-button').addClass('allow');
+                $('.deposit-button').attr('disabled', false);
+            } else {
+                $('.deposit-button').attr('disabled', true);
+            }
+        },
+
+        // Convert data to formData format
+        transDataToFormData() {
+            this.formData = new FormData();
+            this.formData.append('AccountNumber', this.accountNumber);
+            this.formData.append('Amount', this.totalAmount);
+            this.formData.append('DateTime', this.currentDate + ' ' + this.currentTime);
+            if (this.referenceNo) this.formData.append('Reference', this.referenceNo);
+            if (this.uploadFile) this.formData.append('Receipt', this.uploadFile);
+            if (this.selectedPromotion) this.formData.append('Bonus', this.selectedPromotion);
+        },
+
+        // Deposit Submit
+        deposit() {
+            this.transDataToFormData();
+            this.$store.dispatch('wallet/deposit', {
+                accessToken: this.accessToken,
+                formData: this.formData
+            });
         }
     }
 };
@@ -312,7 +436,7 @@ export default {
                 .deposit-bank-img {
                     width: 119px;
                 }
-                &.upload-file-input {
+                &#upload-file-input {
                     padding: 6px 0 0 6px;
                 }
             }
@@ -350,7 +474,7 @@ export default {
                     }
                 }
             }
-            .deposit-promotions-list-wrapper {
+            .deposit-bonus-list-wrapper {
                 display: none;
                 position: absolute;
                 z-index: 10;
@@ -367,7 +491,7 @@ export default {
                 &.show {
                     display: block;
                 }
-                .deposit-promotions-list-item {
+                .deposit-bonus-list-item {
                     font-weight: normal;
                     padding: 10px 20px 5px 20px;
 
@@ -504,11 +628,15 @@ export default {
             border: $border-style;
             background: $color-yellow-linear-unpress;
             border-radius: 5px;
+            opacity: 0.6;
             padding: 16px 0 16px 0;
             margin-top: 32px;
 
             &:active {
                 background: $color-yellow-linear;
+            }
+            &.allow {
+                opacity: 1;
             }
         }
     }

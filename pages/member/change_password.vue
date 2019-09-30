@@ -65,6 +65,7 @@ export default {
         };
     },
     methods: {
+        // Show or Hide Password
         showPassword(type) {
             if (type === 'current') {
                 if (!this.showCurrent) {
@@ -99,12 +100,13 @@ export default {
             }
         },
 
-        // Change Password
+        // Change Password Submit
         changePassword() {
             this.$store.dispatch('user/changePassword', {
                 accessToken: this.accessToken,
                 currentPassword: this.myCurrentPSW,
-                newPassword: this.myNewPSW
+                newPassword: this.myNewPSW,
+                confirmNewPassword: this.myConfirmNewPSW
             });
         }
     }

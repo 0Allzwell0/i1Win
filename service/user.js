@@ -4,12 +4,13 @@ import Language from '~/middleware/getLanguage'
 
 class UserService {
     // Edit Profile
-    static async editPrifile(accessToken, birthday, email, gender) {
+    static async editProfile(accessToken, lineID, email, birthday, gender) {
         let response = null
         try {
             response = await axios.post('api/v1/members/updateProfile', {
-                birthday,
+                lineID,
                 email,
+                birthday,
                 gender
             }, {
                 headers: {
@@ -25,12 +26,13 @@ class UserService {
     }
 
     // Change Password
-    static async changePassword(accessToken, currentPassword, newPassword) {
+    static async changePassword(accessToken, currentPassword, newPassword, confirmNewPassword) {
         let response = null
         try {
             response = await axios.post('/api/v1/members/changePassword', {
                 currentPassword,
-                newPassword
+                newPassword,
+                confirmNewPassword
             }, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,

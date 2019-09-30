@@ -40,12 +40,12 @@
             <!-- Gender -->
             <h3 class="edit-profile-small-title">{{ $t('edit_profile.gender') }}</h3>
             <div class="edit-profile-gender-wrapper">
-                <button class="edit-profile-gender gender-male active" @click="changeGender('male')">{{ $t('edit_profile.male') }}</button>
-                <button class="edit-profile-gender gender-female" @click="changeGender('female')">{{ $t('edit_profile.female') }}</button>
+                <button class="edit-profile-gender gender-male active" @click="changeGender('1')">{{ $t('edit_profile.male') }}</button>
+                <button class="edit-profile-gender gender-female" @click="changeGender('2')">{{ $t('edit_profile.female') }}</button>
             </div>
 
             <!-- Save Button -->
-            <button class="edit-profile-save-btn" type="submit">{{ $t('common.submit') }}</button>
+            <button class="edit-profile-save-btn" type="submit" @click="editProfile()">{{ $t('common.submit') }}</button>
         </div>
     </main>
 </template>
@@ -66,13 +66,15 @@ export default {
             language: this.$i18n.locale === 'th-TH' ? th : en,
             myLineID: null,
             myEmail: null,
-            myBirthday: null
+            myBirthday: null,
+            myGender: '1'
         };
     },
     mounted() {
         this.myLineID = this.userData.line_id;
         this.myEmail = this.userData.email;
         this.myBirthday = this.userData.birthday;
+        this.myGender = this.userData.gender;
 
         this.changeGender(this.userData.gender);
     },
@@ -80,11 +82,22 @@ export default {
         // Change Gender
         changeGender(gender) {
             $('.edit-profile-gender').removeClass('active');
-            if (gender === 'male') {
+            if (gender === '1') {
                 $('.gender-male').addClass('active');
-            } else if (gender === 'female') {
+            } else if (gender === '2') {
                 $('.gender-female').addClass('active');
             }
+        },
+
+        // Edit Profile Submit
+        editProfile() {
+            this.$store.dispatch('user/editProfile', {
+                accessToken: this.accessToken,
+                lineID: this.myLineID,
+                email: this.myEmail,
+                birthday: this.myBirthday,
+                gender: this.myGender
+            });
         }
     }
 };
