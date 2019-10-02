@@ -5,7 +5,6 @@
                 id="transfer-time"
                 class="deposit-transfer-date-time"
                 format="HH : mm"
-                v-model="currentTime"
                 :value="currentTime"
                 hide-clear-button
             />
@@ -30,7 +29,6 @@ export default {
             let hour = dateNow.getHours();
             let minute = dateNow.getMinutes();
             this.currentTime = `${hour} : ${minute}`;
-            this.$emit('getTime', this.currentTime);
         }
     }
 };

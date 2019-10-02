@@ -1,15 +1,9 @@
 <template>
-    <div class="deposit-transfer-time-container">
+    <div class="date-wrapper">
         <client-only>
-            <date-picker
-                id="transfer-date"
-                class="deposit-transfer-date-time"
-                :format="format"
-                :language="language"
-                v-model="currentDate"
-            />
+            <date-picker class="date-container" :format="format" :language="language" :value="currentDate" />
         </client-only>
-        <fa :icon="['fas', 'caret-down']" class="deposit-down" />
+        <fa :icon="['fas', 'caret-down']" class="date-down" />
     </div>
 </template>
 <script>
@@ -42,17 +36,19 @@ export default {
             }
 
             this.currentDate = `${year}-${month}-${date}`;
-            this.$emit('getDate', this.currentDate);
         }
     }
 };
 </script>
 <style lang="scss">
-.deposit-transfer-time-container {
+.date-wrapper {
     position: relative;
     width: 47%;
 
-    .deposit-transfer-date-time {
+    &.to-date .date-container .vdp-datepicker__calendar {
+        right: 0;
+    }
+    .date-container {
         width: 100%;
 
         input {
@@ -64,12 +60,14 @@ export default {
             background: $color-white;
             padding: 0 10px;
         }
-
+        .vdp-datepicker__calendar {
+            width: 250px;
+        }
         .dropdown {
             top: 39px;
         }
     }
-    .deposit-down {
+    .date-down {
         position: absolute;
         top: 10px;
         right: 10px;

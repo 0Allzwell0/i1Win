@@ -20,29 +20,20 @@
 
             <!-- Date -->
             <div class="history-date-wrapper">
-                <!-- Date From -->
-                <div class="history-date-container">
-                    <client-only>
-                        <date-picker class="history-date-input" :format="format" :language="language" :value="currentDate" />
-                    </client-only>
-                    <fa :icon="['fas', 'caret-down']" class="history-down" />
-                </div>
-                <!-- Date To -->
-                <div class="history-date-container">
-                    <client-only>
-                        <date-picker
-                            class="history-date-input to-date"
-                            :format="format"
-                            :language="language"
-                            :value="currentDate"
-                        />
-                    </client-only>
-                    <fa :icon="['fas', 'caret-down']" class="history-down" />
-                </div>
+                <!-- From Date -->
+                <my-date-selecter class="from-date"></my-date-selecter>
+                <!-- To Date -->
+                <my-date-selecter class="to-date"></my-date-selecter>
             </div>
 
             <!-- Search Button -->
-            <button class="history-search-button" type="submit">{{ $t('history.search') }}</button>
+            <button
+                class="history-search-button"
+                type="submit"
+                @click="search()"
+                :disabled="requestState"
+                :class="{'allow': !requestState}"
+            >{{ $t('history.search') }}</button>
 
             <!-- Secondary Content -->
             <div class="history-data-wrapper">
@@ -58,7 +49,15 @@
                     </ul>
 
                     <!-- Transaction Data List -->
-                    <ul class="history-data-list transaction-list"></ul>
+                    <ul class="history-data-list transaction-list">
+                        <li class="history-data-list-item" v-for="(item, index) in transactionData" :key="`transaction-${index}`">
+                            <span class="data-list-item item-date">{{ item.date }}</span>
+                            <span class="data-list-item item-type">{{ item.type }}</span>
+                            <span class="data-list-item item-amount">{{ item.amount }}</span>
+                            <span class="data-list-item item-status">{{ item.status }}</span>
+                            <span class="data-list-item item-remark">{{ item.remark }}</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Statement -->
@@ -72,7 +71,14 @@
                     </ul>
 
                     <!-- Statement Data List -->
-                    <ul class="history-data-list statement-list"></ul>
+                    <ul class="history-data-list statement-list">
+                        <li class="history-data-list-item" v-for="(item, index) in statementData" :key="`statement-${index}`">
+                            <span class="data-list-item item-type">{{ item.type }}</span>
+                            <span class="data-list-item item-turnover">{{ item.turnover }}</span>
+                            <span class="data-list-item item-winloss">{{ item.winloss }}</span>
+                            <span class="data-list-item item-active_bet">{{ item.active_bet }}</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Transfer -->
@@ -87,104 +93,91 @@
                     </ul>
 
                     <!-- Transfer Data List -->
-                    <ul class="history-data-list transfer-list"></ul>
+                    <ul class="history-data-list transfer-list">
+                        <li class="history-data-list-item" v-for="(item, index) in transferData" :key="`transfer-${index}`">
+                            <span class="data-list-item item-date">{{ item.date }}</span>
+                            <span class="data-list-item item-from">{{ item.from }}</span>
+                            <span class="data-list-item item-to">{{ item.to }}</span>
+                            <span class="data-list-item item-amount">{{ item.amount }}</span>
+                            <span class="data-list-item item-status">{{ item.status }}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </main>
 </template>
 <script>
-import { en, th } from 'vuejs-datepicker/dist/locale';
 import { mapGetters } from 'vuex';
 import MyMemberTab from '~/components/MyMemberTab';
+import MyDateSelecter from '~/components/MyDateSelecter';
 
 export default {
     computed: {
+        ...mapGetters('auth', {
+            accessToken: 'GetAccessToken'
+        }),
         ...mapGetters('history', {
+            requestState: 'GetRequestState',
             transactionData: 'GetTransactionData',
             statementData: 'GetStatementData',
             transferData: 'GetTransferData'
         })
     },
     components: {
-        MyMemberTab
+        MyMemberTab,
+        MyDateSelecter
     },
     data() {
         return {
-            format: 'yyyy-MM-dd',
-            language: this.$i18n.locale === 'th-TH' ? th : en,
-            currentDate: null
+            fromDate: null,
+            toDate: null,
+            currentTab: 'Transcation'
         };
     },
     mounted() {
-        this.getCurrentDate();
-        this.getTransactionData();
-        this.getStatementData();
-        this.getTransferData();
+        let _this = this;
+        // this.getHistoryData('Transaction');
+        // this.getHistoryData('Statement');
+        // this.getHistoryData('Transfer');
+
+        // Judge Selected Tab
+        $('.history-tab-container').click(function() {
+            let type = $(this).attr('class');
+            if (type.indexOf('transaction') !== -1) {
+                _this.currentTab = 'Transaction';
+            } else if (type.indexOf('statement') !== -1) {
+                _this.currentTab = 'Statement';
+            } else if (type.indexOf('transfer') !== -1) {
+                _this.currentTab = 'Transfer';
+            }
+        });
     },
     methods: {
-        // Get Current Date
-        getCurrentDate() {
-            this.currentDate = new Date();
-            let year = this.currentDate.getFullYear();
-            let month = this.currentDate.getMonth() + 1;
-            let date = this.currentDate.getDate();
-
-            if (month >= 1 && month <= 9) {
-                month = '0' + month;
-            }
-            if (date >= 0 && date <= 9) {
-                date = '0' + date;
-            }
-
-            this.currentDate = `${year}-${month}-${date}`;
+        // Get History Data
+        getHistoryData(type) {
+            this.$store.dispatch(`history/get${type}Data`, {
+                accessToken: this.accesstoken,
+                fromDate: this.fromDate,
+                toDate: this.toDate
+            });
         },
 
-        // Get Transaction Data
-        getTransactionData() {
-            $('.transaction-list').empty();
-            for (let i = 0; i < this.transactionData.length; i++) {
-                $('.transaction-list').append(
-                    `<li class="history-data-list-item transaction-item">
-                        <span class="data-list-item item-date">${this.transactionData[i].date}</span>
-                        <span class="data-list-item item-type">${this.transactionData[i].type}</span>
-                        <span class="data-list-item item-amount">${this.transactionData[i].amount}</span>
-                        <span class="data-list-item item-status">${this.transactionData[i].status}</span>
-                        <span class="data-list-item item-remark">${this.transactionData[i].remark}</span>
-                    </li>`
-                );
-            }
+        // Get From Date Value
+        getFromDate() {
+            this.fromDate = $('.from-date .date-container input').val();
         },
 
-        // Get Statement Data
-        getStatementData() {
-            $('.statement-list').empty();
-            for (let i = 0; i < this.statementData.length; i++) {
-                $('.statement-list').append(
-                    `<li class="history-data-list-item transaction-item">
-                        <span class="data-list-item item-type">${this.statementData[i].type}</span>
-                        <span class="data-list-item item-turnover">${this.statementData[i].turnover}</span>
-                        <span class="data-list-item item-winloss">${this.statementData[i].winloss}</span>
-                        <span class="data-list-item item-active_bet">${this.statementData[i].active_bet}</span>
-                    </li>`
-                );
-            }
+        // Get To Date
+        getToDate() {
+            this.toDate = $('.to-date .date-container input').val();
         },
 
-        // Get Transfer Data
-        getTransferData() {
-            $('.transfer-list').empty();
-            for (let i = 0; i < this.transferData.length; i++) {
-                $('.transfer-list').append(
-                    `<li class="history-data-list-item transfer-item">
-                        <span class="data-list-item item-date">${this.transferData[i].date}</span>
-                        <span class="data-list-item item-from">${this.transferData[i].from}</span>
-                        <span class="data-list-item item-to">${this.transferData[i].to}</span>
-                        <span class="data-list-item item-amount">${this.transferData[i].amount}</span>
-                        <span class="data-list-item item-status">${this.transferData[i].status}</span>
-                    </li>`
-                );
-            }
+        // Search Submit
+        search() {
+            this.getFromDate();
+            this.getToDate();
+            this.getHistoryData(this.currentTab);
         }
     }
 };
@@ -252,37 +245,6 @@ export default {
             display: flex;
             justify-content: space-between;
             margin: 4% 8% 6% 8%;
-
-            .history-date-container {
-                position: relative;
-                width: 47%;
-
-                .history-date-input {
-                    width: 100%;
-
-                    input {
-                        width: 100%;
-                        height: 39px;
-                        font-size: 15px;
-                        border-radius: 5px;
-                        border: 1px solid #cecece;
-                        background: $color-white;
-                        padding: 0 10px;
-                    }
-                    &.to-date .vdp-datepicker__calendar {
-                        right: 0;
-                    }
-                    .vdp-datepicker__calendar {
-                        width: 250px;
-                    }
-                }
-                .history-down {
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    font-size: 20px;
-                }
-            }
         }
         .history-search-button {
             width: 85%;
@@ -290,12 +252,16 @@ export default {
             font-weight: bold;
             border-radius: 5px;
             border: $border-style;
-            background: $color-yellow-linear-unpress;
-            padding: 3.5% 0 3.5% 0;
             align-self: center;
+            background: $color-yellow-linear-unpress;
+            opacity: 0.7;
+            padding: 3.5% 0 3.5% 0;
 
             &:active {
                 background: $color-yellow-linear;
+            }
+            &.allow {
+                opacity: 1;
             }
         }
         .history-data-wrapper {

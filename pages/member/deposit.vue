@@ -48,8 +48,8 @@
             <!-- Transfer Time -->
             <h3 class="deposit-title-text">{{ $t('deposit.transfer_time') }}</h3>
             <div class="deposit-transfer-time-wrapper">
-                <my-date-selecter v-on:getDate="getDate"></my-date-selecter>
-                <my-time-selecter v-on:getTime="getTime"></my-time-selecter>
+                <my-date-selecter></my-date-selecter>
+                <my-time-selecter></my-time-selecter>
             </div>
 
             <!-- Reference Number -->
@@ -141,8 +141,8 @@ export default {
             choiceAmount: null,
             totalAmount: 0,
             amountError: false,
-            currentDate: null,
-            currentTime: null,
+            depositDate: null,
+            depositTime: null,
             referenceNo: null,
             upLoadFile: null,
             selectedBonus: null,
@@ -228,13 +228,13 @@ export default {
         },
 
         // Get Date Value
-        getDate(currentDate) {
-            this.currentDate = currentDate;
+        getDate() {
+            this.depositDate = $('.date-container input').val();
         },
 
         // Get Time Value
-        getTime(currentTime) {
-            this.currentTime = currentTime;
+        getTime() {
+            this.depositTime = $('#transfer-time').val();
         },
 
         // Show Or Close Bonus List
@@ -273,7 +273,7 @@ export default {
             this.formData = new FormData();
             this.formData.append('AccountNumber', this.accountNumber);
             this.formData.append('Amount', this.totalAmount);
-            this.formData.append('DateTime', this.currentDate + ' ' + this.currentTime);
+            this.formData.append('DateTime', this.depositDate + ' ' + this.depositTime);
             if (this.referenceNo) this.formData.append('Reference', this.referenceNo);
             if (this.uploadFile) this.formData.append('Receipt', this.uploadFile);
             if (this.selectedBonus) this.formData.append('Bonus', this.selectedBonus);
@@ -296,6 +296,8 @@ export default {
 
         // Deposit Submit
         deposit() {
+            this.getDate();
+            this.getTime();
             this.checkAmount();
             if (this.amount) {
                 this.transDataToFormData();
