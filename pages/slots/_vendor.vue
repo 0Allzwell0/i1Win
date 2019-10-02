@@ -14,12 +14,12 @@
             <ul class="slots-games-selector">
                 <!-- Game Vendor Selecter -->
                 <li class="slots-games-vendor">
-                    <button class="slots-games-vendor-btn" @click="showVendorList()"></button>
+                    <button class="slots-games-vendor-btn" @click.stop="showVendorList()"></button>
                     <fa :icon="['fas', 'caret-down']" class="slots-games-down" />
                     <ul class="slots-games-vendor-list">
                         <li class="slots-games-vendor-item" v-for="(vendor, index) in vendorList" :key="`vendor_${index}`">
-                            <nuxt-link :to="$i18n.path(`slots/${vendor.code}`)">
-                                <img class="slots-games-vendor-img" :src="vendor.image" />
+                            <nuxt-link :to="$i18n.path(`slots/${vendor}`)">
+                                <img class="slots-games-vendor-img" :src="`/images/wallet_${vendor}.png`" />
                             </nuxt-link>
                         </li>
                     </ul>
@@ -27,7 +27,7 @@
 
                 <!-- Game Type Selecter -->
                 <li class="slots-games-type">
-                    <button class="slots-games-type-btn" @click="showTypeList()"></button>
+                    <button class="slots-games-type-btn" @click.stop="showTypeList()"></button>
                     <fa :icon="['fas', 'caret-down']" class="slots-games-down" />
                     <ul class="slots-games-type-list">
                         <li
@@ -47,12 +47,19 @@
     </main>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import MyCarousel from '~/components/MyCarousel';
 import MyAnnouncement from '~/components/MyAnnouncement';
 import MyGameTab from '~/components/MyGameTab';
 import MySlotsGameList from '~/components/MySlotsGameList';
 
 export default {
+    asyncData({ store, route }) {},
+    computed: {
+        ...mapGetters('auth', {
+            accesstoken: 'GetAccessToken'
+        })
+    },
     components: {
         MyCarousel,
         MyAnnouncement,
@@ -61,40 +68,7 @@ export default {
     },
     data() {
         return {
-            vendorList: [
-                {
-                    code: 'plt',
-                    image: '/images/wallet_plt.png'
-                },
-                {
-                    code: 'spg',
-                    image: '/images/wallet_spg.png'
-                },
-                {
-                    code: 'plt',
-                    image: '/images/wallet_ygg.png'
-                },
-                {
-                    code: 'gpi',
-                    image: '/images/wallet_gpi.png'
-                },
-                {
-                    code: 'bng',
-                    image: '/images/wallet_bng.png'
-                },
-                {
-                    code: 'jok',
-                    image: '/images/wallet_jok.png'
-                },
-                {
-                    code: 'ifun',
-                    image: '/images/wallet_ifun.png'
-                },
-                {
-                    code: 'ks9',
-                    image: '/images/wallet_ks9.png'
-                }
-            ],
+            vendorList: ['plt', 'spg', 'ygg', 'gpi', 'bng', 'jok', 'ifun', 'ks9', 'cq9', 'mg', 'dt'],
             typeList: ['All', 'Popular', 'New', 'Jackpot', 'Table'],
             showVendor: false,
             showType: false
@@ -116,14 +90,12 @@ export default {
 
         // When Touch Others Places, Close "Vendor" List or "Yype" List
         $(document).click(function(e) {
-            let elClassName = $(e.target)[0].className;
-
-            if (elClassName !== 'slots-games-vendor-btn' && elClassName !== 'slots-games-down' && elClassName !== 'btn-image') {
+            if (_this.showVendor) {
                 _this.showVendor = false;
                 $('.slots-games-vendor-list').removeClass('show');
             }
 
-            if (elClassName !== 'slots-games-type-btn' && elClassName !== 'slots-games-down') {
+            if (_this.showType) {
                 _this.showType = false;
                 $('.slots-games-type-list').removeClass('show');
             }
@@ -132,6 +104,7 @@ export default {
     methods: {
         // Show or Hidden Game Vendor List
         showVendorList() {
+            this.showType = false;
             $('.slots-games-type-list').removeClass('show');
 
             if (!this.showVendor) {
@@ -145,6 +118,7 @@ export default {
 
         // Show or Hidden Game Type List
         showTypeList() {
+            this.showVendor = false;
             $('.slots-games-vendor-list').removeClass('show');
 
             if (!this.showType) {

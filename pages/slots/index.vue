@@ -92,16 +92,53 @@
                         <img class="slots-game-img" src="/images/slots_918kiss.png" />
                     </nuxt-link>
                 </li>
+                <!-- CQ9 -->
+                <li class="slots-game-wrapper" id="cq9">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/cq9')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">CQ9</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots_cq9.png" />
+                    </nuxt-link>
+                </li>
+                <!-- Microgaming -->
+                <li class="slots-game-wrapper" id="mg">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/mg')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">Microgaming</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots_mg.png" />
+                    </nuxt-link>
+                </li>
+                <!-- Dreamtech -->
+                <li class="slots-game-wrapper" id="dt">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/dt')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">Dreamtech</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots_dt.png" />
+                    </nuxt-link>
+                </li>
             </ul>
         </div>
     </main>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import MyCarousel from '~/components/MyCarousel';
 import MyAnnouncement from '~/components/MyAnnouncement';
 import MyGameTab from '~/components/MyGameTab';
 
 export default {
+    computed: {
+        ...mapGetters('auth', {
+            accesstoken: 'GetAccessToken',
+            isLogined: 'GetLogined'
+        })
+    },
     components: {
         MyCarousel,
         MyAnnouncement,

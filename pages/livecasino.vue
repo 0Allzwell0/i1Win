@@ -23,6 +23,19 @@
                         @click="openGame('ag', 'Asia Gaming', '/images/gm_asia_gaming.png')"
                     >{{ $t('common.play_now') }}</button>
                 </div>
+                <!-- SA Gaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/gm_sa_gaming.png" />
+                    <span class="livecasino-item-name">SA Gaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.sa_msg') }}</span>
+                    <button
+                        class="livecasino-play-now-btn"
+                        type="button"
+                        @click="openGame('sa', 'SA Gaming', '/images/gm_sa_gaming.png')"
+                    >{{ $t('common.play_now') }}</button>
+                </div>
+            </li>
+            <li class="livecasino-item-wrapper">
                 <!-- Gameplay Interactive -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/gm_gameplay_interactive.png" />
@@ -34,31 +47,6 @@
                         @click="openGame('gpi', 'Gameplay Interactive', '/images/gm_gameplay_interactive.png')"
                     >{{ $t('common.play_now') }}</button>
                 </div>
-            </li>
-            <li class="livecasino-item-wrapper">
-                <!-- Dream Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/gm_dream_gaming.png" />
-                    <span class="livecasino-item-name">Dream Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.dg_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('dg', 'Dream Gaming', '/images/gm_dream_gaming.png')"
-                    >{{ $t('common.play_now') }}</button>
-                </div>
-                <!-- Playtech -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/gm_playtech.png" />
-                    <span class="livecasino-item-name">Playtech</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.plt_msg') }}</span>
-                    <nuxt-link
-                        class="livecasino-play-now-btn plt-btn"
-                        :to="$i18n.path('livecasino_plt')"
-                    >{{ $t('common.play_now') }}</nuxt-link>
-                </div>
-            </li>
-            <li class="livecasino-item-wrapper">
                 <!-- Evolution Gaming -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/gm_evolution_gaming.png" />
@@ -70,15 +58,51 @@
                         @click="openGame('evo', 'Evolution Gaming', '/images/gm_evolution_gaming.png')"
                     >{{ $t('common.play_now') }}</button>
                 </div>
-                <!-- SA Gaming -->
+            </li>
+            <li class="livecasino-item-wrapper">
+                <!-- Playtech -->
                 <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/gm_sa_gaming.png" />
-                    <span class="livecasino-item-name">SA Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.sa_msg') }}</span>
+                    <img class="livecasino-item-img" src="/images/gm_playtech.png" />
+                    <span class="livecasino-item-name">Playtech</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.plt_msg') }}</span>
+                    <nuxt-link
+                        class="livecasino-play-now-btn plt-btn"
+                        :to="$i18n.path('livecasino_plt')"
+                    >{{ $t('common.play_now') }}</nuxt-link>
+                </div>
+                <!-- Dream Gaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/gm_dream_gaming.png" />
+                    <span class="livecasino-item-name">Dream Gaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.dg_msg') }}</span>
                     <button
                         class="livecasino-play-now-btn"
                         type="button"
-                        @click="openGame('sa', 'SA Gaming', '/images/gm_sa_gaming.png')"
+                        @click="openGame('dg', 'Dream Gaming', '/images/gm_dream_gaming.png')"
+                    >{{ $t('common.play_now') }}</button>
+                </div>
+            </li>
+            <li class="livecasino-item-wrapper">
+                <!-- Sexy Gaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/gm_sexy_gaming.png" />
+                    <span class="livecasino-item-name">Sexy Gaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.sg_msg') }}</span>
+                    <button
+                        class="livecasino-play-now-btn"
+                        type="button"
+                        @click="openGame('sb', 'Sexy Gaming', '/images/gm_sexy_gaming.png')"
+                    >{{ $t('common.play_now') }}</button>
+                </div>
+                <!-- Microgaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/gm_microgaming.png" />
+                    <span class="livecasino-item-name">Microgaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.mg_msg') }}</span>
+                    <button
+                        class="livecasino-play-now-btn"
+                        type="button"
+                        @click="openGame('mg', 'Microgaming', '/images/gm_microgaming.png')"
                     >{{ $t('common.play_now') }}</button>
                 </div>
             </li>
@@ -94,6 +118,7 @@ import MyGameTab from '~/components/MyGameTab';
 export default {
     computed: {
         ...mapGetters('auth', {
+            accesstoken: 'GetAccessToken',
             isLogined: 'GetLogined'
         })
     },
