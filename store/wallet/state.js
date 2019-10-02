@@ -1,20 +1,21 @@
 const state = () => ({
+    requestState: false,
     wallets: [
-        { name: 'Main', amount: 10520.52 },
-        { name: 'OBK', amount: 100.01 },
-        { name: 'SBO', amount: 20.31 },
-        { name: 'PLT', amount: 0 },
-        { name: 'AG', amount: 110 },
-        { name: 'SA', amount: 51.2 },
-        { name: 'EVO', amount: 23.8 },
-        { name: 'DG', amount: 75.21 },
-        { name: 'SPG', amount: 61.39 },
-        { name: 'BNG', amount: 91.02 },
-        { name: 'YGG', amount: 12.11 },
-        { name: 'JOK', amount: 0.59 },
-        { name: 'KS9', amount: 0.8 },
-        { name: 'IFUN', amount: 73.51 },
-        { name: 'SB', amount: 128.91 }
+        { name: 'Main', amount: 10520.52, status: 2 },
+        { name: 'OBK', amount: 100.01, status: 1 },
+        { name: 'SBO', amount: 20.31, status: 2 },
+        { name: 'PLT', amount: 0, status: 1 },
+        { name: 'AG', amount: 110, status: 1 },
+        { name: 'SA', amount: 51.2, status: 1 },
+        { name: 'EVO', amount: 23.8, status: 2 },
+        { name: 'DG', amount: 75.21, status: 1 },
+        { name: 'SPG', amount: 61.39, status: 1 },
+        { name: 'BNG', amount: 91.02, status: 1 },
+        { name: 'YGG', amount: 12.11, status: 2 },
+        { name: 'JOK', amount: 0.59, status: 1 },
+        { name: 'KS9', amount: 0.8, status: 1 },
+        { name: 'IFUN', amount: 73.51, status: 1 },
+        { name: 'SB', amount: 128.91, status: 2 }
     ],
     banksList: [
         {
@@ -53,7 +54,16 @@ const state = () => ({
             accountNumber: '729-244408-8'
         }
     ],
-    limits: null,
+    limits: {
+        maxDaily: 20,
+        maxDeposit: 50000,
+        minDeposit: 30,
+        maxWithdraw: 50000,
+        minWithdraw: 50,
+        maxDailyWithdraw: 1000000,
+        todayWithdrawTotal: 0,
+        todayCount: 0
+    },
     amount: (0).toFixed(2),
     bonus: [
         {

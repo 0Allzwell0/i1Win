@@ -14,39 +14,42 @@
 
             <!-- Withdrawal Bank -->
             <h3 class="withdrawal-title-text">{{ $t('withdrawal.withdrawal_to') }}</h3>
-            <div class="withdrawal-input-wrapper">
-                <button class="withdrawal-bank-input" type="button" @click="showBankList()">{{ $t('common.please_select') }}</button>
-                <fa :icon="['fas', 'caret-down']" class="withdrawal-down" />
-                <ul class="withdrawal-banks-list" :class="{'show': isShowBankList}">
-                    <li class="withdrawal-bank-item" @click="selectBank('none')">{{ $t('common.please_select') }}</li>
-                    <li
-                        class="withdrawal-bank-item"
-                        v-for="(item, index) in banksList"
-                        :key="`withdrawal_bank_${index}`"
-                        @click="selectBank(item)"
-                    >
-                        <img class="withdrawal-bank-img" :src="`/images/bank_${item}.png`" />
-                    </li>
-                </ul>
-            </div>
+            <my-banks-selecter v-on:getBank="getBank"></my-banks-selecter>
 
             <!-- Full Name -->
             <h3 class="withdrawal-title-text">{{ $t('common.fullname') }}</h3>
-            <div class="withdrawal-content-text">Allzwell</div>
+            <div class="withdrawal-content-text">{{ userData.fullname }}</div>
 
             <!-- Account Number -->
             <h3 class="withdrawal-title-text">{{ $t('withdrawal.account_number') }}</h3>
-            <input class="withdrawal-input" type="text" :placeholder="$t('withdrawal.account_number_placeholder')" />
+            <input
+                class="withdrawal-input account-number-input"
+                type="text"
+                v-model="accountNumber"
+                :placeholder="$t('withdrawal.account_number_placeholder')"
+            />
 
             <!-- Amount -->
             <h3 class="withdrawal-title-text">{{ $t('wallet.amount') }} (THB)</h3>
-            <input class="withdrawal-input" type="number" :placeholder="`${$t('wallet.amount')} (THB)`" />
+            <input
+                class="withdrawal-input amount-input"
+                type="number"
+                v-model="amount"
+                :placeholder="amountPlaceholder"
+                :disabled="amountAllowed"
+            />
 
             <!-- Warning Message -->
             <p class="withdrawal-warning-msg">{{ $t('withdrawal.withdrawal_msg') }}</p>
 
             <!-- Withdrawal Button -->
-            <button class="withdrawal-button" type="submit">{{ $t('wallet.withdrawal') }}</button>
+            <button
+                class="withdrawal-button"
+                type="submit"
+                @click="withdrawal()"
+                :disabled="requestState || true"
+                :class="{'allow': requestState}"
+            >{{ $t('wallet.withdrawal') }}</button>
         </div>
     </main>
 </template>
@@ -54,62 +57,137 @@
 import { mapGetters } from 'vuex';
 import MyMemberTab from '~/components/MyMemberTab';
 import MyWalletList from '~/components/MyWalletList';
+import MyBanksSelecter from '~/components/MyBanksSelecter';
 
 export default {
     computed: {
+        ...mapGetters('auth', {
+            accessToken: 'GetAccessToken',
+            userData: 'GetUserData'
+        }),
         ...mapGetters('wallet', {
+            requestState: 'GetRequestState',
             wallets: 'GetWallets',
-            banksList: 'GetBanksList'
+            limits: 'GetLimits'
         })
     },
     components: {
         MyMemberTab,
-        MyWalletList
+        MyWalletList,
+        MyBanksSelecter
     },
     data() {
         return {
             availableBalance: null,
-            isShowBankList: false
+            accountNumber: null,
+            accountNumberOK: false,
+            amount: null,
+            amountOK: false,
+            amountAllowed: false,
+            amountPlaceholder: null,
+            bankOK: false
         };
     },
     mounted() {
         let _this = this;
 
-        this.availableBalance = this.wallets[0].amount.toFixed(2);
+        this.getAvailableBalanve();
+        this.checkAmount();
 
-        // When Touch Others Place, "Bank" List Or "Promotion" List Will Close
-        $(document).click(function(el) {
-            let touchEl = $(el.target)[0].className;
-
-            if (
-                touchEl.indexOf('withdrawal-bank-input') === -1 &&
-                touchEl.indexOf('withdrawal-bank-item') === -1 &&
-                touchEl.indexOf('withdrawal-bank-img') === -1
-            ) {
-                _this.isShowBankList = false;
+        // Check Account Number
+        $('.account-number-input').keyup(function() {
+            let accountNumLeng = $('.account-number-input').val().length;
+            if (accountNumLeng > 0) {
+                _this.accountNumberOK = true;
+            } else {
+                _this.accountNumberOK = false;
             }
+            _this.checkInfo();
+        });
+
+        // Check Amount
+        $('.amount-input').keyup(function() {
+            let amountLength = $('.amount-input').val().length;
+            if (amountLength > 0) {
+                _this.amountOK = true;
+            } else {
+                _this.amountOK = false;
+            }
+            _this.checkInfo();
         });
     },
     methods: {
-        // Show Or Close Bank List
-        showBankList() {
-            this.isShowBankList = !this.isShowBankList;
+        // Get Available Balance
+        getAvailableBalanve() {
+            if (this.wallets) {
+                for (let i = 0; i < this.wallets.length; i++) {
+                    if (this.wallets[i].name === 'Main') {
+                        this.availableBalance = this.wallets[i].amount.toFixed(2);
+                        break;
+                    }
+                }
+            } else {
+                this.availableBalance = (0).toFixed(2);
+            }
         },
 
-        // Select Withdrawal Bank
-        selectBank(bank) {
-            if (bank !== 'none') {
-                $('.withdrawal-bank-input').html(`<img class="withdrawal-bank-img" src="/images/bank_${bank}.png" />`);
+        // Check Amount Is Availabled To Input And Change "Placeholder"
+        // 1. The number of withdrawals per day has exceeded the limit
+        // 2. The amount of one-day withdrawal has exceeded the limit
+        // 3. Insufficient balance
+        // 4. The minimum withdrawal amount is "minWithdraw" or 50
+        checkAmount() {
+            if (this.limits && this.wallets) {
+                if (this.limits.todayWithdrawTotal >= this.limits.maxDailyWithdraw) {
+                    this.amountAllowed = true;
+                    this.amountPlaceholder = this.$t('withdrawal.today_withdraw_total');
+                } else if (this.limits.todayCount >= this.limits.maxDaily) {
+                    this.amountAllowed = true;
+                    this.amountPlaceholder = this.$t('withdrawal.today_count');
+                } else if (this.wallets[0].amount < this.limits.minWithdraw) {
+                    this.amountAllowed = true;
+                    this.amountPlaceholder = this.$t('withdrawal.insufficient_balance');
+                } else {
+                    this.amountAllowed = false;
+                    this.amountPlaceholder = this.$t('withdrawal.amount_placeholder') + this.limits.minWithdraw;
+                }
             } else {
-                $('.withdrawal-bank-input').text(this.$t('common.please_select'));
+                this.amountAllowed = false;
+                this.amountPlaceholder = this.$t('withdrawal.amount_placeholder') + '50';
             }
+        },
 
-            this.isShowBankList = false;
+        // Get Selected Bank
+        getBank(accountNumber, bank, bankOK) {
+            this.selectedBank = bank;
+            this.bankOK = bankOK;
+            this.checkInfo();
+        },
+
+        // Cheeck Information To Allow "Withdrawal" Button
+        checkInfo() {
+            $('.withdrawal-button').removeClass('allow');
+            if (this.bankOK && this.accountNumberOK && this.amountOK) {
+                $('.withdrawal-button').addClass('allow');
+                $('.withdrawal-button').attr('disabled', false);
+            } else {
+                $('.withdrawal-button').attr('disabled', true);
+            }
+        },
+
+        // Withdrawal Submit
+        withdrawal() {
+            this.$store.dispatch('wallet/withdrawal', {
+                accessToken: this.accessToken,
+                toBank: this.selectedBank,
+                accountNumber: this.accountNumber,
+                amount: this.amount
+            });
         }
     }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .withdrawal-wrapper {
     width: 100%;
     height: 100%;
@@ -156,54 +234,12 @@ export default {
             background: $color-white;
             margin: 7px 0 24px 0;
 
-            .withdrawal-bank-input {
-                width: 100%;
-                font-size: 14px;
-                background: $color-white;
-                border-radius: 5px;
-                text-align: left;
-                padding-left: 10px;
-
-                .withdrawal-bank-img {
-                    width: 119px;
-                }
-                &.upload-file-input {
-                    padding: 6px 0 0 6px;
-                }
-            }
             .withdrawal-down {
                 width: 15px;
                 font-size: 20px;
                 color: $color-black;
                 align-self: center;
                 margin-right: 8px;
-            }
-            .withdrawal-banks-list {
-                display: none;
-                position: absolute;
-                z-index: 10;
-                top: 38px;
-                left: 0;
-                width: 100%;
-                height: 230px;
-                font-weight: normal;
-                font-size: 14px;
-                border: 1px solid #cecece;
-                background: $color-white;
-                overflow-y: scroll;
-
-                &.show {
-                    display: block;
-                }
-                .withdrawal-bank-item {
-                    width: 100%;
-                    border-bottom: 1px solid #cecece;
-                    padding: 10px 0 10px 10px;
-
-                    .withdrawal-bank-img {
-                        width: 119px;
-                    }
-                }
             }
         }
         .withdrawal-input {
@@ -226,11 +262,15 @@ export default {
             border: $border-style;
             background: $color-yellow-linear-unpress;
             border-radius: 5px;
+            opacity: 0.6;
             padding: 16px 0 16px 0;
             margin-top: 32px;
 
             &:active {
                 background: $color-yellow-linear;
+            }
+            &.allow {
+                opacity: 1;
             }
         }
     }

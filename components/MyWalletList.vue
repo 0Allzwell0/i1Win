@@ -203,13 +203,13 @@ export default {
                     width: 30px;
                     height: 2px;
                     background: $color-yellow;
-                    margin: 15px 0 0 1.65px;
+                    margin: 15px 0 0 1.5px;
                 }
                 .expand-close-row {
                     width: 2px;
                     height: 30px;
                     background: $color-yellow;
-                    margin: -15px 0 0 16px;
+                    margin: -15.5px 0 0 15px;
                 }
             }
             .expand-close-text {

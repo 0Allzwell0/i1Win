@@ -14,64 +14,24 @@
 
             <!-- Transfer From -->
             <h3 class="transfer-title-text">{{ $t('transfer.transfer_from') }}</h3>
-            <div class="transfer-input-wrapper">
-                <button
-                    class="transfer-game-input transfer-from"
-                    type="button"
-                    @click="showGameList('from')"
-                >{{ $t('common.please_select') }}</button>
-                <fa :icon="['fas', 'caret-down']" class="transfer-down" />
-                <ul class="transfer-games-list transfer-from" :class="{'show': isShowGameFrom}">
-                    <li class="transfer-game-item" @click="selectGame('from', 'none')">{{ $t('common.please_select') }}</li>
-                    <li
-                        class="transfer-game-item"
-                        :class="{'active': selectedToGame === item.name.toLowerCase()}"
-                        v-for="(item, index) in wallets"
-                        :key="`transfer_game_${index}`"
-                        @click="selectGame('from', item.name.toLowerCase())"
-                    >
-                        <img class="transfer-game-img" :src="`/images/wallet_${item.name.toLowerCase()}.png`" />
-                        <span
-                            class="transfer-game-text"
-                            :class="{'active': (item.name === 'Main')}"
-                        >{{ $t('wallet.main_wallet') }}</span>
-                    </li>
-                </ul>
-            </div>
+            <my-wallet-selecter v-on:getHideGame="getFromGame" :hideGame="toGame" :type="'from'"></my-wallet-selecter>
 
             <!-- Transfer To -->
             <h3 class="transfer-title-text">{{ $t('transfer.transfer_to') }}</h3>
-            <div class="transfer-input-wrapper">
-                <button
-                    class="transfer-game-input transfer-to"
-                    type="button"
-                    @click="showGameList('to')"
-                >{{ $t('common.please_select') }}</button>
-                <fa :icon="['fas', 'caret-down']" class="transfer-down" />
-                <ul class="transfer-games-list transfer-to" :class="{'show': isShowGameTo}">
-                    <li class="transfer-game-item" @click="selectGame('to', 'none')">{{ $t('common.please_select') }}</li>
-                    <li
-                        class="transfer-game-item"
-                        :class="{'active': selectedFromGame === item.name.toLowerCase()}"
-                        v-for="(item, index) in wallets"
-                        :key="`transfer_game_${index}`"
-                        @click="selectGame('to', item.name.toLowerCase())"
-                    >
-                        <img class="transfer-game-img" :src="`/images/wallet_${item.name.toLowerCase()}.png`" />
-                        <span
-                            class="transfer-game-text"
-                            :class="{'active': (item.name === 'Main')}"
-                        >{{ $t('wallet.main_wallet') }}</span>
-                    </li>
-                </ul>
-            </div>
+            <my-wallet-selecter v-on:getHideGame="getToGame" :hideGame="fromGame" :type="'to'"></my-wallet-selecter>
 
             <!-- Amount -->
             <span class="transfer-title-text">{{ $t('wallet.amount') }} (THB)</span>
-            <input class="transfer-input" type="number" :placeholder="$t('wallet.amount')" />
+            <input class="transfer-input" type="number" :placeholder="$t('wallet.amount')" v-model="amount" />
 
             <!-- Transfer Button -->
-            <button class="transfer-button" type="submit">{{ $t('wallet.transfer') }}</button>
+            <button
+                class="transfer-button"
+                type="submit"
+                @click="transfer()"
+                :disabled="requestState || true"
+                :class="{'allow': requestState}"
+            >{{ $t('wallet.transfer') }}</button>
         </div>
     </main>
 </template>
@@ -79,103 +39,121 @@
 import { mapGetters } from 'vuex';
 import MyMemberTab from '~/components/MyMemberTab';
 import MyWalletList from '~/components/MyWalletList';
+import MyWalletSelecter from '~/components/MyWalletSelecter';
 
 export default {
     computed: {
+        ...mapGetters('auth', {
+            accessToken: 'GetAccessToken'
+        }),
         ...mapGetters('wallet', {
+            requestState: 'GetRequestState',
             wallets: 'GetWallets'
         })
     },
     components: {
         MyMemberTab,
-        MyWalletList
+        MyWalletList,
+        MyWalletSelecter
     },
     data() {
         return {
-            availableBalance: null,
-            isShowGameFrom: false,
-            isShowGameTo: false,
-            selectedFromGame: null,
-            selectedToGame: null
+            availableBalance: (0).toFixed(2),
+            fromGame: null,
+            fromGameOK: false,
+            toGame: null,
+            toGameOK: false,
+            amount: (0).toFixed(2),
+            amountOK: false
         };
     },
     mounted() {
         let _this = this;
 
-        this.availableBalance = this.wallets[0].amount.toFixed(2);
+        this.getAvailableAmount();
 
-        // When Touch Others Place, "Games" List Will Close
-        $(document).click(function(el) {
-            let touchEl = $(el.target)[0].className;
-
-            if (touchEl.indexOf('transfer-game-img') === -1 && touchEl.indexOf('transfer-game-text') === -1) {
-                if (touchEl.indexOf('transfer-from') !== -1 && touchEl.indexOf('transfer-to') === -1) {
-                    _this.isShowGameTo = false;
-                }
-
-                if (touchEl.indexOf('transfer-from') === -1 && touchEl.indexOf('transfer-to') === -1) {
-                    _this.isShowGameFrom = false;
-                    _this.isShowGameTo = false;
-                }
-
-                if (touchEl.indexOf('transfer-from') === -1 && touchEl.indexOf('transfer-to') !== -1) {
-                    _this.isShowGameFrom = false;
-                }
-            }
+        // Check Amount
+        $('.transfer-input').keyup(function() {
+            _this.checkAmount();
+            _this.checkInfo();
         });
     },
     methods: {
-        // Show Or Close Transfer Game List
-        showGameList(type) {
-            if (type === 'from') {
-                this.isShowGameFrom = !this.isShowGameFrom;
-            } else if (type === 'to') {
-                this.isShowGameTo = !this.isShowGameTo;
+        // Get Available Amount
+        getAvailableAmount() {
+            for (let i = 0; i < this.wallets.length; i++) {
+                if (this.wallets[i].name === 'Main') {
+                    this.availableBalance = this.wallets[i].amount.toFixed(2);
+                    break;
+                }
             }
         },
 
-        // Select transfer Bank
-        selectGame(type, game) {
-            if (type === 'from') {
-                this.setHtml(type, game);
-                this.isShowGameFrom = false;
-            } else if (type === 'to') {
-                this.setHtml(type, game);
-                this.isShowGameTo = false;
+        // Get From Game
+        getFromGame(game, amount) {
+            this.fromGame = game;
+            if (this.fromGame === 'none') {
+                this.fromGameOK = false;
+                this.amount = (0).toFixed(2);
+            } else {
+                this.fromGameOK = true;
+                this.amount = amount.toFixed(2);
+            }
+            this.checkAmount();
+            this.checkInfo();
+        },
+
+        // Get To Game
+        getToGame(game) {
+            this.toGame = game;
+            if (this.toGame === 'none') {
+                this.toGameOK = false;
+            } else {
+                this.toGameOK = true;
+            }
+            this.checkInfo();
+        },
+
+        // Check Amount
+        checkAmount() {
+            if (this.amount) {
+                if (typeof this.amount === 'string') {
+                    this.amount = parseFloat(this.amount);
+                }
+                if (this.amount > 0) {
+                    this.amountOK = true;
+                } else {
+                    this.amountOK = false;
+                }
+            } else {
+                this.amountOK = false;
             }
         },
 
-        setHtml(type, game) {
-            // Set "From" Game Or "To" Game Button Html
-            if (game === 'none') {
-                $(`.transfer-game-input.transfer-${type}`).text(this.$t('common.please_select'));
-            } else if (game === 'main') {
-                $(`.transfer-game-input.transfer-${type}`).html(
-                    `<img class="transfer-game-img" src="/images/wallet_main.png" />
-                    <span class="transfer-game-text">${this.$t('wallet.main_wallet')}</span>
-                    `
-                );
-            } /* else if (game === 'lottery') {
-                $(`.transfer-game-input.transfer-${type}`).html(
-                    `<img class="transfer-game-img" src="/images/wallet_lottery.png" />
-                    <span class="transfer-game-text">${this.$t('transfer.lottery')}</span>
-                    `
-                );
-            } */ else {
-                $(`.transfer-game-input.transfer-${type}`).html(`<img class="transfer-game-img" src="/images/wallet_${game}.png" />`);
+        // Check Infromation To Allow "Transfer" Button
+        checkInfo() {
+            $('.transfer-button').removeClass('allow');
+            if (this.fromGameOK && this.toGameOK && this.amountOK) {
+                $('.transfer-button').addClass('allow');
+                $('.transfer-button').attr('disabled', false);
+            } else {
+                $('.transfer-button').attr('disabled', true);
             }
+        },
 
-            // Hide Selected Game Layout From "From" Or "To" Games List
-            if (type === 'from') {
-                this.selectedFromGame = game;
-            } else if (type === 'to') {
-                this.selectedToGame = game;
-            }
+        // Transfer Submit
+        transfer() {
+            this.$store.dispatch('wallet/transfer', {
+                accessToken: this.accessToken,
+                from: this.fromGame,
+                to: this.toGame,
+                amount: this.amount
+            });
         }
     }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .transfer-wrapper {
     width: 100%;
     height: 100%;
@@ -265,7 +243,9 @@ export default {
                     display: block;
                 }
                 .transfer-game-item {
+                    position: relative;
                     display: flex;
+                    justify-content: space-between;
                     align-items: center;
                     width: 100%;
                     border-bottom: 1px solid #cecece;
@@ -278,12 +258,11 @@ export default {
                         width: 119px;
                     }
                     .transfer-game-text {
-                        display: none;
-
-                        &.active {
-                            display: block;
-                            margin-left: -85px;
-                        }
+                        position: absolute;
+                        left: 45px;
+                    }
+                    .transfer-maintenance-text {
+                        margin-right: 15px;
                     }
                 }
             }
@@ -308,11 +287,15 @@ export default {
             border: $border-style;
             background: $color-yellow-linear-unpress;
             border-radius: 5px;
+            opacity: 0.7;
             padding: 16px 0 16px 0;
             margin-top: 32px;
 
             &:active {
                 background: $color-yellow-linear;
+            }
+            &.allow {
+                opacity: 1;
             }
         }
     }

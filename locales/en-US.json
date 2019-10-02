@@ -150,11 +150,16 @@
     "minimum_withdrawal": "Minimum Withdrawal THB 500",
     "withdrawal_msg": "Please make sure that you fill up accurate bank account details to avoid any inconveniences & using third-party withdrawal is NOT accepted by us.",
     "account_number": "Account Number",
-    "account_number_placeholder": "Please provide bank account with matching full name"
+    "account_number_placeholder": "Please provide bank account with matching full name",
+    "amount_placeholder": "Minimum withdrawal is THB ",
+    "today_withdraw_total": "The accumulated withdrawal amount has exceeded the limit today, please contact customer service.",
+    "today_count": "The number of withdrawals has exceeded the limit today, please contact customer service.",
+    "insufficient_balance": "Insufficient balance"
   },
   "transfer": {
     "transfer_from": "Transfer From",
-    "transfer_to": "Transfer To"
+    "transfer_to": "Transfer To",
+    "maintenance": "[Maintenance]"
   },
   "history": {
     "transaction": "Transaction",
