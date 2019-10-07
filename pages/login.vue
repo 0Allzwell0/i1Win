@@ -34,7 +34,7 @@
                 />
                 <img class="login-eye-icon" :src="passwordEyes" @click="showPassword()" />
             </div>
-            <div class="login-error-msg" :class="{'error_show': false}">{{ $t('login.login_error_mg') }}</div>
+            <div class="login-error-msg" v-if="loginFail">{{ $t('login.login_error_mg') }}</div>
 
             <!-- Forgot Password -->
             <span class="forgot-password" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
@@ -44,7 +44,7 @@
             </span>
 
             <!-- Login Button -->
-            <button class="login-button" type="submit" @click="login()">{{ $t('common.login') }}</button>
+            <button class="login-button" type="submit" @click="login()" :check="checkLogined()">{{ $t('common.login') }}</button>
 
             <!-- Remind Message -->
             <p class="login-remind-message">
@@ -55,13 +55,22 @@
     </main>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
+    computed: {
+        ...mapGetters('auth', {
+            isLogined: 'GetLogined',
+            httpStatus: 'GetHttpStatus'
+        })
+    },
     data() {
         return {
             myUsername: null,
             myPassword: null,
             passwordEyes: '/images/close_eye.png',
-            showForgotMsg: false
+            showForgotMsg: false,
+            loginFail: false
         };
     },
     methods: {
@@ -83,12 +92,41 @@ export default {
             }
         },
 
+        // Check Is Logined Or Not
+        checkLogined() {
+            /*if (this.httpStatus && this.httpStatus !== 200) {
+                this.loginFail = true;
+            } else {
+                this.loginFail = false;
+            }*/
+        },
+
         // Login
         login() {
-            this.$store.dispatch('auth/login', {
-                username: this.myUsername,
-                password: this.myPassword
-            });
+            // Show Loading Animation
+            this.$nuxt.$loading.start();
+
+            this.$store
+                .dispatch('auth/login', {
+                    username: this.myUsername,
+                    password: this.myPassword
+                })
+                .then(() => {
+                    // If Login Success, Go To "Home" Page.
+                    if (this.isLogined) {
+                        this.$router.push(this.$i18n.path(''));
+                    }
+
+                    // If Login Fail, Show Error Message
+                    if (this.httpStatus && this.httpStatus !== 200) {
+                        this.$nuxt.$loading.finish();
+                        setTimeout(() => {
+                            this.loginFail = true;
+                        }, 200);
+                    } else {
+                        this.loginFail = false;
+                    }
+                });
         }
     }
 };
@@ -170,17 +208,12 @@ export default {
             }
         }
         .login-error-msg {
-            display: none;
             width: 100%;
             font-size: 13px;
-            color: $color-yellow;
+            color: $color-red;
             font-weight: bold;
             text-align: center;
-            margin: -25px 0 25px 0;
-
-            &.error_show {
-                display: block;
-            }
+            margin: -24px 0 25px 0;
         }
         .forgot-password {
             font-size: 14px;

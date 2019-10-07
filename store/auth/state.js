@@ -1,5 +1,5 @@
 const state = () => ({
-    isLogined: true,
+    isLogined: false,
     accessToken: null,
     userData: {
         username: 'Alexander',

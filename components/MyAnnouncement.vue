@@ -12,7 +12,7 @@ export default {
     },
     mounted() {
         // Get Announcement
-        this.$store.dispatch('user/getAnnouncement');
+        //this.$store.dispatch('user/getAnnouncement');
 
         // Asign Announcemet Data
         $('.announcement-text').html(this.announcement);

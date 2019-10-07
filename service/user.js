@@ -47,12 +47,10 @@ class UserService {
     }
 
     // Get Banners
-    static async getBanners(bannerType) {
+    static async getBanners(type) {
         let response = null
         try {
-            response = await axios.post('/api/v1/banners', {
-                bannerType
-            }, {
+            response = await axios.get('/api/v1/banners', { type }, {
                 headers: {
                     'Authorization': `Basic ${CREDENTIAL}`,
                     'Accept-Language': Language.getLanguage()
@@ -69,7 +67,7 @@ class UserService {
     static async getAnnouncement() {
         let response = null
         try {
-            response = await axios.post('/api/v1/announcements', {
+            response = await axios.get('/api/v1/announcements', {}, {
                 headers: {
                     'Authorization': `Basic ${CREDENTIAL}`,
                     'Accept-Language': Language.getLanguage()
@@ -86,7 +84,7 @@ class UserService {
     static async getJackpot() {
         let response = null
         try {
-            response = await axios.post('/api/v1/jackpot', {
+            response = await axios.get('/api/v1/jackpot', {}, {
                 headers: {
                     'Authorization': `Basic ${CREDENTIAL}`,
                     'Accept-Language': Language.getLanguage()
@@ -103,7 +101,7 @@ class UserService {
     static async getPromotions() {
         let response = null
         try {
-            response = await axios.post('/api/v1/promotions', {
+            response = await axios.get('/api/v1/promotions', {}, {
                 headers: {
                     'Authorization': `Basic ${CREDENTIAL}`,
                     'Accept-Language': Language.getLanguage()
@@ -120,9 +118,7 @@ class UserService {
     static async getArticles(code) {
         let response = null
         try {
-            response = await axios.post('/api/v1/articles', {
-                code
-            }, {
+            response = await axios.get('/api/v1/articles', { code }, {
                 headers: {
                     'Authorization': `Basic ${CREDENTIAL}`,
                     'Accept-Language': Language.getLanguage()

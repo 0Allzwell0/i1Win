@@ -7,7 +7,7 @@ class AuthService {
     static async refreshToken(accessToken) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/refresh-token`, {
+            response = await axios.get(`/api/v1/members/refresh-token`, {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()

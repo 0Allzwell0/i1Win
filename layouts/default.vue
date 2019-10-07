@@ -25,20 +25,13 @@ export default {
         Footer
     },
     mounted() {
-        // Show Loading Animation
+        // Loading Animation
         this.$nextTick(() => {
             this.$nuxt.$loading.start();
-
-            setTimeout(() => this.$nuxt.$loading.finish(), 500);
+            setTimeout(() => {
+                this.$nuxt.$loading.finish();
+            }, 1500);
         });
-
-        // If Is Logined, Set Data
-        if (window.localStorage.getItem('isLogined') === 'true') {
-            this.$store.commit('auth/SUCCESS_AUTH', {
-                data: window.localStorage.getItem('accessToken'),
-                status: 200
-            });
-        }
     }
 };
 </script>

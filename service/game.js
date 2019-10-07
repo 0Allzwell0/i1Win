@@ -7,7 +7,7 @@ class GameService {
     static async getGamesList(productCode, isSlot, isNew, isFeatured, isJackpot, isTable) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/slots/${productCode}`, {
+            response = await axios.get(`/api/v1/slots/${productCode}`, {
                 isSlot,
                 isNew,
                 isFeatured,
@@ -30,7 +30,7 @@ class GameService {
     static async getGameURL(accessToken, category, productCode, gameID) {
         let response = null
         try {
-            response = await axios.post('/api/v1/play', {
+            response = await axios.get('/api/v1/play', {
                 category,
                 productCode,
                 gameID,

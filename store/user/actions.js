@@ -1,36 +1,36 @@
-import * as type from './type'
+import * as types from './type'
 import UserService from '~/service/user'
 
 const actions = {
     // Edit Profile
     async editProfile({ commit }, { accessToken, lineID, email, birthday, gender }) {
-        commit(type.REQUEST_EDIT_PROFILE)
+        commit(types.REQUEST_EDIT_PROFILE)
         const response = await UserService.editProfile(accessToken, lineID, email, birthday, gender)
         if (response.status === 200) {
-            commit(type.EDIT_PROFILE_SUCCESS, { data: response.data, status: response.status })
+            commit(types.EDIT_PROFILE_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(type.EDIT_PROFILE_FAIL, { data: response.data, status: response.status })
+            commit(types.EDIT_PROFILE_FAIL, { data: response.data, status: response.status })
         }
     },
 
     // Change Password
     async changePassword({ commit }, { accessToken, currentPassword, newPassword, confirmNewPassword }) {
-        commit(type.REQUEST_CHANGE_PASSWORD)
+        commit(types.REQUEST_CHANGE_PASSWORD)
         const response = await UserService.changePassword(accessToken, currentPassword, newPassword, confirmNewPassword)
         if (response.status === 200) {
-            commit(type.CHANGE_PASSWORD_SUCCESS, response.status)
+            commit(types.CHANGE_PASSWORD_SUCCESS, response.status)
         } else {
-            commit(type.CHANGE_PASSWORD_FAIL, { data: response.data, status: response.status })
+            commit(types.CHANGE_PASSWORD_FAIL, { data: response.data, status: response.status })
         }
     },
 
     // Get Banners
-    async getBanners({ commit }, bannerType) {
-        const response = await UserService.getBanners(bannerType)
+    async getBanners({ commit }, type) {
+        const response = await UserService.getBanners(type)
         if (response.status === 200) {
-            commit(type.GET_BANNERS_SUCCESS, { data: response.data, status: response.status })
+            commit(types.GET_BANNERS_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(type.GET_BANNERS_FAIL, response.status)
+            commit(types.GET_BANNERS_FAIL, response.status)
         }
     },
 
@@ -38,9 +38,9 @@ const actions = {
     async getAnnouncement({ commit }) {
         const response = await UserService.getAnnouncement()
         if (response.status === 200) {
-            commit(type.GET_ANNOUNCEMENT_SUCCESS, { data: response.data, status: response.status })
+            commit(types.GET_ANNOUNCEMENT_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(type.GET_ANNOUNCEMENT_FAIL, response.status)
+            commit(types.GET_ANNOUNCEMENT_FAIL, response.status)
         }
     },
 
@@ -48,9 +48,9 @@ const actions = {
     async getJackpot({ commit }) {
         const response = await UserService.getJackpot()
         if (response.status === 200) {
-            commit(type.GET_JACKPOT_SUCCESS, { data: response.data, status: response })
+            commit(types.GET_JACKPOT_SUCCESS, { data: response.data, status: response })
         } else {
-            commit(type.GET_JACKPOT_FAIL, response.status)
+            commit(types.GET_JACKPOT_FAIL, response.status)
         }
     },
 
@@ -58,9 +58,9 @@ const actions = {
     async getPromotions({ commit }) {
         const response = await UserService.getPromotions()
         if (response.status === 200) {
-            commit(type.GET_PROMOTIONS_SUCCESS, { data: response.data, status: response.status })
+            commit(types.GET_PROMOTIONS_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(type.GET_PROMOTIONS_FAIL, response.status)
+            commit(types.GET_PROMOTIONS_FAIL, response.status)
         }
     },
 
@@ -68,9 +68,9 @@ const actions = {
     async getArticles({ commit }, code) {
         const response = await UserService.getArticles(code)
         if (response.status === 200) {
-            commit(type.GET_ARTICLE_SUCCESS, { data: response.data, code: code })
+            commit(types.GET_ARTICLE_SUCCESS, { data: response.data, code: code })
         } else {
-            commit(type.GET_ARTICLE_FAIL, response.status)
+            commit(types.GET_ARTICLE_FAIL, response.status)
         }
     }
 }

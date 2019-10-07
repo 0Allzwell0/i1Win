@@ -22,30 +22,43 @@ export default {
             bannersList: 'GetBanners'
         })
     },
+    created() {
+        // Get Banners
+        /*this.$store.dispatch('user/getBanners', 1).then(()=>{
+            // 開始輪播
+            this.runCarousel()
+        });*/
+    },
     mounted() {
-        // Carouesl Setting
-        let mySwiper = new Swiper('.carousel-container', {
-            // Index Banner
-            autoplay: {
-                delay: 4000
-            },
-            loop: true,
-            pagination: {
-                el: '.carousel-dots-wrapper',
-                bulletElement: 'li',
-                renderBullet: function(index, className) {
-                    return '<li class="' + className + '"></li>';
+        this.runCarousel();
+    },
+    methods: {
+        // Run Carousel
+        runCarousel() {
+            // Carouesl Setting
+            let mySwiper = new Swiper('.carousel-container', {
+                // Index Banner
+                autoplay: {
+                    delay: 4000
                 },
-                clickable: true
-            },
-            // Disable preloading of all images
-            preloadImages: false,
-            // Enable lazy loading
-            lazy: {
-                loadPrevNext: true,
-                loadPrevNextAmount: 1
-            }
-        });
+                loop: true,
+                pagination: {
+                    el: '.carousel-dots-wrapper',
+                    bulletElement: 'li',
+                    renderBullet: function(index, className) {
+                        return '<li class="' + className + '"></li>';
+                    },
+                    clickable: true
+                },
+                // Disable preloading of all images
+                preloadImages: false,
+                // Enable lazy loading
+                lazy: {
+                    loadPrevNext: true,
+                    loadPrevNextAmount: 1
+                }
+            });
+        }
     }
 };
 </script>

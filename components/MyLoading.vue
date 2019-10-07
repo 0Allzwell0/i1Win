@@ -18,16 +18,14 @@ export default {
             this.loading = true;
         },
         finish() {
-            setTimeout(() => {
-                this.loading = false;
+            this.loading = false;
 
-                if (this.$route.name === 'index') {
-                    setTimeout(() => {
-                        // Show Ad Popup
-                        $('#myPopupModal').modal('show');
-                    }, 300);
-                }
-            }, 1000);
+            if (this.$route.name === 'index') {
+                setTimeout(() => {
+                    // Show Ad Popup
+                    $('#myPopupModal').modal('show');
+                }, 300);
+            }
         }
     }
 };

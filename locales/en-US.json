@@ -45,7 +45,7 @@
     "login_msg3": "Don't have an account ? ",
     "forgot_password": "Forgot Password ?",
     "forgot_password_msg": "Please contact our online customer service. Click the live chat at the bottom right.",
-    "login_error_mg": "Usename or Password is incorrect."
+    "login_error_mg": "Usename or Password is incorrect"
   },
   "register": {
     "registration": "REGISTRATION",

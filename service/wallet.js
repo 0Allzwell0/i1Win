@@ -6,9 +6,7 @@ class WalletService {
     static async getWallets(accessToken, isReload) {
         let response = null
         try {
-            response = await axios.post('/api/v1/members/getWallets', {
-                isReload
-            }, {
+            response = await axios.post('/api/v1/members/getWallets', { isReload }, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -25,7 +23,7 @@ class WalletService {
     static async getLimits(accessToken) {
         let response = null
         try {
-            response = await axios.post('/api/v1/members/getLimits', {
+            response = await axios.post('/api/v1/members/getLimits', {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -42,7 +40,7 @@ class WalletService {
     static async getDepositBanks(accessToken) {
         let response = null
         try {
-            response = await axios.post('/api/v1/members/getDepositBankAccounts', {
+            response = await axios.post('/api/v1/members/getDepositBankAccounts', {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -59,7 +57,7 @@ class WalletService {
     static async getWithdrawalBanks(accessToken) {
         let response = null
         try {
-            response = await axios.post('/api/v1/members/getWithdrawalBankAccounts', {
+            response = await axios.post('/api/v1/members/getWithdrawalBankAccounts', {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -76,7 +74,7 @@ class WalletService {
     static async getAmount(accessToken, code) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/getWallets/${code}`, {
+            response = await axios.post(`/api/v1/members/getWallets/${code}`, {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -93,7 +91,7 @@ class WalletService {
     static async getBonus(accessToken) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {
+            response = await axios.post(`/api/v1/members/getBonus`, {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -110,9 +108,7 @@ class WalletService {
     static async deposit(accessToken, formData) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {
-                formData
-            }, {
+            response = await axios.post(`/api/v1/members/getBonus`, { formData }, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
