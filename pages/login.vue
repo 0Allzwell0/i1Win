@@ -34,7 +34,7 @@
                 />
                 <img class="login-eye-icon" :src="passwordEyes" @click="showPassword()" />
             </div>
-            <div class="login-error-msg" v-if="loginFail">{{ $t('login.login_error_mg') }}</div>
+            <div class="login-error-msg" v-if="loginFail">{{ failMessage }}</div>
 
             <!-- Forgot Password -->
             <span class="forgot-password" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
@@ -44,7 +44,7 @@
             </span>
 
             <!-- Login Button -->
-            <button class="login-button" type="submit" @click="login()" :check="checkLogined()">{{ $t('common.login') }}</button>
+            <button class="login-button" type="submit" @click="login()">{{ $t('common.login') }}</button>
 
             <!-- Remind Message -->
             <p class="login-remind-message">
@@ -61,7 +61,8 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined',
-            httpStatus: 'GetHttpStatus'
+            httpStatus: 'GetHttpStatus',
+            failMessage: 'GetFailMessage'
         })
     },
     data() {
@@ -90,15 +91,6 @@ export default {
                 this.passwordEyes = '/images/close_eye.png';
                 $('#loginPassword').attr('type', 'password');
             }
-        },
-
-        // Check Is Logined Or Not
-        checkLogined() {
-            /*if (this.httpStatus && this.httpStatus !== 200) {
-                this.loginFail = true;
-            } else {
-                this.loginFail = false;
-            }*/
         },
 
         // Login

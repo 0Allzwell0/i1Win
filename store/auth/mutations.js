@@ -1,5 +1,4 @@
 import * as type from './type'
-import jwt from 'vue-jwt-decode'
 
 const mutations = {
     // ================================================================ Initial Status
@@ -22,7 +21,7 @@ const mutations = {
     [type.SUCCESS_AUTH](state, { data, status }) {
         state.isLogined = true
         state.accessToken = data.token
-        state.userData = jwt.decode(state.accessToken)
+        state.userData = null
         state.requestState = false
         state.httpStatus = status
 
