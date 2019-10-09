@@ -3,9 +3,10 @@ import HistoryService from '~/service/history'
 
 const actions = {
     // Get Tansaction Data
-    async getTransactionData({ commit }, { accessToken, fromDate, toDate }) {
+    async getTransactionData({ commit }, { fromDate, toDate }) {
+        const payload = { fromDate, toDate }
         commit(types.REQUEST_TRANSACTION_DATA)
-        const response = await HistoryService.getTransactionData(accessToken, fromDate, toDate)
+        const response = await HistoryService.getTransactionData(payload)
         if (response.status === 200) {
             commit(types.GET_TRANSACTION_DATA_SUCCESS, { data: response.data.history, status: response.status })
         } else {
@@ -14,9 +15,10 @@ const actions = {
     },
 
     // Get Statement Data
-    async getStatementData({ commit }, { accessToken, fromDate, toDate }) {
+    async getStatementData({ commit }, { fromDate, toDate }) {
+        const payload = { fromDate, toDate }
         commit(types.REQUEST_STATEMENT_DATA)
-        const response = await HistoryService.getStatementData(accessToken, fromDate, toDate)
+        const response = await HistoryService.getStatementData(payload)
         if (response.status === 200) {
             commit(types.GET_STATEMENT_DATA_SUCCESS, { data: response.data.history, status: response.status })
         } else {
@@ -25,9 +27,10 @@ const actions = {
     },
 
     // Get Transfer Data
-    async getTransferData({ commit }, { accessToken, fromDate, toDate }) {
+    async getTransferData({ commit }, { fromDate, toDate }) {
+        const payload = { fromDate, toDate }
         commit(types.REQUEST_TRANSFER_DATA)
-        const response = await HistoryService.getTransferData(accessToken, fromDate, toDate)
+        const response = await HistoryService.getTransferData(payload)
         if (response.status === 200) {
             commit(types.GET_TRANSFER_DATA_SUCCESS, { data: response.data.history, status: response.status })
         } else {

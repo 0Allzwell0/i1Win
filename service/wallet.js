@@ -1,12 +1,15 @@
 import axios from '~/plugins/axios'
 import Language from '~/middleware/getLanguage'
+import JWT from '~/middleware/jwt'
 
 class WalletService {
     // Get Wallets
-    static async getWallets(accessToken, isReload) {
+    static async getWallets(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post('/api/v1/members/getWallets', { isReload }, {
+            response = await axios.post('/api/v1/members/getWallets', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -20,8 +23,10 @@ class WalletService {
     }
 
     // Get Limits
-    static async getLimits(accessToken) {
+    static async getLimits() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.post('/api/v1/members/getLimits', {}, {
                 headers: {
@@ -37,8 +42,10 @@ class WalletService {
     }
 
     // Get Deposit Banks
-    static async getDepositBanks(accessToken) {
+    static async getDepositBanks() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.post('/api/v1/members/getDepositBankAccounts', {}, {
                 headers: {
@@ -54,8 +61,10 @@ class WalletService {
     }
 
     // Get Withdrawal Banks
-    static async getWithdrawalBanks(accessToken) {
+    static async getWithdrawalBanks() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.post('/api/v1/members/getWithdrawalBankAccounts', {}, {
                 headers: {
@@ -71,8 +80,10 @@ class WalletService {
     }
 
     // Get Amount
-    static async getAmount(accessToken, code) {
+    static async getAmount(code) {
         let response = null
+        let accessToken = JWT.sign(code)
+
         try {
             response = await axios.post(`/api/v1/members/getWallets/${code}`, {}, {
                 headers: {
@@ -88,8 +99,10 @@ class WalletService {
     }
 
     // Get Bonus
-    static async getBonus(accessToken) {
+    static async getBonus() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.post(`/api/v1/members/getBonus`, {}, {
                 headers: {
@@ -105,10 +118,12 @@ class WalletService {
     }
 
     // Deposit
-    static async deposit(accessToken, formData) {
+    static async deposit(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, { formData }, {
+            response = await axios.post(`/api/v1/members/getBonus`, payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -125,7 +140,7 @@ class WalletService {
     static async withdrawal(accessToken, toBank, accountNumber, amount) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {
+            response = await axios.post(`/api/v1/members/getBonus`, {}, {
                 toBank,
                 accountNumber,
                 amount
@@ -146,7 +161,7 @@ class WalletService {
     static async transfer(accessToken, from, amount, to) {
         let response = null
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {
+            response = await axios.post(`/api/v1/members/getBonus`, {}, {
                 from,
                 amount,
                 to

@@ -1,15 +1,15 @@
 import axios from '~/plugins/axios'
 import Language from '~/middleware/getLanguage'
+import JWT from '~/middleware/jwt'
 
 class HistoryService {
     // Get Transaction Data
-    static async getTransactionData(accessToken, fromDate, toDate) {
+    static async getTransactionData(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post('/api/v1/members/getTransactionHistory', {
-                fromDate,
-                toDate
-            }, {
+            response = await axios.post('/api/v1/members/getTransactionHistory', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -23,13 +23,12 @@ class HistoryService {
     }
 
     // Get Statement Data
-    static async getStatementData(accessToken, fromDate, toDate) {
+    static async getStatementData(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post('/api/v1/members/getStatementHistory', {
-                fromDate,
-                toDate
-            }, {
+            response = await axios.post('/api/v1/members/getStatementHistory', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -43,13 +42,12 @@ class HistoryService {
     }
 
     // Get Transfer Data
-    static async getTransferData(accessToken, fromDate, toDate) {
+    static async getTransferData(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post('/api/v1/members/getTransferHistory', {
-                fromDate,
-                toDate
-            }, {
+            response = await axios.post('/api/v1/members/getTransferHistory', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()

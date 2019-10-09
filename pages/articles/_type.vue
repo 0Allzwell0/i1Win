@@ -99,40 +99,38 @@
 </template>
 <script>
 export default {
-    asyncData({ store, route }) {
-        let articleCode = null;
-        let routeParams = route.params.type;
-
-        switch (routeParams) {
-            case 'about-us': {
-                articleCode = 'ABOUTUS';
-                break;
-            }
-            case 'how-to-join': {
-                articleCode = 'HOWTOJOIN';
-                break;
-            }
-            case 'support': {
-                articleCode = 'SUPPORT';
-                break;
-            }
-            case 'responsible-gaming': {
-                articleCode = 'RESPONSIBLE';
-                break;
-            }
-            case 'terms-of-use': {
-                articleCode = 'TERM';
-                break;
-            }
-            case 'privacy-policy': {
-                articleCode = 'PRIVACY';
-                break;
-            }
-        }
-
-        // Get Article Data
-        return store.dispatch('user/getArticles', `${articleCode}`);
-    }
+    // asyncData({ store, route }) {
+    //     let articleCode = null;
+    //     let routeParams = route.params.type;
+    //     switch (routeParams) {
+    //         case 'about-us': {
+    //             articleCode = 'ABOUTUS';
+    //             break;
+    //         }
+    //         case 'how-to-join': {
+    //             articleCode = 'HOWTOJOIN';
+    //             break;
+    //         }
+    //         case 'support': {
+    //             articleCode = 'SUPPORT';
+    //             break;
+    //         }
+    //         case 'responsible-gaming': {
+    //             articleCode = 'RESPONSIBLE';
+    //             break;
+    //         }
+    //         case 'terms-of-use': {
+    //             articleCode = 'TERM';
+    //             break;
+    //         }
+    //         case 'privacy-policy': {
+    //             articleCode = 'PRIVACY';
+    //             break;
+    //         }
+    //     }
+    //     // Get Article Data
+    //     return store.dispatch('user/getArticles', `${articleCode}`);
+    // }
 };
 </script>
 <style lang="scss" scoped>

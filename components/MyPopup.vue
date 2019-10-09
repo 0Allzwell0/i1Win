@@ -16,8 +16,7 @@ export default {};
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    margin: 27vh 0 0;
+    margin-top: 33vh;
     padding: 0;
 
     .my-modal-container {

@@ -3,8 +3,9 @@ import WalletService from '~/service/wallet'
 
 const actions = {
     // Get Wallet
-    async getWallets({ commit }, { accessToken, isReload }) {
-        const response = await WalletService.getWallets(accessToken, isReload)
+    async getWallets({ commit }, isReload) {
+        const payload = { isReload }
+        const response = await WalletService.getWallets(payload)
         if (response.status === 200) {
             commit(types.GET_WALLETS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -13,8 +14,8 @@ const actions = {
     },
 
     // Get Limits
-    async getLimits({ commit }, accessToken) {
-        const response = await WalletService.getLimits(accessToken)
+    async getLimits({ commit }) {
+        const response = await WalletService.getLimits()
         if (response.status === 200) {
             commit(types.GET_LIMITS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -23,8 +24,8 @@ const actions = {
     },
 
     // Get Deposit Banks
-    async getDepositBanks({ commit }, accessToken) {
-        const response = await WalletService.getDepositBanks(accessToken)
+    async getDepositBanks({ commit }) {
+        const response = await WalletService.getDepositBanks()
         if (response.status === 200) {
             commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data.bankAccounts, status: response.status })
         } else {
@@ -33,8 +34,8 @@ const actions = {
     },
 
     // Get Withdrawal Banks
-    async getWithdrawalBanks({ commit }, accessToken) {
-        const response = await WalletService.getWithdrawalBanks(accessToken)
+    async getWithdrawalBanks({ commit }) {
+        const response = await WalletService.getWithdrawalBanks()
         if (response.status === 200) {
             commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data.bankAccounts, status: response.status })
         } else {
@@ -43,8 +44,8 @@ const actions = {
     },
 
     // Get Amount
-    async getAmount({ commit }, { accessToken, code }) {
-        const response = await WalletService.getAmount(accessToken, code)
+    async getAmount({ commit }, code) {
+        const response = await WalletService.getAmount(code)
         if (response.status === 200) {
             commit(types.GET_AMOUNT_SUCCESS, response.data)
         } else {
@@ -53,8 +54,8 @@ const actions = {
     },
 
     // Get Bonus
-    async getBonus({ commit }, accessToken) {
-        const response = await WalletService.getBonus(accessToken)
+    async getBonus({ commit }) {
+        const response = await WalletService.getBonus()
         if (response.status === 200) {
             commit(types.GET_BONUS_SUCCESS, response.data)
         } else {
@@ -63,9 +64,10 @@ const actions = {
     },
 
     // Deposit
-    async deposit({ commit }, { accessToken, formData }) {
+    async deposit({ commit }, formData) {
+        const payload = { formData }
         commit(types.REQUEST_DWT)
-        const response = await WalletService.deposit(accessToken, formData)
+        const response = await WalletService.deposit(payload)
         if (response.status === 200) {
             commit(types.DWT_SUCCESS, response.status)
         } else {
@@ -74,9 +76,10 @@ const actions = {
     },
 
     // Withdrawal
-    async withdrawal({ commit }, { accessToken, toBank, accountNumber, amount }) {
+    async withdrawal({ commit }, { toBank, accountNumber, amount }) {
+        const payload = { toBank, accountNumber, amount }
         commit(types.REQUEST_DWT)
-        const response = await WalletService.withdrawal(accessToken, toBank, accountNumber, amount)
+        const response = await WalletService.withdrawal(payload)
         if (response.status === 200) {
             commit(types.DWT_SUCCESS, response.status)
         } else {
@@ -85,9 +88,10 @@ const actions = {
     },
 
     // Transfer
-    async transfer({ commit }, { accessToken, from, amount, to }) {
+    async transfer({ commit }, { from, amount, to }) {
+        const payload = { from, amount, to }
         commit(types.REQUEST_DWT)
-        const response = await WalletService.transfer(accessToken, from, amount, to)
+        const response = await WalletService.transfer(payload)
         if (response.status === 200) {
             commit(types.DWT_SUCCESS, response.status)
         } else {

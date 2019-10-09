@@ -1,6 +1,6 @@
 class Language {
     static getLanguage() {
-        return window.localStorage.getItem('LANGUAGE') || 'en'
+        return localStorage.getItem('LANGUAGE') || 'en'
     }
 }
 

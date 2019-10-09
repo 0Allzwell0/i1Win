@@ -1,21 +1,17 @@
 import axios from '~/plugins/axios'
-import { CREDENTIAL } from '~/environment'
 import Language from '~/middleware/getLanguage'
+import JWT from '~/middleware/jwt'
 
 class GameService {
     // Get Slot Games
-    static async getGamesList(productCode, isSlot, isNew, isFeatured, isJackpot, isTable) {
+    static async getGamesList(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.get(`/api/v1/slots/${productCode}`, {
-                isSlot,
-                isNew,
-                isFeatured,
-                isJackpot,
-                isTable
-            }, {
+            response = await axios.get(`/api/v1/slots/${payload.productCode}`, payload, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -27,15 +23,12 @@ class GameService {
     }
 
     // Get Game URL
-    static async getGameURL(accessToken, category, productCode, gameID) {
+    static async getGameURL(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.get('/api/v1/play', {
-                category,
-                productCode,
-                gameID,
-                isMobile: 1
-            }, {
+            response = await axios.get('/api/v1/play', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()

@@ -1,8 +1,7 @@
 import axios from 'axios'
-import environment from '../environment'
+import environment from '~/environment'
 
-let baseURL
-baseURL = environment.API_DOMAIN
+const baseURL = environment.API_DOMAIN
 
 const axiosInstance = axios.create({
     baseURL,

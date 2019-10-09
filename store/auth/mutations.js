@@ -4,54 +4,38 @@ const mutations = {
     // ================================================================ Initial Status
     [type.INITIAL_STATE](state) {
         state.isLogined = false
-        state.accessToken = null
         state.requestState = false
         state.httpStatus = null
+        state.failMessage = null
     },
 
     // ================================================================ Request Login && Request Register
     [type.REQUEST_AUTH](state) {
         state.isLogined = false
-        state.accessToken = null
         state.requestState = true
         state.httpStatus = null
+        state.failMessage = null
     },
 
     // ================================================================ Login Success && Register Success
     [type.SUCCESS_AUTH](state, { data, status }) {
         state.isLogined = true
-        state.accessToken = data.token
-        state.userData = null
+        state.userData = data
         state.requestState = false
         state.httpStatus = status
+        state.failMessage = null
 
         setLocalStorage('isLogined', 'true')
-        setLocalStorage('accessToken', state.accessToken)
-        setLocalStorage('userData', state.userData)
+        setLocalStorage('userData', JSON.stringify(state.userData))
     },
 
 
-    // ================================================================ Login Fail && Register Fail && Logout
+    // ================================================================ Login Fail && Register Fail
     [type.FAIL_AUTH](state, { data, status }) {
         state.isLogined = false
-        state.accessToken = null
         state.requestState = false
         state.httpStatus = status
-    },
-
-    // ================================================================ Refresh Token
-    // Refresh Token Success
-    [type.REFRESH_TOKEN_SUCCESS](state, { data, status }) {
-        state.accessToken = data.token
-        state.httpStatus = status
-
-        setLocalStorage('accessToken', state.accessToken)
-    },
-
-    // Refresh Token Fail
-    [type.REFRESH_TOKEN_FAIL](state, status) {
-        state.accessToken = localStorage.getItem('accessToken')
-        state.httpStatus = status
+        state.failMessage = data
     }
 }
 

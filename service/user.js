@@ -1,18 +1,15 @@
 import axios from '~/plugins/axios'
-import { CREDENTIAL } from '~/environment'
 import Language from '~/middleware/getLanguage'
+import JWT from '~/middleware/jwt'
 
 class UserService {
     // Edit Profile
-    static async editProfile(accessToken, lineID, email, birthday, gender) {
+    static async editProfile(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post('api/v1/members/updateProfile', {
-                lineID,
-                email,
-                birthday,
-                gender
-            }, {
+            response = await axios.post('api/v1/members/updateProfile', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -26,14 +23,12 @@ class UserService {
     }
 
     // Change Password
-    static async changePassword(accessToken, currentPassword, newPassword, confirmNewPassword) {
+    static async changePassword(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post('/api/v1/members/changePassword', {
-                currentPassword,
-                newPassword,
-                confirmNewPassword
-            }, {
+            response = await axios.post('/api/v1/members/changePassword', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -47,12 +42,14 @@ class UserService {
     }
 
     // Get Banners
-    static async getBanners(type) {
+    static async getBanners(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.get('/api/v1/banners', { type }, {
+            response = await axios.get('/api/v1/banners', payload, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -66,10 +63,12 @@ class UserService {
     // Get Announcement
     static async getAnnouncement() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.get('/api/v1/announcements', {}, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -83,10 +82,12 @@ class UserService {
     // Get Jackpot
     static async getJackpot() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.get('/api/v1/jackpot', {}, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -100,10 +101,12 @@ class UserService {
     // Get Promotions
     static async getPromotions() {
         let response = null
+        let accessToken = JWT.sign(null)
+
         try {
             response = await axios.get('/api/v1/promotions', {}, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -115,12 +118,14 @@ class UserService {
     }
 
     // Get Article
-    static async getArticles(code) {
+    static async getArticles(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.get('/api/v1/articles', { code }, {
+            response = await axios.post('/api/v1/articles', payload, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })

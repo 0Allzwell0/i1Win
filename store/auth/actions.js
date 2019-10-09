@@ -1,22 +1,13 @@
 import * as types from './type'
 import AuthService from '~/service/auth'
+import JWT from '~/middleware/jwt'
 
 const actions = {
-    // Refresh Token
-    async refreshToken({ commit }, accessToken) {
-        const response = await AuthService.refreshToken(accessToken)
-        if (response.status === 200) {
-            commit(types.REFRESH_TOKEN_SUCCESS, { data: response.data, status: response.status })
-        } else {
-            commit(types.REFRESH_TOKEN_FAIL, response.status)
-        }
-    },
-
-
     // Login
     async login({ commit }, { username, password }) {
+        const payload = { username, password }
         commit(types.REQUEST_AUTH)
-        const response = await AuthService.login(username, password)
+        const response = await AuthService.login(payload)
         if (response.status === 200) {
             commit(types.SUCCESS_AUTH, { data: response.data, status: response.status })
         } else {
@@ -26,13 +17,14 @@ const actions = {
 
     // Logout
     async logout({ commit }) {
-        commit(types.LOGOUT)
+        commit(types.INITIAL_STATE)
     },
 
     // Register
-    async register({ commit }, { username, password, fullname, mobile }) {
+    async register({ commit }, { username, password, fullname, mobile, lineID }) {
+        const payload = { username, password, fullname, mobile, lineID }
         commit(types.REQUEST_AUTH)
-        const response = await AuthService.register(username, password, fullname, mobile)
+        const response = await AuthService.register(payload)
         if (response.status === 200) {
             commit(types.SUCCESS_AUTH, { data: response.data, status: response.status })
         } else {

@@ -62,14 +62,14 @@
                     <div class="menu-language-container">
                         <img
                             class="menu-language"
-                            data-language="th-TH"
-                            :class="{'active': nowLanguage === 'th-TH'}"
+                            data-language="th"
+                            :class="{'active': nowLanguage === 'th'}"
                             src="../static/images/language_th.png"
                         />
                         <img
                             class="menu-language"
-                            data-language="en-US"
-                            :class="{'active': nowLanguage === 'en-US'}"
+                            data-language="en"
+                            :class="{'active': nowLanguage === 'en'}"
                             src="../static/images/language_en.png"
                         />
                     </div>

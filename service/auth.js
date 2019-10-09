@@ -1,13 +1,15 @@
 import axios from '~/plugins/axios'
-import { CREDENTIAL } from '~/environment'
 import Language from '~/middleware/getLanguage'
+import JWT from '~/middleware/jwt'
 
 class AuthService {
 
-    static async refreshToken(accessToken) {
+    static async login(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.get(`/api/v1/members/refresh-token`, {}, {
+            response = await axios.post('/api/v1/members/login', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -20,35 +22,14 @@ class AuthService {
         return response
     }
 
-    static async login(username, password) {
+    static async register(payload) {
         let response = null
-        try {
-            response = await axios.post('/api/v1/members/login', {
-                username,
-                password
-            }, {
-                headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
-                    'Accept-Language': Language.getLanguage()
-                }
-            })
-        } catch (error) {
-            return error.response
-        }
-        return response
-    }
+        let accessToken = JWT.sign(payload)
 
-    static async register(username, password, fullname, mobile) {
-        let response = null
         try {
-            response = await axios.post('/api/v1/members/register', {
-                username,
-                password,
-                fullname,
-                mobile
-            }, {
+            response = await axios.post('/api/v1/members/register', payload, {
                 headers: {
-                    'Authorization': `Basic ${CREDENTIAL}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
