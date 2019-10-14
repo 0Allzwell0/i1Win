@@ -123,7 +123,7 @@ class UserService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post('/api/v1/articles', payload, {
+            response = await axios.get('/api/v1/articles', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()

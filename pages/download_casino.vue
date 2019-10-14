@@ -21,7 +21,7 @@
                             <span id="pltID" class="download-slots-login-id-text">Y3Calexander</span>
                         </div>
                     </div>
-                    <button class="download-slots-download-btn" @click="openDownloadURL('plt-live')">
+                    <button class="download-slots-download-btn" @click="openDownloadURL('plt')">
                         <img class="download-slots-download-img android-img" src="/images/android.png" alt />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
                     </button>
@@ -67,17 +67,49 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            pltData: 'GetDownloadPLT',
+            agData: 'GetDownloadDT',
+            dtData: 'GetDownloadAG'
         })
+    },
+    mounted() {
+        // Get PLT Download Data
+        this.$store.dispatch('game/getGameURL', {
+            isDownload: true,
+            category: 'livecasino',
+            productCode: 'plt',
+            gameId: 'bj21d_mh'
+        });
+
+        // Get AG Download Data
+        this.$store.dispatch('game/getGameURL', {
+            isDownload: true,
+            category: 'slot',
+            productCode: 'ag',
+            gameId: 'bj21d_mh'
+        });
+
+        // Get DT Download Data
+        this.$store.dispatch('game/getGameURL', {
+            isDownload: true,
+            category: 'slot',
+            productCode: 'dt',
+            gameId: 'bj21d_mh'
+        });
     },
     methods: {
         openDownloadURL(code) {
             if (this.isLogined) {
-                if (code == 'plt-live') {
-                    window.open('');
-                } else if (code == 'ag') {
-                    window.open('');
-                } else if (code == 'dg') {
-                    window.open('');
+                if (code === 'plt' && pltData.url) {
+                    window.open(pltData.url);
+                } else if (code === 'ag' && dtData.url) {
+                    window.open(dtData.url);
+                } else if (code === 'dg' && agData.url) {
+                    window.open(agData.url);
+                } else {
+                    alert('Can not download !');
                 }
             } else {
                 this.$router.push({ path: this.$i18n.path('login') });

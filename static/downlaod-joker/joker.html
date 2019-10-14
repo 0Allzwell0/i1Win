@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Joker</title>
+
+  <script>
+    function open() {
+      let gameUrl = localStorage.getItem('JOKER_GameURL')
+      let token = localStorage.getItem('JOKER_Token')
+      let game = localStorage.getItem('JOKER_Game')
+      let redirectUrl = localStorage.getItem('JOKER_RedirectURL')
+
+      document.getElementById('formData').action = gameUrl
+      document.getElementById('token').value = token
+      document.getElementById('game').value = game
+      document.getElementById('redirectUrl').value = redirectUrl
+
+      document.getElementById('formData').submit()
+    }
+
+  </script>
+
+  <html>
+
+<body onload='open()'>
+  <form id='formData' method="POST">
+    <input id='token' type='hidden' name='token'>
+    <input id='game' type='hidden' name='game'>
+    <input id='redirectUrl' type='hidden' name='redirectUrl'>
+  </form>
+  Loading...
+</body>
+
+</html>

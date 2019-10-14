@@ -21,7 +21,7 @@
                             <span id="pltID" class="download-slots-login-id-text">Y3Calexander</span>
                         </div>
                     </div>
-                    <button class="download-slots-download-btn" @click="openDownloadURL('plt-slot')">
+                    <button class="download-slots-download-btn" @click="openDownloadURL('plt')">
                         <img class="download-slots-download-img android-img" src="/images/android.png" alt />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
                     </button>
@@ -35,7 +35,7 @@
                             <span id="jokerID" class="download-slots-login-id-text">F1LU.alexander</span>
                         </div>
                     </div>
-                    <button class="download-slots-download-btn" @click="openDownloadURL('jok')">
+                    <button class="download-slots-download-btn" @click="openDownloadURL('joker')">
                         <img class="download-slots-download-img android-img" src="/images/android.png" alt />
                         <img class="download-slots-download-img ios-img" src="/images/ios.png" alt />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
@@ -57,7 +57,7 @@
                             </span>
                         </div>
                     </div>
-                    <button class="download-slots-download-btn" @click="openDownloadURL('918')">
+                    <button class="download-slots-download-btn" @click="openDownloadURL('918kiss')">
                         <img class="download-slots-download-img android-img" src="/images/android.png" alt />
                         <img class="download-slots-download-img ios-img" src="/images/ios.png" alt />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
@@ -74,17 +74,47 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            pltData: 'GetDownloadPLT',
+            jokerData: 'GetDownloadJOKER',
+            kiss918Data: 'GetDownload918Kiss'
         })
+    },
+    mounted() {
+        // Get PLT Download Data
+        this.$store.dispatch('game/getGameURL', {
+            isDownload: true,
+            category: 'slot',
+            productCode: 'plt',
+            gameId: 'bj21d_mh'
+        });
+
+        // Get Joker Download Data
+        this.$store.dispatch('game/getGameURL', {
+            isDownload: true,
+            category: 'slot',
+            productCode: 'jok',
+            gameId: 'bj21d_mh'
+        });
+
+        // Get 918Liss Download Data
+        this.$store.dispatch('game/getGameURL', {
+            isDownload: true,
+            category: 'slot',
+            productCode: 'ks9',
+            gameId: 'bj21d_mh'
+        });
     },
     methods: {
         openDownloadURL(code) {
             if (this.isLogined) {
-                if (code == 'plt-slot') {
-                    window.open('');
-                } else if (code == 'jok') {
-                    window.open('');
-                } else if (code == '918') {
-                    window.open('');
+                if (code == 'plt') {
+                    window.open(pltData.url);
+                } else if (code == 'joker') {
+                    window.open(jokerData.url);
+                } else if (code == '918kiss') {
+                    window.open(kiss918Data.url);
                 }
             } else {
                 this.$router.push({ path: this.$i18n.path('login') });

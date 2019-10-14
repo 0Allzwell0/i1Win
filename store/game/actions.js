@@ -21,13 +21,19 @@ const actions = {
     },
 
     // Get Game URL
-    async getGameURL({ commit }, { category, productCode, gameID }) {
+    async getGameURL({ commit }, { isDownload, category, productCode, gameID }) {
         const payload = { category, productCode, gameID }
         const response = await GameService.getGamesList(payload)
         if (response.status === 200) {
-            commit(typess.GET_GAME_URL_SUCCESS, { data: response.data, status: reponse.status })
+            if (isDownload)
+                commit(types.GET_DOWNLOAD_DATA_SUCCESS, { productCode, data: response.data, status: reponse.status })
+            else
+                commit(types.GET_GAME_URL_SUCCESS, { data: response.data, status: reponse.status })
         } else {
-            commit(typess.GET_GAME_URL_FAIL, { data: response.data, status: response.status })
+            if (!isDownload)
+                commit(types.GET_DOWNLOAD_DATA_FAIL, { productCode, status: response.status })
+            else
+                commit(types.GET_GAME_URL_FAIL, response.status)
         }
     }
 }

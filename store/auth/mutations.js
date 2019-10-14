@@ -4,17 +4,25 @@ const mutations = {
     // ================================================================ Initial Status
     [type.INITIAL_STATE](state) {
         state.isLogined = false
+        state.userData = null
         state.requestState = false
         state.httpStatus = null
         state.failMessage = null
+
+        setLocalStorage('isLogined', 'false')
+        setLocalStorage('userData', null)
     },
 
     // ================================================================ Request Login && Request Register
     [type.REQUEST_AUTH](state) {
         state.isLogined = false
+        state.userData = null
         state.requestState = true
         state.httpStatus = null
         state.failMessage = null
+
+        setLocalStorage('isLogined', 'false')
+        setLocalStorage('userData', null)
     },
 
     // ================================================================ Login Success && Register Success
@@ -33,15 +41,19 @@ const mutations = {
     // ================================================================ Login Fail && Register Fail
     [type.FAIL_AUTH](state, { data, status }) {
         state.isLogined = false
+        state.userData = null
         state.requestState = false
         state.httpStatus = status
         state.failMessage = data
+
+        setLocalStorage('isLogined', 'false')
+        setLocalStorage('userData', null)
     }
 }
 
 // Set Local Storage
-function setLocalStorage(item, data) {
-    localStorage.setItem(item, data)
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, value)
 }
 
 export default mutations

@@ -108,7 +108,15 @@
     </main>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
+    computed: {
+        ...mapGetters('auth', {
+            isLogined: 'GetLogined',
+            httpStatus: 'GetHttpStatus'
+        })
+    },
     data() {
         return {
             myUsername: null,
@@ -119,11 +127,9 @@ export default {
             myLineID: null,
             passwordEyes: '/images/close_eye.png',
             confirmPasswordEyes: '/images/close_eye.png',
-            expandBanksList: false
+            expandBanksList: false,
+            registerFail: false
         };
-    },
-    mounted() {
-        
     },
     methods: {
         // Show or Hidden Password
@@ -152,12 +158,32 @@ export default {
 
         // Register
         register() {
-            this.$store.dispatch('auth/register', {
-                username: this.myUsername,
-                password: this.myPassword,
-                fullname: this.myFullname,
-                mobile: this.myMobile
-            });
+            // Show Loading Animation
+            this.$nuxt.$loading.start();
+
+            this.$store
+                .dispatch('auth/register', {
+                    username: this.myUsername,
+                    password: this.myPassword,
+                    fullname: this.myFullname,
+                    mobile: this.myMobile
+                })
+                .then(() => {
+                    // If Register Success, Go To "Home" Page.
+                    if (this.isLogined) {
+                        this.$router.push(this.$i18n.path(''));
+                    }
+
+                    // If Register Fail, Show Error Message
+                    if (this.httpStatus && this.httpStatus !== 200) {
+                        this.$nuxt.$loading.finish();
+                        setTimeout(() => {
+                            this.registerFail = true;
+                        }, 200);
+                    } else {
+                        this.registerFail = false;
+                    }
+                });
         }
     }
 };

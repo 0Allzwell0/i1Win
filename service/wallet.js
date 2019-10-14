@@ -9,7 +9,7 @@ class WalletService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post('/api/v1/members/getWallets', payload, {
+            response = await axios.get('/api/v1/members/getWallets', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -28,7 +28,7 @@ class WalletService {
         let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.post('/api/v1/members/getLimits', {}, {
+            response = await axios.get('/api/v1/members/getLimits', {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -47,7 +47,7 @@ class WalletService {
         let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.post('/api/v1/members/getDepositBankAccounts', {}, {
+            response = await axios.get('/api/v1/members/getDepositBankAccounts', {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -66,7 +66,7 @@ class WalletService {
         let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.post('/api/v1/members/getWithdrawalBankAccounts', {}, {
+            response = await axios.get('/api/v1/members/getWithdrawalBankAccounts', {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -85,7 +85,7 @@ class WalletService {
         let accessToken = JWT.sign(code)
 
         try {
-            response = await axios.post(`/api/v1/members/getWallets/${code}`, {}, {
+            response = await axios.get(`/api/v1/members/getWallets/${code}`, {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -104,7 +104,7 @@ class WalletService {
         let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {}, {
+            response = await axios.get(`/api/v1/members/getBonus`, {}, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -137,14 +137,12 @@ class WalletService {
     }
 
     // Withdrawal
-    static async withdrawal(accessToken, toBank, accountNumber, amount) {
+    static async withdrawal(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {}, {
-                toBank,
-                accountNumber,
-                amount
-            }, {
+            response = await axios.post(`/api/v1/members/getBonus`, payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -158,14 +156,12 @@ class WalletService {
     }
 
     // Transfer
-    static async transfer(accessToken, from, amount, to) {
+    static async transfer(payload) {
         let response = null
+        let accessToken = JWT.sign(payload)
+
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, {}, {
-                from,
-                amount,
-                to
-            }, {
+            response = await axios.post(`/api/v1/members/getBonus`, payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()

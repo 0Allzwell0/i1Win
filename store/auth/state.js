@@ -12,6 +12,7 @@ const state = () => ({
         mobile: "0800956956",
         gender: "1"
     },
+    requestState: null,
     httpStatus: null,
     failMessage: null
 })
