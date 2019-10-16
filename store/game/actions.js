@@ -1,16 +1,23 @@
 import * as types from './type'
 import GameService from '~/service/game'
 
+// Set Timestamp
+function getExpTimestamp() {
+    return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
+}
+
 const actions = {
     // Get Games List
     async getGamesList({ commit }, { productCode, isSlots, isNew, isFeatured, isJackpot, isTable }) {
+        const exp = getExpTimestamp()
         const payload = {
             productCode: productCode,
             isSlots: isSlots,
             isNew: isNew,
             isFeatured: isFeatured,
             isJackpot: isJackpot,
-            isTable: isTable
+            isTable: isTable,
+            exp
         }
         const response = await GameService.getGamesList(payload)
         if (response.status === 200) {
@@ -22,7 +29,8 @@ const actions = {
 
     // Get Game URL
     async getGameURL({ commit }, { isDownload, category, productCode, gameID }) {
-        const payload = { category, productCode, gameID }
+        const exp = getExpTimestamp()
+        const payload = { category, productCode, gameID, exp }
         const response = await GameService.getGamesList(payload)
         if (response.status === 200) {
             if (isDownload)

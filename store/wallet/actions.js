@@ -1,10 +1,16 @@
 import * as types from './type'
 import WalletService from '~/service/wallet'
 
+// Set Timestamp
+function getExpTimestamp() {
+    return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
+}
+
 const actions = {
     // Get Wallet
     async getWallets({ commit }, isReload) {
-        const payload = { isReload }
+        const exp = getExpTimestamp()
+        const payload = { isReload, exp }
         const response = await WalletService.getWallets(payload)
         if (response.status === 200) {
             commit(types.GET_WALLETS_SUCCESS, { data: response.data, status: response.status })
@@ -15,7 +21,9 @@ const actions = {
 
     // Get Limits
     async getLimits({ commit }) {
-        const response = await WalletService.getLimits()
+        const exp = getExpTimestamp()
+        const payload = { exp }
+        const response = await WalletService.getLimits(payload)
         if (response.status === 200) {
             commit(types.GET_LIMITS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -25,7 +33,9 @@ const actions = {
 
     // Get Deposit Banks
     async getDepositBanks({ commit }) {
-        const response = await WalletService.getDepositBanks()
+        const exp = getExpTimestamp()
+        const payload = { exp }
+        const response = await WalletService.getDepositBanks(payload)
         if (response.status === 200) {
             commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data.bankAccounts, status: response.status })
         } else {
@@ -35,7 +45,9 @@ const actions = {
 
     // Get Withdrawal Banks
     async getWithdrawalBanks({ commit }) {
-        const response = await WalletService.getWithdrawalBanks()
+        const exp = getExpTimestamp()
+        const payload = { exp }
+        const response = await WalletService.getWithdrawalBanks(payload)
         if (response.status === 200) {
             commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data.bankAccounts, status: response.status })
         } else {
@@ -45,7 +57,9 @@ const actions = {
 
     // Get Amount
     async getAmount({ commit }, code) {
-        const response = await WalletService.getAmount(code)
+        const exp = getExpTimestamp()
+        const payload = { code, exp }
+        const response = await WalletService.getAmount(payload)
         if (response.status === 200) {
             commit(types.GET_AMOUNT_SUCCESS, response.data)
         } else {
@@ -55,7 +69,9 @@ const actions = {
 
     // Get Bonus
     async getBonus({ commit }) {
-        const response = await WalletService.getBonus()
+        const exp = getExpTimestamp()
+        const payload = { exp }
+        const response = await WalletService.getBonus(payload)
         if (response.status === 200) {
             commit(types.GET_BONUS_SUCCESS, response.data)
         } else {
@@ -65,7 +81,8 @@ const actions = {
 
     // Deposit
     async deposit({ commit }, formData) {
-        const payload = { formData }
+        const exp = getExpTimestamp()
+        const payload = { formData, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.deposit(payload)
         if (response.status === 200) {
@@ -77,7 +94,8 @@ const actions = {
 
     // Withdrawal
     async withdrawal({ commit }, { toBank, accountNumber, amount }) {
-        const payload = { toBank, accountNumber, amount }
+        const exp = getExpTimestamp()
+        const payload = { toBank, accountNumber, amount, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.withdrawal(payload)
         if (response.status === 200) {
@@ -89,7 +107,8 @@ const actions = {
 
     // Transfer
     async transfer({ commit }, { from, amount, to }) {
-        const payload = { from, amount, to }
+        const exp = getExpTimestamp()
+        const payload = { from, amount, to, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.transfer(payload)
         if (response.status === 200) {
