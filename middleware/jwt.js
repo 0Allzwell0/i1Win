@@ -5,8 +5,9 @@ const exp = Math.floor(Date.now() / 1000) + (60 * 3)
 
 class JWT_SIGN {
     static sign(payload) {
-        //const accessToken = JWT.sign({ payload, exp }, (PUBLIC_KEY, PRIVATE_KEY), { algorithm: 'ES512' });
-        let accessToken = "MzpoUGJSMFd1ZVBoMURhbzdGTTYzMGdxMWpPRzVwVVp2dGV1bjZrTFlO"
+        let accessToken = JWT.sign(payload, PRIVATE_KEY, { algorithm: 'ES512' });
+
+        console.log(`Access Token : ${accessToken}`)
 
         return accessToken
     }

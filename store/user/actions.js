@@ -71,7 +71,6 @@ const actions = {
     async getArticles({ commit }, code) {
         const payload = { code }
         const response = await UserService.getArticles(payload)
-
         if (response.status === 200) {
             commit(types.GET_ARTICLE_SUCCESS, { data: response.data, status: status })
         } else {
