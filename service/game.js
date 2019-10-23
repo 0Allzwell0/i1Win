@@ -6,12 +6,10 @@ class GameService {
     // Get Slot Games
     static async getGamesList(payload) {
         let response = null
-        let accessToken = JWT.sign(payload)
 
         try {
             response = await axios.get(`/api/v1/slots/${payload.productCode}`, payload, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })

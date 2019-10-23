@@ -80,7 +80,7 @@ export default {
             isDownload: true,
             category: 'livecasino',
             productCode: 'plt',
-            gameId: 'bj21d_mh'
+            gameID: 'bj21d_mh'
         });
 
         // Get AG Download Data
@@ -88,7 +88,7 @@ export default {
             isDownload: true,
             category: 'slot',
             productCode: 'ag',
-            gameId: 'bj21d_mh'
+            gameID: 'bj21d_mh'
         });
 
         // Get DT Download Data
@@ -96,7 +96,7 @@ export default {
             isDownload: true,
             category: 'slot',
             productCode: 'dt',
-            gameId: 'bj21d_mh'
+            gameID: 'bj21d_mh'
         });
     },
     methods: {

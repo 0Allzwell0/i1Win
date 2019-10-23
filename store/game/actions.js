@@ -1,5 +1,6 @@
 import * as types from './type'
 import GameService from '~/service/game'
+import { WEBSITE_ID } from '~/environment'
 
 // Set Timestamp
 function getExpTimestamp() {
@@ -9,7 +10,6 @@ function getExpTimestamp() {
 const actions = {
     // Get Games List
     async getGamesList({ commit }, { productCode, isSlots, isNew, isFeatured, isJackpot, isTable }) {
-        const exp = getExpTimestamp()
         const payload = {
             productCode: productCode,
             isSlots: isSlots,
@@ -17,7 +17,7 @@ const actions = {
             isFeatured: isFeatured,
             isJackpot: isJackpot,
             isTable: isTable,
-            exp
+            website_id: WEBSITE_ID
         }
         const response = await GameService.getGamesList(payload)
         if (response.status === 200) {
@@ -30,7 +30,8 @@ const actions = {
     // Get Game URL
     async getGameURL({ commit }, { isDownload, category, productCode, gameID }) {
         const exp = getExpTimestamp()
-        const payload = { category, productCode, gameID, exp }
+        const cui = localStorage.getItem('CUI')
+        const payload = { cui, category, productCode, gameID, exp }
         const response = await GameService.getGamesList(payload)
         if (response.status === 200) {
             if (isDownload)

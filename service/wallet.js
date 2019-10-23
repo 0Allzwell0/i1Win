@@ -23,12 +23,12 @@ class WalletService {
     }
 
     // Get Limits
-    static async getLimits() {
+    static async getLimits(payload) {
         let response = null
-        let accessToken = JWT.sign(null)
+        let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.get('/api/v1/members/getLimits', {}, {
+            response = await axios.get('/api/v1/members/getLimits', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -42,12 +42,12 @@ class WalletService {
     }
 
     // Get Deposit Banks
-    static async getDepositBanks() {
+    static async getDepositBanks(payload) {
         let response = null
-        let accessToken = JWT.sign(null)
+        let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.get('/api/v1/members/getDepositBankAccounts', {}, {
+            response = await axios.get('/api/v1/members/getDepositBankAccounts', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -61,12 +61,12 @@ class WalletService {
     }
 
     // Get Withdrawal Banks
-    static async getWithdrawalBanks() {
+    static async getWithdrawalBanks(payload) {
         let response = null
-        let accessToken = JWT.sign(null)
+        let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.get('/api/v1/members/getWithdrawalBankAccounts', {}, {
+            response = await axios.get('/api/v1/members/getWithdrawalBankAccounts', payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -80,12 +80,12 @@ class WalletService {
     }
 
     // Get Amount
-    static async getAmount(code) {
+    static async getAmount(payload) {
         let response = null
-        let accessToken = JWT.sign(code)
+        let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.get(`/api/v1/members/getWallets/${code}`, {}, {
+            response = await axios.get(`/api/v1/members/getWallets/${payload.code}`, payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
@@ -99,12 +99,12 @@ class WalletService {
     }
 
     // Get Bonus
-    static async getBonus() {
+    static async getBonus(payload) {
         let response = null
-        let accessToken = JWT.sign(null)
+        let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.get(`/api/v1/members/getBonus`, {}, {
+            response = await axios.get(`/api/v1/members/getBonus`, payload, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()

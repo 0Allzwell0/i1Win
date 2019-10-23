@@ -44,12 +44,10 @@ class UserService {
     // Get Banners
     static async getBanners(payload) {
         let response = null
-        let accessToken = JWT.sign(payload)
 
         try {
             response = await axios.get('/api/v1/banners', payload, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -61,14 +59,12 @@ class UserService {
     }
 
     // Get Announcement
-    static async getAnnouncement() {
+    static async getAnnouncement(payload) {
         let response = null
-        let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.get('/api/v1/announcements', {}, {
+            response = await axios.get('/api/v1/announcements', payload, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -82,12 +78,10 @@ class UserService {
     // Get Jackpot
     static async getJackpot() {
         let response = null
-        let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.get('/api/v1/jackpot', {}, {
+            response = await axios.get('/api/v1/jackpot', payload, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -99,14 +93,12 @@ class UserService {
     }
 
     // Get Promotions
-    static async getPromotions() {
+    static async getPromotions(payload) {
         let response = null
-        let accessToken = JWT.sign(null)
 
         try {
-            response = await axios.get('/api/v1/promotions', {}, {
+            response = await axios.get('/api/v1/promotions', payload, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })
@@ -120,12 +112,10 @@ class UserService {
     // Get Article
     static async getArticles(payload) {
         let response = null
-        let accessToken = JWT.sign(payload)
 
         try {
             response = await axios.get('/api/v1/articles', payload, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
             })

@@ -87,7 +87,7 @@ export default {
             isDownload: true,
             category: 'slot',
             productCode: 'plt',
-            gameId: 'bj21d_mh'
+            gameID: 'bj21d_mh'
         });
 
         // Get Joker Download Data
@@ -95,7 +95,7 @@ export default {
             isDownload: true,
             category: 'slot',
             productCode: 'jok',
-            gameId: 'bj21d_mh'
+            gameID: 'bj21d_mh'
         });
 
         // Get 918Liss Download Data
@@ -103,7 +103,7 @@ export default {
             isDownload: true,
             category: 'slot',
             productCode: 'ks9',
-            gameId: 'bj21d_mh'
+            gameID: 'bj21d_mh'
         });
     },
     methods: {

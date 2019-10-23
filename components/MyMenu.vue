@@ -2,7 +2,7 @@
     <aside class="menu-background" @click="closeMenu()">
         <section class="menu-wrapper">
             <div class="menu-head">
-                <img class="menu-logo-img" src="../static/images/logo.png" />
+                <img class="menu-logo-img" src="/images/logo.png" />
                 <!-- 登入 (尚未登入前顯示) -->
                 <nuxt-link class="menu-btn menu-login" :to="$i18n.path('login')" v-if="!isLogined">{{ $t('common.login') }}</nuxt-link>
                 <!-- 登出 (已登入後顯示) -->
@@ -53,7 +53,7 @@
                 <li class="menu-download-wrapper">
                     <nuxt-link class="menu-download-container" :to="$i18n.path('download_casino')">
                         <span class="menu-title-text">{{ $t('menu.download') }}</span>
-                        <img src="../static/images/download.png" />
+                        <img src="/images/download.png" />
                     </nuxt-link>
                 </li>
                 <!-- Language -->
@@ -64,13 +64,13 @@
                             class="menu-language"
                             data-language="th"
                             :class="{'active': nowLanguage === 'th'}"
-                            src="../static/images/language_th.png"
+                            src="/images/language_th.png"
                         />
                         <img
                             class="menu-language"
                             data-language="en"
                             :class="{'active': nowLanguage === 'en'}"
-                            src="../static/images/language_en.png"
+                            src="/images/language_en.png"
                         />
                     </div>
                 </li>
@@ -78,10 +78,10 @@
                 <li class="menu-follow-us-wrapper">
                     <span class="menu-title-text">{{ $t('menu.follow_us') }}</span>
                     <div class="menu-follow-us-container">
-                        <img src="../static/images/facebook.png" />
-                        <img src="../static/images/youtube.png" />
-                        <img src="../static/images/twitter.png" />
-                        <img src="../static/images/instagram.png" />
+                        <img src="/images/facebook.png" />
+                        <img src="/images/youtube.png" />
+                        <img src="/images/twitter.png" />
+                        <img src="/images/instagram.png" />
                     </div>
                 </li>
             </ul>

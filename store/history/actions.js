@@ -6,11 +6,17 @@ function getExpTimestamp() {
     return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
 }
 
+// Get CUI (Base64_Encode([website_id, account_id]))
+function getCUI() {
+    return localStorage.getItem('CUI')
+}
+
 const actions = {
     // Get Tansaction Data
     async getTransactionData({ commit }, { fromDate, toDate }) {
         const exp = getExpTimestamp()
-        const payload = { fromDate, toDate, exp }
+        const cui = getCUI()
+        const payload = { cui, fromDate, toDate, exp }
         commit(types.REQUEST_TRANSACTION_DATA)
         const response = await HistoryService.getTransactionData(payload)
         if (response.status === 200) {
@@ -23,7 +29,8 @@ const actions = {
     // Get Statement Data
     async getStatementData({ commit }, { fromDate, toDate }) {
         const exp = getExpTimestamp()
-        const payload = { fromDate, toDate, exp }
+        const cui = getCUI()
+        const payload = { cui, fromDate, toDate, exp }
         commit(types.REQUEST_STATEMENT_DATA)
         const response = await HistoryService.getStatementData(payload)
         if (response.status === 200) {
@@ -36,7 +43,8 @@ const actions = {
     // Get Transfer Data
     async getTransferData({ commit }, { fromDate, toDate }) {
         const exp = getExpTimestamp()
-        const payload = { fromDate, toDate, exp }
+        const cui = getCUI()
+        const payload = { cui, fromDate, toDate, exp }
         commit(types.REQUEST_TRANSFER_DATA)
         const response = await HistoryService.getTransferData(payload)
         if (response.status === 200) {

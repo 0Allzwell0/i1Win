@@ -1,16 +1,23 @@
 import * as types from './type'
 import UserService from '~/service/user'
+import { WEBSITE_ID } from '~/environment'
 
 // Set Timestamp
 function getExpTimestamp() {
     return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
 }
 
+// Get CUI (Base64_Encode([website_id, account_id]))
+function getCUI() {
+    return localStorage.getItem('CUI')
+}
+
 const actions = {
     // Edit Profile
     async editProfile({ commit }, { lineID, email, birthday, gender }) {
         const exp = getExpTimestamp()
-        const payload = { lineID, email, birthday, gender, exp }
+        const cui = getCUI()
+        const payload = { cui, lineID, email, birthday, gender, exp }
         commit(types.REQUEST_EDIT_PROFILE)
         const response = await UserService.editProfile(payload)
         if (response.status === 200) {
@@ -23,7 +30,8 @@ const actions = {
     // Change Password
     async changePassword({ commit }, { currentPassword, newPassword, confirmNewPassword }) {
         const exp = getExpTimestamp()
-        const payload = { currentPassword, newPassword, confirmNewPassword, exp }
+        const cui = getCUI()
+        const payload = { cui, currentPassword, newPassword, confirmNewPassword, exp }
         commit(types.REQUEST_CHANGE_PASSWORD)
         const response = await UserService.changePassword(payload)
         if (response.status === 200) {
@@ -35,8 +43,10 @@ const actions = {
 
     // Get Banners
     async getBanners({ commit }, type) {
-        const exp = getExpTimestamp()
-        const payload = { type, exp }
+        const payload = {
+            type,
+            website_id: WEBSITE_ID
+        }
         const response = await UserService.getBanners(payload)
         if (response.status === 200) {
             commit(types.GET_BANNERS_SUCCESS, { data: response.data, status: response.status })
@@ -47,8 +57,7 @@ const actions = {
 
     // Get Announcement
     async getAnnouncement({ commit }) {
-        const exp = getExpTimestamp()
-        const payload = { exp }
+        const payload = { website_id: WEBSITE_ID }
         const response = await UserService.getAnnouncement(payload)
         if (response.status === 200) {
             commit(types.GET_ANNOUNCEMENT_SUCCESS, { data: response.data, status: response.status })
@@ -59,8 +68,7 @@ const actions = {
 
     // Get Jackpot
     async getJackpot({ commit }) {
-        const exp = getExpTimestamp()
-        const payload = { exp }
+        const payload = { website_id: WEBSITE_ID }
         const response = await UserService.getJackpot(payload)
         if (response.status === 200) {
             commit(types.GET_JACKPOT_SUCCESS, { data: response.data, status: response })
@@ -70,9 +78,11 @@ const actions = {
     },
 
     // Get Promotions
-    async getPromotions({ commit }) {
-        const exp = getExpTimestamp()
-        const payload = { exp }
+    async getPromotions({ commit }, isMobile) {
+        const payload = {
+            isMobile,
+            website_id: WEBSITE_ID
+        }
         const response = await UserService.getPromotions(payload)
         if (response.status === 200) {
             commit(types.GET_PROMOTIONS_SUCCESS, { data: response.data, status: response.status })
@@ -83,8 +93,10 @@ const actions = {
 
     // Get Article
     async getArticles({ commit }, code) {
-        const exp = getExpTimestamp()
-        const payload = { code, exp }
+        const payload = {
+            code,
+            website_id: WEBSITE_ID
+        }
         const response = await UserService.getArticles(payload)
         if (response.status === 200) {
             commit(types.GET_ARTICLE_SUCCESS, { data: response.data, status: status })

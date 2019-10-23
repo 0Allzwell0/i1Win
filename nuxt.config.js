@@ -10,17 +10,17 @@ module.exports = {
   head: {
     title: pkg.name,
     meta: [{
-        charset: 'utf-8'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: pkg.description
-      }
+      charset: 'utf-8'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1'
+    },
+    {
+      hid: 'description',
+      name: 'description',
+      content: pkg.description
+    }
     ],
     script: [
 
@@ -49,33 +49,14 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{
-      src: "~plugins/bootstrap.js",
-      ssr: false
-    },
-    {
-      src: "~plugins/jquery.marquee.js",
-      ssr: false
-    },
-    {
-      src: "~plugins/swiper.min.js",
-      ssr: false
-    },
-    {
-      src: '~plugins/font-awesome.js',
-      ssr: false
-    },
-    {
-      src: '~plugins/i18n.js'
-    },
-    {
-      src: "~plugins/datepicker.js",
-      ssr: false
-    },
-    {
-      src: "~plugins/timepicker.js",
-      ssr: false
-    }
+  plugins: [
+    { src: "~plugins/bootstrap.js", ssr: false },
+    { src: "~plugins/jquery.marquee.js", ssr: false },
+    { src: "~plugins/swiper.min.js", ssr: false },
+    { src: '~plugins/font-awesome.js', ssr: false },
+    { src: '~plugins/i18n.js' },
+    { src: "~plugins/datepicker.js", ssr: false },
+    { src: "~plugins/timepicker.js", ssr: false }
   ],
 
   router: {
