@@ -1,3 +1,5 @@
+import { Base64 } from 'js-base64';
+import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import WalletService from '~/service/wallet'
 
@@ -8,7 +10,12 @@ function getExpTimestamp() {
 
 // Get CUI (Base64_Encode([website_id, account_id]))
 function getCUI() {
-    return localStorage.getItem('CUI')
+    let json = JSON.stringify({
+        website_id: WEBSITE_ID,
+        account_id: ACCOUNT_ID
+    })
+    let cui = localStorage.getItem('CUI') || Base64.encode(json)
+    return cui
 }
 
 const actions = {
@@ -91,10 +98,10 @@ const actions = {
     },
 
     // Deposit
-    async deposit({ commit }, formData) {
+    async deposit({ commit }, { accountNumber, amount, time, reference, receipt, bonus }) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { cui, formData, exp }
+        const payload = { cui, accountNumber, amount, time, reference, receipt, bonus, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.deposit(payload)
         if (response.status === 200) {

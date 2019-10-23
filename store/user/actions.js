@@ -1,6 +1,7 @@
+import { Base64 } from 'js-base64';
+import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import UserService from '~/service/user'
-import { WEBSITE_ID } from '~/environment'
 
 // Set Timestamp
 function getExpTimestamp() {
@@ -9,7 +10,12 @@ function getExpTimestamp() {
 
 // Get CUI (Base64_Encode([website_id, account_id]))
 function getCUI() {
-    return localStorage.getItem('CUI')
+    let json = JSON.stringify({
+        website_id: WEBSITE_ID,
+        account_id: ACCOUNT_ID
+    })
+    let cui = localStorage.getItem('CUI') || Base64.encode(json)
+    return cui
 }
 
 const actions = {

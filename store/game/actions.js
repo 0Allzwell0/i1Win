@@ -1,10 +1,21 @@
+import { Base64 } from 'js-base64';
+import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import GameService from '~/service/game'
-import { WEBSITE_ID } from '~/environment'
 
 // Set Timestamp
 function getExpTimestamp() {
     return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
+}
+
+// Get CUI (Base64_Encode([website_id, account_id]))
+function getCUI() {
+    let json = JSON.stringify({
+        website_id: WEBSITE_ID,
+        account_id: ACCOUNT_ID
+    })
+    let cui = localStorage.getItem('CUI') || Base64.encode(json)
+    return cui
 }
 
 const actions = {
@@ -30,7 +41,7 @@ const actions = {
     // Get Game URL
     async getGameURL({ commit }, { isDownload, category, productCode, gameID }) {
         const exp = getExpTimestamp()
-        const cui = localStorage.getItem('CUI')
+        const cui = getCUI()
         const payload = { cui, category, productCode, gameID, exp }
         const response = await GameService.getGamesList(payload)
         if (response.status === 200) {
