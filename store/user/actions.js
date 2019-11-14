@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64';
-import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
+import { WEBSITE_ID, ACCOUNT_ID } from '~/environment.js'
 import * as types from './type'
 import UserService from '~/service/user'
 
@@ -11,10 +11,10 @@ function getExpTimestamp() {
 // Get CUI (Base64_Encode([website_id, account_id]))
 function getCUI() {
     let json = JSON.stringify({
-        website_id: WEBSITE_ID,
-        account_id: ACCOUNT_ID
+        website_id: WEBSITE_ID
     })
-    let cui = localStorage.getItem('CUI') || Base64.encode(json)
+    let cui = Base64.encode(json)
+
     return cui
 }
 
@@ -48,12 +48,8 @@ const actions = {
     },
 
     // Get Banners
-    async getBanners({ commit }, type) {
-        const payload = {
-            type,
-            website_id: WEBSITE_ID
-        }
-        const response = await UserService.getBanners(payload)
+    async getBanners({ commit }) {
+        const response = await UserService.getBanners(WEBSITE_ID)
         if (response.status === 200) {
             commit(types.GET_BANNERS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -63,8 +59,7 @@ const actions = {
 
     // Get Announcement
     async getAnnouncement({ commit }) {
-        const payload = { website_id: WEBSITE_ID }
-        const response = await UserService.getAnnouncement(payload)
+        const response = await UserService.getAnnouncement(WEBSITE_ID)
         if (response.status === 200) {
             commit(types.GET_ANNOUNCEMENT_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -74,8 +69,7 @@ const actions = {
 
     // Get Jackpot
     async getJackpot({ commit }) {
-        const payload = { website_id: WEBSITE_ID }
-        const response = await UserService.getJackpot(payload)
+        const response = await UserService.getJackpot(WEBSITE_ID)
         if (response.status === 200) {
             commit(types.GET_JACKPOT_SUCCESS, { data: response.data, status: response })
         } else {
@@ -84,12 +78,8 @@ const actions = {
     },
 
     // Get Promotions
-    async getPromotions({ commit }, isMobile) {
-        const payload = {
-            isMobile,
-            website_id: WEBSITE_ID
-        }
-        const response = await UserService.getPromotions(payload)
+    async getPromotions({ commit }) {
+        const response = await UserService.getPromotions(1, WEBSITE_ID)
         if (response.status === 200) {
             commit(types.GET_PROMOTIONS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -99,11 +89,7 @@ const actions = {
 
     // Get Article
     async getArticles({ commit }, code) {
-        const payload = {
-            code,
-            website_id: WEBSITE_ID
-        }
-        const response = await UserService.getArticles(payload)
+        const response = await UserService.getArticles(code, 1, WEBSITE_ID)
         if (response.status === 200) {
             commit(types.GET_ARTICLE_SUCCESS, { data: response.data, status: status })
         } else {

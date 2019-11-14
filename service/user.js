@@ -1,6 +1,7 @@
-import axios from '~/plugins/axios'
+import axios from 'axios'
 import Language from '~/middleware/getLanguage'
 import JWT from '~/middleware/jwt'
+import { API_DOMAIN } from '~/environment'
 
 class UserService {
     // Edit Profile
@@ -42,13 +43,21 @@ class UserService {
     }
 
     // Get Banners
-    static async getBanners(payload) {
+    static async getBanners(websiteID) {
         let response = null
 
         try {
-            response = await axios.get('/api/v1/banners', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: 'res/banners',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
+                },
+                params: {
+                    website_id: websiteID
                 }
             })
         } catch (error) {
@@ -59,13 +68,21 @@ class UserService {
     }
 
     // Get Announcement
-    static async getAnnouncement(payload) {
+    static async getAnnouncement(websiteID) {
         let response = null
 
         try {
-            response = await axios.get('/api/v1/announcements', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: 'res/announcements',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
+                },
+                params: {
+                    website_id: websiteID
                 }
             })
         } catch (error) {
@@ -76,13 +93,21 @@ class UserService {
     }
 
     // Get Jackpot
-    static async getJackpot() {
+    static async getJackpot(websiteID) {
         let response = null
 
         try {
-            response = await axios.get('/api/v1/jackpot', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 1000,
+                url: 'res/announcements',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
+                },
+                params: {
+                    website_id: websiteID
                 }
             })
         } catch (error) {
@@ -93,13 +118,22 @@ class UserService {
     }
 
     // Get Promotions
-    static async getPromotions(payload) {
+    static async getPromotions(code, websiteID) {
         let response = null
 
         try {
-            response = await axios.get('/api/v1/promotions', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 1000,
+                url: 'res/announcements',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
+                },
+                params: {
+                    code: code,
+                    website_id: websiteID
                 }
             })
         } catch (error) {
@@ -110,13 +144,23 @@ class UserService {
     }
 
     // Get Article
-    static async getArticles(payload) {
+    static async getArticles(code, isMobile, websiteID) {
         let response = null
 
         try {
-            response = await axios.get('/api/v1/articles', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 1000,
+                url: 'res/articles',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
+                },
+                params: {
+                    code: code,
+                    is_mobile: isMobile,
+                    website_id: websiteID
                 }
             })
         } catch (error) {

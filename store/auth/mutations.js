@@ -37,7 +37,6 @@ const mutations = {
         setLocalStorage('userData', JSON.stringify(state.userData))
     },
 
-
     // ================================================================ Login Fail && Register Fail
     [type.FAIL_AUTH](state, { data, status }) {
         state.isLogined = false
@@ -48,7 +47,19 @@ const mutations = {
 
         setLocalStorage('isLogined', 'false')
         setLocalStorage('userData', null)
-    }
+    },
+
+    // ================================================================ Check Success
+    [type.CHECK_SUCCESS](state, { data, status }) {
+        state.isUsed = data
+        state.httpStatus = status
+    },
+
+    // ================================================================ Check Fail
+    [type.CHECK_SUCCESS](state, { data, status }) {
+        state.isUsed = data
+        state.httpStatus = status
+    },
 }
 
 // Set Local Storage

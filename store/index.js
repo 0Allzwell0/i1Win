@@ -1,7 +1,4 @@
-import {
-    LOCALES,
-    DEFAULT_LOCALE
-} from '../environment.js'
+import { LOCALES, DEFAULT_LOCALE } from '~/environment.js'
 
 export const state = () => ({
     locales: LOCALES,

@@ -128,6 +128,8 @@ export default {
             let chooseLanguage = $(el.currentTarget).data('language');
             let url = null;
 
+            window.localStorage.setItem('LANGUAGE', chooseLanguage);
+
             // If the language selected is the current language  => Dont move
             if (chooseLanguage === currentLocale) {
                 return;

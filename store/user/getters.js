@@ -1,7 +1,8 @@
 const getters = {
     GetProfileToken: state => state.profileToken,
     GetBanners: state => state.banners,
-    GetAnnouncement: state => state.announcement,
+    GetAnnouncements: state => state.announcements,
+    GetArticles: state => state.articles,
     GetJackpot: state => state.jackpot,
     GetPromotions: state => state.promotions
 }

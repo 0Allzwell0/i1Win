@@ -54,9 +54,21 @@
     "bank_account_num": "Bank Account Number",
     "mobile_number": "Mobile Number",
     "terms_of_use": "Terms Of Use",
-    "register_msg1_1": "By clicking“ Join now” I hereby acknowledge that I am above 18 years old and have read and accepted the ",
+    "register_msg1_1": "By clicking 'Join now' I hereby acknowledge that I am above 18 years old and have read and accepted the ",
     "register_msg1_2": "apply.",
-    "register_msg2": "Already have an account ? "
+    "register_msg2": "Already have an account? ",
+    "username_ok": "This username can be used.",
+    "username_error1": "Please enter 6 to 10 digit or english characters.",
+    "username_error2": "The uesrname is already in use, change it again.",
+    "password_ok": "This password can be used.",
+    "password_error": "Please enter 6 to 12 digit or english characters.",
+    "confirm_psw_ok": "Password is match.",
+    "confirm_psw_error": "Password does not match.",
+    "fullname_ok": "Full Name can be used.",
+    "mobile_ok": "Mobile number is OK.",
+    "mobile_error1": "Please enter 9 to 10 digit characters.",
+    "mobile_error2": "The mobile number has already been taken.",
+    "special_symbols": "Can not use special symbols."
   },
   "promotions": {
     "detail": "Detail",

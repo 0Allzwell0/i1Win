@@ -7,19 +7,21 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters('user', {
-            announcement: 'GetAnnouncement'
+            announcements: 'GetAnnouncements'
         })
     },
     mounted() {
         // Get Announcement
-        //this.$store.dispatch('user/getAnnouncement');
+        this.$store.dispatch('user/getAnnouncement').then(() => {
+            // Asign Announcemet Data
+            for (let i = 0; i < this.announcements.length; i++) {
+                $('.announcement-text').append(`[ ${this.announcements[i].date} ] ${this.announcements[i].text} `);
+            }
 
-        // Asign Announcemet Data
-        $('.announcement-text').html(this.announcement);
-
-        // Announcement Setting
-        $('.announcement-text').marquee({
-            duration: 10000
+            // Announcement Setting
+            $('.announcement-text').marquee({
+                duration: 10000
+            });
         });
     }
 };

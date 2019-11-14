@@ -77,22 +77,13 @@ const mutations = {
     // =========================================================== Get Announcement
     // Get Announcement Success
     [type.GET_ANNOUNCEMENT_SUCCESS](state, { data, status }) {
-        if (data.length > 0) {
-            let getYear = data.date.getFullYear()
-            let getMonth = (data.date.getMonth() + 1 < 10 ? '0' + (data.date.getMonth() + 1) : (data.date.getMonth() + 1))
-            let getDate = data.date.getDate()
-
-            state.announcement = `[${getYear}-${getMonth}-${getDate}]  ${data.text}`
-        } else {
-            state.announcement = data
-        }
-
+        state.announcements = data
         state.httpStatus = status
     },
 
     // Get Announcement Fail
     [type.GET_ANNOUNCEMENT_FAIL](state, status) {
-        state.announcement = null
+        state.announcements = null
         state.httpStatus = status
     },
 
@@ -112,13 +103,13 @@ const mutations = {
     // =========================================================== Get Article
     // Get Article Success
     [type.GET_ARTICLE_SUCCESS](state, { data, status }) {
-        state.articleHTML = data.body
+        state.articles = data
         state.httpStatus = status
     },
 
     // Get Article Fail
     [type.GET_ARTICLE_FAIL](state, status) {
-        state.articleHTML = null
+        state.articles = null
         state.httpStatus = status
     }
 }

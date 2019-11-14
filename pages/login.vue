@@ -98,12 +98,10 @@ export default {
             // Show Loading Animation
             this.$nuxt.$loading.start();
 
-            this.$store
-                .dispatch('auth/login', {
+            this.$store.dispatch('auth/login', {
                     username: this.myUsername,
                     password: this.myPassword
-                })
-                .then(() => {
+                }).then(() => {
                     // If Login Success, Go To "Home" Page.
                     if (this.isLogined) {
                         this.$router.push(this.$i18n.path(''));
