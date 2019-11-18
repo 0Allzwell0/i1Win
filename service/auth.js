@@ -62,7 +62,7 @@ class AuthService {
             response = await axios({
                 method: 'GET',
                 timeout: 5000,
-                url: `api/check/username/:${username}`,
+                url: `api/check/username/${username}`,
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',

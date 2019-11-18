@@ -16,10 +16,14 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
 // ================================================================ Register Fail
 export const REGISTER_FAIL = "REGISTER_FAIL"
 
-// ================================================================ Check Success
-export const CHECK_SUCCESS = "CHECK_SUCCESS"
+// ================================================================ Check Username Success
+export const CHECK_USERNAME_SUCCESS = "CHECK_USERNAME_SUCCESS"
 
-// ================================================================ Check Fail
-export const CHECK_FAIL = "CHECK_FAIL"
+// ================================================================ Check Username Fail
+export const CHECK_USERNAME_FAIL = "CHECK_USERNAME_FAIL"
 
+// ================================================================ Check Mobile Success
+export const CHECK_MOBILE_SUCCESS = "CHECK_MOBILE_SUCCESS"
 
+// ================================================================ Check Mobile Fail
+export const CHECK_MOBILE_FAIL = "CHECK_MOBILE_FAIL"

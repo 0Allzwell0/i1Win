@@ -122,14 +122,26 @@ const mutations = {
         setLocalStorage('isLogined', 'false')
     },
 
-    // ================================================================ Check Success
-    [type.CHECK_SUCCESS](state, { data, status }) {
+    // ================================================================ Check Username Success
+    [type.CHECK_USERNAME_SUCCESS](state, { data, status }) {
+        state.isUsed = data.isRegistered
+        state.httpStatus = status
+    },
+
+    // ================================================================ Check Username Fail
+    [type.CHECK_USERNAME_FAIL](state, { data, status }) {
+        state.isUsed = data.isRegistered
+        state.httpStatus = status
+    },
+
+    // ================================================================ Check Mobile Success
+    [type.CHECK_MOBILE_SUCCESS](state, { data, status }) {
         state.isUsed = data
         state.httpStatus = status
     },
 
-    // ================================================================ Check Fail
-    [type.CHECK_SUCCESS](state, { data, status }) {
+    // ================================================================ Check Mobile Fail
+    [type.CHECK_MOBILE_FAIL](state, { data, status }) {
         state.isUsed = data
         state.httpStatus = status
     },

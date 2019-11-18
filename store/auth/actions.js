@@ -58,9 +58,9 @@ const actions = {
         const payload = { cui, exp }
         const response = await AuthService.checkUsername(payload, username)
         if (response.status === 200) {
-            commit(types.CHECK_SUCCESS, { data: response.data, status: response.status })
+            commit(types.CHECK_USERNAME_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.CHECK_FAIL, { data: response.data, status: reponse.status })
+            commit(types.CHECK_USERNAME_FAIL, { data: response.data, status: reponse.status })
         }
     },
 
@@ -71,9 +71,9 @@ const actions = {
         const payload = { cui, exp }
         const response = await AuthService.checkMobile(payload, mobile)
         if (response.status === 200) {
-            commit(types.CHECK_SUCCESS, { data: response.data, status: response.status })
+            commit(types.CHECK_MOBILE_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.CHECK_FAIL, { data: response.data, status: reponse.status })
+            commit(types.CHECK_MOBILE_FAIL, { data: response.data, status: reponse.status })
         }
     }
 }

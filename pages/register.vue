@@ -186,10 +186,7 @@ export default {
             } else {
                 // Username
                 if (elementID === 'input-username') {
-                    if (inputValue.length >= 6 && inputValue.length <= 10) {
-                        $(elTarget).removeClass('is-valid is-invalid');
-                        $(errorEl).removeClass('is-valid is-invalid');
-                    } else {
+                    if ((inputValue.length > 0 && inputValue.length < 6) || inputValue.length > 10) {
                         $(`#${errElementID} .msg-text`).text(this.$t('register.username_error1'));
                         $(elTarget).addClass('is-invalid');
                         $(errorEl).addClass('is-invalid');
@@ -379,7 +376,7 @@ export default {
     },
     methods: {
         // Check Username Had Be Used
-        checkUsername(elTarget, errorEl) {
+        checkUsername(elTarget, errElementID) {
             this.$store.dispatch('auth/checkUsername', this.myUsername).then(() => {
                 if (this.isUsed) {
                     $(`#${errElementID} .msg-text`).text(this.$t('register.username_error2'));
@@ -404,8 +401,8 @@ export default {
                     $(`#${errElementID} .msg-text`).text(this.$t('register.mobile_ok'));
                     $(elTarget).removeClass('is-invalid');
                     $(elTarget).addClass('is-valid');
-                    $(errorEl).removeClass('is-invalid');
-                    $(errorEl).addClass('is-valid');
+                    $(`#${errElementID}`).removeClass('is-invalid');
+                    $(`#${errElementID}`).addClass('is-valid');
                 } else {
                     $(`#${errElementID} .msg-text`).text(this.$t('register.mobile_error2'));
                     $(elTarget).removeClass('is-valid');
