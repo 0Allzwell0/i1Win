@@ -4,11 +4,17 @@ export const INITIAL_STATE = 'INITIAL_STATE'
 // ================================================================ Request Type
 export const REQUEST_AUTH = "REQUEST_AUTH"
 
-// ================================================================ Success Type
-export const SUCCESS_AUTH = "SUCCESS_AUTH"
+// ================================================================ Login Success
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
-// ================================================================ Fail Type
-export const FAIL_AUTH = "FAIL_AUTH"
+// ================================================================ Login Fail
+export const LOGIN_FAIL = "LOGIN_FAIL"
+
+// ================================================================ Register Success
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
+
+// ================================================================ Register Fail
+export const REGISTER_FAIL = "REGISTER_FAIL"
 
 // ================================================================ Check Success
 export const CHECK_SUCCESS = "CHECK_SUCCESS"

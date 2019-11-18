@@ -10,7 +10,8 @@
                 <div class="register-input-container">
                     <img class="register-input-img" src="/images/username_image.png" />
                     <input
-                        class="register-input-text input-username"
+                        class="register-input-text"
+                        id="input-username"
                         type="text"
                         :placeholder="$t('common.username')"
                         minlength="6"
@@ -18,13 +19,17 @@
                         v-model="myUsername"
                     />
                 </div>
-                <p class="error-msg error-username"></p>
+                <ul class="error-msg" id="error-username">
+                    <li class="msg-text"></li>
+                    <li class="response-msg" v-for="(item, index) in regErrorMsg.username" :key="`usn-${index}`">{{ item }}</li>
+                </ul>
 
                 <!-- Password -->
                 <div class="register-input-container">
                     <img class="register-input-img" src="/images/password_image.png" />
                     <input
-                        class="register-input-text input-password"
+                        class="register-input-text"
+                        id="input-password"
                         type="password"
                         :placeholder="$t('common.password')"
                         minlength="6"
@@ -33,13 +38,17 @@
                     />
                     <img class="register-eye-icon" :src="passwordEyes" @click="showPassword()" />
                 </div>
-                <p class="error-msg error-password"></p>
+                <ul class="error-msg" id="error-password">
+                    <li class="msg-text"></li>
+                    <li class="response-msg" v-for="(item, index) in regErrorMsg.password" :key="`psw-${index}`">{{ item }}</li>
+                </ul>
 
                 <!-- Confirm Password -->
                 <div class="register-input-container">
                     <img class="register-input-img" src="/images/password_image.png" />
                     <input
-                        class="register-input-text input-confirm-psw"
+                        class="register-input-text"
+                        id="input-confirm-psw"
                         type="password"
                         :placeholder="$t('register.confirm_password')"
                         minlength="6"
@@ -48,36 +57,51 @@
                     />
                     <img class="register-eye-icon" :src="confirmPasswordEyes" @click="showConfirmPassword()" />
                 </div>
-                <p class="error-msg error-confirm-psw"></p>
+                <ul class="error-msg" id="error-confirm-psw">
+                    <li class="msg-text"></li>
+                    <li
+                        class="response-msg"
+                        v-for="(item, index) in regErrorMsg.password_confirmation"
+                        :key="`confirm-psw-${index}`"
+                    >{{ item }}</li>
+                </ul>
 
                 <!-- Full Name -->
                 <div class="register-input-container">
                     <img class="register-input-img fullname-img" src="/images/fullname_image.png" />
                     <input
-                        class="register-input-text input-fullname"
+                        class="register-input-text"
+                        id="input-fullname"
                         type="text"
                         :placeholder="$t('common.fullname')"
                         v-model="myFullname"
                     />
                 </div>
-                <p class="error-msg error-fullname"></p>
+                <ul class="error-msg" id="error-fullname">
+                    <li class="msg-text"></li>
+                    <li class="response-msg" v-for="(item, index) in regErrorMsg.fullname" :key="`fullname-${index}`">{{ item }}</li>
+                </ul>
 
                 <!-- Mobile Number -->
                 <div class="register-input-container">
                     <img class="register-input-img mobile-img" src="/images/mobile_image.png" />
                     <input
-                        class="register-input-text input-mobile"
+                        class="register-input-text"
+                        id="input-mobile"
                         type="number"
                         :placeholder="$t('register.mobile_number')"
                         v-model="myMobile"
                     />
                 </div>
-                <p class="error-msg error-mobile"></p>
+                <ul class="error-msg" id="error-mobile">
+                    <li class="msg-text"></li>
+                    <li class="response-msg" v-for="(item, index) in regErrorMsg.mobile" :key="`mobile-${index}`">{{ item }}</li>
+                </ul>
 
                 <!-- Line ID -->
                 <div class="register-input-container">
                     <img class="register-input-img line-img" src="/images/line_image.png" />
-                    <input class="register-input-text input-line" type="text" placeholder="LINE ID" v-model="myLineID" />
+                    <input class="register-input-text" id="input-line" type="text" placeholder="LINE ID" v-model="myLineID" />
                 </div>
             </div>
 
@@ -111,23 +135,23 @@ export default {
             isLogined: 'GetLogined',
             isUsed: 'GetIsUsed',
             httpStatus: 'GetHttpStatus',
-            failMessage: 'GetFailMessage'
+            regErrorMsg: 'GetRegErrorMsg'
         })
     },
     data() {
         return {
             myUsername: null,
-            usernameOK: false,
             myPassword: null,
-            passwordOK: false,
             myConfirmPassword: null,
-            confirmOK: false,
             myFullname: null,
-            fullnameOK: false,
             myMobile: null,
-            mobileOK: false,
             myLineID: null,
-            lineIDOK: false,
+            usernameError: false,
+            passwordError: false,
+            confirmPSWError: false,
+            fullnameError: false,
+            mobileError: false,
+            othersError: false,
             passwordEyes: '/images/close_eye.png',
             confirmPasswordEyes: '/images/close_eye.png',
             expandBanksList: false,
@@ -138,108 +162,96 @@ export default {
         // Change CSS When "Input" Occurs With "keyup" Event
         $('.register-input-text').keyup(el => {
             let elTarget = el.target;
-            let elClassName = elTarget.className;
+            let elementID = elTarget.id;
             let errorEl = null;
-            let errElClassName = null;
+            let errElementID = null;
 
             // If Is Not "Line ID" input, Get The input's Error Message Element Class Name
-            if (elClassName.indexOf('line') === -1) {
+            if (elementID !== 'input-line') {
                 errorEl = $(elTarget.parentNode).next();
-                errElClassName = errorEl[0].className;
+                errElementID = errorEl[0].id;
             }
 
             let inputValue = $(elTarget).val(); // Get input Value
             let inputOK = inputValue.search(/[-~!@#$%^&*(){}_+*/`\[\];',.]/); // Determine Have Special Characters ?
 
-            if ((inputOK = !-1)) {
+            $(elTarget).removeClass('is-valid is-invalid');
+            $(errorEl).removeClass('is-valid is-invalid');
+            $(`#${errElementID} .response-msg`).hide();
+
+            if (inputOK !== -1) {
+                $(`#${errElementID} .msg-text`).text(this.$t('register.special_symbols'));
                 $(elTarget).addClass('is-invalid');
                 $(errorEl).addClass('is-invalid');
-                $(errorEl).text(this.$t(`register.special_symbols`));
             } else {
                 // Username
-                if (elClassName.indexOf('username') !== -1) {
+                if (elementID === 'input-username') {
                     if (inputValue.length >= 6 && inputValue.length <= 10) {
                         $(elTarget).removeClass('is-valid is-invalid');
                         $(errorEl).removeClass('is-valid is-invalid');
                     } else {
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.username_error1'));
                         $(elTarget).addClass('is-invalid');
                         $(errorEl).addClass('is-invalid');
-                        $(errorEl).text(this.$t('register.username_error1'));
                     }
                 }
 
                 // Password
-                if (elClassName.indexOf('password') !== -1) {
-                    if (inputValue.length >= 6 && inputValue.length <= 12) {
-                        $(elTarget).removeClass('is-valid is-invalid');
-                        $(errorEl).removeClass('is-valid is-invalid');
-                    } else {
+                if (elementID === 'input-password') {
+                    if ((inputValue.length < 6 && inputValue.length > 0) || inputValue.length > 12) {
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.password_error'));
                         $(elTarget).addClass('is-invalid');
                         $(errorEl).addClass('is-invalid');
-                        $(errorEl).text(this.$t('register.password_error'));
                     }
 
-                    let confirmInput = $('.input-confirm-psw').val();
+                    let confirmInput = $('#input-confirm-psw').val();
 
                     if (confirmInput.length > 0) {
                         if (confirmInput === inputValue) {
-                            $('.input-confirm-psw, .error-confirm-psw')
-                                .removeClass('is-invalid')
-                                .addClass('is-valid');
-                            $('.error-confirm-psw').text(this.$t('register.confirm_psw_ok'));
+                            $('#error-confirm-psw .msg-text').text(this.$t('register.confirm_psw_ok'));
+                            $('#input-confirm-psw, #error-confirm-psw').removeClass('is-invalid');
+                            $('#input-confirm-psw, #error-confirm-psw').addClass('is-valid');
                         } else if (confirmInput !== inputValue) {
-                            $('.input-confirm-psw, .error-confirm-psw')
-                                .removeClass('is-valid')
-                                .addClass('is-invalid');
-                            $('.error-confirm-psw').text(this.$t('register.confirm_psw_error'));
+                            $('#error-confirm-psw .msg-text').text(this.$t('register.confirm_psw_error'));
+                            $('#input-confirm-psw, #error-confirm-psw').removeClass('is-valid');
+                            $('#input-confirm-psw, #error-confirm-psw').addClass('is-invalid');
                         }
                     } else {
-                        $('.input-confirm-psw, .error-confirm-psw').removeClass('is-invalid is-valid');
+                        $('#input-confirm-psw, #error-confirm-psw').removeClass('is-invalid is-valid');
                     }
                 }
 
                 // Confirm Password
-                if (elClassName.indexOf('confirm-psw') !== -1) {
-                    let passwordInput = $('.input-password').val();
+                if (elementID === 'input-confirm-psw') {
+                    let passwordInput = $('#input-password').val();
 
                     if (inputValue.length > 0) {
                         if (inputValue === passwordInput) {
-                            $(elTarget)
-                                .removeClass('is-invalid')
-                                .addClass('is-valid');
-                            $(errorEl)
-                                .removeClass('is-invalid')
-                                .addClass('is-valid');
-                            $(errorEl).text(this.$t('register.confirm_psw_ok'));
+                            $(`#${errElementID} .msg-text`).text(this.$t('register.confirm_psw_ok'));
+                            $(elTarget).removeClass('is-invalid');
+                            $(elTarget).addClass('is-valid');
+                            $(errorEl).removeClass('is-invalid');
+                            $(errorEl).addClass('is-valid');
                         } else if (inputValue !== passwordInput) {
-                            $(elTarget)
-                                .removeClass('is-valid')
-                                .addClass('is-invalid');
-                            $(errorEl)
-                                .removeClass('is-valid')
-                                .addClass('is-invalid');
-                            $(errorEl).text(this.$t('register.confirm_psw_error'));
+                            $(`#${errElementID} .msg-text`).text(this.$t('register.confirm_psw_error'));
+                            $(elTarget).removeClass('is-valid');
+                            $(elTarget).addClass('is-invalid');
+                            $(errorEl).removeClass('is-valid');
+                            $(errorEl).addClass('is-invalid');
                         }
                     }
                 }
 
                 // Fullname
-                if (elClassName.indexOf('fullname') !== -1) {
-                    if (inputValue.length > 0) {
-                        $(elTarget).removeClass('is-valid is-invalid');
-                        $(errorEl).removeClass('is-valid is-invalid');
-                    }
+                if (elementID === 'input-fullname') {
                 }
 
                 // Mobile
-                if (elClassName.indexOf('mobile') !== -1) {
-                    if (inputValue.length >= 9 && inputValue.length <= 10) {
-                        $(elTarget).removeClass('is-valid is-invalid');
-                        $(errorEl).removeClass('is-valid is-invalid');
-                    } else {
+                if (elementID === 'input-mobile') {
+                    if ((inputValue.length < 9 && inputValue.length > 0) || inputValue.length > 10) {
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.mobile_error1'));
                         $(elTarget).addClass('is-invalid');
                         $(errorEl).addClass('is-invalid');
-                        $(errorEl).text(this.$t('register.mobile_error1'));
                     }
                 }
             }
@@ -248,134 +260,118 @@ export default {
         // Change CSS When "Input" Occurs With "keyup" Event
         $('.register-input-text').blur(el => {
             let elTarget = el.target;
-            let elClassName = elTarget.className;
+            let elementID = elTarget.id;
             let errorEl = null;
-            let errElClassName = null;
+            let errElementID = null;
 
             // If Is Not "Line ID" input, Get The input's Error Message Element Class Name
-            if (elClassName.indexOf('line') === -1) {
+            if (elementID !== 'input-line') {
                 errorEl = $(elTarget.parentNode).next();
-                errElClassName = errorEl[0].className;
+                errElementID = errorEl[0].id;
             }
 
             let inputValue = $(elTarget).val(); // Get input Value
             let inputOK = inputValue.search(/[-~!@#$%^&*(){}_+*/`\[\];',.]/); // Determine Have Special Characters ?
 
             if ((inputOK = !-1)) {
+                $(errorEl).html(`<li class="msg-text">${this.$t('register.special_symbols')}</li>`);
                 $(elTarget).addClass('is-invalid');
                 $(errorEl).addClass('is-invalid');
-                $(errorEl).text(this.$t(`register.special_symbols`));
             } else if (inputValue.length <= 0) {
                 $(elTarget).removeClass('is-valid is-invalid');
                 $(errorEl).removeClass('is-valid is-invalid');
             } else {
                 // Username
-                if (elClassName.indexOf('username') !== -1) {
+                if (elementID === 'input-username') {
                     if (inputValue.length >= 6 && inputValue.length <= 10) {
-                        checkUsername(elTarget, errorEl);
+                        this.checkUsername(elTarget, errElementID);
                     } else {
-                        $(elTarget)
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-                        $(errorEl)
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-                        $(errorEl).text(this.$t('register.username_error1'));
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.username_error1'));
+                        $(elTarget).removeClass('is-valid');
+                        $(elTarget).addClass('is-invalid');
+                        $(errorEl).removeClass('is-valid');
+                        $(errorEl).addClass('is-invalid');
                     }
                 }
 
                 // Password
-                if (elClassName.indexOf('password') !== -1) {
+                if (elementID === 'input-password') {
                     if (inputValue.length >= 6 && inputValue.length <= 12) {
-                        $(elTarget)
-                            .removeClass('is-invalid')
-                            .addClass('is-valid');
-                        $(errorEl)
-                            .removeClass('is-invalid')
-                            .addClass('is-valid');
-                        $(errorEl).text(this.$t('register.password_ok'));
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.password_ok'));
+                        $(elTarget).removeClass('is-invalid');
+                        $(elTarget).addClass('is-valid');
+                        $(errorEl).removeClass('is-invalid');
+                        $(errorEl).addClass('is-valid');
                     } else {
-                        $(elTarget)
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-                        $(errorEl)
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-                        $(errorEl).text(this.$t('register.password_error'));
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.password_error'));
+                        $(elTarget).removeClass('is-valid');
+                        $(elTarget).addClass('is-invalid');
+                        $(errorEl).removeClass('is-valid');
+                        $(errorEl).addClass('is-invalid');
                     }
 
-                    let confirmInput = $('.input-confirm-psw').val();
+                    let confirmInput = $('#input-confirm-psw').val();
 
                     if (confirmInput.length > 0) {
                         if (confirmInput === inputValue) {
-                            $('.input-confirm-psw, .error-confirm-psw')
-                                .removeClass('is-invalid')
-                                .addClass('is-valid');
-                            $('.error-confirm-psw').text(this.$t('register.confirm_psw_ok'));
+                            $(`#${errElementID} .msg-text`).text(this.$t('register.confirm_psw_ok'));
+                            $('#input-confirm-psw, #error-confirm-psw').removeClass('is-invalid');
+                            $('#input-confirm-psw, #error-confirm-psw').addClass('is-valid');
                         } else if (confirmInput !== inputValue) {
-                            $('.input-confirm-psw, .error-confirm-psw')
-                                .removeClass('is-valid')
-                                .addClass('is-invalid');
-                            $('.error-confirm-psw').text(this.$t('register.confirm_psw_error'));
+                            $(`#${errElementID} .msg-text`).text(this.$t('register.confirm_psw_error'));
+                            $('#input-confirm-psw, #error-confirm-psw').removeClass('is-valid');
+                            $('#input-confirm-psw, #error-confirm-psw').addClass('is-invalid');
                         }
                     }
                 }
 
                 // Confirm Password
-                if (elClassName.indexOf('confirm-psw') !== -1) {
-                    let passwordInput = $('.input-password').val();
+                if (elementID === 'input-confirm-psw') {
+                    let passwordInput = $('#input-password').val();
 
                     if (inputValue.length > 0) {
                         if (inputValue === passwordInput) {
-                            $(elTarget)
-                                .removeClass('is-invalid')
-                                .addClass('is-valid');
-                            $(errorEl)
-                                .removeClass('is-invalid')
-                                .addClass('is-valid');
-                            $(errorEl).text(this.$t('register.confirm_psw_ok'));
+                            $(`#${errElementID} .msg-text`).text(this.$t('register.confirm_psw_ok'));
+                            $(elTarget).removeClass('is-invalid');
+                            $(elTarget).addClass('is-valid');
+                            $(errorEl).removeClass('is-invalid');
+                            $(errorEl).addClass('is-valid');
                         } else if (inputValue !== passwordInput) {
-                            $(elTarget)
-                                .removeClass('is-valid')
-                                .addClass('is-invalid');
-                            $(errorEl)
-                                .removeClass('is-valid')
-                                .addClass('is-invalid');
-                            $(errorEl).text(this.$t('register.confirm_psw_error'));
+                            $(`#${errElementID} .msg-text`).text(this.$t('register.confirm_psw_error'));
+                            $(elTarget).removeClass('is-valid');
+                            $(elTarget).addClass('is-invalid');
+                            $(errorEl).removeClass('is-valid');
+                            $(errorEl).addClass('is-invalid');
                         }
                     }
                 }
 
                 // Fullname
-                if (elClassName.indexOf('fullname') !== -1) {
+                if (elementID === 'input-fullname') {
                     if (inputValue.length > 0) {
-                        $(elTarget)
-                            .removeClass('is-invalid')
-                            .addClass('is-valid');
-                        $(errorEl)
-                            .removeClass('is-invalid')
-                            .addClass('is-valid');
-                        $(errorEl).text(this.$t('register.fullname_ok'));
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.fullname_ok'));
+                        $(elTarget).removeClass('is-invalid');
+                        $(elTarget).addClass('is-valid');
+                        $(errorEl).removeClass('is-invalid');
+                        $(errorEl).addClass('is-valid');
                     }
                 }
 
                 // Mobile
-                if (elClassName.indexOf('mobile') !== -1) {
+                if (elementID === 'input-mobile') {
                     if (inputValue.length >= 9 && inputValue.length <= 10) {
-                        checkMobile(elTarget, errorEl);
+                        this.checkMobile(elTarget, errElementID);
                     } else {
-                        $(elTarget)
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-                        $(errorEl)
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-                        $(errorEl).text(this.$t('register.mobile_error1'));
+                        $(`#${errElementID} .msg-text`).text(this.$t('register.mobile_error1'));
+                        $(elTarget).removeClass('is-valid');
+                        $(elTarget).addClass('is-invalid');
+                        $(errorEl).removeClass('is-valid');
+                        $(errorEl).addClass('is-invalid');
                     }
                 }
 
                 // Line ID
-                if (elClassName.indexOf('line') !== -1) {
+                if (elementID === 'input-line') {
                     $(elTarget).addClass('is-valid');
                 }
             }
@@ -384,71 +380,63 @@ export default {
     methods: {
         // Check Username Had Be Used
         checkUsername(elTarget, errorEl) {
-            this.$store.dispatch('user/checkUsername', this.myUsername).then(function() {
-                if (isUsed) {
-                    $(elTarget)
-                        .removeClass('is-invalid')
-                        .addClass('is-valid');
-                    $(errorEl)
-                        .removeClass('is-invalid')
-                        .addClass('is-valid');
-                    $(errorEl).text(this.$t('register.username_ok'));
+            this.$store.dispatch('auth/checkUsername', this.myUsername).then(() => {
+                if (this.isUsed) {
+                    $(`#${errElementID} .msg-text`).text(this.$t('register.username_error2'));
+                    $(elTarget).removeClass('is-valid');
+                    $(elTarget).addClass('is-invalid');
+                    $(`#${errElementID}`).removeClass('is-valid');
+                    $(`#${errElementID}`).addClass('is-invalid');
                 } else {
-                    $(elTarget)
-                        .removeClass('is-valid')
-                        .addClass('is-invalid');
-                    $(errorEl)
-                        .removeClass('is-valid')
-                        .addClass('is-invalid');
-                    $(errorEl).text(this.$t('register.username_error2'));
+                    $(`#${errElementID} .msg-text`).text(this.$t('register.username_ok'));
+                    $(elTarget).removeClass('is-invalid');
+                    $(elTarget).addClass('is-valid');
+                    $(`#${errElementID}`).removeClass('is-invalid');
+                    $(`#${errElementID}`).addClass('is-valid');
                 }
             });
         },
 
         // Check Mobile Had Be Used
-        checkMobile(elTarget, errorEl) {
-            this.$store.dispatch('user/checkMobile', this.myMobile).then(function() {
-                if (isUsed) {
-                    $(elTarget)
-                        .removeClass('is-invalid')
-                        .addClass('is-valid');
-                    $(errorEl)
-                        .removeClass('is-invalid')
-                        .addClass('is-valid');
-                    $(errorEl).text(this.$t('register.mobile_ok'));
+        checkMobile(elTarget, errElementID) {
+            this.$store.dispatch('auth/checkMobile', this.myMobile).then(() => {
+                if (this.isUsed) {
+                    $(`#${errElementID} .msg-text`).text(this.$t('register.mobile_ok'));
+                    $(elTarget).removeClass('is-invalid');
+                    $(elTarget).addClass('is-valid');
+                    $(errorEl).removeClass('is-invalid');
+                    $(errorEl).addClass('is-valid');
                 } else {
-                    $(elTarget)
-                        .removeClass('is-valid')
-                        .addClass('is-invalid');
-                    $(errorEl)
-                        .removeClass('is-valid')
-                        .addClass('is-invalid');
-                    $(errorEl).text(this.$t('register.mobile_error2'));
+                    $(`#${errElementID} .msg-text`).text(this.$t('register.mobile_error2'));
+                    $(elTarget).removeClass('is-valid');
+                    $(elTarget).addClass('is-invalid');
+                    $(`#${errElementID}`).removeClass('is-valid');
+                    $(`#${errElementID}`).addClass('is-invalid');
                 }
             });
         },
 
         // Show or Hidden Password
         showPassword() {
-            let pswInputType = $('.input-password').attr('type');
+            let pswInputType = $('#input-password').attr('type');
             if (pswInputType === 'password') {
                 this.passwordEyes = '/images/open_eye.png';
-                $('.input-password').attr('type', 'text');
+                $('#input-password').attr('type', 'text');
             } else if (pswInputType === 'text') {
                 this.passwordEyes = '/images/close_eye.png';
-                $('.input-password').attr('type', 'password');
+                $('#input-password').attr('type', 'password');
             }
         },
 
         // Show or Hidden Confirm Password
         showConfirmPassword() {
-            let pswInputType = $('.input-confirm-psw').attr('type');
+            let pswInputType = $('#input-confirm-psw').attr('type');
             if (pswInputType === 'password') {
                 this.confirmPasswordEyes = '/images/open_eye.png';
-                $('.input-confirm-psw').attr('type', 'text');
+                $('#input-confirm-psw').attr('type', 'text');
             } else if (pswInputType === 'text') {
                 this.confirmPasswordEyes = '/images/close_eye.png';
-                $('.input-confirm-psw').attr('type', 'password');
+                $('#input-confirm-psw').attr('type', 'password');
             }
         },
 
@@ -474,41 +462,75 @@ export default {
                     // If Register Fail, Show Error Message
                     if (this.httpStatus && this.httpStatus !== 200) {
                         this.$nuxt.$loading.finish();
-                        this.showErrorMessage();
+                        this.showErrorMessage(this.httpStatus);
+                    } else {
+                        this.usernameError = false;
+                        this.passwordError = false;
+                        this.confirmPSWError = false;
+                        this.fullnameError = false;
+                        this.mobileError = false;
                     }
                 });
         },
 
         // Sort And Display Error Messages
-        showErrorMessage() {
-            // Username
-            if (this.failMessage.username) {
-                $('.input-username, .error-username').addClass('is-invalid');
-                this.usernameErrorMsg = this.failMessage.username[0];
-            }
+        showErrorMessage(status) {
+            $('#error-username .response-msg').show();
+            if (status === 400) {
+                if (this.regErrorMsg.username) {
+                    this.usernameError = true;
+                    $('#error-username .msg-text').text('');
+                    $('#input-username, #error-username').removeClass('is-valid');
+                    $('#input-username, #error-username').addClass('is-invalid');
+                } else {
+                    this.usernameError = false;
+                    $('#input-username, #error-username').removeClass('is-valid is-invalid');
+                }
 
-            // Password
-            if (this.failMessage.password) {
-                $('.input-password, .error-password').addClass('is-invalid');
-                this.passwordErrorMsg = this.failMessage.password[0];
-            }
+                if (this.regErrorMsg.password) {
+                    this.passwordError = true;
+                    $('#error-password .msg-text').text('');
+                    $('#input-password, #error-password').removeClass('is-valid');
+                    $('#input-password, #error-password').addClass('is-invalid');
+                } else {
+                    this.passwordError = false;
+                    $('#input-password, #error-password').removeClass('is-valid is-invalid');
+                }
 
-            // Confirm Password
-            if (this.failMessage.password_confirmation) {
-                $('.input-confirm-psw, .error-confirm-psw').addClass('is-invalid');
-                this.psw_confirmErrorMsg = this.failMessage.password_confirmation[0];
-            }
+                if (this.regErrorMsg.password_confirmation) {
+                    this.confirmPSWError = true;
+                    $('#error-confirm-psw .msg-text').text('');
+                    $('#input-confirm-psw, #error-confirm-psw').removeClass('is-valid');
+                    $('#input-confirm-psw, #error-confirm-psw').addClass('is-invalid');
+                } else {
+                    this.confirmPSWError = false;
+                    $('#input-confirm-psw, #error-confirm-psw').removeClass('is-valid is-invalid');
+                }
 
-            // Fullname
-            if (this.failMessage.fullname) {
-                $('.input-fullname, .error-fullname').addClass('is-invalid');
-                this.fullnameErrorMsg = this.failMessage.fullname[0];
-            }
+                if (this.regErrorMsg.fullname) {
+                    this.fullnameError = true;
+                    $('#error-fullname .msg-text').text('');
+                    $('#input-fullname, #error-fullname').removeClass('is-valid');
+                    $('#input-fullname, #error-fullname').addClass('is-invalid');
+                } else {
+                    this.fullnameError = false;
+                    $('#input-fullname, #error-fullname').removeClass('is-valid is-invalid');
+                }
 
-            // Mobile
-            if (this.failMessage.mobile) {
-                $('.input-mobile, .error-mobile').addClass('is-invalid');
-                this.mobileErrorMsg = this.failMessage.mobile[0];
+                if (this.regErrorMsg.mobile) {
+                    this.mobileError = true;
+                    $('#error-mobile .msg-text').text('');
+                    $('#input-mobile, #error-mobile').removeClass('is-valid');
+                    $('#input-mobile, #error-mobile').addClass('is-invalid');
+                } else {
+                    this.mobileError = false;
+                    $('#input-mobile, #error-mobile').removeClass('is-valid is-invalid');
+                }
+            }
+            if (status === 401) {
+                this.othersError = true;
+            } else {
+                this.othersError = false;
             }
         }
     }

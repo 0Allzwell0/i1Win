@@ -3,7 +3,8 @@ const getters = {
     GetUserData: state => state.userData,
     GetIsUsed: state => state.isUsed,
     GetHttpStatus: state => state.httpStatus,
-    GetFailMessage: state => state.failMessage
+    GetLoginErrorMsg: state => state.loginErrorMsg,
+    GetRegErrorMsg: state => state.regErrorMsg
 }
 
 export default getters

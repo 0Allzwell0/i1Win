@@ -7,7 +7,12 @@ const mutations = {
         state.userData = null
         state.requestState = false
         state.httpStatus = null
-        state.failMessage = null
+        state.loginError = {
+            login: null,
+            username: null,
+            password: null,
+            others: null
+        }
 
         setLocalStorage('isLogined', 'false')
         setLocalStorage('userData', null)
@@ -19,34 +24,102 @@ const mutations = {
         state.userData = null
         state.requestState = true
         state.httpStatus = null
-        state.failMessage = null
+        state.loginErrorMsg = {
+            login: null,
+            username: null,
+            password: null,
+            others: null
+        }
 
         setLocalStorage('isLogined', 'false')
         setLocalStorage('userData', null)
     },
 
-    // ================================================================ Login Success && Register Success
-    [type.SUCCESS_AUTH](state, { data, status }) {
+    // ================================================================ Login Success
+    [type.LOGIN_SUCCESS](state, { data, status }) {
         state.isLogined = true
         state.userData = data
         state.requestState = false
         state.httpStatus = status
-        state.failMessage = null
+        state.loginErrorMsg = {
+            login: null,
+            username: null,
+            password: null,
+            others: null
+        }
 
         setLocalStorage('isLogined', 'true')
         setLocalStorage('userData', JSON.stringify(state.userData))
     },
 
-    // ================================================================ Login Fail && Register Fail
-    [type.FAIL_AUTH](state, { data, status }) {
+    // ================================================================ Login Fail
+    [type.LOGIN_FAIL](state, { data, status }) {
         state.isLogined = false
         state.userData = null
         state.requestState = false
         state.httpStatus = status
-        state.failMessage = data
+        if (status === 400) {
+            if (data.login) {
+                state.loginErrorMsg.login = data.login
+            }
+            if (data.username) {
+                state.loginErrorMsg.username = data.username
+            }
+            if (data.password) {
+                state.loginErrorMsg.password = data.password
+            }
+        } else {
+            state.loginErrorMsg.others = data
+        }
 
         setLocalStorage('isLogined', 'false')
         setLocalStorage('userData', null)
+    },
+
+    // ================================================================ Register Success
+    [type.REGISTER_SUCCESS](state, { data, status }) {
+        state.isLogined = true
+        state.userData = data
+        state.requestState = false
+        state.httpStatus = status
+        state.regErrorMsg = {
+            username: null,
+            password: null,
+            confirm_psw: null,
+            fullname: null,
+            mobile: null
+        }
+
+        setLocalStorage('isLogined', 'true')
+    },
+
+    // ================================================================ Register Fail
+    [type.REGISTER_FAIL](state, { data, status }) {
+        state.isLogined = false
+        state.userData = null
+        state.requestState = false
+        state.httpStatus = status
+        if (status === 400) {
+            if (data.username) {
+                state.regErrorMsg.username = data.username
+            }
+            if (data.password) {
+                state.regErrorMsg.password = data.password
+            }
+            if (data.password_confirmation) {
+                state.regErrorMsg.confirm_psw = data.password_confirmation
+            }
+            if (data.fullname) {
+                state.regErrorMsg.fullname = data.fullname
+            }
+            if (data.mobile) {
+                state.regErrorMsg.mobile = data.mobile
+            }
+        } else {
+            state.regErrorMsg.others = data
+        }
+
+        setLocalStorage('isLogined', 'false')
     },
 
     // ================================================================ Check Success

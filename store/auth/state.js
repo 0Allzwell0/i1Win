@@ -1,20 +1,23 @@
 const state = () => ({
     isLogined: false,
-    userData: {
-        websiteID: null,
-        machineID: null,
-        accountID: null,
-        username: 'Alexander',
-        fullname: "Allzwell",
-        birthday: "1990-09-16",
-        email: "jxfrontend@gmail.com",
-        lineID: 'jiexun@line_id',
-        mobile: "0800956956",
-        gender: "1"
-    },
+    userData: null,
     requestState: null,
     httpStatus: null,
-    failMessage: null
+    loginErrorMsg: {
+        login: null,
+        username: null,
+        password: null,
+        others: null
+    },
+    regErrorMsg: {
+        username: null,
+        password: null,
+        confirm_psw: null,
+        fullname: null,
+        mobile: null,
+        others: null
+    },
+    isUsed: false
 })
 
 export default state

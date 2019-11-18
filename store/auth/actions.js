@@ -26,9 +26,9 @@ const actions = {
         commit(types.REQUEST_AUTH)
         const response = await AuthService.login(payload)
         if (response.status === 200) {
-            commit(types.SUCCESS_AUTH, { data: response.data, status: response.status })
-        } else {
-            commit(types.FAIL_AUTH, { data: response.data, status: response.status })
+            commit(types.LOGIN_SUCCESS, { data: response.data, status: response.status })
+        } else if (response.status === 400) {
+            commit(types.LOGIN_FAIL, { data: response.data, status: response.status })
         }
     },
 
@@ -45,9 +45,9 @@ const actions = {
         commit(types.REQUEST_AUTH)
         const response = await AuthService.register(payload)
         if (response.status === 200) {
-            commit(types.SUCCESS_AUTH, { data: response.data, status: response.status })
+            commit(types.REGISTER_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.FAIL_AUTH, { data: response.data, status: response.status })
+            commit(types.REGISTER_FAIL, { data: response.data, status: response.status })
         }
     },
 

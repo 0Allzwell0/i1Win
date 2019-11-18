@@ -21,6 +21,10 @@
                     v-model="myUsername"
                 />
             </div>
+            <!-- Username Error Message-->
+            <ul class="login-error-msg" v-if="usernameError">
+                <li class="error-msg" v-for="(item, index) in loginErrorMsg.username" :key="`usn-${index}`">{{ item }}</li>
+            </ul>
 
             <!-- Password -->
             <div class="login-input-wrapper">
@@ -34,7 +38,24 @@
                 />
                 <img class="login-eye-icon" :src="passwordEyes" @click="showPassword()" />
             </div>
-            <div class="login-error-msg" v-if="loginFail">{{ failMessage }}</div>
+            <ul class="login-error-msg">
+                <!-- Password Error Message-->
+                <li
+                    class="error-msg"
+                    v-show="passwordError"
+                    v-for="(item, index) in loginErrorMsg.password"
+                    :key="`psw-${index}`"
+                >{{ item }}</li>
+                <!-- Login Error Message-->
+                <li
+                    class="error-msg"
+                    v-show="loginError"
+                    v-for="(item, index) in loginErrorMsg.login"
+                    :key="`login-${index}`"
+                >{{ item }}}</li>
+            </ul>
+            <!-- Others Error Message-->
+            <div class="login-error-msg" v-if="othersError">{{ loginErrorMsg.others }}</div>
 
             <!-- Forgot Password -->
             <span class="forgot-password" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
@@ -62,7 +83,7 @@ export default {
         ...mapGetters('auth', {
             isLogined: 'GetLogined',
             httpStatus: 'GetHttpStatus',
-            failMessage: 'GetFailMessage'
+            loginErrorMsg: 'GetLoginErrorMsg'
         })
     },
     data() {
@@ -71,7 +92,10 @@ export default {
             myPassword: null,
             passwordEyes: '/images/close_eye.png',
             showForgotMsg: false,
-            loginFail: false
+            usernameError: false,
+            passwordError: false,
+            loginError: false,
+            othersError: false
         };
     },
     methods: {
@@ -98,10 +122,12 @@ export default {
             // Show Loading Animation
             this.$nuxt.$loading.start();
 
-            this.$store.dispatch('auth/login', {
+            this.$store
+                .dispatch('auth/login', {
                     username: this.myUsername,
                     password: this.myPassword
-                }).then(() => {
+                })
+                .then(() => {
                     // If Login Success, Go To "Home" Page.
                     if (this.isLogined) {
                         this.$router.push(this.$i18n.path(''));
@@ -110,13 +136,42 @@ export default {
                     // If Login Fail, Show Error Message
                     if (this.httpStatus && this.httpStatus !== 200) {
                         this.$nuxt.$loading.finish();
-                        setTimeout(() => {
-                            this.loginFail = true;
-                        }, 200);
+                        this.showErrorMsg(this.httpStatus);
                     } else {
-                        this.loginFail = false;
+                        this.usernameError = false;
+                        this.passwordError = false;
+                        this.loginError = false;
+                        this.othersError = false;
                     }
                 });
+        },
+
+        // Show Error Message
+        showErrorMsg(status) {
+            if (status === 400) {
+                setTimeout(() => {
+                    if (this.loginErrorMsg.username) {
+                        this.usernameError = true;
+                    } else {
+                        this.usernameError = false;
+                    }
+                    if (this.loginErrorMsg.password) {
+                        this.passwordError = true;
+                    } else {
+                        this.passwordError = false;
+                    }
+                    if (this.loginErrorMsg.login) {
+                        this.loginError = true;
+                    } else {
+                        this.loginError = false;
+                    }
+                }, 200);
+            }
+            if (status === 401 || status === 403) {
+                this.othersError = true;
+            } else {
+                this.othersError = false;
+            }
         }
     }
 };
@@ -203,13 +258,12 @@ export default {
             color: $color-red;
             font-weight: bold;
             text-align: center;
-            margin: -24px 0 25px 0;
+            margin: -24px 0 6px 0;
         }
         .forgot-password {
             font-size: 14px;
             font-weight: bold;
             align-self: flex-end;
-            margin-top: -15px;
         }
         .forgot-prompt-wrapper {
             display: none;
