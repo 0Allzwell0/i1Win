@@ -99,6 +99,9 @@ export default {
     computed: {
         ...mapGetters('user', {
             jackpot: 'GetJackpot'
+        }),
+        ...mapGetters('auth', {
+            isLogined: 'GetLogined'
         })
     },
     data() {

@@ -35,6 +35,20 @@ const mutations = {
         setLocalStorage('userData', null)
     },
 
+    // ================================================================ Get Login State
+    [type.GET_LOGIN_STATE](state) {
+        state.isLogined = (getLocalStorage('isLogined') === 'true') ? true : false
+        state.userData = getLocalStorage('userData')
+        state.requestState = false
+        state.httpStatus = null
+        state.loginError = {
+            login: null,
+            username: null,
+            password: null,
+            others: null
+        }
+    },
+
     // ================================================================ Login Success
     [type.LOGIN_SUCCESS](state, { data, status }) {
         state.isLogined = true
@@ -150,6 +164,11 @@ const mutations = {
 // Set Local Storage
 function setLocalStorage(key, value) {
     localStorage.setItem(key, value)
+}
+
+// Get Local Storage
+function getLocalStorage(key) {
+    return localStorage.getItem(key)
 }
 
 export default mutations

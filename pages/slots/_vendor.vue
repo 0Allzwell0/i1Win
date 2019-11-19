@@ -42,7 +42,7 @@
             </ul>
 
             <!-- Games List -->
-            <my-slots-game-list />
+            <my-slots-game-list ref="child" :tab="tab" />
         </div>
     </main>
 </template>
@@ -70,20 +70,22 @@ export default {
         return {
             vendorList: ['plt', 'spg', 'ygg', 'gpi', 'bng', 'jok', 'ifun', 'ks9', 'cq9', 'mg', 'dt'],
             typeList: ['All', 'Popular', 'New', 'Jackpot', 'Table'],
+            productCode: null,
+            tab: 'all',
             showVendor: false,
             showType: false
         };
     },
     mounted() {
         let _this = this;
-        let slotsCode = this.$route.params.vendor;
+        this.productCode = this.$route.params.vendor;
 
         // Set Game Tab CSS
         $('.tab-container').removeClass('active');
         $('.tab-slots').addClass('active');
 
         // Show Tthe Vendor's Image Of The Selected Game
-        $('.slots-games-vendor-btn').html(`<img class="btn-image" src="/images/wallet_${slotsCode}.png" />`);
+        $('.slots-games-vendor-btn').html(`<img class="btn-image" src="/images/wallet_${this.productCode}.png" />`);
 
         // Show Default Game Type => "All"
         $('.slots-games-type-btn').text(this.$t('slots.all'));
@@ -133,6 +135,8 @@ export default {
         // Select Game Type
         selectType(type) {
             $('.slots-games-type-btn').text(type);
+            this.tab = type.toLowerCase();
+            this.$refs.child.loadGames(this.productCode, 'new');
         }
     }
 };

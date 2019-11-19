@@ -52,7 +52,7 @@
                     v-show="loginError"
                     v-for="(item, index) in loginErrorMsg.login"
                     :key="`login-${index}`"
-                >{{ item }}}</li>
+                >{{ item }}</li>
             </ul>
             <!-- Others Error Message-->
             <div class="login-error-msg" v-if="othersError">{{ loginErrorMsg.others }}</div>

@@ -4,6 +4,9 @@ export const INITIAL_STATE = 'INITIAL_STATE'
 // ================================================================ Request Type
 export const REQUEST_AUTH = "REQUEST_AUTH"
 
+// ================================================================ Get Login State
+export const GET_LOGIN_STATE = "GET_LOGIN_STATE"
+
 // ================================================================ Login Success
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 

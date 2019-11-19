@@ -21,14 +21,20 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            gamesList: 'GetGamesList',
+            gameUrl: 'GetGameURL'
         })
     },
     components: {
         MyFreePlayModal
     },
+    props: { tab: { type: String } },
     data() {
         return {
-            allDataSize: new Array(100),
+            productCode: null,
+            allDataSize: null,
             pageSize: 24,
             lastPageSize: null,
             totalPages: null,
@@ -39,40 +45,44 @@ export default {
         };
     },
     mounted() {
-        let _this = this;
+        this.productCode = this.$route.params.vendor;
 
-        this.loadGames();
+        if (!this.isLogined) {
+            //this.$store.commit('auth/GET_LOGIN_STATE');
+        }
+
+        this.loadGames(this.productCode, this.tab);
 
         // Selected Page or Go Prev of Go Next
-        $('.slots-game-page-selector').click(function(el) {
-            if (_this.allDataSize) {
+        $('.slots-game-page-selector').click(el => {
+            if (this.allDataSize) {
                 // 點擊到的頁碼
                 el.preventDefault();
                 let className = el.target.nodeName;
                 let choosePage = el.target.dataset.page;
 
                 if (className === 'LI') {
-                    _this.currentPage = Number(choosePage);
+                    this.currentPage = Number(choosePage);
                 } else if (className === 'BUTTON') {
-                    if (choosePage === 'prev' && _this.currentPage !== 1) {
-                        _this.currentPage = _this.currentPage - 1;
-                    } else if (choosePage === 'next' && _this.currentPage !== _this.totalPages) {
-                        _this.currentPage = _this.currentPage + 1;
+                    if (choosePage === 'prev' && this.currentPage !== 1) {
+                        this.currentPage = this.currentPage - 1;
+                    } else if (choosePage === 'next' && this.currentPage !== this.totalPages) {
+                        this.currentPage = this.currentPage + 1;
                     }
                 }
 
                 $('.slots-game-list-container').empty();
                 $('.slots-game-num-btns-wrapper').empty();
 
-                _this.setSelector();
-                _this.renderGames();
+                this.setSelector();
+                this.renderGames();
             }
         });
     },
     methods: {
         // Initial Data
         initialData() {
-            this.allDataSize = new Array(100);
+            this.allDataSize = null;
             this.pageSize = 24;
             this.lastPageSize = null;
             this.totalPages = null;
@@ -88,22 +98,18 @@ export default {
         },
 
         // Load Games
-        loadGames() {
+        loadGames(productCode, tab) {
             this.initialData();
 
-            for (let i = 0; i < this.allDataSize.length; i++) {
-                this.allDataSize[i] = {
-                    id: 205,
-                    name: 'Zhao Cai Tong Zi',
-                    code: 'zhao-cai-tong-zi',
-                    provider: 'playtech',
-                    image: 'http://v2.96star.com/img/slots/playtech/zhao-cai-tong-zi.png'
-                };
-            }
-            this.lastPageSize = this.allDataSize.length % this.pageSize;
+            this.$store
+                .dispatch(this.isLogined ? 'game/getGamesAfter' : 'game/getGamesBefore', { productCode: 'playtech', tab })
+                .then(() => {
+                    this.allDataSize = this.gamesList;
+                    this.lastPageSize = this.allDataSize.length % this.pageSize;
 
-            this.setSelector();
-            this.renderGames();
+                    this.setSelector();
+                    this.renderGames();
+                });
         },
 
         setSelector() {
@@ -187,9 +193,7 @@ export default {
             for (let i = startIndex; i < endIndex; i++) {
                 $('.slots-game-list-container').append(
                     `<li class="slots-game-list-item">
-                        <img class="slots-game-list-item-img" id="${this.allDataSize[i].id}" src="${this.allDataSize[i].image}" alt="${
-                        this.allDataSize[i].name
-                    }" />
+                        <img class="slots-game-list-item-img" id="${this.allDataSize[i].id}" src="${this.allDataSize[i].image}" alt="${this.allDataSize[i].name}" />
                     </li>`
                 );
             }
@@ -216,7 +220,18 @@ export default {
                         return alert('The game is unavailable.');
                     }
 
-                    _this.checkBalance(gameID);
+                    _this.$store
+                        .dispatch('game/getGmeURL', {
+                            isDownload: false,
+                            category: 'slots',
+                            productCode: gameName,
+                            gameId: gameID
+                        })
+                        .then(() => {
+                            window.open(this.gameUrl);
+                        });
+
+                    // _this.checkBalance(gameID);
                 } else {
                     _this.showModal(gameID, gameName, gameImage);
                 }
@@ -224,9 +239,7 @@ export default {
         },
 
         // Check Balance
-        checkBalance(code) {
-            window.open('');
-        },
+        checkBalance(code) {},
 
         // Show Modal
         showModal(id, name, imgURL) {
