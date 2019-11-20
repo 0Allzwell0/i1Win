@@ -4,7 +4,7 @@
         <h1 class="article-title">{{ articleHTML.name }}</h1>
 
         <!-- Content -->
-        <div class="article-html">{{ articleHTML.mobile }}</div>
+        <div class="article-html" v-html="articleHTML.mobile" />
     </main>
 </template>
 <script>
@@ -17,37 +17,45 @@ export default {
         })
     },
     mounted() {
-        let articleCode = null;
-        let routeParams = this.$route.params.type;
+        this.getHTML(this.$route.params.type);
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.getHTML(to.params.type);
+    },
+    methods: {
+        // Get Article Content
+        getHTML(articleName) {
+            let articleCode = null;
 
-        switch (routeParams) {
-            case 'about-us': {
-                articleCode = 'ABOUTUS_EN';
-                break;
+            switch (articleName) {
+                case 'about-us': {
+                    articleCode = 'ABOUTUS_EN';
+                    break;
+                }
+                case 'how-to-join': {
+                    articleCode = 'HOWTOJOIN';
+                    break;
+                }
+                case 'support': {
+                    articleCode = 'SUPPORT';
+                    break;
+                }
+                case 'responsible-gaming': {
+                    articleCode = 'RESPONSIBLE';
+                    break;
+                }
+                case 'terms-of-use': {
+                    articleCode = 'TERM';
+                    break;
+                }
+                case 'privacy-policy': {
+                    articleCode = 'PRIVACY';
+                    break;
+                }
             }
-            case 'how-to-join': {
-                articleCode = 'HOWTOJOIN';
-                break;
-            }
-            case 'support': {
-                articleCode = 'SUPPORT';
-                break;
-            }
-            case 'responsible-gaming': {
-                articleCode = 'RESPONSIBLE';
-                break;
-            }
-            case 'terms-of-use': {
-                articleCode = 'TERM';
-                break;
-            }
-            case 'privacy-policy': {
-                articleCode = 'PRIVACY';
-                break;
-            }
+
+            this.$store.dispatch('user/getArticles', articleCode);
         }
-
-        this.$store.dispatch('user/getArticles', articleCode);
     }
 };
 </script>
@@ -57,7 +65,7 @@ export default {
     background-image: $background_img;
     background-size: cover;
     overflow: auto;
-    padding: 0 10px 0 20px;
+
     .article-title {
         width: 100%;
         font-family: $font-family;
@@ -69,7 +77,7 @@ export default {
     .article-html {
         font-family: $font-family;
         font-size: 16px;
-        margin: 35px 10px 90px 10px;
+        margin: 35px 20px 90px 20px;
 
         h4,
         h3 {

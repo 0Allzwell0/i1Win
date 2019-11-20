@@ -25,10 +25,10 @@
             </div>
             <ul class="wallet-list-container">
                 <li class="wallet-list-item-wrapper" v-for="(item, index) in walletList" :key="`wallet-${index}`">
-                    <span class="wallet-list-item-name">{{ item.name }}</span>
-                    <div class="wallet-list-item-container">
+                    <span class="wallet-list-item-name">{{ item.code }}</span>
+                    <div class="wallet-list-item-container" :id="(item.code).toLowerCase()">
                         <span class="wallet-list-item-currency">THB</span>
-                        <span class="wallet-list-item-amount">{{ item.amount.toFixed(2) }}</span>
+                        <span class="wallet-list-item-amount">0.00</span>
                     </div>
                 </li>
             </ul>
@@ -41,7 +41,8 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters('wallet', {
-            wallets: 'GetWallets'
+            wallets: 'GetWallets',
+            balance: 'GetBalance'
         })
     },
     data() {
@@ -55,10 +56,61 @@ export default {
         };
     },
     mounted() {
-        this.resetWallet();
+        this.getWallets();
         this.routeName();
     },
     methods: {
+        // Get Wallets
+        getWallets() {
+            let productCode = null;
+            let isActive = 1;
+            let isBlocked = 1;
+
+            this.$store.dispatch('wallet/getWallets').then(() => {
+                this.walletList = new Array(this.wallets.length - 1);
+
+                for (let i = 0; i < this.wallets.length; i++) {
+                    if (this.wallets[i].code === 'MAIN') {
+                        this.haveMain = true;
+                    }
+
+                    if (this.haveMain) {
+                        this.walletList[i - 1] = this.wallets[i];
+                    } else {
+                        this.walletList[i] = this.wallets[i];
+                    }
+                }
+
+                // Get Wallet Balance
+                for (let j = 0; j < this.walletList.length; i++) {
+                    isActive = this.walletList[i].isActive;
+                    isBlocked = this.walletList[i].isBlocked;
+                    productCode = this.walletList[i].code;
+
+                    if (isActive === 1 && isBlocked === 1) {
+                        this.$store.dispatch('wallet/getBalance', { productCode: productCode }).then(() => {
+                            $(`#${productCode} .wallet-list-item-amount`).text(this.balance.toFixed(2));
+                        });
+                    }
+                }
+            });
+        },
+
+        // Get Route Name
+        routeName() {
+            this.route_name = this.$route.name;
+
+            if (this.route_name.indexOf('deposit') !== -1) {
+                this.route_name = 'deposit';
+            } else if (this.route_name.indexOf('withdrawal') !== -1) {
+                this.route_name = 'withdrawal';
+            } else if (this.route_name.indexOf('transfer') !== -1) {
+                this.route_name = 'transfer';
+            } else {
+                this.route_name = null;
+            }
+        },
+
         // Expand Or Close Wallet List
         expandWalletList() {
             if (!this.expandWallet) {
@@ -85,48 +137,6 @@ export default {
                 }
             }
             this.expandWallet = !this.expandWallet;
-        },
-
-        // Get Route Name
-        routeName() {
-            this.route_name = this.$route.name;
-
-            if (this.route_name.indexOf('deposit') !== -1) {
-                this.route_name = 'deposit';
-            } else if (this.route_name.indexOf('withdrawal') !== -1) {
-                this.route_name = 'withdrawal';
-            } else if (this.route_name.indexOf('transfer') !== -1) {
-                this.route_name = 'transfer';
-            } else {
-                this.route_name = null;
-            }
-        },
-
-        // Get "Main" & "Total" Wallets & Set "Wallet List"
-        resetWallet() {
-            this.haveMain = false;
-            this.walletList = new Array(this.wallets.length - 1);
-
-            for (let i = 0; i < this.wallets.length; i++) {
-                // Get "Main" Wallet
-                if (this.wallets[i].name === 'Main') {
-                    this.mainWallet = this.wallets[i].amount;
-                    this.mainWallet = this.mainWallet.toFixed(2);
-                    this.haveMain = true;
-                }
-
-                // Set "Wallet List"
-                if (this.haveMain) {
-                    this.walletList[i - 1] = this.wallets[i];
-                } else {
-                    this.walletList[i] = this.wallets[i];
-                }
-
-                // Calculate "Total" Wallet
-                this.totalWallet += this.wallets[i].amount;
-            }
-
-            this.totalWallet = this.totalWallet.toFixed(2);
         }
     }
 };

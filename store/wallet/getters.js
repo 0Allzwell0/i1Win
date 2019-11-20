@@ -4,7 +4,7 @@ const getters = {
     GetLimits: state => state.limits,
     GetWallets: state => state.wallets,
     GetBanksList: state => state.banksList,
-    GetAmount: state => state.amount,
+    GetBalance: state => state.balance,
     GetBonus: state => state.bonus,
     GetShowPromptMsg: state => state.showPromptMsg
 }

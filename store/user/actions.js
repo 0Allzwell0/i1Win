@@ -49,7 +49,7 @@ const actions = {
 
     // Get Banners
     async getBanners({ commit }) {
-        const response = await UserService.getBanners(WEBSITE_ID)
+        const response = await UserService.getBanners()
         if (response.status === 200) {
             commit(types.GET_BANNERS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -59,7 +59,7 @@ const actions = {
 
     // Get Announcement
     async getAnnouncement({ commit }) {
-        const response = await UserService.getAnnouncement(WEBSITE_ID)
+        const response = await UserService.getAnnouncement()
         if (response.status === 200) {
             commit(types.GET_ANNOUNCEMENT_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -69,7 +69,7 @@ const actions = {
 
     // Get Jackpot
     async getJackpot({ commit }) {
-        const response = await UserService.getJackpot(WEBSITE_ID)
+        const response = await UserService.getJackpot()
         if (response.status === 200) {
             commit(types.GET_JACKPOT_SUCCESS, { data: response.data, status: response })
         } else {
@@ -79,7 +79,7 @@ const actions = {
 
     // Get Promotions
     async getPromotions({ commit }) {
-        const response = await UserService.getPromotions(1, WEBSITE_ID)
+        const response = await UserService.getPromotions()
         if (response.status === 200) {
             commit(types.GET_PROMOTIONS_SUCCESS, { data: response.data, status: response.status })
         } else {
@@ -89,7 +89,7 @@ const actions = {
 
     // Get Article
     async getArticles({ commit }, code) {
-        const response = await UserService.getArticles(code, 1, WEBSITE_ID)
+        const response = await UserService.getArticles(code)
         if (response.status === 200) {
             commit(types.GET_ARTICLE_SUCCESS, { data: response.data, status: status })
         } else {

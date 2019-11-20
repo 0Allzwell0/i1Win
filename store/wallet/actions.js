@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64';
-import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
+import { WEBSITE_ID } from '~/environment'
 import * as types from './type'
 import WalletService from '~/service/wallet'
 
@@ -11,8 +11,7 @@ function getExpTimestamp() {
 // Get CUI (Base64_Encode([website_id, account_id]))
 function getCUI() {
     let json = JSON.stringify({
-        website_id: WEBSITE_ID,
-        account_id: ACCOUNT_ID
+        website_id: WEBSITE_ID
     })
     let cui = localStorage.getItem('CUI') || Base64.encode(json)
     return cui
@@ -52,7 +51,7 @@ const actions = {
         const payload = { cui, exp }
         const response = await WalletService.getDepositBanks(payload)
         if (response.status === 200) {
-            commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data.bankAccounts, status: response.status })
+            commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data, status: response.status })
         } else {
             commit(types.GET_BANKS_LIST_FAIL, response.status)
         }
@@ -65,22 +64,22 @@ const actions = {
         const payload = { cui, exp }
         const response = await WalletService.getWithdrawalBanks(payload)
         if (response.status === 200) {
-            commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data.bankAccounts, status: response.status })
+            commit(types.GET_BANKS_LIST_SUCCESS, { date: response.data, status: response.status })
         } else {
             commit(types.GET_BANKS_LIST_FAIL, response.status)
         }
     },
 
-    // Get Amount
-    async getAmount({ commit }, code) {
+    // Get Balance
+    async getBalance({ commit }, productCode) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { cui, code, exp }
-        const response = await WalletService.getAmount(payload)
+        const payload = { cui, exp }
+        const response = await WalletService.getAmount(payload, productCode)
         if (response.status === 200) {
-            commit(types.GET_AMOUNT_SUCCESS, response.data)
+            commit(types.GET_BALANCE_SUCCESS, response.data)
         } else {
-            commit(types.GET_AMOUNT_FAIL, response.status)
+            commit(types.GET_BALANCE_FAIL, response.status)
         }
     },
 

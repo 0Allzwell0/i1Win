@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Language from '~/middleware/getLanguage'
 import JWT from '~/middleware/jwt'
-import { API_DOMAIN } from '~/environment'
+import { API_DOMAIN, WEBSITE_ID } from '~/environment'
 
 class UserService {
     // Edit Profile
@@ -10,11 +10,17 @@ class UserService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post('api/v1/members/updateProfile', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: 'api/member/updateProfile',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                }
+                },
+                data: payload
             })
         } catch (error) {
             return error.response
@@ -29,11 +35,17 @@ class UserService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post('/api/v1/members/changePassword', payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: 'api/member/changePassword',
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                }
+                },
+                data: payload
             })
         } catch (error) {
             return error.response
@@ -43,7 +55,7 @@ class UserService {
     }
 
     // Get Banners
-    static async getBanners(websiteID) {
+    static async getBanners() {
         let response = null
 
         try {
@@ -57,7 +69,7 @@ class UserService {
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    website_id: websiteID
+                    website_id: WEBSITE_ID
                 }
             })
         } catch (error) {
@@ -68,7 +80,7 @@ class UserService {
     }
 
     // Get Announcement
-    static async getAnnouncement(websiteID) {
+    static async getAnnouncement() {
         let response = null
 
         try {
@@ -82,7 +94,7 @@ class UserService {
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    website_id: websiteID
+                    website_id: WEBSITE_ID
                 }
             })
         } catch (error) {
@@ -93,21 +105,21 @@ class UserService {
     }
 
     // Get Jackpot
-    static async getJackpot(websiteID) {
+    static async getJackpot() {
         let response = null
 
         try {
             response = await axios({
                 method: 'GET',
                 timeout: 1000,
-                url: 'res/announcements',
+                url: 'res/jackpot',
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    website_id: websiteID
+                    website_id: WEBSITE_ID
                 }
             })
         } catch (error) {
@@ -118,7 +130,7 @@ class UserService {
     }
 
     // Get Promotions
-    static async getPromotions(code, websiteID) {
+    static async getPromotions() {
         let response = null
 
         try {
@@ -132,8 +144,8 @@ class UserService {
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    code: code,
-                    website_id: websiteID
+                    code: 1,
+                    website_id: WEBSITE_ID
                 }
             })
         } catch (error) {
@@ -144,7 +156,7 @@ class UserService {
     }
 
     // Get Article
-    static async getArticles(code, isMobile, websiteID) {
+    static async getArticles(code) {
         let response = null
 
         try {
@@ -159,8 +171,8 @@ class UserService {
                 },
                 params: {
                     code: code,
-                    is_mobile: isMobile,
-                    website_id: websiteID
+                    is_mobile: 1,
+                    website_id: WEBSITE_ID
                 }
             })
         } catch (error) {

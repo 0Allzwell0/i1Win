@@ -14,6 +14,19 @@ const mutations = {
         state.httpStatus = status
     },
 
+    // ================================================================ Get Amount
+    // Get Amount Success
+    [type.GET_BALANCE_SUCCESS](state, { data, status }) {
+        state.amount = data.amount.toFixed(2)
+        state.httpStatus = null
+    },
+
+    // Get Amount Fail
+    [type.GET_BALANCE_FAIL](state, status) {
+        state.amount = null
+        state.httpStatus = status
+    },
+
     // ================================================================ Get Limits
     // Get Limits Success
     [type.GET_LIMITS_SUCCESS](state, { data, status }) {
@@ -30,26 +43,13 @@ const mutations = {
     // ================================================================ Get Banks List
     // Get Banks List Success
     [type.GET_BANKS_LIST_SUCCESS](state, { data, status }) {
-        state.banksList = data
+        state.banksList = data.bankAccounts
         state.httpStatus = status
     },
 
     // Get Banks List Fail
     [type.GET_BANKS_LIST_FAIL](state, status) {
         state.banksList = null
-        state.httpStatus = status
-    },
-
-    // ================================================================ Get Amount
-    // Get Amount Success
-    [type.GET_AMOUNT_SUCCESS](state, { data, status }) {
-        state.amount = data.amount.toFixed(2)
-        state.httpStatus = null
-    },
-
-    // Get Amount Fail
-    [type.GET_AMOUNT_FAIL](state, status) {
-        state.amount = null
         state.httpStatus = status
     },
 

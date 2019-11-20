@@ -4,10 +4,10 @@ const state = () => ({
     announcements: null,
     jackpot: parseFloat(1830082162),
     promotions: null,
-    articles: {
+    articles: [{
         name: null,
         mobile: null
-    }
+    }]
 })
 
 export default state

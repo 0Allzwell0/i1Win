@@ -199,9 +199,9 @@ export default {
     },
     methods: {
         // Get Selected Bank
-        getBank(accountNumber, bank, bankOK) {
+        getBank(accountNumber, name, bankOK) {
             if (bankOK) {
-                $('.deposit-bank-name-value').text(bank);
+                $('.deposit-bank-name-value').text(name);
                 $('.deposit-bank-account-value').text(accountNumber);
                 $('.deposit-detail-container').addClass('show');
             } else {

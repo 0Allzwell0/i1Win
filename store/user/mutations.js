@@ -103,7 +103,7 @@ const mutations = {
     // =========================================================== Get Article
     // Get Article Success
     [type.GET_ARTICLE_SUCCESS](state, { data, status }) {
-        state.articles = data
+        state.articles = data[0]
         state.httpStatus = status
     },
 

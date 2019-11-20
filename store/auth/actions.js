@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64';
-import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
+import { WEBSITE_ID } from '~/environment'
 import * as types from './type'
 import AuthService from '~/service/auth'
 

@@ -7,10 +7,10 @@
             <li
                 class="bank-item"
                 v-for="(item, index) in banksList"
-                :key="`bank_${index}`"
-                @click.stop="selectBank(item.accountNumber, item.bank, item.name)"
+                :key="`bank-${index}`"
+                @click.stop="selectBank(item.accountNumber, item.name, item.bank)"
             >
-                <img class="bank-img" :src="`/images/bank_${item.name}.png`" />
+                <img class="bank-img" :src="`/images/bank_${item.bank}.png`" />
             </li>
         </ul>
     </div>
@@ -46,9 +46,9 @@ export default {
         },
 
         // Select Deposit Bank
-        selectBank(accountNumber, bank, name) {
+        selectBank(accountNumber, name, bank) {
             if (bank !== 'none') {
-                $('.bank-input').html(`<img class="bank-img" src="/images/bank_${name}.png" />`);
+                $('.bank-input').html(`<img class="bank-img" src="/images/bank_${bank}.png" />`);
                 this.bankOK = true;
             } else {
                 $('.bank-input').text(this.$t('common.please_select'));
@@ -56,7 +56,7 @@ export default {
             }
 
             this.showBankList = false;
-            this.$emit('getBank', accountNumber, bank, this.bankOK);
+            this.$emit('getBank', accountNumber, name, this.bankOK);
         }
     }
 };

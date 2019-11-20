@@ -90,7 +90,7 @@ export default {
         },
 
         // Get From Game
-        getFromGame(game, amount) {
+        getFromGame(game) {
             this.fromGame = game;
             if (this.fromGame === 'none') {
                 this.fromGameOK = false;

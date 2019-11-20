@@ -11,8 +11,8 @@ export const GET_BONUS_SUCCESS = 'GET_BONUS_SUCCESS'
 export const GET_BONUS_FAIL = 'GET_BONUS_FAIL'
 
 // ======================================================================== Get Amount
-export const GET_AMOUNT_SUCCESS = 'GET_AMOUNT_SUCCESS'
-export const GET_AMOUNT_FAIL = 'GET_AMOUNT_FAIL'
+export const GET_BALANCE_SUCCESS = 'GET_BALANCE_SUCCESS'
+export const GET_BALANCE_FAIL = 'GET_BALANCE_FAIL'
 
 // ======================================================================== Get Banks List
 export const GET_BANKS_LIST_SUCCESS = 'GET_BANKS_LIST_SUCCESS'
