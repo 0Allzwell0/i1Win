@@ -24,7 +24,7 @@ export default {
         }),
         ...mapGetters('game', {
             gamesList: 'GetGamesList',
-            gameUrl: 'GetGameURL'
+            gameURL: 'GetGameURL'
         })
     },
     components: {
@@ -47,11 +47,9 @@ export default {
     mounted() {
         this.productCode = this.$route.params.vendor;
 
-        if (!this.isLogined) {
-            //this.$store.commit('auth/GET_LOGIN_STATE');
-        }
-
-        this.loadGames(this.productCode, this.tab);
+        setTimeout(() => {
+            this.loadGames(this.productCode, this.tab);
+        }, 100);
 
         // Selected Page or Go Prev of Go Next
         $('.slots-game-page-selector').click(el => {
@@ -221,14 +219,14 @@ export default {
                     }
 
                     _this.$store
-                        .dispatch('game/getGmeURL', {
+                        .dispatch('game/getGameURL', {
                             isDownload: false,
-                            category: 'slots',
-                            productCode: gameName,
-                            gameId: gameID
+                            category: 'Slots',
+                            productCode: _this.productCode,
+                            gameID: gameID
                         })
                         .then(() => {
-                            window.open(this.gameUrl);
+                            window.open(this.gameURL);
                         });
 
                     // _this.checkBalance(gameID);

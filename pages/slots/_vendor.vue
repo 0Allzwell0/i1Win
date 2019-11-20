@@ -81,7 +81,6 @@ export default {
         this.productCode = this.$route.params.vendor;
 
         // Set Game Tab CSS
-        $('.tab-container').removeClass('active');
         $('.tab-slots').addClass('active');
 
         // Show Tthe Vendor's Image Of The Selected Game
@@ -136,7 +135,7 @@ export default {
         selectType(type) {
             $('.slots-games-type-btn').text(type);
             this.tab = type.toLowerCase();
-            this.$refs.child.loadGames(this.productCode, 'new');
+            this.$refs.child.loadGames(this.productCode, this.tab);
         }
     }
 };

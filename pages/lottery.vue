@@ -18,7 +18,7 @@
                     <button
                         class="lottery-play-now-btn"
                         type="button"
-                        @click="openGame('thailottery', '/images/gm_thailottery.png')"
+                        @click="openGame('thailottery')"
                     >{{ $t('common.play_now') }}</button>
                 </div>
                 <img class="lottery-img" src="/images/gm_thailottery.png" />
@@ -28,22 +28,14 @@
                 <div class="lottery-item-container">
                     <span class="lottery-item-name">{{ $t('lottery.diamond') }}</span>
                     <span class="lottery-item-msg">{{ $t('lottery.diamond_msg') }}</span>
-                    <button
-                        class="lottery-play-now-btn"
-                        type="button"
-                        @click="openGame('diamond', '/images/gm_diamond.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="lottery-play-now-btn" type="button" @click="openGame('diamond')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
             <li class="lottery-item-wrapper">
                 <div class="lottery-item-container">
                     <span class="lottery-item-name">{{ $t('lottery.ruby') }}</span>
                     <span class="lottery-item-msg">{{ $t('lottery.ruby_msg') }}</span>
-                    <button
-                        class="lottery-play-now-btn"
-                        type="button"
-                        @click="openGame('ruby', '/images/gm_ruby.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="lottery-play-now-btn" type="button" @click="openGame('ruby')">{{ $t('common.play_now') }}</button>
                 </div>
                 <img class="lottery-img" src="/images/gm_ruby.png" />
             </li>
@@ -52,22 +44,27 @@
                 <div class="lottery-item-container">
                     <span class="lottery-item-name">{{ $t('lottery.sapphire') }}</span>
                     <span class="lottery-item-msg">{{ $t('lottery.sapphire_msg') }}</span>
-                    <button
-                        class="lottery-play-now-btn"
-                        type="button"
-                        @click="openGame('sapphire', '/images/gm_sapphire.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="lottery-play-now-btn" type="button" @click="openGame('sapphire')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
         </ul>
     </main>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import MyCarousel from '~/components/MyCarousel';
 import MyAnnouncement from '~/components/MyAnnouncement';
 import MyGameTab from '~/components/MyGameTab';
 
 export default {
+    computed: {
+        ...mapGetters('auth', {
+            isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            gameURL: 'GetGameURL'
+        })
+    },
     components: {
         MyCarousel,
         MyAnnouncement,
@@ -75,15 +72,23 @@ export default {
     },
     mounted() {
         // Set Game Tab CSS
-        $('.tab-container').removeClass('active');
         $('.tab-lottery').addClass('active');
     },
     methods: {
         // Open Lottery Games
-        openGame(gameName, imgURL) {
-            if (false) {
+        openGame(productCode, imgURL) {
+            if (this.isLogined) {
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        isDownload: false,
+                        category: 'Lottery',
+                        productCode
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
-                this.$router.push({ path: this.$i18n.path('login') });
+                this.$router.push(this.$i18n.path('login'));
             }
         }
     }

@@ -16,22 +16,14 @@
                 <div class="sports-item-container">
                     <span class="sports-item-name">SBOBET</span>
                     <span class="sports-item-msg">{{ $t('sports.sbo_msg') }}</span>
-                    <button
-                        class="sports-play-now-btn"
-                        type="button"
-                        @click="openGame('sbo', 'SBOBET', '/images/gm_sbobet.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="sports-play-now-btn" type="button" @click="openGame('sbo')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
             <li class="sports-item-wrapper">
                 <div class="sports-item-container">
                     <span class="sports-item-name">ONE BOOK</span>
                     <span class="sports-item-msg">{{ $t('sports.ibc_msg') }}</span>
-                    <button
-                        class="sports-play-now-btn"
-                        type="button"
-                        @click="openGame('ibc', 'ONE BOOK', '/images/gm_ibcg.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="sports-play-now-btn" type="button" @click="openGame('ibc')">{{ $t('common.play_now') }}</button>
                 </div>
                 <img class="sports-item-img" src="/images/gm_ibcg.png" />
             </li>
@@ -48,6 +40,9 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            gameURL: 'GetGameURL'
         })
     },
     components: {
@@ -57,16 +52,23 @@ export default {
     },
     mounted() {
         // Set Game Tab CSS
-        $('.tab-container').removeClass('active');
         $('.tab-sports').addClass('active');
     },
     methods: {
         // Open Sports Games
-        openGame(vendor, gameName, imgURL) {
+        openGame(productCode) {
             if (this.isLogined) {
-                window.open('');
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        isDownload: false,
+                        category: 'Sports',
+                        productCode
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
-                this.$router.push({ path: this.$i18n.path('login') });
+                tthis.$router.push(this.$i18n.path('login'));
             }
         }
     }

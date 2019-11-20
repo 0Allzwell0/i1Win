@@ -53,7 +53,11 @@
     </ul>
 </template>
 <script>
-export default {};
+export default {
+    mounted() {
+        $('.tab-container').removeClass('active');
+    }
+};
 </script>
 <style lang="scss" scoped>
 .tabs-wrapper {

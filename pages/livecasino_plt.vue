@@ -8,34 +8,22 @@
             <li class="livecasino-plt-item">
                 <img class="livecasino-plt-item-img" src="/images/plt_live_7_seat_baccarat.png" />
                 <span class="livecasino-plt-item-name">Live 7 Seat Baccarat</span>
-                <button
-                    class="livecasino-plt-item-btn"
-                    @click="openGame('7bal', 'Live 7 Seat Baccarat', '/images/plt_live_7_seat_baccarat.png')"
-                >{{ $t('common.play_now') }}</button>
+                <button class="livecasino-plt-item-btn" @click="openGame('7bal')">{{ $t('common.play_now') }}</button>
             </li>
             <li class="livecasino-plt-item">
                 <img class="livecasino-plt-item-img" src="/images/plt_baccarat_live.png" />
                 <span class="livecasino-plt-item-name">Baccarat Live</span>
-                <button
-                    class="livecasino-plt-item-btn"
-                    @click="openGame('bal', 'Baccarat Live', '/images/plt_baccarat_live.png')"
-                >{{ $t('common.play_now') }}</button>
+                <button class="livecasino-plt-item-btn" @click="openGame('bal')">{{ $t('common.play_now') }}</button>
             </li>
             <li class="livecasino-plt-item">
                 <img class="livecasino-plt-item-img" src="/images/plt_live_french_roulette.png" />
                 <span class="livecasino-plt-item-name">Live French Roulette</span>
-                <button
-                    class="livecasino-plt-item-btn"
-                    @click="openGame('rofl', 'Live French Roulette', '/images/plt_live_french_roulette.png')"
-                >{{ $t('common.play_now') }}</button>
+                <button class="livecasino-plt-item-btn" @click="openGame('rofl')">{{ $t('common.play_now') }}</button>
             </li>
             <li class="livecasino-plt-item">
                 <img class="livecasino-plt-item-img" src="/images/plt_roulette_live.png" />
                 <span class="livecasino-plt-item-name">Roulette Live</span>
-                <button
-                    class="livecasino-plt-item-btn"
-                    @click="openGame('rol', 'Roulette Live', '/images/plt_roulette_live.png')"
-                >{{ $t('common.play_now') }}</button>
+                <button class="livecasino-plt-item-btn" @click="openGame('rol')">{{ $t('common.play_now') }}</button>
             </li>
         </ul>
     </main>
@@ -47,15 +35,26 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            gameURL: 'GetGameURL'
         })
     },
     methods: {
         // Open Live Casino Playtech Games
-        openGame(vendor, gameName, imgURL) {
+        openGame(productCode) {
             if (this.isLogined) {
-                window.open('');
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        isDownload: false,
+                        category: 'Livecasino',
+                        productCode
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
-                this.$router.push({ path: this.$i18n.path('login') });
+                this.$router.push(this.$i18n.path('login'));
             }
         }
     }

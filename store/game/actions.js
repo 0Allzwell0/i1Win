@@ -55,7 +55,7 @@ const actions = {
     async getGameURL({ commit }, { isDownload, category, productCode, gameID }) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { cui, category, productCode, gameID, exp }
+        const payload = { cui, category, productCode, gameID, is_mobile: 1, exp }
         const response = await GameService.getGameURL(payload)
         if (response.status === 200) {
             if (isDownload)

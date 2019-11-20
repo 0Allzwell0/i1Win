@@ -6,7 +6,7 @@
                 <!-- 登入 (尚未登入前顯示) -->
                 <nuxt-link class="menu-btn menu-login" :to="$i18n.path('login')" v-if="!isLogined">{{ $t('common.login') }}</nuxt-link>
                 <!-- 登出 (已登入後顯示) -->
-                <nuxt-link class="menu-btn menu-logout" :to="$i18n.path('')" v-if="isLogined">{{ $t('menu.logout') }}</nuxt-link>
+                <button class="menu-btn menu-logout" @click="logout()" v-if="isLogined">{{ $t('menu.logout') }}</button>
                 <fa :icon="['fas', 'times']" class="menu-close" id="menuClose" @click="closeMenu()" />
             </div>
             <ul class="menu-list">
@@ -152,6 +152,15 @@ export default {
     },
 
     methods: {
+        // Logout
+        logout() {
+            this.$store.commit('auth/INITIAL_STATE');
+            this.closeMenu();
+            setTimeout(() => {
+                this.$router.push(this.$i18n.path(''));
+            }, 300);
+        },
+
         // Close Menu Side Bar
         closeMenu() {
             $('.menu-wrapper').removeClass('show-menu');

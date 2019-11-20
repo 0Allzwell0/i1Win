@@ -17,22 +17,14 @@
                     <img class="livecasino-item-img" src="/images/gm_asia_gaming.png" />
                     <span class="livecasino-item-name">Asia Gaming</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.ag_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('ag', 'Asia Gaming', '/images/gm_asia_gaming.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('ag')">{{ $t('common.play_now') }}</button>
                 </div>
                 <!-- SA Gaming -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/gm_sa_gaming.png" />
                     <span class="livecasino-item-name">SA Gaming</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.sa_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('sa', 'SA Gaming', '/images/gm_sa_gaming.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sa')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
             <li class="livecasino-item-wrapper">
@@ -41,22 +33,14 @@
                     <img class="livecasino-item-img" src="/images/gm_gameplay_interactive.png" />
                     <span class="livecasino-item-name">Gameplay Interactive</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.gpi_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('gpi', 'Gameplay Interactive', '/images/gm_gameplay_interactive.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('gpi')">{{ $t('common.play_now') }}</button>
                 </div>
                 <!-- Evolution Gaming -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/gm_evolution_gaming.png" />
                     <span class="livecasino-item-name">Evolution Gaming</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.evo_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('evo', 'Evolution Gaming', '/images/gm_evolution_gaming.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('evo')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
             <li class="livecasino-item-wrapper">
@@ -75,11 +59,7 @@
                     <img class="livecasino-item-img" src="/images/gm_dream_gaming.png" />
                     <span class="livecasino-item-name">Dream Gaming</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.dg_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('dg', 'Dream Gaming', '/images/gm_dream_gaming.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('dg')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
             <li class="livecasino-item-wrapper">
@@ -88,22 +68,14 @@
                     <img class="livecasino-item-img" src="/images/gm_sexy_gaming.png" />
                     <span class="livecasino-item-name">Sexy Gaming</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.sg_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('sb', 'Sexy Gaming', '/images/gm_sexy_gaming.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sb')">{{ $t('common.play_now') }}</button>
                 </div>
                 <!-- Microgaming -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/gm_microgaming.png" />
                     <span class="livecasino-item-name">Microgaming</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.mg_msg') }}</span>
-                    <button
-                        class="livecasino-play-now-btn"
-                        type="button"
-                        @click="openGame('mg', 'Microgaming', '/images/gm_microgaming.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('mg')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
         </ul>
@@ -120,6 +92,9 @@ export default {
         ...mapGetters('auth', {
             accesstoken: 'GetAccessToken',
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            gameURL: 'GetGameURL'
         })
     },
     components: {
@@ -134,9 +109,17 @@ export default {
     },
     methods: {
         // Open Live Casino Games
-        openGame(vendor, gameName, imgURL) {
+        openGame(productCode) {
             if (this.isLogined) {
-                window.open('');
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        isDownload: false,
+                        category: 'Livecasino',
+                        productCode
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
                 this.$router.push({ path: this.$i18n.path('login') });
             }

@@ -15,11 +15,7 @@
                 <div class="fishing-item-container">
                     <span class="fishing-item-name">Fishing God</span>
                     <span class="fishing-item-msg">{{ $t('fishing.fg_msg') }}</span>
-                    <button
-                        class="fishing-play-now-btn"
-                        type="button"
-                        @click="openGame(521, 'Fishing God', '/images/gm_fishing_god.png')"
-                    >{{ $t('common.play_now') }}</button>
+                    <button class="fishing-play-now-btn" type="button" @click="openGame(421, 'fg')">{{ $t('common.play_now') }}</button>
                 </div>
                 <img class="fishing-img" src="/images/gm_fishing_god.png" />
             </li>
@@ -36,6 +32,9 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('game', {
+            gameURL: 'GetGameURL'
         })
     },
     components: {
@@ -45,16 +44,24 @@ export default {
     },
     mounted() {
         // Set Game Tab CSS
-        $('.tab-container').removeClass('active');
         $('.tab-fishing').addClass('active');
     },
     methods: {
         // Open Fishing Games
-        openGame(id, gameName, imgURL) {
+        openGame(gameID, productCode) {
             if (this.isLogined) {
-                window.open('');
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        isDownload: false,
+                        category: 'Fishing',
+                        productCode,
+                        gameID
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
-                this.$router.push({ path: this.$i18n.path('login') });
+                this.$router.push(this.$i18n.path('login'));
             }
         }
     }

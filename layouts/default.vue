@@ -1,5 +1,5 @@
 <template>
-    <div class="body-wrapper">
+    <div class="body-wrapper" :check="checkStatus()">
         <Header />
         <Menu />
         <nuxt />
@@ -15,8 +15,19 @@ import Footer from '~/components/MyFooter';
 export default {
     computed: {
         ...mapGetters('auth', {
-            isLogined: 'GetLogined',
-            accessToken: 'GetAccessToken'
+            authStatus: 'GetHttpStatus'
+        }),
+        ...mapGetters('user', {
+            userStatus: 'GetHttpStatus'
+        }),
+        ...mapGetters('game', {
+            gameStatus: 'GetHttpStatus'
+        }),
+        ...mapGetters('wallet', {
+            walletStatus: 'GetHttpStatus'
+        }),
+        ...mapGetters('history', {
+            historyStatus: 'GetHttpStatus'
         })
     },
     components: {
@@ -32,6 +43,25 @@ export default {
                 this.$nuxt.$loading.finish();
             }, 1500);
         });
+
+        if (localStorage.getItem('isLogined')) {
+            this.$store.commit('auth/GET_LOGIN_STATE');
+        }
+    },
+    methods: {
+        // If Any Response Status Is "401", Logout And Go To Home Page
+        checkStatus() {
+            if (
+                this.authStatus === 401 ||
+                this.userStatus === 401 ||
+                this.gameStatus === 401 ||
+                this.walletStatus === 401 ||
+                this.historyStatus === 401
+            ) {
+                this.$store.commit('auth/INITIAL_STATE');
+                this.$router.push(this.$i18n.path(''));
+            }
+        }
     }
 };
 </script>
