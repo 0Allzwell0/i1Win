@@ -21,6 +21,7 @@ export default {
     },
     beforeRouteUpdate(to, from, next) {
         this.getHTML(to.params.type);
+        next();
     },
     methods: {
         // Get Article Content
