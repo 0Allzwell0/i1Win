@@ -4,15 +4,24 @@ const mutations = {
     // =========================================================== Eidt Profile
     // Request Edit Profile
     [type.REQUEST_EDIT_PROFILE](state) {
-        state.profileToken = null
         state.requestState = true
         state.failMessage = null
         state.httpStatus = null
     },
 
     // Edit Profile Success
-    [type.EDIT_PROFILE_SUCCESS](state, { data, status }) {
-        state.profileToken = data.token
+    [type.EDIT_PROFILE_SUCCESS](state, { status, cui, line_id, email, birthday, gender }) {
+        state.userData = {
+            cui: cui,
+            username: null,
+            fullname: null,
+            birthday: birthday,
+            mobile: null,
+            email: email,
+            gender: gender,
+            line_id: line_id,
+            uid: null
+        }
         state.requestState = false
         state.failMessage = null
         state.httpStatus = status
@@ -20,9 +29,8 @@ const mutations = {
 
     // Edit Profile Fail
     [type.EDIT_PROFILE_FAIL](state, { data, status }) {
-        state.profileToken = null
         state.requestState = false
-        state.failMessage = data.msg
+        state.failMessage = data
         state.httpStatus = status
     },
 

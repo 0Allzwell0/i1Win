@@ -1,4 +1,5 @@
 const state = () => ({
+    errorMessage: null,
     gamesList: null,
     gameURL: null,
     downloadType: null,

@@ -27,7 +27,7 @@ const actions = {
         const response = await AuthService.login(payload)
         if (response.status === 200) {
             commit(types.LOGIN_SUCCESS, { data: response.data, status: response.status })
-        } else if (response.status === 400) {
+        } else {
             commit(types.LOGIN_FAIL, { data: response.data, status: response.status })
         }
     },
@@ -38,14 +38,23 @@ const actions = {
     },
 
     // Register
-    async register({ commit }, { username, password, password_confirmation, fullname, mobile, lineID }) {
+    async register({ commit }, { username, password, password_confirmation, fullname, mobile, line_id }) {
         let exp = getExpTimestamp()
         let cui = getCUI()
-        const payload = { username, password, fullname, password_confirmation, mobile, lineID, cui, exp }
+        const payload = { username, password, fullname, password_confirmation, mobile, line_id, cui, exp }
         commit(types.REQUEST_AUTH)
         const response = await AuthService.register(payload)
         if (response.status === 200) {
-            commit(types.REGISTER_SUCCESS, { data: response.data, status: response.status })
+            commit(types.REGISTER_SUCCESS, {
+                data: response.data,
+                status: response.status,
+                username,
+                password,
+                password_confirmation,
+                fullname,
+                mobile,
+                line_id
+            })
         } else {
             commit(types.REGISTER_FAIL, { data: response.data, status: response.status })
         }

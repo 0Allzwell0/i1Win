@@ -148,7 +148,7 @@ export default {
 
         // Show Error Message
         showErrorMsg(status) {
-            if (status === 400) {
+            if (status === 422) {
                 setTimeout(() => {
                     if (this.loginErrorMsg.username) {
                         this.usernameError = true;

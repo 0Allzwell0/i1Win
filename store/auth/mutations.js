@@ -4,7 +4,17 @@ const mutations = {
     // ================================================================ Initial Status
     [type.INITIAL_STATE](state) {
         state.isLogined = false
-        state.userData = null
+        state.userData = {
+            cui: null,
+            username: null,
+            fullname: null,
+            birthday: null,
+            mobile: null,
+            email: null,
+            gender: null,
+            line_id: null,
+            uid: null
+        }
         state.requestState = false
         state.httpStatus = null
         state.loginError = {
@@ -21,7 +31,17 @@ const mutations = {
     // ================================================================ Request Login && Request Register
     [type.REQUEST_AUTH](state) {
         state.isLogined = false
-        state.userData = null
+        state.userData = {
+            cui: null,
+            username: null,
+            fullname: null,
+            birthday: null,
+            mobile: null,
+            email: null,
+            gender: null,
+            line_id: null,
+            uid: null
+        }
         state.requestState = true
         state.httpStatus = null
         state.loginErrorMsg = {
@@ -52,7 +72,17 @@ const mutations = {
     // ================================================================ Login Success
     [type.LOGIN_SUCCESS](state, { data, status }) {
         state.isLogined = true
-        state.userData = data
+        state.userData = {
+            cui: data.cui,
+            username: data.username,
+            fullname: data.fullname,
+            birthday: data.birthday,
+            mobile: data.mobile,
+            email: data.email,
+            gender: data.gender,
+            line_id: data.line_id,
+            uid: data.uid
+        }
         state.requestState = false
         state.httpStatus = status
         state.loginErrorMsg = {
@@ -69,10 +99,20 @@ const mutations = {
     // ================================================================ Login Fail
     [type.LOGIN_FAIL](state, { data, status }) {
         state.isLogined = false
-        state.userData = null
+        state.userData = {
+            cui: null,
+            username: null,
+            fullname: null,
+            birthday: null,
+            mobile: null,
+            email: null,
+            gender: null,
+            line_id: null,
+            uid: null
+        }
         state.requestState = false
         state.httpStatus = status
-        if (status === 400) {
+        if (status === 422) {
             if (data.login) {
                 state.loginErrorMsg.login = data.login
             }
@@ -91,9 +131,19 @@ const mutations = {
     },
 
     // ================================================================ Register Success
-    [type.REGISTER_SUCCESS](state, { data, status }) {
+    [type.REGISTER_SUCCESS](state, { data, status, username, fullname, mobile, line_id, cui }) {
         state.isLogined = true
-        state.userData = data
+        state.userData = {
+            cui: cui,
+            username: username,
+            fullname: fullname,
+            birthday: null,
+            mobile: mobile,
+            email: null,
+            gender: null,
+            line_id: line_id,
+            uid: null
+        }
         state.requestState = false
         state.httpStatus = status
         state.regErrorMsg = {
@@ -105,15 +155,26 @@ const mutations = {
         }
 
         setLocalStorage('isLogined', 'true')
+        setLocalStorage('userData', JSON.stringify(state.userData))
     },
 
     // ================================================================ Register Fail
     [type.REGISTER_FAIL](state, { data, status }) {
         state.isLogined = false
-        state.userData = null
+        state.userData = {
+            cui: null,
+            username: null,
+            fullname: null,
+            birthday: null,
+            mobile: null,
+            email: null,
+            gender: null,
+            line_id: null,
+            uid: null
+        }
         state.requestState = false
         state.httpStatus = status
-        if (status === 400) {
+        if (status === 422) {
             if (data.username) {
                 state.regErrorMsg.username = data.username
             }
@@ -134,6 +195,7 @@ const mutations = {
         }
 
         setLocalStorage('isLogined', 'false')
+        setLocalStorage('userData', null)
     },
 
     // ================================================================ Check Username Success

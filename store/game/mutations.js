@@ -17,12 +17,13 @@ const mutations = {
     // =========================================================== Get Game URL
     // Get Game URL Success
     [type.GET_GAME_URL_SUCCESS](state, { data, status }) {
-        state.gameURL = data.gameUrl
+        state.gameURL = data
         state.httpStatus = status
     },
 
     // Get Game URL Fail
-    [type.GET_GAME_URL_FAIL](state, status) {
+    [type.GET_GAME_URL_FAIL](state, { data, status }) {
+        state.errorMessage = data
         state.gameURL = null
         state.httpStatus = status
     },

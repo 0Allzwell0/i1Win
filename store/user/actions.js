@@ -20,14 +20,21 @@ function getCUI() {
 
 const actions = {
     // Edit Profile
-    async editProfile({ commit }, { lineID, email, birthday, gender }) {
+    async editProfile({ commit }, { line_id, email, birthday, gender }) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { cui, lineID, email, birthday, gender, exp }
+        const payload = { cui, line_id, email, birthday, gender, exp }
         commit(types.REQUEST_EDIT_PROFILE)
         const response = await UserService.editProfile(payload)
-        if (response.status === 200) {
-            commit(types.EDIT_PROFILE_SUCCESS, { data: response.data, status: response.status })
+        if (response.status === 204) {
+            commit(types.EDIT_PROFILE_SUCCESS, {
+                status: response.status,
+                cui,
+                line_id,
+                email,
+                birthday,
+                gender
+            })
         } else {
             commit(types.EDIT_PROFILE_FAIL, { data: response.data, status: response.status })
         }

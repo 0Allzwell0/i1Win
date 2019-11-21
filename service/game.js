@@ -7,6 +7,7 @@ class GameService {
     // Get Slot Games. Before Login
     static async getGamesBefore(payload, productCode) {
         let response = null
+        let accessToken = JWT.sign(payload)
 
         try {
             response = await axios({
@@ -16,6 +17,7 @@ class GameService {
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 },
                 params: payload

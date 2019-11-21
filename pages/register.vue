@@ -466,6 +466,7 @@ export default {
                         this.confirmPSWError = false;
                         this.fullnameError = false;
                         this.mobileError = false;
+                        
                     }
                 });
         },
@@ -473,7 +474,7 @@ export default {
         // Sort And Display Error Messages
         showErrorMessage(status) {
             $('#error-username .response-msg').show();
-            if (status === 400) {
+            if (status === 422) {
                 if (this.regErrorMsg.username) {
                     this.usernameError = true;
                     $('#error-username .msg-text').text('');

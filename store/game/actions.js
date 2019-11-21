@@ -20,9 +20,14 @@ function getCUI() {
 const actions = {
     // Get Games List. Before Login
     async getGamesBefore({ commit }, { productCode, tab }) {
+        const exp = getExpTimestamp()
+        const cui = getCUI()
         const payload = {
+            cui,
             tab,
-            is_mobile: 1
+            is_mobile: 1,
+            lang: localStorage.getItem('LANGUAGE') || 'en',
+            exp
         }
         const response = await GameService.getGamesBefore(payload, productCode)
         if (response.status === 200) {
@@ -66,7 +71,7 @@ const actions = {
             if (isDownload)
                 commit(types.GET_DOWNLOAD_DATA_FAIL, { productCode, status: response.status })
             else
-                commit(types.GET_GAME_URL_FAIL, response.status)
+                commit(types.GET_GAME_URL_FAIL, { data: response.data, status: reponse.status })
         }
     }
 }

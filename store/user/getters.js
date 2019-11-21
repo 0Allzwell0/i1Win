@@ -1,6 +1,5 @@
 const getters = {
     GetHttpStatus: state => state.httpStatus,
-    GetProfileToken: state => state.profileToken,
     GetBanners: state => state.banners,
     GetAnnouncements: state => state.announcements,
     GetArticles: state => state.articles,

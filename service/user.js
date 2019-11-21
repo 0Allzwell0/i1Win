@@ -11,9 +11,9 @@ class UserService {
 
         try {
             response = await axios({
-                method: 'GET',
+                method: 'PATCH',
                 timeout: 5000,
-                url: 'api/member/updateProfile',
+                url: 'api/member/profile',
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',

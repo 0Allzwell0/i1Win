@@ -6,11 +6,11 @@
 
             <!-- Full Name -->
             <h3 class="edit-profile-small-title">{{ $t('common.fullname') }}</h3>
-            <p class="edit-profile-unchange-text">{{ userData.fullname }}</p>
+            <p class="edit-profile-unchange-text">{{ myFullname }}</p>
 
             <!-- Mobile Number -->
             <h3 class="edit-profile-small-title">{{ $t('edit_profile.mobile_number') }}</h3>
-            <p class="edit-profile-unchange-text">{{ userData.mobile }}</p>
+            <p class="edit-profile-unchange-text">{{ myMobile }}</p>
 
             <!-- Line ID -->
             <h3 class="edit-profile-small-title">LINE ID</h3>
@@ -40,7 +40,7 @@
             <!-- Gender -->
             <h3 class="edit-profile-small-title">{{ $t('edit_profile.gender') }}</h3>
             <div class="edit-profile-gender-wrapper">
-                <button class="edit-profile-gender gender-male active" @click="changeGender('1')">{{ $t('edit_profile.male') }}</button>
+                <button class="edit-profile-gender gender-male" @click="changeGender('1')">{{ $t('edit_profile.male') }}</button>
                 <button class="edit-profile-gender gender-female" @click="changeGender('2')">{{ $t('edit_profile.female') }}</button>
             </div>
 
@@ -56,14 +56,16 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters('auth', {
-            isLogined: 'GetLogined',
-            userData: 'GetUserData'
+            isLogined: 'GetLogined'
         })
     },
     data() {
         return {
             format: 'yyyy-MM-dd',
-            language: this.$i18n.locale === 'th-TH' ? th : en,
+            language: this.$i18n.locale === 'th' ? th : en,
+            userData: null,
+            myFullname: null,
+            myMobile: null,
             myLineID: null,
             myEmail: null,
             myBirthday: null,
@@ -71,12 +73,13 @@ export default {
         };
     },
     mounted() {
+        this.userData = JSON.parse(localStorage.getItem('userData'));
+        this.myFullname = this.userData.fullname;
+        this.myMobile = this.userData.mobile;
         this.myLineID = this.userData.line_id;
         this.myEmail = this.userData.email;
         this.myBirthday = this.userData.birthday;
         this.myGender = this.userData.gender;
-
-        this.changeGender(this.userData.gender);
     },
     methods: {
         // Change Gender
@@ -91,13 +94,26 @@ export default {
 
         // Edit Profile Submit
         editProfile() {
-            this.$store.dispatch('user/editProfile', {
-                accessToken: this.accessToken,
-                lineID: this.myLineID,
-                email: this.myEmail,
-                birthday: this.myBirthday,
-                gender: this.myGender
-            });
+            this.$store
+                .dispatch('user/editProfile', {
+                    accessToken: this.accessToken,
+                    lineID: this.myLineID,
+                    email: this.myEmail,
+                    birthday: this.myBirthday,
+                    gender: this.myGender
+                })
+                .then(() => {
+                    if (this.httpStatus === 204) {
+                        this.userData.fullname = this.myFullname;
+                        this.userData.mobile = this.myMobile;
+                        this.userData.line_id = this.myLineID;
+                        this.userData.email = this.myEmail;
+                        this.userData.birthday = this.myBirthday;
+                        this.userData.gender = this.myGender;
+
+                        localStorage.setItem('userData', this.userData);
+                    }
+                });
         }
     }
 };

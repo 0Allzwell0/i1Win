@@ -1,6 +1,16 @@
 const state = () => ({
     isLogined: false,
-    userData: null,
+    userData: {
+        cui: null,
+        username: null,
+        fullname: null,
+        birthday: null,
+        mobile: null,
+        email: null,
+        gender: null,
+        line_id: null,
+        uid: null
+    },
     requestState: null,
     httpStatus: null,
     loginErrorMsg: {
