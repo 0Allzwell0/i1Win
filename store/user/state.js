@@ -10,6 +10,12 @@ const state = () => ({
         line_id: null,
         uid: null
     },
+    errorMessage: {
+        password: null,
+        new_password: null,
+        confirm_new_password: null,
+        others: null
+    },
     banners: null,
     announcements: null,
     jackpot: parseFloat(1830082162),

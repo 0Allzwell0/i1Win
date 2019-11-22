@@ -5,7 +5,12 @@ const mutations = {
     // Request Edit Profile
     [type.REQUEST_EDIT_PROFILE](state) {
         state.requestState = true
-        state.failMessage = null
+        state.errorMessage = {
+            password: null,
+            new_password: null,
+            confirm_new_password: null,
+            others: null
+        }
         state.httpStatus = null
     },
 
@@ -23,14 +28,24 @@ const mutations = {
             uid: null
         }
         state.requestState = false
-        state.failMessage = null
+        state.errorMessage = {
+            password: null,
+            new_password: null,
+            confirm_new_password: null,
+            others: null
+        }
         state.httpStatus = status
     },
 
     // Edit Profile Fail
     [type.EDIT_PROFILE_FAIL](state, { data, status }) {
         state.requestState = false
-        state.failMessage = data
+        state.errorMessage = {
+            password: null,
+            new_password: null,
+            confirm_new_password: null,
+            others: data
+        }
         state.httpStatus = status
     },
 
@@ -38,22 +53,44 @@ const mutations = {
     // Request Change Password
     [type.REQUEST_CHANGE_PASSWORD](state) {
         state.requestState = true
-        state.failMessage = null
+        state.errorMessage = {
+            password: null,
+            new_password: null,
+            confirm_new_password: null,
+            others: null
+        }
         state.httpStatus = null
     },
 
     // Change Password Success
     [type.CHANGE_PASSWORD_SUCCESS](state, status) {
         state.requestState = false
-        state.failMessage = null
+        state.errorMessage = {
+            password: null,
+            new_password: null,
+            confirm_new_password: null,
+            others: null
+        }
         state.httpStatus = status
     },
 
     // Change Password Fail
     [type.CHANGE_PASSWORD_FAIL](state, { data, status }) {
         state.requestState = false
-        state.failMessage = data.msg
         state.httpStatus = status
+        if (status === 422) {
+            if (data.password) {
+                state.errorMessage.password = data.password
+            }
+            if (data.new_password) {
+                state.errorMessage.new_password = data.new_password
+            }
+            if (data.confirm_new_password) {
+                state.errorMessage.confirm_new_password = data.confirm_new_password
+            }
+        } else {
+            state.errorMessage.others = data
+        }
     },
 
     // =========================================================== Get Banners

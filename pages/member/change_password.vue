@@ -41,7 +41,12 @@
             </div>
 
             <!-- Change Button -->
-            <button class="change-password-btn" type="submit" @click="changePassword()">{{ $t('common.submit') }}</button>
+            <button
+                class="change-password-btn"
+                type="submit"
+                @click="changePassword()"
+                :disabled="allowClick"
+            >{{ $t('common.submit') }}</button>
         </div>
     </main>
 </template>
@@ -50,8 +55,9 @@ import { mapGetters } from 'vuex';
 
 export default {
     computed: {
-        ...mapGetters('auth', {
-            accessToken: 'GetAccessToken'
+        ...mapGetters('user', {
+            httpStatus: 'GetHttpStatus',
+            errorMessage: 'GetErrorMessage'
         })
     },
     data() {
@@ -61,8 +67,22 @@ export default {
             showConfirm: false,
             myCurrentPSW: null,
             myNewPSW: null,
-            myConfirmNewPSW: null
+            myConfirmNewPSW: null,
+            allowClick: false
         };
+    },
+    mounted() {
+        $('.change-password-input').on('keyup blur', function() {
+            let currentPSWLength = this.myCurrentPSW.length;
+            let newPSWLength = this.myNewPSW.length;
+            let confirmNewPSWLength = this.myConfirmNewPSW.length;
+
+            if (currentPSWLength > 0 && newPSWLength > 0 && confirmNewPSWLength) {
+                this.allowClick = true;
+            } else {
+                this.allowClick = false;
+            }
+        });
     },
     methods: {
         // Show or Hide Password
@@ -102,12 +122,41 @@ export default {
 
         // Change Password Submit
         changePassword() {
-            this.$store.dispatch('user/changePassword', {
-                accessToken: this.accessToken,
-                currentPassword: this.myCurrentPSW,
-                newPassword: this.myNewPSW,
-                confirmNewPassword: this.myConfirmNewPSW
+            this.$store.dispatch('user/changePassword', this.myNewPSW).then(() => {
+                this.showErrorMessage();
             });
+        },
+
+        // Show Error Message Modal
+        showErrorMessage() {
+            if (this.httpStatus === 204) {
+                $('#errorMsg .error-msg-container').text(this.$t('change_password.success_msg'));
+            } else if (this.httpStatus === 422) {
+                if (this.errorMessage.password) {
+                    let arrayLength = this.errorMessage.password.length;
+                    for (let i = 0; i < arrayLength; i++) {
+                        $('#errorMsg .error-msg-container').append(this.errorMessage.password[i]);
+                    }
+                }
+
+                if (this.errorMessage.new_password) {
+                    let arrayLength = this.errorMessage.new_password.length;
+                    for (let i = 0; i < arrayLength; i++) {
+                        $('#errorMsg .error-msg-container').append(this.errorMessage.new_password[i]);
+                    }
+                }
+
+                if (this.errorMessage.confirm_new_password) {
+                    let arrayLength = this.errorMessage.confirm_new_password.length;
+                    for (let i = 0; i < arrayLength; i++) {
+                        $('#errorMsg .error-msg-container').append(this.errorMessage.confirm_new_password[i]);
+                    }
+                }
+            } else {
+                $('#errorMsg .error-msg-container').text(this.errorMessage.others);
+            }
+
+            $('#errorMsg').show();
         }
     }
 };

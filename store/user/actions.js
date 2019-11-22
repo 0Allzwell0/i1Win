@@ -41,13 +41,13 @@ const actions = {
     },
 
     // Change Password
-    async changePassword({ commit }, { currentPassword, newPassword, confirmNewPassword }) {
+    async changePassword({ commit }, password) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { cui, currentPassword, newPassword, confirmNewPassword, exp }
+        const payload = { cui, password, exp }
         commit(types.REQUEST_CHANGE_PASSWORD)
         const response = await UserService.changePassword(payload)
-        if (response.status === 200) {
+        if (response.status === 204) {
             commit(types.CHANGE_PASSWORD_SUCCESS, response.status)
         } else {
             commit(types.CHANGE_PASSWORD_FAIL, { data: response.data, status: response.status })
