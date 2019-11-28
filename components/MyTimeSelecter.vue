@@ -4,7 +4,7 @@
             <time-picker
                 id="transfer-time"
                 class="deposit-transfer-date-time"
-                format="HH : mm"
+                format="HH:mm"
                 :value="currentTime"
                 hide-clear-button
             />
@@ -28,7 +28,7 @@ export default {
             let dateNow = new Date();
             let hour = dateNow.getHours();
             let minute = dateNow.getMinutes();
-            this.currentTime = `${hour} : ${minute}`;
+            this.currentTime = `${hour}:${minute}`;
         }
     }
 };

@@ -1,5 +1,8 @@
 <template>
     <main class="deposit-wrapper">
+        <!-- Error Message -->
+        <my-message-modal />
+
         <!-- Tab -->
         <my-member-tab />
 
@@ -65,9 +68,15 @@
 
             <!-- Upload File -->
             <h3 class="deposit-title-text">{{ $t('deposit.file_input') }}</h3>
-            <form action class="deposit-input-wrapper" enctype="multipart/form-data">
-                <input id="upload-file-input" class="deposit-input" type="file" :placeholder="$t('deposit.no_file_select')" />
-            </form>
+            <div class="deposit-input-wrapper">
+                <input
+                    id="upload-file-input"
+                    class="deposit-input"
+                    type="file"
+                    :placeholder="$t('deposit.no_file_select')"
+                    @change="getFile"
+                />
+            </div>
 
             <!-- Bonus -->
             <h3 class="deposit-title-text">{{ $t('footer.promotions') }}</h3>
@@ -75,21 +84,23 @@
                 <button class="deposit-input bonus-input" type="button" @click="showBonusList()">{{ $t('common.please_select') }}</button>
                 <fa :icon="['fas', 'caret-down']" class="deposit-down" />
                 <ul class="deposit-bonus-list-wrapper" :class="{'show': isShowBonusList}">
-                    <li class="deposit-bonus-list-item select-item" @click="selectBonus('none')">{{ $t('common.please_select') }}</li>
+                    <li
+                        class="deposit-bonus-list-item select-item"
+                        @click="selectBonus('none', 'none')"
+                    >{{ $t('common.please_select') }}</li>
                     <li
                         class="deposit-bonus-list-item type-item"
-                        v-for="(typeItem, index) in bonusList"
+                        v-for="(typeItem, index) in newBonusList"
                         :key="`bonus_type_${index}`"
-                        :label="typeItem.type"
                     >
                         {{ typeItem.type }}
                         <ul>
                             <li
                                 class="deposit-bonus-list-item bonus-item"
-                                v-for="(item, index) in typeItem.data"
+                                v-for="(item, index) in typeItem.bonus"
                                 :key="`bonus_item_${index}`"
-                                @click="selectBonus(item)"
-                            >{{ item }}</li>
+                                @click="selectBonus(item.name, item.code)"
+                            >{{ item.name }}</li>
                         </ul>
                     </li>
                 </ul>
@@ -116,6 +127,7 @@ import MyWalletList from '~/components/MyWalletList';
 import MyDateSelecter from '~/components/MyDateSelecter';
 import MyTimeSelecter from '~/components/MyTimeSelecter';
 import MyBanksSelecter from '~/components/MyBanksSelecter';
+import MyMessageModal from '~/components/MyMessageModal';
 
 export default {
     computed: {
@@ -123,7 +135,9 @@ export default {
             accessToken: 'GetAccessToken'
         }),
         ...mapGetters('wallet', {
+            httpStatus: 'GetHttpStatus',
             requestState: 'GetRequestState',
+            responseMsg: 'GetResponseMsg',
             bonusList: 'GetBonus',
             limits: 'GetLimits'
         })
@@ -133,42 +147,54 @@ export default {
         MyWalletList,
         MyDateSelecter,
         MyTimeSelecter,
-        MyBanksSelecter
+        MyBanksSelecter,
+        MyMessageModal
     },
     data() {
         return {
             accountNumber: null,
             choiceAmount: null,
             totalAmount: 0,
-            amountError: false,
             depositDate: null,
             depositTime: null,
             referenceNo: null,
             upLoadFile: null,
+            formData: null,
+            newBonusList: null,
             selectedBonus: null,
             isShowBonusList: false,
             bankOK: false,
             amountOK: false,
             referenceOK: false,
-            uploadFileOK: false,
+            upLoadFileOK: false,
             bonusOK: false
         };
     },
     mounted() {
         let _this = this;
 
+        // Get Limits
+        this.$store.dispatch('wallet/getLimits');
+
+        // Get Bonus
+        this.$store.dispatch('wallet/getBonus').then(() => {
+            if (this.bonusList) {
+                this.calculateType();
+            }
+        });
+
         // When Touch Others Place, "Promotion" List Will Close
-        $(document).click(function(el) {
+        $(document).click(el => {
             let touchEl = $(el.target)[0].className;
             if (touchEl.indexOf('bonus-input') === -1 && touchEl.indexOf('bonus-item') === -1) {
-                _this.isShowBonusList = false;
+                this.isShowBonusList = false;
             }
         });
 
         // Check Amount Input
         $('.deposit-amount-input').keyup(function() {
             if (parseFloat($(this).val()) > 0) {
-                _this.amountOK = true;
+                _this.checkAmount();
             } else {
                 _this.amountOK = false;
             }
@@ -176,29 +202,99 @@ export default {
         });
 
         // Check Reference Input
-        $('.reference-input').keyup(function() {
+        $('.reference-input').keyup(() => {
             let referenceNum = $('.reference-input').val();
             if (referenceNum.length > 0) {
-                _this.referenceOK = true;
+                this.referenceOK = true;
             } else {
-                _this.referenceOK = false;
+                this.referenceOK = false;
             }
-            _this.checkInfo();
-        });
-
-        // Check Upload File
-        $('#upload-file-input').change(function() {
-            _this.uploadFile = $('#upload-file-input').val();
-            if (_this.uploadFile.length > 0) {
-                _this.uploadFileOK = true;
-            } else {
-                _this.uploadFileOK = false;
-            }
-            _this.checkInfo();
+            this.checkInfo();
         });
     },
     methods: {
-        // Get Selected Bank
+        // Calculate the number of tpe
+        calculateType() {
+            let count = 1;
+            let haveSame = false;
+            for (let i = 1; i < this.bonusList.length; i++) {
+                for (let j = 0; j < i; j++) {
+                    if (this.bonusList[j].type === this.bonusList[i].type) {
+                        haveSame = true;
+                    }
+                }
+
+                if (!haveSame) {
+                    count++;
+                }
+
+                haveSame = false;
+            }
+
+            this.newBonusList = new Array(count);
+
+            // Set a default value for each item in the "newBonus List" array
+            for (let k = 0; k < this.newBonusList.length; k++) {
+                this.newBonusList[k] = {
+                    type: null,
+                    bonus: []
+                };
+            }
+
+            this.classifyBonus();
+        },
+
+        // Classify the bonus and save it to "newBonusList"
+        classifyBonus() {
+            let noSame = false;
+
+            this.newBonusList[0].type = this.bonusList[0].type;
+
+            for (let i = 0; i < this.newBonusList.length; i++) {
+                for (let j = 0; j < this.bonusList.length; j++) {
+                    if (this.newBonusList[i].type === null) {
+                        noSame = true;
+                        for (let k = 0; k < i; k++) {
+                            if (this.newBonusList[k].type === this.bonusList[j].type) {
+                                noSame = false;
+                                break;
+                            }
+                        }
+
+                        if (noSame) {
+                            this.newBonusList[i].type = this.bonusList[j].type;
+                        }
+                    }
+                    if (this.newBonusList[i].type === this.bonusList[j].type) {
+                        this.newBonusList[i].bonus.push(this.bonusList[j]);
+                    }
+                }
+            }
+        },
+
+        // Get UpLoad File
+        getFile(e) {
+            if (e.target.files[0]) {
+                if (e.target.files[0].size < 2097152) {
+                    this.upLoadFile = e.target.files[0];
+                    this.upLoadFileOK = true;
+                    //this.formData = new FormData();
+                    //this.formData.append('receipt', this.upLoadFile);
+                } else {
+                    $('#errorMsg .error-msg-container').text(this.$t('deposit.upload_file_error'));
+                    $('#errorMsg').modal('show');
+                    this.upLoadFile = null;
+                    this.upLoadFileOK = false;
+                }
+            } else {
+                this.upLoadFile = null;
+                this.upLoadFileOK = false;
+            }
+
+            this.checkInfo();
+        },
+
+        // Get selected bank
         getBank(accountNumber, name, bankOK) {
             if (bankOK) {
                 $('.deposit-bank-name-value').text(name);
@@ -212,7 +308,7 @@ export default {
             this.checkInfo();
         },
 
-        // Set Deposit Amount
+        // Set deposit amount
         setAmount(amount) {
             if (this.choiceAmount != amount) {
                 this.totalAmount = amount;
@@ -222,45 +318,70 @@ export default {
                 this.totalAmount = this.totalAmount + amount;
                 $('.deposit-amount-input').val(this.totalAmount);
             }
-
-            this.amountOK = true;
+            this.checkAmount();
             this.checkInfo();
         },
 
-        // Get Date Value
+        // Check deposit amount
+        checkAmount() {
+            if (this.totalAmount > 0) {
+                if (this.limits) {
+                    if (this.totalAmount <= this.limits.maxDeposit) {
+                        this.amountOK = true;
+                    } else {
+                        this.amountOK = false;
+                    }
+
+                    if (this.totalAmount >= this.limits.minDeposit) {
+                        this.amountOK = true;
+                    } else {
+                        this.amountOK = false;
+                    }
+                } else {
+                    if (this.totalAmount > 50000) this.amountOK = true;
+                    else this.amountOK = false;
+                    if (this.totalAmount < 30) this.amountOK = true;
+                    else this.amountOK = false;
+                }
+            } else {
+                this.amountOK = false;
+            }
+        },
+
+        // Get date value
         getDate() {
             this.depositDate = $('.date-container input').val();
         },
 
-        // Get Time Value
+        // Get time value
         getTime() {
             this.depositTime = $('#transfer-time').val();
         },
 
-        // Show Or Close Bonus List
+        // Show or close bonus list
         showBonusList() {
             this.isShowBonusList = !this.isShowBonusList;
         },
 
-        // Select Bonus
-        selectBonus(bonus) {
-            if (bonus !== 'none') {
-                $('.bonus-input').text(bonus);
+        // Select bonus
+        selectBonus(name, code) {
+            if (name !== 'none' && code !== 'none') {
+                $('.bonus-input').text(name);
                 this.bonusOK = true;
             } else {
                 $('.bonus-input').text(this.$t('common.please_select'));
                 this.bonusOK = false;
             }
 
-            this.selectedBonus = bonus;
+            this.selectedBonus = code;
             this.isShowBonusList = false;
             this.checkInfo();
         },
 
-        // Check Information To Allow "Deposit" Button
+        // Check information to allow "Deposit" button
         checkInfo() {
             $('.deposit-button').removeClass('allow');
-            if (this.bankOK && this.amountOK && this.referenceOK && this.uploadFileOK && this.bonusOK) {
+            if (this.bankOK && this.amountOK && this.referenceOK && this.upLoadFileOK && this.bonusOK) {
                 $('.deposit-button').addClass('allow');
                 $('.deposit-button').attr('disabled', false);
             } else {
@@ -268,46 +389,48 @@ export default {
             }
         },
 
-        // Convert Data To "FormData" Format
+        // Convert data to "FormData" format
         transDataToFormData() {
             this.formData = new FormData();
-            this.formData.append('AccountNumber', this.accountNumber);
-            this.formData.append('Amount', this.totalAmount);
-            this.formData.append('DateTime', this.depositDate + ' ' + this.depositTime);
-            if (this.referenceNo) this.formData.append('Reference', this.referenceNo);
-            if (this.uploadFile) this.formData.append('Receipt', this.uploadFile);
-            if (this.selectedBonus) this.formData.append('Bonus', this.selectedBonus);
+            this.formData.append('accountNumber', this.accountNumber);
+            this.formData.append('amount', this.totalAmount);
+            this.formData.append('dateTime', this.depositDate + ' ' + this.depositTime);
+            this.formData.append('reference', this.referenceNo);
+            this.formData.append('receipt', this.upLoadFile);
+            this.formData.append('bonus', this.selectedBonus);
         },
 
-        // Check Deposit Amount
-        checkAmount() {
-            if (this.limits) {
-                if (this.totalAmount > this.limits.maxDeposit) this.amountError = true;
-                else this.amountError = false;
-                if (this.totalAmount < this.limits.minDeposit) this.amountError = true;
-                else this.amountError = false;
-            } else {
-                if (this.totalAmount > 50000) this.amountError = true;
-                else this.amountError = false;
-                if (this.totalAmount < 30) this.amountError = true;
-                else this.amountError = false;
-            }
-        },
-
-        // Deposit Submit
+        // Deposit submit
         deposit() {
             this.getDate();
             this.getTime();
-            this.checkAmount();
-            if (this.amount) {
-                this.transDataToFormData();
-                this.$store.dispatch('wallet/deposit', {
-                    accessToken: this.accessToken,
-                    formData: this.formData
+            // this.transDataToFormData();
+            // this.$store.dispatch('wallet/deposit', this.formData);
+
+            this.$store
+                .dispatch('wallet/deposit', {
+                    accountNumber: this.accountNumber,
+                    amount: this.totalAmount,
+                    time: this.depositDate + ' ' + this.depositTime,
+                    reference: this.referenceNo,
+                    receipt: `"${this.upLoadFile}"`,
+                    bonus: this.selectedBonus
+                })
+                .then(() => {
+                    if (this.httpStatus === 422) {
+                        let msgArray = [];
+                        for (let i in this.responseMsg) {
+                            msgArray.push(this.responseMsg[i]);
+                            $('#errorMsg .error-msg-container').append(msgArray[0]);
+                        }
+                    } else if (this.httpStatus === 200) {
+                        $('#errorMsg .error-msg-container').text(this.$t('deposit.success'));
+                    } else {
+                        $('#errorMsg .error-msg-container').text(this.responseMsg);
+                    }
+
+                    $('#errorMsg').modal('show');
                 });
-            } else {
-                alert('Amount Error !!');
-            }
         }
     }
 };
@@ -328,13 +451,11 @@ export default {
         font-family: $font-family;
         font-size: 12px;
         font-weight: bold;
-        margin-top: -407px;
         padding: 5% 5% 90px 5%;
-
         transition: margin-top 400ms;
 
         &.expand {
-            margin-top: 0;
+            margin-top: 0 !important;
             transition: margin-top 400ms;
         }
         .deposit-title-text {
@@ -360,7 +481,7 @@ export default {
                 padding-left: 10px;
 
                 &#upload-file-input {
-                    padding: 6px 0 0 6px;
+                    padding: 6px;
                 }
             }
             .deposit-down {
@@ -374,15 +495,16 @@ export default {
                 display: none;
                 position: absolute;
                 z-index: 10;
-                top: -251px;
+                top: 38px;
                 left: 0;
                 width: 100%;
-                height: 250px;
+                max-height: 250px;
                 font-size: 15px;
                 border-radius: 5px;
                 border: 1px solid #cecece;
                 background: $color-white;
                 overflow-y: auto;
+                margin-bottom: 100px;
 
                 &.show {
                     display: block;

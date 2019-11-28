@@ -6,7 +6,7 @@
                 <span class="total-wallet-text">{{ $t('wallet.total') }}</span>
                 <span class="total-wallet-currency">THB</span>
             </div>
-            <span class="total-wallet-amount">{{ totalWallet }}</span>
+            <span class="total-wallet-amount">{{ totalWallet.toFixed(2) }}</span>
             <div class="expand-close-wrapper" @click="expandWalletList()">
                 <div class="expand-close-img">
                     <div class="expand-close-column"></div>
@@ -21,12 +21,12 @@
             <div class="main-wallet-container">
                 <span class="main-wallet-text">{{ $t('wallet.main_wallet') }}</span>
                 <span class="main-wallet-currency">THB</span>
-                <span class="main-wallet-amount">{{ mainWallet }}</span>
+                <span class="main-wallet-amount">{{ mainWallet.toFixed(2) }}</span>
             </div>
             <ul class="wallet-list-container">
-                <li class="wallet-list-item-wrapper" v-for="(item, index) in walletList" :key="`wallet-${index}`">
+                <li class="wallet-list-item-wrapper" v-for="(item, index) in wallets" :key="`wallet-${index}`">
                     <span class="wallet-list-item-name">{{ item.code }}</span>
-                    <div class="wallet-list-item-container" :id="(item.code).toLowerCase()">
+                    <div class="wallet-list-item-container" :id="(item.code.toLowerCase())">
                         <span class="wallet-list-item-currency">THB</span>
                         <span class="wallet-list-item-amount">0.00</span>
                     </div>
@@ -48,52 +48,69 @@ export default {
     data() {
         return {
             mainWallet: 0,
-            haveMain: false,
             totalWallet: 0,
-            walletList: null,
+            walletList: [],
             expandWallet: false,
-            route_name: null
+            route_name: null,
+            getBalance: null,
+            temp: 0
         };
     },
     mounted() {
-        this.getWallets();
-        this.routeName();
+        // Get Main Balance
+        // this.$store.dispatch('wallet/getBalance', 'main').then(() => {
+        //     this.mainWallet = this.balance;
+        //     this.totalWallet = this.totalWallet + this.mainWallet;
+        // });
+        // this.getWallets();
+        // this.routeName();
+    },
+    updated() {
+        let scrollHeight = $('.wallet-list-container').height();
+        if (this.route_name === 'deposit') {
+            $('.deposit-container').css('margin-top', -scrollHeight);
+        }
+        if (this.route_name === 'withdrawal') {
+            $('.withdrawal-container').css('margin-top', -scrollHeight);
+        }
+        if (this.route_name === 'transfer') {
+            $('.transfer-container').css('margin-top', -scrollHeight);
+        }
     },
     methods: {
         // Get Wallets
         getWallets() {
-            let productCode = null;
-            let isActive = 1;
-            let isBlocked = 1;
-
             this.$store.dispatch('wallet/getWallets').then(() => {
-                this.walletList = new Array(this.wallets.length - 1);
-
-                for (let i = 0; i < this.wallets.length; i++) {
-                    if (this.wallets[i].code === 'MAIN') {
-                        this.haveMain = true;
-                    }
-
-                    if (this.haveMain) {
-                        this.walletList[i - 1] = this.wallets[i];
-                    } else {
-                        this.walletList[i] = this.wallets[i];
-                    }
-                }
-
-                // Get Wallet Balance
-                for (let j = 0; j < this.walletList.length; i++) {
-                    isActive = this.walletList[i].isActive;
-                    isBlocked = this.walletList[i].isBlocked;
-                    productCode = this.walletList[i].code;
-
-                    if (isActive === 1 && isBlocked === 1) {
-                        this.$store.dispatch('wallet/getBalance', { productCode: productCode }).then(() => {
-                            $(`#${productCode} .wallet-list-item-amount`).text(this.balance.toFixed(2));
-                        });
-                    }
-                }
+                this.getWalletBalance();
             });
+        },
+
+        // Get Wallet Balance
+        getWalletBalance() {
+            this.getBalance = setInterval(() => {
+                let productCode = null;
+                let isActive = 1;
+                let isBlocked = 1;
+
+                isActive = this.wallets[this.temp].isActive;
+                isBlocked = this.wallets[this.temp].isBlocked;
+                productCode = this.wallets[this.temp].code.toLowerCase();
+
+                if (isActive === 1 && isBlocked === 0) {
+                    this.$store.dispatch('wallet/getBalance', productCode).then(() => {
+                        if (this.balance) {
+                            $(`#${productCode} .wallet-list-item-amount`).text(this.balance);
+                            this.totalWallet = this.totalWallet + this.balance;
+                        }
+                    });
+                }
+
+                this.temp++;
+
+                if (this.temp >= this.wallets.length) {
+                    clearInterval(this.getBalance);
+                }
+            }, 200);
         },
 
         // Get Route Name
@@ -275,6 +292,7 @@ export default {
                     margin-right: 0;
                 }
                 .wallet-list-item-name {
+                    font-size: 14px;
                     font-weight: bold;
                     color: $color-black;
                     opacity: 0.7;

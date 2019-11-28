@@ -23,13 +23,13 @@ const mutations = {
         state.transactionData = null
         state.requestState = false
         state.httpStatus = status
-        state.failMessage = data.msg
+        state.failMessage = data
     },
 
     // ================================================================ Statement
     // Request Statement Data
     [type.REQUEST_STATEMENT_DATA](state) {
-        state.statementData = data
+        state.statementData = null
         state.requestState = true
         state.httpStatus = null
         state.failMessage = null
@@ -48,7 +48,7 @@ const mutations = {
         state.statementData = null
         state.requestState = false
         state.httpStatus = status
-        state.failMessage = data.msg
+        state.failMessage = data
     },
 
     // ================================================================ Transfer
@@ -73,7 +73,7 @@ const mutations = {
         state.transferData = null
         state.requestState = false
         state.httpStatus = status
-        state.failMessage = data.msg
+        state.failMessage = data
     }
 }
 

@@ -6,7 +6,7 @@ const getters = {
     GetBanksList: state => state.banksList,
     GetBalance: state => state.balance,
     GetBonus: state => state.bonus,
-    GetShowPromptMsg: state => state.showPromptMsg
+    GetResponseMsg: state => state.responseMsg
 }
 
 export default getters

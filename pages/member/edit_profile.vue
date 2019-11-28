@@ -57,6 +57,9 @@ export default {
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
+        }),
+        ...mapGetters('user', {
+            profileData: 'GetProfileData'
         })
     },
     data() {
@@ -80,6 +83,13 @@ export default {
         this.myEmail = this.userData.email;
         this.myBirthday = this.userData.birthday;
         this.myGender = this.userData.gender;
+
+        $('.edit-profile-gender').removeClass('active');
+        if (this.myGender === 1) {
+            $('.gender-male').addClass('active');
+        } else if (this.myGender === 2) {
+            $('.gender-female').addClass('active');
+        }
     },
     methods: {
         // Change Gender
@@ -87,8 +97,10 @@ export default {
             $('.edit-profile-gender').removeClass('active');
             if (gender === '1') {
                 $('.gender-male').addClass('active');
+                this.myGender = 1;
             } else if (gender === '2') {
                 $('.gender-female').addClass('active');
+                this.myGender = 2;
             }
         },
 
@@ -97,19 +109,17 @@ export default {
             this.$store
                 .dispatch('user/editProfile', {
                     accessToken: this.accessToken,
-                    lineID: this.myLineID,
+                    line_id: this.myLineID,
                     email: this.myEmail,
                     birthday: this.myBirthday,
                     gender: this.myGender
                 })
                 .then(() => {
                     if (this.httpStatus === 204) {
-                        this.userData.fullname = this.myFullname;
-                        this.userData.mobile = this.myMobile;
-                        this.userData.line_id = this.myLineID;
-                        this.userData.email = this.myEmail;
-                        this.userData.birthday = this.myBirthday;
-                        this.userData.gender = this.myGender;
+                        this.userData.line_id = this.profileData.line_id;
+                        this.userData.email = this.profileData.email;
+                        this.userData.birthday = this.profileData.birthday;
+                        this.userData.gender = this.profileData.gender;
 
                         localStorage.setItem('userData', this.userData);
                     }

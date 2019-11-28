@@ -158,7 +158,9 @@
     "reference_msg": "Enter the transaction reference number",
     "file_input": "File Input",
     "no_file_select": "No File Select",
-    "agree_certify": "I certify that I have read and agreed to the Promotions Terms & Conditions."
+    "upload_file_error": "File size must smaller than 2MB.",
+    "agree_certify": "I certify that I have read and agreed to the Promotions Terms & Conditions.",
+    "success": "Deposit Success !!"
   },
   "withdrawal": {
     "withdrawal_to": "Withdrawal To",

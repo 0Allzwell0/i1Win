@@ -4,33 +4,38 @@ const mutations = {
     // ================================================================ Get Wallets
     // Get Wallets Success
     [type.GET_WALLETS_SUCCESS](state, { data, status }) {
-        state.wallets = data
+        // Put the data of the object into the array in sequence
+        for (let i in data) {
+            state.wallets.push(data[i]);
+        }
         state.httpStatus = status
     },
 
     // Get Wallets Fail
     [type.GET_WALLETS_FAIL](state, status) {
-        state.wallets = null
+        state.wallets = []
         state.httpStatus = status
     },
 
-    // ================================================================ Get Amount
-    // Get Amount Success
+    // ================================================================ Get Balance
+    // Get Balance Success
     [type.GET_BALANCE_SUCCESS](state, { data, status }) {
-        state.amount = data.amount.toFixed(2)
-        state.httpStatus = null
+        state.balance = data.amount
+        state.httpStatus = status
     },
 
     // Get Amount Fail
     [type.GET_BALANCE_FAIL](state, status) {
-        state.amount = null
+        state.balance = 0.00
         state.httpStatus = status
     },
 
     // ================================================================ Get Limits
     // Get Limits Success
     [type.GET_LIMITS_SUCCESS](state, { data, status }) {
-        state.limits = data
+        if (data) {
+            state.limits = data
+        }
         state.httpStatus = status
     },
 
@@ -43,7 +48,7 @@ const mutations = {
     // ================================================================ Get Banks List
     // Get Banks List Success
     [type.GET_BANKS_LIST_SUCCESS](state, { data, status }) {
-        state.banksList = data.bankAccounts
+        state.banksList = data
         state.httpStatus = status
     },
 
@@ -70,25 +75,22 @@ const mutations = {
     // Request Deposit、Withdrawal、Transfer
     [type.REQUEST_DWT](state) {
         state.requestState = true
-        state.showPromptMsg = false
         state.httpStatus = null
-        state.failMessage = null
+        state.responseMsg = null
     },
 
     // Despoit、Withdrawal、Transfer Success
-    [type.DWT_SUCCESS](state, status) {
+    [type.DWT_SUCCESS](state, { data, status }) {
         state.requestState = false
-        state.showPromptMsg = false
         state.httpStatus = status
-        state.failMessage = null
+        state.responseMsg = data
     },
 
     // Deposit、Withdrawal、Transfer Fail
     [type.DWT_FAIL](state, { data, status }) {
         state.requestState = false
-        state.showPromptMsg = true
         state.httpStatus = status
-        state.failMessage = data.msg
+        state.responseMsg = data
     }
 }
 

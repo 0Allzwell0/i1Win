@@ -1,5 +1,8 @@
 <template>
     <main class="change-password-wrapper">
+        <!-- Error Message Modal -->
+        <my-message-modal />
+
         <div class="change-password-container">
             <!-- Title -->
             <h2 class="change-password-title">{{ $t('change_password.title') }}</h2>
@@ -45,15 +48,19 @@
                 class="change-password-btn"
                 type="submit"
                 @click="changePassword()"
-                :disabled="allowClick"
+                :disabled="!allowClick"
             >{{ $t('common.submit') }}</button>
         </div>
     </main>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import MyMessageModal from '~/components/MyMessageModal';
 
 export default {
+    components: {
+        MyMessageModal
+    },
     computed: {
         ...mapGetters('user', {
             httpStatus: 'GetHttpStatus',
@@ -72,10 +79,20 @@ export default {
         };
     },
     mounted() {
-        $('.change-password-input').on('keyup blur', function() {
-            let currentPSWLength = this.myCurrentPSW.length;
-            let newPSWLength = this.myNewPSW.length;
-            let confirmNewPSWLength = this.myConfirmNewPSW.length;
+        $('.change-password-input').on('keyup blur', () => {
+            let currentPSWLength = null;
+            let newPSWLength = null;
+            let confirmNewPSWLength = null;
+
+            if (this.myCurrentPSW) {
+                currentPSWLength = this.myCurrentPSW.length;
+            }
+            if (this.myNewPSW) {
+                newPSWLength = this.myNewPSW.length;
+            }
+            if (this.myConfirmNewPSW) {
+                confirmNewPSWLength = this.myConfirmNewPSW.length;
+            }
 
             if (currentPSWLength > 0 && newPSWLength > 0 && confirmNewPSWLength) {
                 this.allowClick = true;
@@ -156,7 +173,7 @@ export default {
                 $('#errorMsg .error-msg-container').text(this.errorMessage.others);
             }
 
-            $('#errorMsg').show();
+            $('#errorMsg').modal('show');
         }
     }
 };

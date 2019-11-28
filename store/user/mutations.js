@@ -15,18 +15,11 @@ const mutations = {
     },
 
     // Edit Profile Success
-    [type.EDIT_PROFILE_SUCCESS](state, { status, cui, line_id, email, birthday, gender }) {
-        state.userData = {
-            cui: cui,
-            username: null,
-            fullname: null,
-            birthday: birthday,
-            mobile: null,
-            email: email,
-            gender: gender,
-            line_id: line_id,
-            uid: null
-        }
+    [type.EDIT_PROFILE_SUCCESS](state, { status, line_id, email, birthday, gender }) {
+        state.profileData.birthday = birthday
+        state.profileData.email = email
+        state.profileData.line_id = line_id
+        state.profileData.gender = gender
         state.requestState = false
         state.errorMessage = {
             password: null,

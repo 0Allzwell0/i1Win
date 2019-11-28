@@ -36,6 +36,8 @@ export default {
             }
 
             this.currentDate = `${year}-${month}-${date}`;
+            this.$emit('getFromDate', this.currentDate);
+            this.$emit('getToDate', this.currentDate);
         }
     }
 };

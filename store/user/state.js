@@ -1,14 +1,9 @@
 const state = () => ({
-    userData: {
-        cui: null,
-        username: null,
-        fullname: null,
+    profileData: {
         birthday: null,
-        mobile: null,
         email: null,
         gender: null,
         line_id: null,
-        uid: null
     },
     errorMessage: {
         password: null,

@@ -21,9 +21,9 @@
             <!-- Date -->
             <div class="history-date-wrapper">
                 <!-- From Date -->
-                <my-date-selecter class="from-date"></my-date-selecter>
+                <my-date-selecter class="from-date" v-on:getFromDate="getFromDate"></my-date-selecter>
                 <!-- To Date -->
-                <my-date-selecter class="to-date"></my-date-selecter>
+                <my-date-selecter class="to-date" v-on:getToDate="getToDate"></my-date-selecter>
             </div>
 
             <!-- Search Button -->
@@ -132,24 +132,26 @@ export default {
         return {
             fromDate: null,
             toDate: null,
-            currentTab: 'Transcation'
+            currentTab: 'Transaction'
         };
     },
     mounted() {
         let _this = this;
-        // this.getHistoryData('Transaction');
-        // this.getHistoryData('Statement');
-        // this.getHistoryData('Transfer');
+
+        this.getHistoryData('Transaction');
 
         // Judge Selected Tab
         $('.history-tab-container').click(function() {
             let type = $(this).attr('class');
             if (type.indexOf('transaction') !== -1) {
                 _this.currentTab = 'Transaction';
+                _this.getHistoryData('Transaction');
             } else if (type.indexOf('statement') !== -1) {
                 _this.currentTab = 'Statement';
+                _this.getHistoryData('Statement');
             } else if (type.indexOf('transfer') !== -1) {
                 _this.currentTab = 'Transfer';
+                _this.getHistoryData('Transfer');
             }
         });
     },
@@ -157,26 +159,25 @@ export default {
         // Get History Data
         getHistoryData(type) {
             this.$store.dispatch(`history/get${type}Data`, {
-                accessToken: this.accesstoken,
-                fromDate: this.fromDate,
-                toDate: this.toDate
+                from: this.fromDate,
+                to: this.toDate
             });
         },
 
-        // Get From Date Value
-        getFromDate() {
-            this.fromDate = $('.from-date .date-container input').val();
+        // Get Current From Date Value
+        getFromDate(date) {
+            this.fromDate = date;
         },
 
-        // Get To Date
-        getToDate() {
-            this.toDate = $('.to-date .date-container input').val();
+        // Get Current To Date
+        getToDate(date) {
+            this.toDate = date;
         },
 
         // Search Submit
         search() {
-            this.getFromDate();
-            this.getToDate();
+            this.fromDate = $('.from-date .date-container input').val();
+            this.toDate = $('.to-date .date-container input').val();
             this.getHistoryData(this.currentTab);
         }
     }

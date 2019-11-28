@@ -25,7 +25,6 @@ const mutations = {
         }
 
         setLocalStorage('isLogined', 'false')
-        setLocalStorage('userData', null)
     },
 
     // ================================================================ Request Login && Request Register
@@ -52,7 +51,6 @@ const mutations = {
         }
 
         setLocalStorage('isLogined', 'false')
-        setLocalStorage('userData', null)
     },
 
     // ================================================================ Get Login State
@@ -127,7 +125,6 @@ const mutations = {
         }
 
         setLocalStorage('isLogined', 'false')
-        setLocalStorage('userData', null)
     },
 
     // ================================================================ Register Success
@@ -195,7 +192,6 @@ const mutations = {
         }
 
         setLocalStorage('isLogined', 'false')
-        setLocalStorage('userData', null)
     },
 
     // ================================================================ Check Username Success

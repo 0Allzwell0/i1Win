@@ -2,7 +2,7 @@
     <div class="modal fade" id="myPopupModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog my-modal-wrapper" role="document">
             <div class="my-modal-container">
-                <img class="my-modal-close" src="/images/popup_close.svg" alt data-dismiss="modal" />
+                <img class="my-modal-close" src="/images/modal_close.svg" alt data-dismiss="modal" />
                 <img class="my-modal-image" id="modalImage" src="https://static.i1win.com/banner/1568200140855506763.png" alt />
             </div>
         </div>

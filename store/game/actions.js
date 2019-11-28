@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64';
-import { WEBSITE_ID } from '~/environment'
+import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import GameService from '~/service/game'
 
@@ -11,9 +11,10 @@ function getExpTimestamp() {
 // Get CUI (Base64_Encode([website_id, account_id]))
 function getCUI() {
     let json = JSON.stringify({
-        website_id: WEBSITE_ID
+        website_id: WEBSITE_ID,
+        account_id: ACCOUNT_ID
     })
-    let cui = localStorage.getItem('CUI') || Base64.encode(json)
+    let cui = JSON.parse(localStorage.getItem('userData')).cui || Base64.encode(json)
     return cui
 }
 

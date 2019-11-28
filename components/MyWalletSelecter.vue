@@ -7,20 +7,20 @@
         >{{ $t('common.please_select') }}</button>
         <fa :icon="['fas', 'caret-down']" class="transfer-down" />
         <ul class="transfer-games-list" :class="{'show': showGamesList}">
-            <li class="transfer-game-item" @click.stop="selectGame('none', 'none', 'none')">{{ $t('common.please_select') }}</li>
+            <li class="transfer-game-item" @click="selectGame('none', 0, 0)">{{ $t('common.please_select') }}</li>
+            <li class="transfer-game-item" @click="selectGame('main', 1, 0)" :class="{'active': hideGame === 'main'}">
+                <img class="transfer-game-img" :src="`/images/wallet_main.png`" />
+                <span class="transfer-game-text">{{ $t('wallet.main_wallet') }}</span>
+            </li>
             <li
                 class="transfer-game-item"
                 :class="{'active': hideGame === item.code.toLowerCase()}"
                 v-for="(item, index) in wallets"
                 :key="`transfer_game_${index}`"
-                @click.stop="selectGame(item.code.toLowerCase(), item.isActive, item.isBlocked)"
+                @click="selectGame(item.code.toLowerCase(), item.isActive, item.isBlocked)"
             >
-                <img class="transfer-game-img" :src="`/images/wallet_${item.name.toLowerCase()}.png`" />
-                <span class="transfer-game-text" v-if="(item.name === 'Main')">{{ $t('wallet.main_wallet') }}</span>
-                <span
-                    class="transfer-maintenance-text"
-                    v-if="(item.isActive === 0 || item.isBlocked === 0)"
-                >{{ $t('transfer.maintenance') }}</span>
+                <img class="transfer-game-img" :src="`/images/wallet_${item.code.toLowerCase()}.png`" />
+                <span class="transfer-maintenance-text" v-if="(item.isBlocked !== 0)">{{ $t('transfer.maintenance') }}</span>
             </li>
         </ul>
     </div>
@@ -54,11 +54,8 @@ export default {
     mounted() {
         // When Touch Others Place, "Games" List Will Close
         $(document).click(() => {
-            _this.showGamesList = false;
+            this.showGamesList = false;
         });
-
-        // Get wallets
-        this.$store.dispatch('wallet/getWallets');
     },
     methods: {
         // Show Or Close Transfer Game List
@@ -68,7 +65,11 @@ export default {
 
         // Select Transfer Game
         selectGame(game, isActive, isBlocked) {
-            if (isActive === 1 && isBlocked === 1) {
+            if (game === 'none') {
+                this.setHtml('none');
+                this.$emit('getHideGame', 'none');
+                this.showGamesList = false;
+            } else if (isActive === 1 && isBlocked !== 1) {
                 if (this.type === 'from') {
                     this.selectedFromGame = game;
                     this.setHtml(this.selectedFromGame);

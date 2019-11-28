@@ -135,11 +135,17 @@ class WalletService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.get(`/api/v1/members/getBonus`, payload, {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: `api/member/bonus`,
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                }
+                },
+                params: payload
             })
         } catch (error) {
             return error.response
@@ -154,11 +160,17 @@ class WalletService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, payload, {
+            response = await axios({
+                method: 'POST',
+                timeout: 5000,
+                url: `api/member/deposit`,
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                }
+                },
+                data: payload
             })
         } catch (error) {
             return error.response

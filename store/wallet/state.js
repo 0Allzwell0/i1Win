@@ -1,11 +1,12 @@
 const state = () => ({
+    httpStatus: null,
     requestState: false,
-    wallets: null,
+    responseMsg: false,
+    wallets: [],
     banksList: null,
     limits: null,
-    balance: (0).toFixed(2),
-    bonus: null,
-    showPromptMsg: false
+    balance: 0.00,
+    bonus: null
 })
 
 export default state

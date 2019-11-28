@@ -13,9 +13,14 @@ function getCUI() {
     let json = JSON.stringify({
         website_id: WEBSITE_ID
     })
-    let cui = Base64.encode(json)
 
-    return cui
+    let cui = null
+    if (localStorage.getItem('userData')) {
+        let userData = localStorage.getItem('userData')
+        cui = JSON.parse(userData).cui
+    }
+
+    return cui || Base64.encode(json)
 }
 
 const actions = {
@@ -29,7 +34,6 @@ const actions = {
         if (response.status === 204) {
             commit(types.EDIT_PROFILE_SUCCESS, {
                 status: response.status,
-                cui,
                 line_id,
                 email,
                 birthday,

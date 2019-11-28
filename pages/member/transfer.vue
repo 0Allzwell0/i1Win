@@ -10,7 +10,7 @@
         <div class="transfer-container">
             <!-- Available Balance -->
             <h3 class="transfer-title-text">{{ $t('wallet.available_balance') }}</h3>
-            <div class="transfer-content-text">THB {{ availableBalance }}</div>
+            <div class="transfer-content-text">THB {{ availableBalance || '0.00' }}</div>
 
             <!-- Transfer From -->
             <h3 class="transfer-title-text">{{ $t('transfer.transfer_from') }}</h3>
@@ -22,7 +22,7 @@
 
             <!-- Amount -->
             <span class="transfer-title-text">{{ $t('wallet.amount') }} (THB)</span>
-            <input class="transfer-input" type="number" :placeholder="$t('wallet.amount')" v-model="amount" />
+            <input class="transfer-input" type="number" :placeholder="$t('wallet.amount')" v-model="amount" :disabled="!isEnough" />
 
             <!-- Transfer Button -->
             <button
@@ -48,7 +48,8 @@ export default {
         }),
         ...mapGetters('wallet', {
             requestState: 'GetRequestState',
-            wallets: 'GetWallets'
+            wallets: 'GetWallets',
+            balance: 'GetBalance'
         })
     },
     components: {
@@ -64,43 +65,37 @@ export default {
             toGame: null,
             toGameOK: false,
             amount: (0).toFixed(2),
-            amountOK: false
+            amountOK: false,
+            isEnough: false
         };
     },
     mounted() {
-        let _this = this;
-
-        this.getAvailableAmount();
+        let scrollTop = $('.wallet-list-container').height();
+        $('.transfer-container').css('margin-top', -scrollTop);
 
         // Check Amount
-        $('.transfer-input').keyup(function() {
-            _this.checkAmount();
-            _this.checkInfo();
+        $('.transfer-input').keyup(() => {
+            this.checkAmount();
+            this.checkInfo();
         });
     },
     methods: {
-        // Get Available Amount
-        getAvailableAmount() {
-            for (let i = 0; i < this.wallets.length; i++) {
-                if (this.wallets[i].name === 'Main') {
-                    this.availableBalance = this.wallets[i].amount.toFixed(2);
-                    break;
-                }
-            }
-        },
-
         // Get From Game
         getFromGame(game) {
             this.fromGame = game;
             if (this.fromGame === 'none') {
                 this.fromGameOK = false;
                 this.amount = (0).toFixed(2);
+                this.checkAmount();
+                this.checkInfo();
             } else {
                 this.fromGameOK = true;
-                this.amount = amount.toFixed(2);
+                this.$store.dispatch('wallet/getBalance', game).then(() => {
+                    this.amount = this.balance;
+                    this.checkAmount();
+                    this.checkInfo();
+                });
             }
-            this.checkAmount();
-            this.checkInfo();
         },
 
         // Get To Game
@@ -120,12 +115,16 @@ export default {
                 if (typeof this.amount === 'string') {
                     this.amount = parseFloat(this.amount);
                 }
-                if (this.amount > 0) {
+
+                if (this.amount > 0 && this.amount >= this.balance) {
+                    this.isEnough = true;
                     this.amountOK = true;
                 } else {
+                    this.isEnough = false;
                     this.amountOK = false;
                 }
             } else {
+                this.isEnough = false;
                 this.amountOK = false;
             }
         },
@@ -169,12 +168,11 @@ export default {
         font-family: $font-family;
         font-size: 12px;
         font-weight: bold;
-        margin-top: -407px;
         padding: 5% 5% 90px 5%;
         transition: margin-top 400ms;
 
         &.expand {
-            margin-top: 0;
+            margin-top: 0 !important;
             transition: margin-top 400ms;
         }
         .transfer-title-text {

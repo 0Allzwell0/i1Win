@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64';
-import { WEBSITE_ID } from '~/environment'
+import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import AuthService from '~/service/auth'
 
@@ -13,8 +13,14 @@ function getCUI() {
     let json = JSON.stringify({
         website_id: WEBSITE_ID
     })
-    let cui = localStorage.getItem('CUI') || Base64.encode(json)
-    return cui
+
+    let cui = null
+    if (localStorage.getItem('userData')) {
+        let userData = localStorage.getItem('userData')
+        cui = JSON.parse(userData).cui
+    }
+
+    return cui || Base64.encode(json)
 }
 
 const actions = {

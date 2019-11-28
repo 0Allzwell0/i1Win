@@ -10,7 +10,7 @@
         <div class="withdrawal-container">
             <!-- Available Balance -->
             <h3 class="withdrawal-title-text">{{ $t('wallet.available_balance') }}</h3>
-            <div class="withdrawal-content-text">THB {{ availableBalance }}</div>
+            <div class="withdrawal-content-text">THB {{ availableBalance || '0.00' }}</div>
 
             <!-- Withdrawal Bank -->
             <h3 class="withdrawal-title-text">{{ $t('withdrawal.withdrawal_to') }}</h3>
@@ -18,7 +18,7 @@
 
             <!-- Full Name -->
             <h3 class="withdrawal-title-text">{{ $t('common.fullname') }}</h3>
-            <div class="withdrawal-content-text">{{ userData.fullname }}</div>
+            <div class="withdrawal-content-text">{{ userData.fullname || 'Fullname' }}</div>
 
             <!-- Account Number -->
             <h3 class="withdrawal-title-text">{{ $t('withdrawal.account_number') }}</h3>
@@ -31,13 +31,7 @@
 
             <!-- Amount -->
             <h3 class="withdrawal-title-text">{{ $t('wallet.amount') }} (THB)</h3>
-            <input
-                class="withdrawal-input amount-input"
-                type="number"
-                v-model="amount"
-                :placeholder="amountPlaceholder"
-                :disabled="amountAllowed"
-            />
+            <input class="withdrawal-input amount-input" type="number" :placeholder="amountPlaceholder" :disabled="amountAllowed" />
 
             <!-- Warning Message -->
             <p class="withdrawal-warning-msg">{{ $t('withdrawal.withdrawal_msg') }}</p>
@@ -68,6 +62,7 @@ export default {
         ...mapGetters('wallet', {
             requestState: 'GetRequestState',
             wallets: 'GetWallets',
+            balance: 'GetBalance',
             limits: 'GetLimits'
         })
     },
@@ -81,7 +76,6 @@ export default {
             availableBalance: null,
             accountNumber: null,
             accountNumberOK: false,
-            amount: null,
             amountOK: false,
             amountAllowed: false,
             amountPlaceholder: null,
@@ -91,70 +85,60 @@ export default {
     mounted() {
         let _this = this;
 
-        this.getAvailableBalanve();
+        let scrollTop = $('.wallet-list-container').height();
+        $('.withdrawal-container').css('margin-top', -scrollTop);
+
         this.checkAmount();
 
         // Check Account Number
-        $('.account-number-input').keyup(function() {
+        $('.account-number-input').keyup(() => {
             let accountNumLeng = $('.account-number-input').val().length;
             if (accountNumLeng > 0) {
-                _this.accountNumberOK = true;
+                this.accountNumberOK = true;
             } else {
-                _this.accountNumberOK = false;
+                this.accountNumberOK = false;
             }
-            _this.checkInfo();
+            this.checkInfo();
         });
 
         // Check Amount
-        $('.amount-input').keyup(function() {
+        $('.amount-input').keyup(() => {
             let amountLength = $('.amount-input').val().length;
             if (amountLength > 0) {
-                _this.amountOK = true;
+                this.amountOK = true;
             } else {
-                _this.amountOK = false;
+                this.amountOK = false;
             }
             _this.checkInfo();
         });
     },
     methods: {
-        // Get Available Balance
-        getAvailableBalanve() {
-            if (this.wallets) {
-                for (let i = 0; i < this.wallets.length; i++) {
-                    if (this.wallets[i].name === 'Main') {
-                        this.availableBalance = this.wallets[i].amount.toFixed(2);
-                        break;
-                    }
-                }
-            } else {
-                this.availableBalance = (0).toFixed(2);
-            }
-        },
-
         // Check Amount Is Availabled To Input And Change "Placeholder"
         // 1. The number of withdrawals per day has exceeded the limit
         // 2. The amount of one-day withdrawal has exceeded the limit
         // 3. Insufficient balance
         // 4. The minimum withdrawal amount is "minWithdraw" or 50
         checkAmount() {
-            if (this.limits && this.wallets) {
-                if (this.limits.todayWithdrawTotal >= this.limits.maxDailyWithdraw) {
-                    this.amountAllowed = true;
-                    this.amountPlaceholder = this.$t('withdrawal.today_withdraw_total');
-                } else if (this.limits.todayCount >= this.limits.maxDaily) {
-                    this.amountAllowed = true;
-                    this.amountPlaceholder = this.$t('withdrawal.today_count');
-                } else if (this.wallets[0].amount < this.limits.minWithdraw) {
-                    this.amountAllowed = true;
-                    this.amountPlaceholder = this.$t('withdrawal.insufficient_balance');
+            this.$store.dispatch('wallet/getLimits').then(() => {
+                if (this.limits) {
+                    if (this.limits.todayWithdrawTotal >= this.limits.maxDailyWithdraw) {
+                        this.amountAllowed = true;
+                        this.amountPlaceholder = this.$t('withdrawal.today_withdraw_total');
+                    } else if (this.limits.todayCount >= this.limits.maxDaily) {
+                        this.amountAllowed = true;
+                        this.amountPlaceholder = this.$t('withdrawal.today_count');
+                    } else if (this.balance < this.limits.minWithdraw || this.balance <= 0) {
+                        this.amountAllowed = true;
+                        this.amountPlaceholder = this.$t('withdrawal.insufficient_balance');
+                    } else {
+                        this.amountAllowed = false;
+                        this.amountPlaceholder = this.$t('withdrawal.amount_placeholder') + this.limits.minWithdraw;
+                    }
                 } else {
                     this.amountAllowed = false;
-                    this.amountPlaceholder = this.$t('withdrawal.amount_placeholder') + this.limits.minWithdraw;
+                    this.amountPlaceholder = this.$t('withdrawal.amount_placeholder') + '50';
                 }
-            } else {
-                this.amountAllowed = false;
-                this.amountPlaceholder = this.$t('withdrawal.amount_placeholder') + '50';
-            }
+            });
         },
 
         // Get Selected Bank
@@ -203,12 +187,11 @@ export default {
         font-family: $font-family;
         font-size: 12px;
         font-weight: bold;
-        margin-top: -407px;
         padding: 5% 5% 90px 5%;
         transition: margin-top 400ms;
 
         &.expand {
-            margin-top: 0;
+            margin-top: 0 !important;
             transition: margin-top 400ms;
         }
         .withdrawal-title-text {
