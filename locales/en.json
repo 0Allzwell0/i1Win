@@ -126,14 +126,16 @@
     "birthday": "Birthday",
     "gender": "Gender",
     "male": "Male",
-    "female": "Female"
+    "female": "Female",
+    "success_msg": "Change Profile Success !!"
   },
   "change_password": {
     "title": "Change Password",
     "current_password": "Current Password",
     "new_password": "New Password",
     "confirm_password": "Confirm Password",
-    "success_msg": "Change Password Success !!"
+    "success_msg": "Change Password Success !!",
+    "no_match_msg": "Password does not match !!"
   },
   "wallet": {
     "deposit": "Deposit",
@@ -160,7 +162,7 @@
     "no_file_select": "No File Select",
     "upload_file_error": "File size must smaller than 2MB.",
     "agree_certify": "I certify that I have read and agreed to the Promotions Terms & Conditions.",
-    "success": "Deposit Success !!"
+    "success_msg": "Deposit Success !!"
   },
   "withdrawal": {
     "withdrawal_to": "Withdrawal To",
@@ -171,12 +173,14 @@
     "amount_placeholder": "Minimum withdrawal is THB ",
     "today_withdraw_total": "The accumulated withdrawal amount has exceeded the limit today, please contact customer service.",
     "today_count": "The number of withdrawals has exceeded the limit today, please contact customer service.",
-    "insufficient_balance": "Insufficient balance"
+    "insufficient_balance": "Insufficient balance",
+    "success_msg": "Withdrawal Success !!"
   },
   "transfer": {
     "transfer_from": "Transfer From",
     "transfer_to": "Transfer To",
-    "maintenance": "[Maintenance]"
+    "maintenance": "[Maintenance]",
+    "success_msg": "Transfer Success !!"
   },
   "history": {
     "transaction": "Transaction",

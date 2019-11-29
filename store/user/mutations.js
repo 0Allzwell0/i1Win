@@ -5,13 +5,14 @@ const mutations = {
     // Request Edit Profile
     [type.REQUEST_EDIT_PROFILE](state) {
         state.requestState = true
-        state.errorMessage = {
-            password: null,
-            new_password: null,
-            confirm_new_password: null,
-            others: null
-        }
         state.httpStatus = null
+        state.profileErrorMsg = null
+        state.profileData = {
+            birthday: null,
+            email: null,
+            gender: null,
+            line_id: null,
+        }
     },
 
     // Edit Profile Success
@@ -21,24 +22,14 @@ const mutations = {
         state.profileData.line_id = line_id
         state.profileData.gender = gender
         state.requestState = false
-        state.errorMessage = {
-            password: null,
-            new_password: null,
-            confirm_new_password: null,
-            others: null
-        }
+        state.profileErrorMsg = null
         state.httpStatus = status
     },
 
     // Edit Profile Fail
     [type.EDIT_PROFILE_FAIL](state, { data, status }) {
         state.requestState = false
-        state.errorMessage = {
-            password: null,
-            new_password: null,
-            confirm_new_password: null,
-            others: data
-        }
+        state.profileErrorMsg = data
         state.httpStatus = status
     },
 
@@ -46,25 +37,25 @@ const mutations = {
     // Request Change Password
     [type.REQUEST_CHANGE_PASSWORD](state) {
         state.requestState = true
-        state.errorMessage = {
+        state.httpStatus = null
+        state.changePSWErrorMsg = {
             password: null,
             new_password: null,
             confirm_new_password: null,
             others: null
         }
-        state.httpStatus = null
     },
 
     // Change Password Success
     [type.CHANGE_PASSWORD_SUCCESS](state, status) {
         state.requestState = false
-        state.errorMessage = {
+        state.httpStatus = status
+        state.changePSWErrorMsg = {
             password: null,
             new_password: null,
             confirm_new_password: null,
             others: null
         }
-        state.httpStatus = status
     },
 
     // Change Password Fail
@@ -73,16 +64,16 @@ const mutations = {
         state.httpStatus = status
         if (status === 422) {
             if (data.password) {
-                state.errorMessage.password = data.password
+                state.changePSWErrorMsg.password = data.password
             }
             if (data.new_password) {
-                state.errorMessage.new_password = data.new_password
+                state.changePSWErrorMsg.new_password = data.new_password
             }
             if (data.confirm_new_password) {
-                state.errorMessage.confirm_new_password = data.confirm_new_password
+                state.changePSWErrorMsg.confirm_new_password = data.confirm_new_password
             }
         } else {
-            state.errorMessage.others = data
+            state.changePSWErrorMsg.others = data
         }
     },
 

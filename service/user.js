@@ -19,8 +19,7 @@ class UserService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                data: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -44,8 +43,7 @@ class UserService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                data: payload
+                }
             })
         } catch (error) {
             return error.response

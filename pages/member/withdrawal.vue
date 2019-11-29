@@ -1,5 +1,8 @@
 <template>
     <main class="withdrawal-wrapper">
+        <!-- Error Message -->
+        <my-message-modal />
+
         <!-- Tab -->
         <my-member-tab />
 
@@ -52,6 +55,7 @@ import { mapGetters } from 'vuex';
 import MyMemberTab from '~/components/MyMemberTab';
 import MyWalletList from '~/components/MyWalletList';
 import MyBanksSelecter from '~/components/MyBanksSelecter';
+import MyMessageModal from '~/components/MyMessageModal';
 
 export default {
     computed: {
@@ -60,6 +64,7 @@ export default {
             userData: 'GetUserData'
         }),
         ...mapGetters('wallet', {
+            httpStatus: 'GetHttpStatus',
             requestState: 'GetRequestState',
             wallets: 'GetWallets',
             balance: 'GetBalance',
@@ -69,7 +74,8 @@ export default {
     components: {
         MyMemberTab,
         MyWalletList,
-        MyBanksSelecter
+        MyBanksSelecter,
+        MyMessageModal
     },
     data() {
         return {
@@ -161,12 +167,31 @@ export default {
 
         // Withdrawal Submit
         withdrawal() {
-            this.$store.dispatch('wallet/withdrawal', {
-                accessToken: this.accessToken,
-                toBank: this.selectedBank,
-                accountNumber: this.accountNumber,
-                amount: this.amount
-            });
+            this.$store
+                .dispatch('wallet/withdrawal', {
+                    accessToken: this.accessToken,
+                    toBank: this.selectedBank,
+                    accountNumber: this.accountNumber,
+                    amount: this.amount
+                })
+                .then(() => {
+                    if (this.httpStatus === 422) {
+                        let msgArray = [];
+                        $('#errorMsg .error-msg-container').html('');
+                        for (let i in this.responseMsg) {
+                            msgArray.push(this.responseMsg[i]);
+                        }
+                        for (let j = 0; j < msgArray.length; j++) {
+                            $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
+                        }
+                    } else if (this.httpStatus === 200) {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('withdrawal.success_msg')}</div>`);
+                    } else {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
+                    }
+
+                    $('#errorMsg').modal('show');
+                });
         }
     }
 };

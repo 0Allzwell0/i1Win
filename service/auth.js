@@ -19,8 +19,7 @@ class AuthService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -43,8 +42,7 @@ class AuthService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                data: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -68,7 +66,7 @@ class AuthService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
+                }
             })
         } catch (error) {
             return error.response
@@ -92,7 +90,7 @@ class AuthService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
+                }
             })
         } catch (error) {
             return error.response

@@ -278,8 +278,6 @@ export default {
                 if (e.target.files[0].size < 2097152) {
                     this.upLoadFile = e.target.files[0];
                     this.upLoadFileOK = true;
-                    //this.formData = new FormData();
-                    //this.formData.append('receipt', this.upLoadFile);
                 } else {
                     $('#errorMsg .error-msg-container').text(this.$t('deposit.upload_file_error'));
                     $('#errorMsg').modal('show');
@@ -389,44 +387,35 @@ export default {
             }
         },
 
-        // Convert data to "FormData" format
-        transDataToFormData() {
-            this.formData = new FormData();
-            this.formData.append('accountNumber', this.accountNumber);
-            this.formData.append('amount', this.totalAmount);
-            this.formData.append('dateTime', this.depositDate + ' ' + this.depositTime);
-            this.formData.append('reference', this.referenceNo);
-            this.formData.append('receipt', this.upLoadFile);
-            this.formData.append('bonus', this.selectedBonus);
-        },
-
         // Deposit submit
         deposit() {
             this.getDate();
             this.getTime();
-            // this.transDataToFormData();
-            // this.$store.dispatch('wallet/deposit', this.formData);
-
+            $('.spinner-wrapper').show();
             this.$store
                 .dispatch('wallet/deposit', {
                     accountNumber: this.accountNumber,
                     amount: this.totalAmount,
                     time: this.depositDate + ' ' + this.depositTime,
                     reference: this.referenceNo,
-                    receipt: `"${this.upLoadFile}"`,
+                    receipt: this.upLoadFile,
                     bonus: this.selectedBonus
                 })
                 .then(() => {
+                    $('.spinner-wrapper').hide();
                     if (this.httpStatus === 422) {
                         let msgArray = [];
+                        $('#errorMsg .error-msg-container').html('');
                         for (let i in this.responseMsg) {
                             msgArray.push(this.responseMsg[i]);
-                            $('#errorMsg .error-msg-container').append(msgArray[0]);
+                        }
+                        for (let j = 0; j < msgArray.length; j++) {
+                            $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
                         }
                     } else if (this.httpStatus === 200) {
-                        $('#errorMsg .error-msg-container').text(this.$t('deposit.success'));
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('deposit.success_msg')}</div>`);
                     } else {
-                        $('#errorMsg .error-msg-container').text(this.responseMsg);
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
                     }
 
                     $('#errorMsg').modal('show');

@@ -1,5 +1,8 @@
 <template>
     <main class="transfer-wrapper">
+        <!-- Error Message -->
+        <my-message-modal />
+
         <!-- Tab -->
         <my-member-tab />
 
@@ -40,6 +43,7 @@ import { mapGetters } from 'vuex';
 import MyMemberTab from '~/components/MyMemberTab';
 import MyWalletList from '~/components/MyWalletList';
 import MyWalletSelecter from '~/components/MyWalletSelecter';
+import MyMessageModal from '~/components/MyMessageModal';
 
 export default {
     computed: {
@@ -47,6 +51,7 @@ export default {
             accessToken: 'GetAccessToken'
         }),
         ...mapGetters('wallet', {
+            httpStatus: 'GetHttpStatus',
             requestState: 'GetRequestState',
             wallets: 'GetWallets',
             balance: 'GetBalance'
@@ -55,7 +60,8 @@ export default {
     components: {
         MyMemberTab,
         MyWalletList,
-        MyWalletSelecter
+        MyWalletSelecter,
+        MyMessageModal
     },
     data() {
         return {
@@ -142,12 +148,31 @@ export default {
 
         // Transfer Submit
         transfer() {
-            this.$store.dispatch('wallet/transfer', {
-                accessToken: this.accessToken,
-                from: this.fromGame,
-                to: this.toGame,
-                amount: this.amount
-            });
+            this.$store
+                .dispatch('wallet/transfer', {
+                    accessToken: this.accessToken,
+                    from: this.fromGame,
+                    to: this.toGame,
+                    amount: this.amount
+                })
+                .then(() => {
+                    if (this.httpStatus === 422) {
+                        let msgArray = [];
+                        $('#errorMsg .error-msg-container').html('');
+                        for (let i in this.responseMsg) {
+                            msgArray.push(this.responseMsg[i]);
+                        }
+                        for (let j = 0; j < msgArray.length; j++) {
+                            $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
+                        }
+                    } else if (this.httpStatus === 200) {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('transfer.success_msg')}</div>`);
+                    } else {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
+                    }
+
+                    $('#errorMsg').modal('show');
+                });
         }
     }
 };

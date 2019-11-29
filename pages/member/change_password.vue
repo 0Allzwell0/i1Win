@@ -64,7 +64,7 @@ export default {
     computed: {
         ...mapGetters('user', {
             httpStatus: 'GetHttpStatus',
-            errorMessage: 'GetErrorMessage'
+            changePSWErrorMsg: 'GetChangePSWErrorMsg'
         })
     },
     data() {
@@ -94,7 +94,7 @@ export default {
                 confirmNewPSWLength = this.myConfirmNewPSW.length;
             }
 
-            if (currentPSWLength > 0 && newPSWLength > 0 && confirmNewPSWLength) {
+            if (currentPSWLength > 0 && newPSWLength > 0 && confirmNewPSWLength > 0) {
                 this.allowClick = true;
             } else {
                 this.allowClick = false;
@@ -139,38 +139,49 @@ export default {
 
         // Change Password Submit
         changePassword() {
-            this.$store.dispatch('user/changePassword', this.myNewPSW).then(() => {
-                this.showErrorMessage();
-            });
+            if (this.myNewPSW === this.myConfirmNewPSW) {
+                this.$store.dispatch('user/changePassword', this.myNewPSW).then(() => {
+                    this.showResponseMsg();
+                });
+            } else if (this.myNewPSW !== this.myConfirmNewPSW) {
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('change_password.no_match_msg')}</div>`);
+            }
         },
 
         // Show Error Message Modal
-        showErrorMessage() {
+        showResponseMsg() {
             if (this.httpStatus === 204) {
-                $('#errorMsg .error-msg-container').text(this.$t('change_password.success_msg'));
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('change_password.success_msg')}</div>`);
             } else if (this.httpStatus === 422) {
-                if (this.errorMessage.password) {
-                    let arrayLength = this.errorMessage.password.length;
+                $('#errorMsg .error-msg-container').html('');
+                if (this.changePSWErrorMsg.password) {
+                    let arrayLength = this.changePSWErrorMsg.password.length;
                     for (let i = 0; i < arrayLength; i++) {
-                        $('#errorMsg .error-msg-container').append(this.errorMessage.password[i]);
+                        $('#errorMsg .error-msg-container').append(
+                            `<div class="error-msg">${this.changePSWErrorMsg.password[i]}</div>`
+                        );
                     }
                 }
 
-                if (this.errorMessage.new_password) {
-                    let arrayLength = this.errorMessage.new_password.length;
+                if (this.changePSWErrorMsg.new_password) {
+                    let arrayLength = this.changePSWErrorMsg.new_password.length;
                     for (let i = 0; i < arrayLength; i++) {
-                        $('#errorMsg .error-msg-container').append(this.errorMessage.new_password[i]);
+                        $('#errorMsg .error-msg-container').append(
+                            `<div class="error-msg">${this.changePSWErrorMsg.new_password[i]}</div>`
+                        );
                     }
                 }
 
-                if (this.errorMessage.confirm_new_password) {
-                    let arrayLength = this.errorMessage.confirm_new_password.length;
+                if (this.changePSWErrorMsg.confirm_new_password) {
+                    let arrayLength = this.changePSWErrorMsg.confirm_new_password.length;
                     for (let i = 0; i < arrayLength; i++) {
-                        $('#errorMsg .error-msg-container').append(this.errorMessage.confirm_new_password[i]);
+                        $('#errorMsg .error-msg-container').append(
+                            `<div class="error-msg">${this.changePSWErrorMsg.confirm_new_password[i]}</div>`
+                        );
                     }
                 }
             } else {
-                $('#errorMsg .error-msg-container').text(this.errorMessage.others);
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.changePSWErrorMsg.others}</div>`);
             }
 
             $('#errorMsg').modal('show');

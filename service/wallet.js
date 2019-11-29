@@ -19,8 +19,7 @@ class WalletService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -44,8 +43,7 @@ class WalletService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -69,8 +67,7 @@ class WalletService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -94,8 +91,7 @@ class WalletService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -119,8 +115,7 @@ class WalletService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -144,8 +139,7 @@ class WalletService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -155,7 +149,7 @@ class WalletService {
     }
 
     // Deposit
-    static async deposit(payload) {
+    static async deposit(payload, formData) {
         let response = null
         let accessToken = JWT.sign(payload)
 
@@ -170,7 +164,7 @@ class WalletService {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 },
-                data: payload
+                data: formData
             })
         } catch (error) {
             return error.response
@@ -185,8 +179,13 @@ class WalletService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, payload, {
+            response = await axios({
+                method: 'POST',
+                timeout: 5000,
+                url: `api/member/withdraw`,
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }
@@ -204,8 +203,13 @@ class WalletService {
         let accessToken = JWT.sign(payload)
 
         try {
-            response = await axios.post(`/api/v1/members/getBonus`, payload, {
+            response = await axios({
+                method: 'POST',
+                timeout: 5000,
+                url: `api/member/transfer`,
+                baseURL: API_DOMAIN,
                 headers: {
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
                 }

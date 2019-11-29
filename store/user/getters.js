@@ -1,6 +1,7 @@
 const getters = {
     GetHttpStatus: state => state.httpStatus,
-    GetErrorMessage: state => state.errorMessage,
+    GetChangePSWErrorMsg: state => state.changePSWErrorMsg,
+    GetProfileErrorMsg: state => state.profileErrorMsg,
     GetProfilData: state => state.profileData,
     GetBanners: state => state.banners,
     GetAnnouncements: state => state.announcements,

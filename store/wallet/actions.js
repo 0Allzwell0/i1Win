@@ -106,9 +106,13 @@ const actions = {
     async deposit({ commit }, { accountNumber, amount, time, reference, receipt, bonus }) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { exp, accountNumber, amount, time, reference, receipt, bonus, cui }
+        const payload = { exp, accountNumber, amount, time, reference, bonus, cui }
+
+        let formData = new FormData()
+        formData.append('receipt', receipt);
+
         commit(types.REQUEST_DWT)
-        const response = await WalletService.deposit(payload)
+        const response = await WalletService.deposit(payload, formData)
         if (response.status === 200) {
             commit(types.DWT_SUCCESS, { data: response.data, status: response.status })
         } else {

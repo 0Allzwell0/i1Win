@@ -19,8 +19,7 @@ class HistoryService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -44,8 +43,7 @@ class HistoryService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response
@@ -69,8 +67,7 @@ class HistoryService {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': Language.getLanguage()
-                },
-                params: payload
+                }
             })
         } catch (error) {
             return error.response

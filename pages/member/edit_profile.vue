@@ -1,5 +1,8 @@
 <template>
     <main class="edit-profile-wrapper">
+        <!-- Error Message Modal -->
+        <my-message-modal />
+
         <div class="edit-profile-container">
             <!-- Title -->
             <h2 class="edit-profile-title">{{ $t('edit_profile.title') }}</h2>
@@ -52,14 +55,20 @@
 <script>
 import { en, th } from 'vuejs-datepicker/dist/locale';
 import { mapGetters } from 'vuex';
+import MyMessageModal from '~/components/MyMessageModal';
 
 export default {
+    components: {
+        MyMessageModal
+    },
     computed: {
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
         }),
         ...mapGetters('user', {
-            profileData: 'GetProfileData'
+            httpStatus: 'GetHttpStatus',
+            profileData: 'GetProfileData',
+            profileErrorMsg: 'GetProfileErrorMsg'
         })
     },
     data() {
@@ -108,7 +117,6 @@ export default {
         editProfile() {
             this.$store
                 .dispatch('user/editProfile', {
-                    accessToken: this.accessToken,
                     line_id: this.myLineID,
                     email: this.myEmail,
                     birthday: this.myBirthday,
@@ -116,14 +124,27 @@ export default {
                 })
                 .then(() => {
                     if (this.httpStatus === 204) {
-                        this.userData.line_id = this.profileData.line_id;
-                        this.userData.email = this.profileData.email;
-                        this.userData.birthday = this.profileData.birthday;
-                        this.userData.gender = this.profileData.gender;
+                        this.userData.line_id = this.myLineID;
+                        this.userData.email = this.myEmail;
+                        this.userData.birthday = this.myBirthday;
+                        this.userData.gender = this.myGender;
 
-                        localStorage.setItem('userData', this.userData);
+                        localStorage.setItem('userData', JSON.stringify(this.userData));
                     }
+
+                    this.showResponseMsg();
                 });
+        },
+
+        // Show Response Message
+        showResponseMsg() {
+            if (this.httpStatus === 204) {
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('edit_profile.success_msg')}</div>`);
+            } else {
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.profileErrorMsg}</div>`);
+            }
+
+            $('#errorMsg').modal('show');
         }
     }
 };

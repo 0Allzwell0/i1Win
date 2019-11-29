@@ -126,14 +126,16 @@
     "birthday": "วันเกิด",
     "gender": "เพศ'",
     "male": "ชาย",
-    "female": "หญิง"
+    "female": "หญิง",
+    "success_msg": "เปลี่ยนโปรไฟล์สำเร็จ !!"
   },
   "change_password": {
     "title": "เปลี่ยนรหัสผ่าน",
     "current_password": "รหัสผ่านปัจจุบัน",
     "new_password": "รหัสผ่านใหม่",
     "confirm_password": "ยืนยันรหัสผ่านใหม่",
-    "success_msg": "เปลี่ยนรหัสผ่านสำเร็จ !!"
+    "success_msg": "เปลี่ยนรหัสผ่านสำเร็จ !!",
+    "no_match_msg": "รหัสผ่านไม่ตรงกัน !!"
   },
   "wallet": {
     "deposit": "ฝากเงิน",
@@ -160,7 +162,7 @@
     "no_file_select": "ไม่ได้เลือกไฟล์",
     "upload_file_error": "ขนาดไฟล์ต้องเล็กกว่า 2MB",
     "agree_certify": "ฉันรับรองว่าฉันได้อ่านและยอมรับข้อกำหนดและเงื่อนไขของโปรโมชั่น",
-    "success": "ฝากสำเร็จ !!"
+    "success_msg": "ฝากสำเร็จ !!"
   },
   "withdrawal": {
     "withdrawal_to": "ถอนเงินไปยัง",
@@ -171,12 +173,14 @@
     "amount_placeholder": "ถอนขั้นต่ำคือ THB ",
     "today_withdraw_total": "จำนวนการถอนเงินสะสมเกินขีด จำกัด ในวันนี้โปรดติดต่อฝ่ายบริการลูกค้า.",
     "today_count": "จำนวนการถอนได้เกินขีด จำกัด ในวันนี้โปรดติดต่อฝ่ายบริการลูกค้า.",
-    "insufficient_balance": "ยอดเงินไม่เพียงพอ"
+    "insufficient_balance": "ยอดเงินไม่เพียงพอ",
+    "success_msg": "ถอนเงินสำเร็จ !!"
   },
   "transfer": {
     "transfer_from": "ย้ายเงินจาก",
     "transfer_to": "ย้ายเงินสู่",
-    "maintenance": "[ซ่อมบำรุง]"
+    "maintenance": "[ซ่อมบำรุง]",
+    "success_msg": "ถ่ายโอนความสำเร็จ !!"
   },
   "history": {
     "transaction": "ธุรกรรม",
