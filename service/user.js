@@ -109,7 +109,7 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 1000,
+                timeout: 5000,
                 url: 'res/jackpot',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -134,15 +134,15 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 1000,
-                url: 'res/announcements',
+                timeout: 5000,
+                url: 'res/promotions',
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    code: 1,
+                    is_mobile: 1,
                     website_id: WEBSITE_ID
                 }
             })
@@ -160,15 +160,14 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 1000,
-                url: 'res/articles',
+                timeout: 5000,
+                url: `res/articles`,
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    code: code,
                     is_mobile: 1,
                     website_id: WEBSITE_ID
                 }

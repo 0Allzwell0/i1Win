@@ -7,7 +7,7 @@ const getters = {
     GetAnnouncements: state => state.announcements,
     GetArticles: state => state.articles,
     GetJackpot: state => state.jackpot,
-    GetPromotions: state => state.promotions
+    GetPromotionsList: state => state.promotionsList
 }
 
 export default getters

@@ -46,7 +46,7 @@ import MyPromotionsDetail from '~/components/MyPromotionsDetail';
 export default {
     computed: {
         ...mapGetters('user', {
-            promotionsList: 'GetPromotions'
+            promotionsList: 'GetPromotionsList'
         }),
         ...mapGetters('auth', {
             isLogined: 'GetLogined'
@@ -54,6 +54,9 @@ export default {
     },
     components: {
         MyPromotionsDetail
+    },
+    mounted() {
+        this.$store.dispatch('user/getPromotions');
     }
 };
 </script>

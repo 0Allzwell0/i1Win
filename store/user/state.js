@@ -16,7 +16,7 @@ const state = () => ({
     banners: null,
     announcements: null,
     jackpot: parseFloat(1830082162),
-    promotions: null,
+    promotionsList: null,
     articles: [{
         name: null,
         mobile: null

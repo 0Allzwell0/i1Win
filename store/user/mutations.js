@@ -119,13 +119,13 @@ const mutations = {
     // =========================================================== Get Promotions
     // Get Promotions Success
     [type.GET_PROMOTIONS_SUCCESS](state, { data, status }) {
-        state.promotions = data
+        state.promotionsList = data
         state.httpStatus = status
     },
 
     // Get Promotions Fail
     [type.GET_PROMOTIONS_FAIL](state, status) {
-        state.promotions = null
+        state.promotionsList = null
         state.httpStatus = status
     },
 
