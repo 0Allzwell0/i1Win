@@ -4,7 +4,7 @@
         <h1 class="article-title">{{ articleHTML.name }}</h1>
 
         <!-- Content -->
-        <div class="article-html" v-html="articleHTML.mobile" />
+        <div class="article-html" v-html="articleHTML.body" />
     </main>
 </template>
 <script>
@@ -34,23 +34,23 @@ export default {
                     break;
                 }
                 case 'how-to-join': {
-                    articleCode = 'HOWTOJOIN';
+                    articleCode = 'HOWJOIN_EN';
                     break;
                 }
                 case 'support': {
-                    articleCode = 'SUPPORT';
+                    articleCode = 'SUPPORT_EN';
                     break;
                 }
                 case 'responsible-gaming': {
-                    articleCode = 'RESPONSIBLE';
+                    articleCode = 'RESPONSIBLE_EN';
                     break;
                 }
                 case 'terms-of-use': {
-                    articleCode = 'TERM';
+                    articleCode = 'TERM_EN';
                     break;
                 }
                 case 'privacy-policy': {
-                    articleCode = 'PRIVACY';
+                    articleCode = 'PRIVACY_EN';
                     break;
                 }
             }

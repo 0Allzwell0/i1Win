@@ -161,14 +161,14 @@ class UserService {
             response = await axios({
                 method: 'GET',
                 timeout: 5000,
-                url: `res/articles`,
+                url: `res/article`,
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    is_mobile: 1,
+                    code,
                     website_id: WEBSITE_ID
                 }
             })
