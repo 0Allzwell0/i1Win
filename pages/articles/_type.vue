@@ -60,7 +60,7 @@ export default {
     }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .article-wrapper {
     min-height: calc(100vh - 100px);
     background-image: $background_img;
@@ -82,13 +82,17 @@ export default {
 
         h4,
         h3 {
+            font-weight: bold;
             font-size: 20px;
             text-align: center;
             margin: 20px 0 10px 0;
         }
-
+        li {
+            list-style-type: decimal;
+            list-style-position: inside;
+        }
         p {
-            text-indent: 30px;
+            text-indent: 2em;
         }
     }
 }

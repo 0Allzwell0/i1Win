@@ -67,6 +67,7 @@ class UserService {
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
+                    is_mobile: 1,
                     website_id: WEBSITE_ID
                 }
             })
@@ -161,14 +162,13 @@ class UserService {
             response = await axios({
                 method: 'GET',
                 timeout: 5000,
-                url: `res/article`,
+                url: `res/article/${code}`,
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Language': Language.getLanguage()
                 },
                 params: {
-                    code,
                     website_id: WEBSITE_ID
                 }
             })

@@ -3,8 +3,8 @@
         <h2 class="promotions-title">{{ $t('footer.promotions') }}</h2>
         <ul class="promotions-list">
             <li class="promotions-item" v-for="(item, index) in promotionsList" :key="`promotion-${index}`">
-                <img class="promotions-img" :src="item.src" />
-                <p class="promotions-text">{{ item.title }}</p>
+                <img class="promotions-img" :src="item.image_mobile" />
+                <p class="promotions-text">{{ item.name }}</p>
                 <div class="promotions-btn-wrapper">
                     <!-- Detail -->
                     <button
@@ -28,12 +28,9 @@
                     >{{ $t('promotions.deposit') }}</nuxt-link>
                 </div>
 
+                <!-- Detail Modal -->
                 <div class="modal fade" :id="`detail_${index}`" tabindex="-1" role="dialog" aria-hidden="true">
-                    <my-promotions-detail
-                        class="modal-dialog modal-dialog-scrollable"
-                        role="document"
-                        :htmlContent="item.content"
-                    />
+                    <my-promotions-detail class="modal-dialog" role="document" :htmlContent="item.body" />
                 </div>
             </li>
         </ul>
@@ -76,17 +73,18 @@ export default {
         font-weight: bold;
         text-shadow: $text-shadow;
         align-self: center;
-        margin: 20px 0;
+        margin: 5% 0 0 0;
     }
     .promotions-list {
         height: 100%;
-        text-align: center;
-        padding: 0 10px;
+        background: rgba(0, 0, 0, 0.1);
+        padding: 3% 3% 0 3%;
+        margin: 5% 3% 0 3%;
 
         .promotions-item {
             display: inline-block;
-            width: 95%;
-            margin-bottom: 30px;
+            width: 100%;
+            margin: 0 0 8% 0;
             background: #eeeeee;
             -webkit-box-shadow: 4px 4px 5px #494949;
             box-shadow: 4px 4px 5px #494949;
@@ -98,15 +96,13 @@ export default {
                 font-family: $font-family;
                 font-weight: bold;
                 font-size: 18px;
-                color: $color-white;
-                text-align: left;
-                margin: -25px 0 18px 13px;
+                margin: 5% 0 0 4%;
             }
             .promotions-btn-wrapper {
                 display: flex;
                 justify-content: space-around;
                 width: 100%;
-                margin: 10px 0;
+                margin: 8% 0 3% 0;
 
                 .promotions-btn {
                     width: 45%;

@@ -4,7 +4,7 @@
             <ul class="carousel-list swiper-wrapper">
                 <li class="carousel-item-wrapper swiper-slide" v-for="(item, index) in bannersList" :key="`banner-${index}`">
                     <nuxt-link class="carousel-item" :to="$i18n.path('promotions')">
-                        <img class="carousel-item-img swiper-lazy" :src="item.image" />
+                        <img class="carousel-item-img swiper-lazy" :src="item.image_mobile" />
                         <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                     </nuxt-link>
                 </li>

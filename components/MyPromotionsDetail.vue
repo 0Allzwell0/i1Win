@@ -19,7 +19,6 @@ export default {
 
 <style lang="scss" scoped>
 .promotions-detail-wrapper {
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
