@@ -54,12 +54,6 @@ import MyGameTab from '~/components/MyGameTab';
 import MySlotsGameList from '~/components/MySlotsGameList';
 
 export default {
-    asyncData({ store, route }) {},
-    computed: {
-        ...mapGetters('auth', {
-            accesstoken: 'GetAccessToken'
-        })
-    },
     components: {
         MyCarousel,
         MyAnnouncement,

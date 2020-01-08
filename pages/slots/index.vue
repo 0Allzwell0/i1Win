@@ -127,18 +127,11 @@
     </main>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import MyCarousel from '~/components/MyCarousel';
 import MyAnnouncement from '~/components/MyAnnouncement';
 import MyGameTab from '~/components/MyGameTab';
 
 export default {
-    computed: {
-        ...mapGetters('auth', {
-            accesstoken: 'GetAccessToken',
-            isLogined: 'GetLogined'
-        })
-    },
     components: {
         MyCarousel,
         MyAnnouncement,
