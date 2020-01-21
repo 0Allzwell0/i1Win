@@ -182,14 +182,20 @@ export default {
 </script>
 <style lang="scss">
     .history-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
-        height: 100%;
+        min-height: calc(100vh - 100px);
+        font-family: $font-family;
+        font-size: 14px;
 
         .history-container {
             display: flex;
             flex-direction: column;
             width: 100%;
-            min-height: calc(100vh - 177px);
+            min-height: calc(100vh - 116px);
             background: url('/images/background_img.jpg');
             background-size: cover;
             font-family: $font-family;

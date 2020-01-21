@@ -422,198 +422,206 @@ export default {
 };
 </script>
 <style lang="scss">
-.deposit-wrapper {
-    width: 100%;
-    height: 100%;
-
-    .deposit-container {
+    .deposit-wrapper {
         position: relative;
         display: flex;
         flex-direction: column;
+        align-items: center;
         width: 100%;
-        min-height: 81vh;
-        background: url('/images/background_img.jpg');
-        background-size: cover;
+        min-height: calc(100vh - 100px);
         font-family: $font-family;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 5% 5% 90px 5%;
-        transition: margin-top 400ms;
+        font-size: 14px;
 
-        &.expand {
-            margin-top: 0 !important;
-            transition: margin-top 400ms;
-        }
-        .deposit-title-text {
-            width: 100%;
-            font-size: 15px;
-        }
-        .deposit-input-wrapper {
-            position: relative;
-            display: flex;
-            width: 100%;
-            height: 39px;
-            border-radius: 5px;
-            border: 1px solid #cecece;
-            background: $color-white;
-            margin: 7px 0 24px 0;
-
-            .deposit-input {
-                width: 100%;
-                font-size: 14px;
-                background: $color-white;
-                border-radius: 5px;
-                text-align: left;
-                padding-left: 10px;
-
-                &#upload-file-input {
-                    padding: 6px;
-                }
-            }
-            .deposit-down {
-                width: 15px;
-                font-size: 20px;
-                color: $color-black;
-                align-self: center;
-                margin-right: 8px;
-            }
-            .deposit-bonus-list-wrapper {
-                display: none;
-                position: absolute;
-                z-index: 10;
-                top: 38px;
-                left: 0;
-                width: 100%;
-                max-height: 250px;
-                font-size: 15px;
-                border-radius: 5px;
-                border: 1px solid #cecece;
-                background: $color-white;
-                overflow-y: auto;
-                margin-bottom: 100px;
-
-                &.show {
-                    display: block;
-                }
-                .deposit-bonus-list-item {
-                    font-weight: normal;
-                    padding: 10px 20px 5px 20px;
-
-                    &.select-item {
-                        padding: 15px 10px 8px 10px;
-                    }
-                    &.type-item {
-                        font-weight: bold;
-                        padding: 5px 10px;
-                    }
-                }
-            }
-        }
-        .deposit-bank-detail-wrapper {
+        .deposit-container {
+            position: absolute;
+            z-index: 1;
+            top: 161px;
+            left: 0;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             width: 100%;
-            color: $color-white-gray;
-            padding: 10px;
-            margin: 7px 0 24px 0;
-            border: 1px solid #cecece;
-            border-radius: 5px;
+            background: url('/images/background_img.jpg');
+            background-size: cover;
+            font-family: $font-family;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5% 5% 90px 5%;
+            transition: margin-top 400ms;
 
-            .deposit-detail-container {
-                display: none;
-                width: 100%;
-
-                &.show {
-                    display: block;
-                }
-                .deposit-bank-name-wrapper {
-                    display: flex;
-                    width: 100%;
-
-                    .deposit-bank-name-value {
-                        font-size: 13px;
-                        color: $color-black;
-                        margin-left: 12.5px;
-                    }
-                }
-                .deposit-bank-account-wrapper {
-                    display: flex;
-                    width: 100%;
-
-                    .deposit-bank-account-value {
-                        font-size: 13px;
-                        color: $color-black;
-                        margin-left: 12.5px;
-                    }
-                }
+            &.expand {
+                transition: margin-top 400ms;
             }
-            .deposit-copy-wrapper {
+            .deposit-title-text {
+                width: 100%;
+                font-size: 15px;
+            }
+            .deposit-input-wrapper {
+                position: relative;
                 display: flex;
                 width: 100%;
-                margin-top: 5px;
-
-                .deposit-copy-img {
-                    font-size: 18px;
-                }
-                .deposit-copy-text {
-                    margin-left: 4%;
-                }
-            }
-        }
-        .deposit-amount-wrapper {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 7px;
-
-            &.second {
-                margin-bottom: 24px;
-            }
-            .deposit-amount-dollars {
-                width: 23%;
                 height: 39px;
-                font-size: 18px;
-                color: $color-yellow;
-                background: $color-black;
-                border-radius: 5px;
-                padding-top: 3px;
-            }
-            .deposit-amount-input {
-                width: 49%;
-                height: 39px;
-                font-size: 16px;
                 border-radius: 5px;
                 border: 1px solid #cecece;
                 background: $color-white;
-                padding: 2px 8px 0 10px;
-            }
-        }
-        .deposit-transfer-time-wrapper {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin: 7px 0 24px 0;
-        }
-        .deposit-warning-msg {
-            width: 100%;
-        }
-        .deposit-button {
-            width: 100%;
-            font-size: 17px;
-            font-weight: bold;
-            border: $border-style;
-            background: $color-yellow-linear-unpress;
-            border-radius: 5px;
-            opacity: 0.6;
-            padding: 16px 0 16px 0;
-            margin-top: 32px;
+                margin: 7px 0 24px 0;
 
-            &:active {
-                background: $color-yellow-linear;
+                .deposit-input {
+                    width: 100%;
+                    font-size: 14px;
+                    background: $color-white;
+                    border-radius: 5px;
+                    text-align: left;
+                    padding-left: 10px;
+
+                    &#upload-file-input {
+                        padding: 6px;
+                    }
+                }
+                .deposit-down {
+                    width: 15px;
+                    font-size: 20px;
+                    color: $color-black;
+                    align-self: center;
+                    margin-right: 8px;
+                }
+                .deposit-bonus-list-wrapper {
+                    display: none;
+                    position: absolute;
+                    z-index: 10;
+                    top: 38px;
+                    left: 0;
+                    width: 100%;
+                    max-height: 250px;
+                    font-size: 15px;
+                    border-radius: 5px;
+                    border: 1px solid #cecece;
+                    background: $color-white;
+                    overflow-y: auto;
+                    margin-bottom: 100px;
+
+                    &.show {
+                        display: block;
+                    }
+                    .deposit-bonus-list-item {
+                        font-weight: normal;
+                        padding: 10px 20px 5px 20px;
+
+                        &.select-item {
+                            padding: 15px 10px 8px 10px;
+                        }
+                        &.type-item {
+                            font-weight: bold;
+                            padding: 5px 10px;
+                        }
+                    }
+                }
             }
-            &.allow {
-                opacity: 1;
+            .deposit-bank-detail-wrapper {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                color: $color-white-gray;
+                padding: 10px;
+                margin: 7px 0 24px 0;
+                border: 1px solid #cecece;
+                border-radius: 5px;
+
+                .deposit-detail-container {
+                    display: none;
+                    width: 100%;
+
+                    &.show {
+                        display: block;
+                    }
+                    .deposit-bank-name-wrapper {
+                        display: flex;
+                        width: 100%;
+
+                        .deposit-bank-name-value {
+                            font-size: 13px;
+                            color: $color-black;
+                            margin-left: 12.5px;
+                        }
+                    }
+                    .deposit-bank-account-wrapper {
+                        display: flex;
+                        width: 100%;
+
+                        .deposit-bank-account-value {
+                            font-size: 13px;
+                            color: $color-black;
+                            margin-left: 12.5px;
+                        }
+                    }
+                }
+                .deposit-copy-wrapper {
+                    display: flex;
+                    width: 100%;
+                    margin-top: 5px;
+
+                    .deposit-copy-img {
+                        font-size: 18px;
+                    }
+                    .deposit-copy-text {
+                        margin-left: 4%;
+                    }
+                }
+            }
+            .deposit-amount-wrapper {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 7px;
+
+                &.second {
+                    margin-bottom: 24px;
+                }
+                .deposit-amount-dollars {
+                    width: 23%;
+                    height: 39px;
+                    font-size: 18px;
+                    color: $color-yellow;
+                    background: $color-black;
+                    border-radius: 5px;
+                    padding-top: 3px;
+                }
+                .deposit-amount-input {
+                    width: 49%;
+                    height: 39px;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    border: 1px solid #cecece;
+                    background: $color-white;
+                    padding: 2px 8px 0 10px;
+                }
+            }
+            .deposit-transfer-time-wrapper {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin: 7px 0 24px 0;
+            }
+            .deposit-warning-msg {
+                width: 100%;
+            }
+            .deposit-button {
+                width: 100%;
+                font-size: 17px;
+                font-weight: bold;
+                border: $border-style;
+                background: $color-yellow-linear-unpress;
+                border-radius: 5px;
+                opacity: 0.6;
+                padding: 16px 0 16px 0;
+                margin-top: 32px;
+
+                &:active {
+                    background: $color-yellow-linear;
+                }
+                &.allow {
+                    opacity: 1;
+                }
             }
         }
     }
-}
 </style>

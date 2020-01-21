@@ -198,15 +198,24 @@ export default {
 </script>
 <style lang="scss" scoped>
     .withdrawal-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
-        height: 100%;
+        min-height: calc(100vh - 100px);
+        font-family: $font-family;
+        font-size: 14px;
 
         .withdrawal-container {
-            position: relative;
+            position: absolute;
+            z-index: 1;
+            top: 161px;
+            left: 0;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             width: 100%;
-            min-height: 81vh;
             background: url('/images/background_img.jpg');
             background-size: cover;
             font-family: $font-family;
@@ -216,7 +225,6 @@ export default {
             transition: margin-top 400ms;
 
             &.expand {
-                margin-top: 0 !important;
                 transition: margin-top 400ms;
             }
             .withdrawal-title-text {
