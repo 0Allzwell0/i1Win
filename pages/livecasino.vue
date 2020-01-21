@@ -87,7 +87,6 @@ import MyGameTab from '~/components/MyGameTab';
 export default {
     computed: {
         ...mapGetters('auth', {
-            accesstoken: 'GetAccessToken',
             isLogined: 'GetLogined'
         }),
         ...mapGetters('game', {

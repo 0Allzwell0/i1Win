@@ -13,7 +13,7 @@
         <div class="withdrawal-container">
             <!-- Available Balance -->
             <h3 class="withdrawal-title-text">{{ $t('wallet.available_balance') }}</h3>
-            <div class="withdrawal-content-text">THB {{ availableBalance || '0.00' }}</div>
+            <div class="withdrawal-content-text">THB {{ balance || '0.00' }}</div>
 
             <!-- Withdrawal Bank -->
             <h3 class="withdrawal-title-text">{{ $t('withdrawal.withdrawal_to') }}</h3>
@@ -88,11 +88,13 @@ export default {
             bankOK: false
         };
     },
+    beforeMount() {
+        this.$store.dispatch('wallet/getBalance', 'main');
+    },
     mounted() {
         let _this = this;
 
-        let scrollTop = $('.wallet-list-container').height();
-        $('.withdrawal-container').css('margin-top', -scrollTop);
+
 
         this.checkAmount();
 
@@ -167,120 +169,118 @@ export default {
 
         // Withdrawal Submit
         withdrawal() {
-            this.$store
-                .dispatch('wallet/withdrawal', {
-                    accessToken: this.accessToken,
-                    toBank: this.selectedBank,
-                    accountNumber: this.accountNumber,
-                    amount: this.amount
-                })
-                .then(() => {
-                    if (this.httpStatus === 422) {
-                        let msgArray = [];
-                        $('#errorMsg .error-msg-container').html('');
-                        for (let i in this.responseMsg) {
-                            msgArray.push(this.responseMsg[i]);
-                        }
-                        for (let j = 0; j < msgArray.length; j++) {
-                            $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
-                        }
-                    } else if (this.httpStatus === 200) {
-                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('withdrawal.success_msg')}</div>`);
-                    } else {
-                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
+            this.$store.dispatch('wallet/withdrawal',
+            {
+                toBank: this.selectedBank,
+                accountNumber: this.accountNumber,
+                amount: this.amount
+            }).then(() => {
+                if (this.httpStatus === 422) {
+                    let msgArray = [];
+                    $('#errorMsg .error-msg-container').html('');
+                    for (let i in this.responseMsg) {
+                        msgArray.push(this.responseMsg[i]);
                     }
+                    for (let j = 0; j < msgArray.length; j++) {
+                        $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
+                    }
+                } else if (this.httpStatus === 200) {
+                    $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('withdrawal.success_msg')}</div>`);
+                } else {
+                    $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
+                }
 
-                    $('#errorMsg').modal('show');
-                });
+                $('#errorMsg').modal('show');
+            });
         }
     }
 };
 </script>
 <style lang="scss" scoped>
-.withdrawal-wrapper {
-    width: 100%;
-    height: 100%;
-
-    .withdrawal-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
+    .withdrawal-wrapper {
         width: 100%;
-        min-height: 81vh;
-        background: url('/images/background_img.jpg');
-        background-size: cover;
-        font-family: $font-family;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 5% 5% 90px 5%;
-        transition: margin-top 400ms;
+        height: 100%;
 
-        &.expand {
-            margin-top: 0 !important;
-            transition: margin-top 400ms;
-        }
-        .withdrawal-title-text {
-            width: 100%;
-            font-size: 15px;
-        }
-        .withdrawal-content-text {
-            width: 100%;
-            font-size: 14px;
-            color: rgba(25, 25, 25, 0.5);
-            border: 1px solid #cecece;
-            border-radius: 5px;
-            margin: 7px 0 24px 0;
-            padding: 10px 17px 7px 17px;
-        }
-        .withdrawal-input-wrapper {
+        .withdrawal-container {
             position: relative;
             display: flex;
+            flex-direction: column;
             width: 100%;
-            height: 39px;
-            border-radius: 5px;
-            border: 1px solid #cecece;
-            background: $color-white;
-            margin: 7px 0 24px 0;
-
-            .withdrawal-down {
-                width: 15px;
-                font-size: 20px;
-                color: $color-black;
-                align-self: center;
-                margin-right: 8px;
-            }
-        }
-        .withdrawal-input {
-            width: 100%;
-            height: 39px;
-            font-size: 14px;
-            background: $color-white;
-            border-radius: 5px;
-            border: 1px solid #cecece;
-            padding-left: 10px;
-            margin: 7px 0 24px 0;
-        }
-        .withdrawal-warning-msg {
-            width: 100%;
-        }
-        .withdrawal-button {
-            width: 100%;
-            font-size: 17px;
+            min-height: 81vh;
+            background: url('/images/background_img.jpg');
+            background-size: cover;
+            font-family: $font-family;
+            font-size: 12px;
             font-weight: bold;
-            border: $border-style;
-            background: $color-yellow-linear-unpress;
-            border-radius: 5px;
-            opacity: 0.6;
-            padding: 16px 0 16px 0;
-            margin-top: 32px;
+            padding: 5% 5% 90px 5%;
+            transition: margin-top 400ms;
 
-            &:active {
-                background: $color-yellow-linear;
+            &.expand {
+                margin-top: 0 !important;
+                transition: margin-top 400ms;
             }
-            &.allow {
-                opacity: 1;
+            .withdrawal-title-text {
+                width: 100%;
+                font-size: 15px;
+            }
+            .withdrawal-content-text {
+                width: 100%;
+                font-size: 14px;
+                color: rgba(25, 25, 25, 0.5);
+                border: 1px solid #cecece;
+                border-radius: 5px;
+                margin: 7px 0 24px 0;
+                padding: 10px 17px 7px 17px;
+            }
+            .withdrawal-input-wrapper {
+                position: relative;
+                display: flex;
+                width: 100%;
+                height: 39px;
+                border-radius: 5px;
+                border: 1px solid #cecece;
+                background: $color-white;
+                margin: 7px 0 24px 0;
+
+                .withdrawal-down {
+                    width: 15px;
+                    font-size: 20px;
+                    color: $color-black;
+                    align-self: center;
+                    margin-right: 8px;
+                }
+            }
+            .withdrawal-input {
+                width: 100%;
+                height: 39px;
+                font-size: 14px;
+                background: $color-white;
+                border-radius: 5px;
+                border: 1px solid #cecece;
+                padding-left: 10px;
+                margin: 7px 0 24px 0;
+            }
+            .withdrawal-warning-msg {
+                width: 100%;
+            }
+            .withdrawal-button {
+                width: 100%;
+                font-size: 17px;
+                font-weight: bold;
+                border: $border-style;
+                background: $color-yellow-linear-unpress;
+                border-radius: 5px;
+                opacity: 0.6;
+                padding: 16px 0 16px 0;
+                margin-top: 32px;
+
+                &:active {
+                    background: $color-yellow-linear;
+                }
+                &.allow {
+                    opacity: 1;
+                }
             }
         }
     }
-}
 </style>

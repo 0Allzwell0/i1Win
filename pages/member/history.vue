@@ -114,9 +114,6 @@ import MyDateSelecter from '~/components/MyDateSelecter';
 
 export default {
     computed: {
-        ...mapGetters('auth', {
-            accessToken: 'GetAccessToken'
-        }),
         ...mapGetters('history', {
             requestState: 'GetRequestState',
             transactionData: 'GetTransactionData',
@@ -184,185 +181,186 @@ export default {
 };
 </script>
 <style lang="scss">
-.history-wrapper {
-    width: 100%;
-    height: 100%;
-
-    .history-container {
-        display: flex;
-        flex-direction: column;
+    .history-wrapper {
         width: 100%;
-        min-height: calc(100vh - 177px);
-        background: url('/images/background_img.jpg');
-        background-size: cover;
-        font-family: $font-family;
-        font-size: 12px;
-        padding-bottom: 90px;
+        height: 100%;
 
-        .history-tab-wrapper {
-            display: flex;
-            flex-direction: row;
-            margin: 30px 15px 10px 15px;
-
-            .history-tab-container {
-                display: flex;
-                width: 100%;
-                border-top: $border-style;
-                border-left: $border-style;
-                border-bottom: $border-style;
-
-                &:first-child {
-                    border-radius: 20px 0 0 20px;
-
-                    .history-tab {
-                        border-radius: 20px 0 0 20px;
-                    }
-                }
-                &:last-child {
-                    border-radius: 0 20px 20px 0;
-                    border-right: $border-style;
-
-                    .history-tab {
-                        border-radius: 0 20px 20px 0;
-                    }
-                }
-                .history-tab {
-                    width: 100%;
-                    color: $color-black;
-                    font-weight: bold;
-                    font-size: 14px;
-                    text-align: center;
-                    opacity: 0.6;
-                    padding: 5% 0 5% 0;
-
-                    &.active {
-                        opacity: 1;
-                        background: $color-yellow;
-                    }
-                }
-            }
-        }
-        .history-date-wrapper {
-            display: flex;
-            justify-content: space-between;
-            margin: 4% 8% 6% 8%;
-        }
-        .history-search-button {
-            width: 85%;
-            font-size: 19px;
-            font-weight: bold;
-            border-radius: 5px;
-            border: $border-style;
-            align-self: center;
-            background: $color-yellow-linear-unpress;
-            opacity: 0.7;
-            padding: 3.5% 0 3.5% 0;
-
-            &:active {
-                background: $color-yellow-linear;
-            }
-            &.allow {
-                opacity: 1;
-            }
-        }
-        .history-data-wrapper {
+        .history-container {
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100%;
-            padding: 6% 0 0 0;
+            min-height: calc(100vh - 177px);
+            background: url('/images/background_img.jpg');
+            background-size: cover;
+            font-family: $font-family;
+            font-size: 12px;
+            padding-bottom: 90px;
 
-            .history-data-container {
+            .history-tab-wrapper {
+                display: flex;
+                flex-direction: row;
+                margin: 30px 15px 10px 15px;
+
+                .history-tab-container {
+                    display: flex;
+                    width: 100%;
+                    border-top: $border-style;
+                    border-left: $border-style;
+                    border-bottom: $border-style;
+
+                    &:first-child {
+                        border-radius: 20px 0 0 20px;
+
+                        .history-tab {
+                            border-radius: 20px 0 0 20px;
+                        }
+                    }
+                    &:last-child {
+                        border-radius: 0 20px 20px 0;
+                        border-right: $border-style;
+
+                        .history-tab {
+                            border-radius: 0 20px 20px 0;
+                        }
+                    }
+                    .history-tab {
+                        width: 100%;
+                        color: $color-black;
+                        font-weight: bold;
+                        font-size: 14px;
+                        text-align: center;
+                        opacity: 0.6;
+                        padding: 5% 0 5% 0;
+
+                        &.active {
+                            opacity: 1;
+                            background: $color-yellow;
+                        }
+                    }
+                }
+            }
+            .history-date-wrapper {
+                display: flex;
+                justify-content: space-between;
+                margin: 4% 8% 6% 8%;
+            }
+            .history-search-button {
+                width: 85%;
+                font-size: 19px;
+                font-weight: bold;
+                border-radius: 5px;
+                border: $border-style;
+                align-self: center;
+                background: $color-yellow-linear-unpress;
+                opacity: 0.7;
+                padding: 3.5% 0 3.5% 0;
+
+                &:active {
+                    background: $color-yellow-linear;
+                }
+                &.allow {
+                    opacity: 1;
+                }
+            }
+            .history-data-wrapper {
                 display: flex;
                 flex-direction: column;
+                width: 100%;
+                height: 100%;
+                padding: 6% 0 0 0;
 
-                &.tab-pane {
-                    display: none;
-                }
-                &.active {
+                .history-data-container {
                     display: flex;
-                }
-                .history-data-title-bar-wrapper {
-                    display: flex;
-                    width: 100%;
-                    font-size: 14px;
-                    font-weight: bold;
-                    color: $color-white;
-                    background: $color-black;
-                    padding: 3% 1% 3% 1%;
-                    text-align: center;
+                    flex-direction: column;
 
-                    .history-data-title {
-                        flex: 1;
+                    &.tab-pane {
+                        display: none;
                     }
-                    &.transaction-bar {
-                        .title-date {
-                            flex: 1;
-                        }
-                        .title-type {
-                            flex: 1;
-                        }
-                        .title-amount {
-                            flex: 0.7;
-                        }
-                        .title-status {
-                            flex: 1;
-                        }
-                        .title-remark {
-                            flex: 1;
-                        }
+                    &.active {
+                        display: flex;
                     }
-                    &.transfer-bar {
-                        .title-date {
-                            flex: 1.05;
-                        }
-                        .title-from {
-                            flex: 1.1;
-                        }
-                        .title-to {
-                            flex: 1;
-                        }
-                        .title-amount {
-                            flex: 0.85;
-                        }
-                        .title-status {
-                            flex: 1;
-                        }
-                    }
-                }
-                .history-data-list {
-                    width: 100%;
-                    height: 300px;
-                    overflow-y: auto;
-
-                    .history-data-list-item {
+                    .history-data-title-bar-wrapper {
                         display: flex;
                         width: 100%;
+                        font-size: 14px;
                         font-weight: bold;
-                        text-align: center;
-                        align-items: center;
+                        color: $color-white;
+                        background: $color-black;
                         padding: 3% 1% 3% 1%;
+                        text-align: center;
 
-                        &:not(:nth-child(2n)) {
-                            background: rgba(105, 105, 105, 0.5);
-                        }
-                        .data-list-item {
+                        .history-data-title {
                             flex: 1;
-
-                            &.item-date {
+                        }
+                        &.transaction-bar {
+                            .title-date {
                                 flex: 1;
                             }
-                            &.item-type {
+                            .title-type {
                                 flex: 1;
                             }
-                            &.item-amount {
+                            .title-amount {
                                 flex: 0.7;
                             }
-                            &.item-status {
+                            .title-status {
                                 flex: 1;
                             }
-                            &.item-remark {
+                            .title-remark {
                                 flex: 1;
+                            }
+                        }
+                        &.transfer-bar {
+                            .title-date {
+                                flex: 1.05;
+                            }
+                            .title-from {
+                                flex: 1.1;
+                            }
+                            .title-to {
+                                flex: 1;
+                            }
+                            .title-amount {
+                                flex: 0.85;
+                            }
+                            .title-status {
+                                flex: 1;
+                            }
+                        }
+                    }
+                    .history-data-list {
+                        width: 100%;
+                        height: 300px;
+                        overflow-y: auto;
+
+                        .history-data-list-item {
+                            display: flex;
+                            width: 100%;
+                            font-weight: bold;
+                            text-align: center;
+                            align-items: center;
+                            padding: 3% 1% 3% 1%;
+
+                            &:not(:nth-child(2n)) {
+                                background: rgba(105, 105, 105, 0.5);
+                            }
+                            .data-list-item {
+                                flex: 1;
+
+                                &.item-date {
+                                    flex: 1;
+                                }
+                                &.item-type {
+                                    flex: 1;
+                                }
+                                &.item-amount {
+                                    flex: 0.7;
+                                }
+                                &.item-status {
+                                    flex: 1;
+                                }
+                                &.item-remark {
+                                    flex: 1;
+                                }
                             }
                         }
                     }
@@ -370,5 +368,4 @@ export default {
             }
         }
     }
-}
 </style>

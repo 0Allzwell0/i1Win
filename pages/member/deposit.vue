@@ -131,9 +131,6 @@ import MyMessageModal from '~/components/MyMessageModal';
 
 export default {
     computed: {
-        ...mapGetters('auth', {
-            accessToken: 'GetAccessToken'
-        }),
         ...mapGetters('wallet', {
             httpStatus: 'GetHttpStatus',
             requestState: 'GetRequestState',
