@@ -56,14 +56,18 @@ export default {
             temp: 0
         };
     },
-    mounted() {
+    beforeMount() {
         // Get Main Balance
         this.$store.dispatch('wallet/getBalance', 'main').then(() => {
             this.mainWallet = this.balance;
             this.totalWallet = this.totalWallet + this.mainWallet;
         });
-        this.getWallets();
+    },
+    mounted() {
         this.routeName();
+        setTimeout(() => {
+            this.getWallets();
+        }, 500);
     },
     methods: {
         // Get Wallets

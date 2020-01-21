@@ -4,6 +4,7 @@ const mutations = {
     // ================================================================ Get Wallets
     // Get Wallets Success
     [type.GET_WALLETS_SUCCESS](state, { data, status }) {
+        state.wallets = []
         // Put the data of the object into the array in sequence
         for (let i in data) {
             state.wallets.push(data[i]);
