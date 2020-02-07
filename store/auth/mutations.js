@@ -173,19 +173,19 @@ const mutations = {
         state.httpStatus = status
         if (status === 422) {
             if (data.username) {
-                state.regErrorMsg.username = data.username
+                state.regErrorMsg.username = data.username[0]
             }
             if (data.password) {
-                state.regErrorMsg.password = data.password
+                state.regErrorMsg.password = data.password[0]
             }
             if (data.password_confirmation) {
-                state.regErrorMsg.confirm_psw = data.password_confirmation
+                state.regErrorMsg.confirm_psw = data.password_confirmation[0]
             }
             if (data.fullname) {
-                state.regErrorMsg.fullname = data.fullname
+                state.regErrorMsg.fullname = data.fullname[0]
             }
             if (data.mobile) {
-                state.regErrorMsg.mobile = data.mobile
+                state.regErrorMsg.mobile = data.mobile[0]
             }
         } else {
             state.regErrorMsg.others = data

@@ -459,7 +459,7 @@
 				if (status === 422) {
 					if (this.regErrorMsg.username) {
 						this.usernameError = true;
-						$('#error-username .msg-text').text('');
+						$('#error-username .msg-text').text(this.regErrorMsg.username);
 						$('#input-username, #error-username').removeClass('is-valid');
 						$('#input-username, #error-username').addClass('is-invalid');
 					} else {
@@ -469,7 +469,7 @@
 
 					if (this.regErrorMsg.password) {
 						this.passwordError = true;
-						$('#error-password .msg-text').text('');
+						$('#error-password .msg-text').text(this.regErrorMsg.password);
 						$('#input-password, #error-password').removeClass('is-valid');
 						$('#input-password, #error-password').addClass('is-invalid');
 					} else {
@@ -479,7 +479,7 @@
 
 					if (this.regErrorMsg.password_confirmation) {
 						this.confirmPSWError = true;
-						$('#error-confirm-psw .msg-text').text('');
+						$('#error-confirm-psw .msg-text').text(this.regErrorMsg.password_confirmation);
 						$('#input-confirm-psw, #error-confirm-psw').removeClass('is-valid');
 						$('#input-confirm-psw, #error-confirm-psw').addClass('is-invalid');
 					} else {
@@ -489,7 +489,7 @@
 
 					if (this.regErrorMsg.fullname) {
 						this.fullnameError = true;
-						$('#error-fullname .msg-text').text('');
+						$('#error-fullname .msg-text').text(this.regErrorMsg.fullname);
 						$('#input-fullname, #error-fullname').removeClass('is-valid');
 						$('#input-fullname, #error-fullname').addClass('is-invalid');
 					} else {
@@ -499,7 +499,7 @@
 
 					if (this.regErrorMsg.mobile) {
 						this.mobileError = true;
-						$('#error-mobile .msg-text').text('');
+						$('#error-mobile .msg-text').text(this.regErrorMsg.mobile);
 						$('#input-mobile, #error-mobile').removeClass('is-valid');
 						$('#input-mobile, #error-mobile').addClass('is-invalid');
 					} else {
