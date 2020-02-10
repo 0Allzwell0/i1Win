@@ -150,114 +150,120 @@ export default {
 };
 </script>
 <style lang="scss">
-.edit-profile-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: calc(100vh - 50px);
-    font-size: 12px;
-    font-weight: bold;
-    font-family: $font-family;
-    background-image: $background_img;
-    background-size: cover;
-    padding: 0 30px 90px 30px;
-
-    .edit-profile-container {
+    .edit-profile-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-        max-width: 414px;
-        height: 100%;
+        min-height: calc(100vh - 50px);
+        font-size: 12px;
+        font-weight: bold;
+        font-family: $font-family;
+        background-image: $background_img;
+        background-size: cover;
+        padding: 0 30px 90px 30px;
 
-        .edit-profile-title {
-            font-size: 24px;
-            margin: 25px 0 15px 0;
-        }
-        .edit-profile-small-title {
-            width: 100%;
-            font-size: 18px;
-            margin: 20px 0 5px 0;
-        }
-        .edit-profile-unchange-text {
-            width: 100%;
-            height: 40px;
-            line-height: 40px;
-            font-size: 14px;
-            opacity: 0.5;
-            border-radius: 5px;
-            border: 1px solid $color-gray;
-            padding-left: 13px;
-        }
-        .edit-profile-input-wrapper {
+        .edit-profile-container {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
-            border-radius: 5px;
-            border: 1px solid $color-gray;
+            max-width: 414px;
+            height: 100%;
 
-            .edit-profile-input {
+            .edit-profile-title {
+                font-size: 24px;
+                margin: 25px 0 15px 0;
+            }
+
+            .edit-profile-small-title {
                 width: 100%;
-                height: 38px;
+                font-size: 18px;
+                margin: 20px 0 5px 0;
+            }
+
+            .edit-profile-unchange-text {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
                 font-size: 14px;
-                background: $color-white;
+                opacity: 0.5;
                 border-radius: 5px;
+                border: 1px solid $color-gray;
                 padding-left: 13px;
             }
 
-            .vdp-datepicker {
+            .edit-profile-input-wrapper {
+                display: flex;
                 width: 100%;
+                border-radius: 5px;
+                border: 1px solid $color-gray;
 
-                input {
+                .edit-profile-input {
                     width: 100%;
                     height: 38px;
                     font-size: 14px;
+                    background: $color-white;
                     border-radius: 5px;
                     padding-left: 13px;
                 }
 
-                .vdp-datepicker__calendar {
+                .vdp-datepicker {
                     width: 100%;
-                    max-width: 313px;
-                    margin-bottom: 20px;
+
+                    input {
+                        width: 100%;
+                        height: 38px;
+                        font-size: 14px;
+                        border-radius: 5px;
+                        padding-left: 13px;
+                    }
+
+                    .vdp-datepicker__calendar {
+                        width: 100%;
+                        max-width: 313px;
+                        margin-bottom: 20px;
+                    }
                 }
             }
-        }
-        .edit-profile-gender-wrapper {
-            display: flex;
-            width: 100%;
 
-            .edit-profile-gender {
-                width: 80px;
-                min-height: 35px;
-                color: $color-gray;
-                font-size: 14px;
-                font-weight: bold;
-                border-radius: 5px;
-                background: rgba(53, 53, 53, 0.9);
+            .edit-profile-gender-wrapper {
+                display: flex;
+                width: 100%;
 
-                &.gender-male {
-                    margin-right: 8px;
+                .edit-profile-gender {
+                    width: 80px;
+                    min-height: 35px;
+                    color: $color-gray;
+                    font-size: 14px;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    background: rgba(53, 53, 53, 0.9);
+
+                    &.gender-male {
+                        margin-right: 8px;
+                    }
+
+                    &.active {
+                        color: $color-black;
+                        background: $color-yellow-linear;
+                    }
                 }
-                &.active {
-                    color: $color-black;
+            }
+
+            .edit-profile-save-btn {
+                width: 100%;
+                min-height: 52px;
+                font-size: 18px;
+                border: $border-style;
+                background: $color-yellow-linear-unpress;
+                border-radius: 5px;
+                margin-top: 50px;
+
+                &:active {
                     background: $color-yellow-linear;
                 }
             }
         }
-        .edit-profile-save-btn {
-            width: 100%;
-            min-height: 52px;
-            font-size: 18px;
-            border: $border-style;
-            background: $color-yellow-linear-unpress;
-            border-radius: 5px;
-            margin-top: 50px;
-
-            &:active {
-                background: $color-yellow-linear;
-            }
-        }
     }
-}
 </style>

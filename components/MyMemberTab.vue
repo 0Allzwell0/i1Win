@@ -46,47 +46,50 @@
 export default {};
 </script>
 <style lang="scss" scoped>
-.member-tab-wrapper {
-    display: flex;
-    flex-direction: row;
-    font-family: $font-family;
-    font-size: 14px;
-    width: 100%;
-
-    .member-tab-container {
-        flex: 1;
+    .member-tab-wrapper {
         display: flex;
-        flex-direction: column;
-        border-bottom: 2px solid $color-black-gray;
-        border-right: 1px solid $color-black-gray;
+        flex-direction: row;
+        font-family: $font-family;
+        font-size: 14px;
+        width: 100%;
 
-        &:last-child {
-            border-right: none;
-        }
-        .member-tab {
+        .member-tab-container {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            background: $color-white;
-            opacity: 0.4;
+            border-bottom: 2px solid $color-black-gray;
+            border-right: 1px solid $color-black-gray;
 
-            &.active {
-                opacity: 1;
-                background: $color-yellow;
+            &:last-child {
+                border-right: none;
             }
-            .member-tab-image {
-                align-self: center;
-                width: 35px;
-                padding-top: 9px;
-            }
-            .member-tab-text {
-                font-weight: bold;
-                color: $color-black;
-                text-align: center;
-                align-self: center;
-                padding: 4px 0;
+
+            .member-tab {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                background: $color-white;
+                opacity: 0.4;
+
+                &.active {
+                    opacity: 1;
+                    background: $color-yellow;
+                }
+
+                .member-tab-image {
+                    align-self: center;
+                    width: 35px;
+                    padding-top: 9px;
+                }
+
+                .member-tab-text {
+                    font-weight: bold;
+                    color: $color-black;
+                    text-align: center;
+                    align-self: center;
+                    padding: 4px 0;
+                }
             }
         }
     }
-}
 </style>

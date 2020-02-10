@@ -151,179 +151,187 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.primary-wrapper {
-    width: 100%;
-    height: 100%;
-    font-size: 12px;
-    font-family: $font-family;
-
-    .secondary-wrapper {
-        display: flex;
-        flex-direction: column;
+    .primary-wrapper {
         width: 100%;
         height: 100%;
-        background: $background_img;
-        background-size: cover;
-        padding: 5% 5% 70px 5%;
+        font-size: 12px;
+        font-family: $font-family;
 
-        .jackpot-wrapper {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            height: 10%;
-            border-radius: 5px;
-            box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
-            background: $color-black;
-            padding: 2% 2% 2% 3.5%;
-
-            .jackpot-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 100%;
-                color: $color-yellow;
-                margin-right: 5%;
-
-                .jackpot-title {
-                    font-size: 18px;
-                    line-height: 25px;
-                    font-weight: bold;
-                    white-space: nowrap;
-                    margin-top: 3px;
-                }
-                .jackpot-currency {
-                    font-size: 14px;
-                }
-            }
-            .jackpot-amount {
-                width: 100%;
-                color: $color-yellow;
-                font-size: 20px;
-                font-weight: bold;
-                border-radius: 5px;
-                text-align: right;
-                padding: 10px 5px;
-            }
-        }
-
-        .games-content-wrapper {
+        .secondary-wrapper {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             width: 100%;
+            height: 100%;
+            background: $background_img;
+            background-size: cover;
+            padding: 5% 5% 70px 5%;
 
-            .game-wrapper {
+            .jackpot-wrapper {
                 display: flex;
+                align-items: center;
                 width: 100%;
-                background: url('/images/game_background.png');
-                background-size: cover;
+                height: 10%;
                 border-radius: 5px;
-                box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
-                margin-top: 5%;
-                padding: 3% 2%;
+                box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
+                background: $color-black;
+                padding: 2% 2% 2% 3.5%;
 
-                .game-image {
-                    width: 50%;
-                    height: 100%;
-                }
-                .game-right-wrapper {
+                .jackpot-container {
                     display: flex;
                     flex-direction: column;
+                    align-items: center;
+                    height: 100%;
+                    color: $color-yellow;
+                    margin-right: 5%;
+
+                    .jackpot-title {
+                        font-size: 18px;
+                        line-height: 25px;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        margin-top: 3px;
+                    }
+
+                    .jackpot-currency {
+                        font-size: 14px;
+                    }
+                }
+
+                .jackpot-amount {
                     width: 100%;
-                    color: $color-black;
-                    padding: 0 3%;
-
-                    .game-title-wrapper {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-
-                        .game-icon {
-                            width: 16%;
-                        }
-                        .game-title {
-                            width: 100%;
-                            font-size: 16px;
-                            font-weight: bold;
-                            white-space: nowrap;
-                            margin: 1px 0 0 6px;
-                        }
-                    }
-                    .game-descript {
-                        width: 100%;
-                        height: 100%;
-                        margin: 8% 0 0 0;
-                    }
-                    .game-play-now-btn {
-                        width: 60%;
-                        min-height: 30px;
-                        line-height: 30px;
-                        color: $color-black;
-                        text-align: center;
-                        border-radius: 5px;
-                        border: 1px solid rgba(247, 147, 30, 0.4);
-                        background-image: $color-yellow-linear-unpress;
-
-                        &:active {
-                            background-image: $color-yellow-linear;
-                        }
-                    }
+                    color: $color-yellow;
+                    font-size: 20px;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    text-align: right;
+                    padding: 10px 5px;
                 }
             }
 
-            .bottom-games-wrapper {
+            .games-content-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
                 width: 100%;
 
-                .bottom-games-container {
+                .game-wrapper {
                     display: flex;
-                    justify-content: center;
-                    align-items: center;
                     width: 100%;
+                    background: url('/images/game_background.png');
+                    background-size: cover;
+                    border-radius: 5px;
+                    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
                     margin-top: 5%;
+                    padding: 3% 2%;
 
-                    .bottom-game-item {
+                    .game-image {
+                        width: 50%;
+                        height: 100%;
+                    }
+
+                    .game-right-wrapper {
                         display: flex;
                         flex-direction: column;
+                        width: 100%;
+                        color: $color-black;
+                        padding: 0 3%;
+
+                        .game-title-wrapper {
+                            display: flex;
+                            align-items: center;
+                            width: 100%;
+
+                            .game-icon {
+                                width: 16%;
+                            }
+
+                            .game-title {
+                                width: 100%;
+                                font-size: 16px;
+                                font-weight: bold;
+                                white-space: nowrap;
+                                margin: 1px 0 0 6px;
+                            }
+                        }
+
+                        .game-descript {
+                            width: 100%;
+                            height: 100%;
+                            margin: 8% 0 0 0;
+                        }
+
+                        .game-play-now-btn {
+                            width: 60%;
+                            min-height: 30px;
+                            line-height: 30px;
+                            color: $color-black;
+                            text-align: center;
+                            border-radius: 5px;
+                            border: 1px solid rgba(247, 147, 30, 0.4);
+                            background-image: $color-yellow-linear-unpress;
+
+                            &:active {
+                                background-image: $color-yellow-linear;
+                            }
+                        }
+                    }
+                }
+
+                .bottom-games-wrapper {
+                    width: 100%;
+
+                    .bottom-games-container {
+                        display: flex;
                         justify-content: center;
                         align-items: center;
                         width: 100%;
-                        background: url('/images/game_background.png');
-                        background-size: cover;
-                        border-radius: 5px;
-                        box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
-                        margin: 0 3% 0 0;
+                        margin-top: 5%;
 
-                        .bottom-game-image {
-                            width: 90%;
-                            height: auto;
-                        }
-                        .bottom-game-name {
+                        .bottom-game-item {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
                             width: 100%;
-                            color: #000000;
-                            text-align: center;
-                            margin: -13% 0 2% 0;
-                        }
-                        &:last-child {
-                            margin: 0;
+                            background: url('/images/game_background.png');
+                            background-size: cover;
+                            border-radius: 5px;
+                            box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
+                            margin: 0 3% 0 0;
+
+                            .bottom-game-image {
+                                width: 90%;
+                                height: auto;
+                            }
+
+                            .bottom-game-name {
+                                width: 100%;
+                                color: #000000;
+                                text-align: center;
+                                margin: -13% 0 2% 0;
+                            }
+
+                            &:last-child {
+                                margin: 0;
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 
-// RWD
-// Screen: 360px ~
-@media screen and (min-width: 375px) {
-    .primary-wrapper {
-        .secondary-wrapper {
-            .jackpot-wrapper {
-                .jackpot-amount {
-                    font-size: 25px;
+    // RWD
+    // Screen: 360px ~
+    @media screen and (min-width: 375px) {
+        .primary-wrapper {
+            .secondary-wrapper {
+                .jackpot-wrapper {
+                    .jackpot-amount {
+                        font-size: 25px;
+                    }
                 }
             }
         }
     }
-}
 </style>

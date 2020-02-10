@@ -126,177 +126,185 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.download-slots-wrapper {
-    width: 100%;
-    height: 100%;
-    font-family: $font-family;
-    font-weight: bold;
-    color: $color-white;
-    background: $color-black;
-    padding: 5% 6% 90px 6%;
-
-    .download-slots-container {
+    .download-slots-wrapper {
         width: 100%;
-        background: url('/images/download_slots_bg.jpg') no-repeat;
-        background-size: 100%;
-        text-align: center;
+        height: 100%;
+        font-family: $font-family;
+        font-weight: bold;
+        color: $color-white;
+        background: $color-black;
+        padding: 5% 6% 90px 6%;
 
-        .download-slots-title {
-            font-size: 24px;
-            line-height: 36px;
-        }
-        .download-slots-msg {
-            font-size: 12px;
-        }
-        .download-slots-tab-wrapper {
-            display: flex;
-            font-size: 14px;
-            margin-top: 7%;
+        .download-slots-container {
+            width: 100%;
+            background: url('/images/download_slots_bg.jpg') no-repeat;
+            background-size: 100%;
+            text-align: center;
 
-            .download-slots-tab-container {
-                width: 100%;
-                font-size: 15px;
-                border-top: 1.5px solid #fcb813;
-                border-bottom: 1.5px solid #fcb813;
-                padding: 2% 0% 2% 0;
+            .download-slots-title {
+                font-size: 24px;
+                line-height: 36px;
+            }
 
-                &.tab-livecasino {
-                    border-left: 1.5px solid #fcb813;
-                    border-radius: 20px 0 0 20px;
+            .download-slots-msg {
+                font-size: 12px;
+            }
 
-                    a {
-                        display: block;
-                        color: $color-white;
+            .download-slots-tab-wrapper {
+                display: flex;
+                font-size: 14px;
+                margin-top: 7%;
+
+                .download-slots-tab-container {
+                    width: 100%;
+                    font-size: 15px;
+                    border-top: 1.5px solid #fcb813;
+                    border-bottom: 1.5px solid #fcb813;
+                    padding: 2% 0% 2% 0;
+
+                    &.tab-livecasino {
+                        border-left: 1.5px solid #fcb813;
+                        border-radius: 20px 0 0 20px;
+
+                        a {
+                            display: block;
+                            color: $color-white;
+                        }
+                    }
+
+                    &.tab-slots {
+                        color: $color-black;
+                        background: $color-yellow;
+                        border-right: 1.5px solid #fcb813;
+                        border-radius: 0 20px 20px 0;
                     }
                 }
-                &.tab-slots {
-                    color: $color-black;
-                    background: $color-yellow;
-                    border-right: 1.5px solid #fcb813;
-                    border-radius: 0 20px 20px 0;
-                }
             }
-        }
-        .download-slots-content-wrapper {
-            margin-top: 48%;
 
-            .download-slots-content-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                background: #292929;
-                border-radius: 12px;
-                border: 1px solid rgba(100, 100, 100, 0.5);
-                margin-top: 8%;
+            .download-slots-content-wrapper {
+                margin-top: 48%;
 
-                .download-slots-img {
-                    width: 60%;
-                }
-                .download-slots-login-id-wrapper {
+                .download-slots-content-container {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     width: 100%;
-                    padding: 7px 20px 14px 20px;
+                    background: #292929;
+                    border-radius: 12px;
+                    border: 1px solid rgba(100, 100, 100, 0.5);
+                    margin-top: 8%;
 
-                    .download-slots-login-id-container {
+                    .download-slots-img {
+                        width: 60%;
+                    }
+
+                    .download-slots-login-id-wrapper {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
                         width: 100%;
-                        font-size: 14px;
-                        text-align: left;
-                        margin-left: 10%;
+                        padding: 7px 20px 14px 20px;
 
-                        .download-slots-id-title {
-                            display: inline-block;
-                            color: $color-gray;
-                        }
-                        .download-slots-login-id-text {
-                            display: inline-block;
-                            color: $color-white;
+                        .download-slots-login-id-container {
+                            width: 100%;
+                            font-size: 14px;
+                            text-align: left;
+                            margin-left: 10%;
+
+                            .download-slots-id-title {
+                                display: inline-block;
+                                color: $color-gray;
+                            }
+
+                            .download-slots-login-id-text {
+                                display: inline-block;
+                                color: $color-white;
+                            }
                         }
                     }
-                }
-                .download-slots-download-btn {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-                    height: 45px;
-                    background: -webkit-linear-gradient(#737182, #545459);
-                    border-radius: 0 0 12px 12px;
 
-                    .download-slots-download-img {
-                        width: 28px;
+                    .download-slots-download-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 45px;
+                        background: -webkit-linear-gradient(#737182, #545459);
+                        border-radius: 0 0 12px 12px;
 
-                        &.ios-img {
+                        .download-slots-download-img {
+                            width: 28px;
+
+                            &.ios-img {
+                                margin-left: 7px;
+                            }
+                        }
+
+                        .download-slots-download-text {
+                            font-size: 14px;
+                            font-weight: bold;
+                            color: $color-white;
                             margin-left: 7px;
                         }
                     }
-                    .download-slots-download-text {
-                        font-size: 14px;
-                        font-weight: bold;
-                        color: $color-white;
-                        margin-left: 7px;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 414px) {
+        .download-slots-wrapper {
+            .download-slots-container {
+                .download-slots-content-wrapper {
+                    margin-top: 53%;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 600px) {
+        .download-slots-wrapper {
+            .download-slots-container {
+                .download-slots-title {
+                    font-size: 45px;
+                    line-height: 68px;
+                }
+                .download-slots-msg {
+                    font-size: 20px;
+                }
+                .download-slots-tab-wrapper {
+                    .download-slots-tab-container {
+                        font-size: 22px;
+
+                        &.tab-livecasino {
+                            border-radius: 30px 0 0 30px;
+                        }
+                        &.tab-slots {
+                            border-radius: 0 30px 30px 0;
+                        }
                     }
                 }
             }
         }
     }
-}
 
-@media screen and (min-width: 414px) {
-    .download-slots-wrapper {
-        .download-slots-container {
-            .download-slots-content-wrapper {
-                margin-top: 53%;
-            }
-        }
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .download-slots-wrapper {
-        .download-slots-container {
-            .download-slots-title {
-                font-size: 45px;
-                line-height: 68px;
-            }
-            .download-slots-msg {
-                font-size: 20px;
-            }
-            .download-slots-tab-wrapper {
-                .download-slots-tab-container {
-                    font-size: 22px;
-
-                    &.tab-livecasino {
-                        border-radius: 30px 0 0 30px;
-                    }
-                    &.tab-slots {
-                        border-radius: 0 30px 30px 0;
-                    }
+    @media screen and (min-width: 768px) {
+        .download-slots-wrapper {
+            .download-slots-container {
+                .download-slots-content-wrapper {
+                    margin-top: 56%;
                 }
             }
         }
     }
-}
 
-@media screen and (min-width: 768px) {
-    .download-slots-wrapper {
-        .download-slots-container {
-            .download-slots-content-wrapper {
-                margin-top: 56%;
+    @media screen and (min-width: 1024px) {
+        .download-slots-wrapper {
+            .download-slots-container {
+                .download-slots-content-wrapper {
+                    margin-top: 60%;
+                }
             }
         }
     }
-}
-
-@media screen and (min-width: 1024px) {
-    .download-slots-wrapper {
-        .download-slots-container {
-            .download-slots-content-wrapper {
-                margin-top: 60%;
-            }
-        }
-    }
-}
 </style>

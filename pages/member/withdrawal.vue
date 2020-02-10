@@ -227,10 +227,12 @@ export default {
             &.expand {
                 transition: margin-top 400ms;
             }
+
             .withdrawal-title-text {
                 width: 100%;
                 font-size: 15px;
             }
+
             .withdrawal-content-text {
                 width: 100%;
                 font-size: 14px;
@@ -240,6 +242,7 @@ export default {
                 margin: 7px 0 24px 0;
                 padding: 10px 17px 7px 17px;
             }
+
             .withdrawal-input-wrapper {
                 position: relative;
                 display: flex;
@@ -258,6 +261,7 @@ export default {
                     margin-right: 8px;
                 }
             }
+
             .withdrawal-input {
                 width: 100%;
                 height: 39px;
@@ -268,9 +272,11 @@ export default {
                 padding-left: 10px;
                 margin: 7px 0 24px 0;
             }
+
             .withdrawal-warning-msg {
                 width: 100%;
             }
+
             .withdrawal-button {
                 width: 100%;
                 font-size: 17px;
@@ -285,6 +291,7 @@ export default {
                 &:active {
                     background: $color-yellow-linear;
                 }
+
                 &.allow {
                     opacity: 1;
                 }

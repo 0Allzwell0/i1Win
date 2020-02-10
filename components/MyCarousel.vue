@@ -60,36 +60,36 @@ export default {
 };
 </script>
 <style lang="scss">
-.carousel-wrapper {
-    width: 100%;
-
-    .carousel-item {
-        display: block;
-    }
-
-    .carousel-item-img {
+    .carousel-wrapper {
         width: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        text-align: center;
-    }
 
-    .carousel-dots-wrapper {
-        bottom: 0;
-        margin-top: -18px;
-        text-align: center;
-
-        .swiper-pagination-bullet {
-            width: 8px;
-            height: 8px;
-            opacity: 0.5;
-            margin: 0 4px 4px 4px;
+        .carousel-item {
+            display: block;
         }
-        .swiper-pagination-bullet-active {
-            background: #82181c;
-            opacity: 1;
+
+        .carousel-item-img {
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            text-align: center;
+        }
+
+        .carousel-dots-wrapper {
+            bottom: 0;
+            margin-top: -18px;
+            text-align: center;
+
+            .swiper-pagination-bullet {
+                width: 8px;
+                height: 8px;
+                opacity: 0.5;
+                margin: 0 4px 4px 4px;
+            }
+            .swiper-pagination-bullet-active {
+                background: $color-yellow;
+                opacity: 1;
+            }
         }
     }
-}
 </style>

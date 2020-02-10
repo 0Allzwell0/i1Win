@@ -221,6 +221,7 @@ export default {
                             border-radius: 20px 0 0 20px;
                         }
                     }
+
                     &:last-child {
                         border-radius: 0 20px 20px 0;
                         border-right: $border-style;
@@ -229,6 +230,7 @@ export default {
                             border-radius: 0 20px 20px 0;
                         }
                     }
+
                     .history-tab {
                         width: 100%;
                         color: $color-black;
@@ -245,11 +247,13 @@ export default {
                     }
                 }
             }
+
             .history-date-wrapper {
                 display: flex;
                 justify-content: space-between;
                 margin: 4% 8% 6% 8%;
             }
+
             .history-search-button {
                 width: 85%;
                 font-size: 19px;
@@ -264,10 +268,12 @@ export default {
                 &:active {
                     background: $color-yellow-linear;
                 }
+
                 &.allow {
                     opacity: 1;
                 }
             }
+
             .history-data-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -282,9 +288,11 @@ export default {
                     &.tab-pane {
                         display: none;
                     }
+
                     &.active {
                         display: flex;
                     }
+
                     .history-data-title-bar-wrapper {
                         display: flex;
                         width: 100%;
@@ -298,6 +306,7 @@ export default {
                         .history-data-title {
                             flex: 1;
                         }
+
                         &.transaction-bar {
                             .title-date {
                                 flex: 1;
@@ -349,6 +358,7 @@ export default {
                             &:not(:nth-child(2n)) {
                                 background: rgba(105, 105, 105, 0.5);
                             }
+
                             .data-list-item {
                                 flex: 1;
 

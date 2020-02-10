@@ -1,7 +1,7 @@
 <template>
     <main class="article-wrapper">
         <!-- Title -->
-        <h1 class="article-title">{{ articleHTML.name }}</h1>
+        <h2 class="article-title">{{ articleHTML.name }}</h2>
 
         <!-- Content -->
         <div class="article-html" v-html="articleHTML.body" />
@@ -61,39 +61,42 @@ export default {
 };
 </script>
 <style lang="scss">
-.article-wrapper {
-    min-height: calc(100vh - 100px);
-    background-image: $background_img;
-    background-size: cover;
-    overflow: auto;
+    .article-wrapper {
+        min-height: calc(100vh - 100px);
+        background-image: $background_img;
+        background-size: cover;
+        overflow: auto;
 
-    .article-title {
-        width: 100%;
-        font-family: $font-family;
-        font-weight: bold;
-        font-size: 24px;
-        text-align: center;
-        margin: 20px 0 0 0;
-    }
-    .article-html {
-        font-family: $font-family;
-        font-size: 16px;
-        margin: 35px 20px 90px 20px;
-
-        h4,
-        h3 {
+        .article-title {
+            width: 100%;
+            font-family: $font-family;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 24px;
             text-align: center;
-            margin: 20px 0 10px 0;
+            margin: 20px 0 0 0;
         }
-        li {
-            list-style-type: decimal;
-            list-style-position: inside;
-        }
-        p {
-            text-indent: 2em;
+
+        .article-html {
+            font-family: $font-family;
+            font-size: 16px;
+            margin: 35px 20px 90px 20px;
+
+            h4,
+            h3 {
+                font-weight: bold;
+                font-size: 20px;
+                text-align: center;
+                margin: 20px 0 10px 0;
+            }
+
+            li {
+                list-style-type: decimal;
+                list-style-position: inside;
+            }
+
+            p {
+                text-indent: 2em;
+            }
         }
     }
-}
 </style>

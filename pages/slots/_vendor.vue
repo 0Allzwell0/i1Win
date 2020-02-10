@@ -135,154 +135,159 @@ export default {
 };
 </script>
 <style lang="scss">
-.slots-games-wrapper {
-    width: 100%;
-    height: 100%;
-    font-size: 12px;
-    font-family: $font-family;
-
-    .slots-games-container {
+    .slots-games-wrapper {
         width: 100%;
-        min-height: 62vh;
-        background: $background_img;
-        background-size: cover;
-        padding: 18px 18px 70px 18px;
+        height: 100%;
+        font-size: 12px;
+        font-family: $font-family;
 
-        .slots-games-selector {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .slots-games-container {
             width: 100%;
+            min-height: 62vh;
+            background: $background_img;
+            background-size: cover;
+            padding: 18px 18px 70px 18px;
 
-            .slots-games-vendor {
-                position: relative;
+            .slots-games-selector {
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
-                width: 160px;
-                min-height: 40px;
-                border-radius: 5px;
-                box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(25, 25, 25, 0.6);
-                background: $color-white;
+                width: 100%;
 
-                .slots-games-vendor-btn {
-                    width: 100%;
+                .slots-games-vendor {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    width: 160px;
                     min-height: 40px;
-                    border-radius: 5px;
-                    background: transparent;
-                    text-align: left;
-                    padding: 0 0 0 10px;
-
-                    .btn-image {
-                        width: 100%;
-                    }
-                }
-                .slots-games-down {
-                    font-size: 20px;
-                    color: $color-black;
-                    margin: 0 10px 0 0;
-                }
-                .slots-games-vendor-list {
-                    position: absolute;
-                    z-index: -1;
-                    top: 41px;
-                    left: -1px;
-                    width: 101%;
-                    height: 0;
                     border-radius: 5px;
                     box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
                     border: 1px solid rgba(25, 25, 25, 0.6);
-                    background-color: #f8f8f8;
-                    overflow-y: scroll;
+                    background: $color-white;
 
-                    transition: z-index 0.4s, height 0.4s;
-                    -webkit-transition: z-index 0.4s, height 0.4s;
-                    -moz-transition: z-index 0.4s, height 0.4s;
-                    -o-transition: z-index 0.4s, height 0.4s;
-
-                    &.show {
-                        z-index: 10;
-                        height: 180px;
-                    }
-                    .slots-games-vendor-item {
+                    .slots-games-vendor-btn {
                         width: 100%;
-                        border-bottom: 1px solid rgba(25, 25, 25, 0.6);
+                        min-height: 40px;
+                        border-radius: 5px;
+                        background: transparent;
+                        text-align: left;
+                        padding: 0 0 0 10px;
 
-                        .slots-games-vendor-img {
-                            width: 90%;
-                            padding: 5px 0 5px 10px;
+                        .btn-image {
+                            width: 100%;
+                        }
+                    }
+
+                    .slots-games-down {
+                        font-size: 20px;
+                        color: $color-black;
+                        margin: 0 10px 0 0;
+                    }
+
+                    .slots-games-vendor-list {
+                        position: absolute;
+                        z-index: -1;
+                        top: 41px;
+                        left: -1px;
+                        width: 101%;
+                        height: 0;
+                        border-radius: 5px;
+                        box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
+                        border: 1px solid rgba(25, 25, 25, 0.6);
+                        background-color: #f8f8f8;
+                        overflow-y: scroll;
+
+                        transition: z-index 0.4s, height 0.4s;
+                        -webkit-transition: z-index 0.4s, height 0.4s;
+                        -moz-transition: z-index 0.4s, height 0.4s;
+                        -o-transition: z-index 0.4s, height 0.4s;
+
+                        &.show {
+                            z-index: 10;
+                            height: 180px;
+                        }
+
+                        .slots-games-vendor-item {
+                            width: 100%;
+                            border-bottom: 1px solid rgba(25, 25, 25, 0.6);
+
+                            .slots-games-vendor-img {
+                                width: 90%;
+                                padding: 5px 0 5px 10px;
+                            }
                         }
                     }
                 }
-            }
 
-            .slots-games-type {
-                position: relative;
-                display: flex;
-                align-items: center;
-                width: 110px;
-                min-height: 40px;
-                border-radius: 5px;
-                box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(25, 25, 25, 0.6);
-                background: #f8f8f8;
-
-                .slots-games-type-btn {
-                    width: 100%;
+                .slots-games-type {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    width: 110px;
                     min-height: 40px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    border-radius: 5px;
-                    background-color: transparent;
-                    text-align: left;
-                    padding: 0 0 0 10px;
-                }
-                .slots-games-down {
-                    font-size: 20px;
-                    color: $color-black;
-                    margin: 0 10px 0 0;
-                }
-                .slots-games-type-list {
-                    position: absolute;
-                    top: 41px;
-                    left: 0;
-                    z-index: -1;
-                    width: 101%;
-                    height: 0;
                     border-radius: 5px;
                     box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
                     border: 1px solid rgba(25, 25, 25, 0.6);
-                    background-color: #f8f8f8;
-                    overflow-y: scroll;
+                    background: #f8f8f8;
 
-                    transition: z-index 0.4s, height 0.4s;
-                    -webkit-transition: z-index 0.4s, height 0.4s;
-                    -moz-transition: z-index 0.4s, height 0.4s;
-                    -o-transition: z-index 0.4s, height 0.4s;
-
-                    &.show {
-                        z-index: 10;
-                        height: 162px;
+                    .slots-games-type-btn {
+                        width: 100%;
+                        min-height: 40px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border-radius: 5px;
+                        background-color: transparent;
+                        text-align: left;
+                        padding: 0 0 0 10px;
                     }
 
-                    .slots-games-type-item {
-                        width: 100%;
+                    .slots-games-down {
+                        font-size: 20px;
                         color: $color-black;
-                        font-weight: bold;
-                        font-size: 15px;
-                        padding: 7px 0 7px 10px;
+                        margin: 0 10px 0 0;
+                    }
 
-                        &.active {
+                    .slots-games-type-list {
+                        position: absolute;
+                        top: 41px;
+                        left: 0;
+                        z-index: -1;
+                        width: 101%;
+                        height: 0;
+                        border-radius: 5px;
+                        box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
+                        border: 1px solid rgba(25, 25, 25, 0.6);
+                        background-color: #f8f8f8;
+                        overflow-y: scroll;
+
+                        transition: z-index 0.4s, height 0.4s;
+                        -webkit-transition: z-index 0.4s, height 0.4s;
+                        -moz-transition: z-index 0.4s, height 0.4s;
+                        -o-transition: z-index 0.4s, height 0.4s;
+
+                        &.show {
+                            z-index: 10;
+                            height: 162px;
+                        }
+
+                        .slots-games-type-item {
                             width: 100%;
-                            color: $color-white;
-                            opacity: 0.9;
-                            box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-                            background: $color-yellow;
+                            color: $color-black;
+                            font-weight: bold;
+                            font-size: 15px;
+                            padding: 7px 0 7px 10px;
+
+                            &.active {
+                                width: 100%;
+                                color: $color-white;
+                                opacity: 0.9;
+                                box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
+                                background: $color-yellow;
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 </style>

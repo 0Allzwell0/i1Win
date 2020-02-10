@@ -106,67 +106,70 @@ export default {
 };
 </script>
 <style lang="scss">
-.bank-input-wrapper {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 39px;
-    border-radius: 5px;
-    border: 1px solid #cecece;
-    background: $color-white;
-    margin: 7px 0 24px 0;
-
-    .bank-input {
+    .bank-input-wrapper {
+        position: relative;
+        display: flex;
         width: 100%;
-        font-size: 14px;
-        background: $color-white;
+        height: 39px;
         border-radius: 5px;
-        text-align: left;
-        padding-left: 10px;
-
-        .bank-img {
-            width: auto;
-            max-width: 119px;
-        }
-    }
-    .bank-down {
-        width: 15px;
-        font-size: 20px;
-        color: $color-black;
-        align-self: center;
-        margin-right: 8px;
-    }
-    .bank-list {
-        display: none;
-        position: absolute;
-        z-index: 10;
-        top: 38px;
-        left: 0;
-        width: 100%;
-        max-height: 230px;
-        font-weight: normal;
-        font-size: 14px;
         border: 1px solid #cecece;
         background: $color-white;
-        overflow-y: scroll;
+        margin: 7px 0 24px 0;
 
-        &.show {
-            display: block;
-        }
-        .bank-item {
-            font-size: 15px;
+        .bank-input {
             width: 100%;
-            border-bottom: 1px solid #cecece;
-            padding: 10px 0 10px 10px;
+            font-size: 14px;
+            background: $color-white;
+            border-radius: 5px;
+            text-align: left;
+            padding-left: 10px;
 
-            &.please-select {
-                padding: 12px 0 12px 10px;
-            }
             .bank-img {
                 width: auto;
                 max-width: 119px;
             }
         }
+
+        .bank-down {
+            width: 15px;
+            font-size: 20px;
+            color: $color-black;
+            align-self: center;
+            margin-right: 8px;
+        }
+
+        .bank-list {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            top: 38px;
+            left: 0;
+            width: 100%;
+            max-height: 230px;
+            font-weight: normal;
+            font-size: 14px;
+            border: 1px solid #cecece;
+            background: $color-white;
+            overflow-y: scroll;
+
+            &.show {
+                display: block;
+            }
+            .bank-item {
+                font-size: 15px;
+                width: 100%;
+                border-bottom: 1px solid #cecece;
+                padding: 10px 0 10px 10px;
+
+                &.please-select {
+                    padding: 12px 0 12px 10px;
+                }
+
+                .bank-img {
+                    width: auto;
+                    max-width: 119px;
+                }
+            }
+        }
     }
-}
 </style>

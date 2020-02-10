@@ -145,58 +145,60 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.slots-wrapper {
-    width: 100%;
-    height: 100%;
-    font-size: 12px;
-    font-family: $font-family;
-
-    .slots-container {
+    .slots-wrapper {
         width: 100%;
-        min-height: 62vh;
-        background: $background_img;
-        background-size: cover;
-        padding-bottom: 70px;
+        height: 100%;
+        font-size: 12px;
+        font-family: $font-family;
 
-        .slots-games-list {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+        .slots-container {
             width: 100%;
-            height: 100%;
-        }
+            min-height: 62vh;
+            background: $background_img;
+            background-size: cover;
+            padding-bottom: 70px;
 
-        .slots-game-wrapper {
-            position: relative;
-            width: 28%;
-            background: $color-black;
-            border-radius: 10px;
-            margin: 4% 0 0 4%;
-
-            .slots-game-container {
+            .slots-games-list {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
                 width: 100%;
                 height: 100%;
+            }
 
-                .slots-game-name-wrapper {
-                    position: absolute;
-                    top: 7px;
-                    left: 7px;
+            .slots-game-wrapper {
+                position: relative;
+                width: 28%;
+                background: $color-black;
+                border-radius: 10px;
+                margin: 4% 0 0 4%;
 
-                    .slots-game-name {
-                        color: $color-white;
-                        font-size: 16px;
-                        line-height: 18px;
-                    }
-                    .slots-game-type {
-                        color: #fdd609;
-                    }
-                }
-                .slots-game-img {
+                .slots-game-container {
                     width: 100%;
-                    border-radius: 10px;
+                    height: 100%;
+
+                    .slots-game-name-wrapper {
+                        position: absolute;
+                        top: 7px;
+                        left: 7px;
+
+                        .slots-game-name {
+                            color: $color-white;
+                            font-size: 16px;
+                            line-height: 18px;
+                        }
+
+                        .slots-game-type {
+                            color: #fdd609;
+                        }
+                    }
+
+                    .slots-game-img {
+                        width: 100%;
+                        border-radius: 10px;
+                    }
                 }
             }
         }
     }
-}
 </style>

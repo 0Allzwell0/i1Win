@@ -27,11 +27,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.announcement-text {
-    width: 100%;
-    color: $color-white;
-    background: $color-black;
-    overflow-x: hidden;
-    padding: 1px 0;
-}
+    .announcement-text {
+        width: 100%;
+        color: $color-white;
+        background: $color-black;
+        overflow-x: hidden;
+        padding: 1px 0;
+    }
 </style>

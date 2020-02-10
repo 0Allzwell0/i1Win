@@ -1,8 +1,5 @@
 <template>
-    <footer
-        class="footer-wrapper"
-        :class="{'hidden': $route.name.indexOf('register') !== -1 || $route.name.indexOf('login') !== -1}"
-    >
+    <footer class="footer-wrapper" :class="{'hidden': $route.name.indexOf('register') !== -1 || $route.name.indexOf('login') !== -1}">
         <!-- Home -->
         <div class="footer-btn-wrapper">
             <nuxt-link
@@ -76,45 +73,50 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.footer-wrapper {
-    position: fixed;
-    z-index: 10;
-    bottom: 0;
-    display: flex;
-    width: 100%;
-    font-family: $font-family;
-    font-size: 12px;
-    background: $color-black-linear;
-
-    &.hidden {
-        display: none;
-    }
-    .footer-btn-wrapper {
-        flex: 1;
-    }
-    .footer-btn-wrapper .active {
-        background: -webkit-linear-gradient(#000000, #343131);
-    }
-    .footer-btn-container {
+    .footer-wrapper {
+        position: fixed;
+        z-index: 10;
+        bottom: 0;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         width: 100%;
-        color: $color-gray;
+        font-family: $font-family;
+        font-size: 12px;
+        background: $color-black-linear;
 
-        .footer-btn-img {
-            width: 28px;
-            margin-top: 7px;
+        &.hidden {
+            display: none;
         }
-        .footer-btn-text {
-            color: $color-yellow;
-            font-size: 14px;
-            padding: 7px 0 3px 0;
+
+        .footer-btn-wrapper {
+            flex: 1;
         }
-        .line-image {
-            width: 35px;
-            margin: 10px 10px 0 0;
+
+        .footer-btn-wrapper .active {
+            background: -webkit-linear-gradient(#000000, #343131);
+        }
+
+        .footer-btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            color: $color-gray;
+
+            .footer-btn-img {
+                width: 28px;
+                margin-top: 7px;
+            }
+
+            .footer-btn-text {
+                color: $color-yellow;
+                font-size: 14px;
+                padding: 6px 0 3px 0;
+            }
+
+            .line-image {
+                width: 35px;
+                margin: 10px 10px 0 0;
+            }
         }
     }
-}
 </style>

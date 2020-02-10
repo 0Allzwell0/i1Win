@@ -190,72 +190,76 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.change-password-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: calc(100vh - 50px);
-    font-size: 12px;
-    font-weight: bold;
-    font-family: $font-family;
-    background-image: $background_img;
-    background-size: cover;
-    padding: 0 30px 90px 30px;
-
-    .change-password-container {
+    .change-password-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-        max-width: 414px;
-        height: 100%;
+        min-height: calc(100vh - 50px);
+        font-size: 12px;
+        font-weight: bold;
+        font-family: $font-family;
+        background-image: $background_img;
+        background-size: cover;
+        padding: 0 30px 90px 30px;
 
-        .change-password-title {
-            font-size: 24px;
-            margin: 25px 0 15px 0;
-        }
-        .change-password-samall-title {
-            width: 100%;
-            font-size: 18px;
-            margin: 30px 0 10px 0;
-        }
-        .change-password-input-wrapper {
-            position: relative;
+        .change-password-container {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
-            border-radius: 5px;
-            border: 1px solid $color-gray;
+            max-width: 414px;
+            height: 100%;
 
-            .change-password-input {
+            .change-password-title {
+                font-size: 24px;
+                margin: 25px 0 15px 0;
+            }
+
+            .change-password-samall-title {
                 width: 100%;
-                height: 38px;
-                font-size: 14px;
-                background: $color-white;
-                border-radius: 5px;
-                padding-left: 13px;
+                font-size: 18px;
+                margin: 30px 0 10px 0;
             }
-            .change-password-eye {
-                position: absolute;
-                top: 13px;
-                right: 8px;
-                height: 12px;
-                filter: brightness(50%);
-            }
-        }
-        .change-password-btn {
-            width: 100%;
-            min-height: 52px;
-            font-size: 18px;
-            border: $border-style;
-            background: $color-yellow-linear-unpress;
-            border-radius: 5px;
-            margin-top: 50px;
 
-            &:active {
-                background: $color-yellow-linear;
+            .change-password-input-wrapper {
+                position: relative;
+                display: flex;
+                width: 100%;
+                border-radius: 5px;
+                border: 1px solid $color-gray;
+
+                .change-password-input {
+                    width: 100%;
+                    height: 38px;
+                    font-size: 14px;
+                    background: $color-white;
+                    border-radius: 5px;
+                    padding-left: 13px;
+                }
+
+                .change-password-eye {
+                    position: absolute;
+                    top: 13px;
+                    right: 8px;
+                    height: 12px;
+                    filter: brightness(50%);
+                }
+            }
+
+            .change-password-btn {
+                width: 100%;
+                min-height: 52px;
+                font-size: 18px;
+                border: $border-style;
+                background: $color-yellow-linear-unpress;
+                border-radius: 5px;
+                margin-top: 50px;
+
+                &:active {
+                    background: $color-yellow-linear;
+                }
             }
         }
     }
-}
 </style>

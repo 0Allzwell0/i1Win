@@ -208,10 +208,12 @@ export default {
             &.expand {
                 transition: margin-top 400ms;
             }
+
             .transfer-title-text {
                 width: 100%;
                 font-size: 15px;
             }
+
             .transfer-content-text {
                 width: 100%;
                 font-size: 14px;
@@ -221,6 +223,7 @@ export default {
                 margin: 7px 0 24px 0;
                 padding: 10px 17px 7px 17px;
             }
+
             .transfer-input-wrapper {
                 position: relative;
                 display: flex;
@@ -244,10 +247,12 @@ export default {
                     .transfer-game-img {
                         width: 119px;
                     }
+
                     .transfer-game-text {
                         margin-left: -85px;
                     }
                 }
+
                 .transfer-down {
                     width: 15px;
                     font-size: 20px;
@@ -255,6 +260,7 @@ export default {
                     align-self: center;
                     margin-right: 8px;
                 }
+
                 .transfer-games-list {
                     display: none;
                     position: absolute;
@@ -273,6 +279,7 @@ export default {
                     &.show {
                         display: block;
                     }
+
                     .transfer-game-item {
                         position: relative;
                         display: flex;
@@ -285,19 +292,23 @@ export default {
                         &.active {
                             display: none;
                         }
+
                         .transfer-game-img {
                             width: 119px;
                         }
+
                         .transfer-game-text {
                             position: absolute;
                             left: 45px;
                         }
+
                         .transfer-maintenance-text {
                             margin-right: 15px;
                         }
                     }
                 }
             }
+
             .transfer-input {
                 width: 100%;
                 height: 39px;
@@ -308,9 +319,11 @@ export default {
                 padding-left: 10px;
                 margin: 7px 0 24px 0;
             }
+
             .transfer-warning-msg {
                 width: 100%;
             }
+
             .transfer-button {
                 width: 100%;
                 font-size: 17px;
@@ -325,6 +338,7 @@ export default {
                 &:active {
                     background: $color-yellow-linear;
                 }
+
                 &.allow {
                     opacity: 1;
                 }

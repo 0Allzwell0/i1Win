@@ -266,79 +266,83 @@ export default {
 };
 </script>
 <style lang="scss">
-.slots-game-list-wrapper {
-    width: 100%;
-    height: 100%;
-
-    .slots-game-list-container {
+    .slots-game-list-wrapper {
         width: 100%;
-        padding: 0 0 35px 0;
+        height: 100%;
 
-        .slots-game-list-item {
-            display: inline-block;
-            width: calc((100% - 13.2%) / 3);
-            margin-top: 5%;
-            background: $color-black;
-            border-radius: 5px;
-            text-align: center;
+        .slots-game-list-container {
+            width: 100%;
+            padding: 0 0 35px 0;
 
-            &:not(:nth-child(3n)) {
-                margin-right: 6.6%;
-            }
-            .slots-game-list-item-img {
-                width: 100%;
-                height: 100%;
+            .slots-game-list-item {
+                display: inline-block;
+                width: calc((100% - 13.2%) / 3);
+                margin-top: 5%;
+                background: $color-black;
                 border-radius: 5px;
+                text-align: center;
+
+                &:not(:nth-child(3n)) {
+                    margin-right: 6.6%;
+                }
+
+                .slots-game-list-item-img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 5px;
+                }
             }
         }
-    }
-    .slots-game-page-selector {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 30px;
 
-        .slots-game-btn {
+        .slots-game-page-selector {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 75px;
-            height: 100%;
-            font-size: 14px;
-            border-radius: 5px;
-            border: 1px solid $color-black;
-            background: transparent;
-            opacity: 0.4;
-        }
-        .slots-game-num-btns-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            margin: 0 10px;
+            height: 30px;
 
-            .slots-game-num-btns {
+            .slots-game-btn {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 30px;
+                width: 75px;
                 height: 100%;
-                color: $color-black;
+                font-size: 14px;
+                border-radius: 5px;
                 border: 1px solid $color-black;
-                border-radius: 50%;
                 background: transparent;
-                margin-right: 10px;
+                opacity: 0.4;
+            }
 
-                &:last-child {
-                    margin-right: 0;
-                }
-                &.active {
-                    border: 0;
-                    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
-                    background: $color-yellow-linear;
+            .slots-game-num-btns-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                margin: 0 10px;
+
+                .slots-game-num-btns {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 100%;
+                    color: $color-black;
+                    border: 1px solid $color-black;
+                    border-radius: 50%;
+                    background: transparent;
+                    margin-right: 10px;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+
+                    &.active {
+                        border: 0;
+                        box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
+                        background: $color-yellow-linear;
+                    }
                 }
             }
         }
     }
-}
 </style>

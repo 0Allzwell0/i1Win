@@ -186,12 +186,14 @@ export default {
                     color: $color-white;
                     line-height: 30px;
                 }
+
                 .total-wallet-currency {
                     font-size: 14px;
                     opacity: 0.4;
                     color: $color-gray;
                 }
             }
+
             .total-wallet-amount {
                 flex: 1;
                 width: 100%;
@@ -199,6 +201,7 @@ export default {
                 line-height: 50px;
                 color: $color-yellow;
             }
+
             .expand-close-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -226,12 +229,14 @@ export default {
                         -webkit-transition: -webkit-transform 300ms;
                         transition: transform 300ms;
                     }
+
                     .expand-close-column {
                         width: 30px;
                         height: 2px;
                         background: $color-yellow;
                         margin: 15px 0 0 1.5px;
                     }
+
                     .expand-close-row {
                         width: 2px;
                         height: 30px;
@@ -239,6 +244,7 @@ export default {
                         margin: -15.5px 0 0 15px;
                     }
                 }
+
                 .expand-close-text {
                     width: 100%;
                     color: $color-yellow;
@@ -248,6 +254,7 @@ export default {
                 }
             }
         }
+
         .wallet-list-wrapper {
             width: 100%;
 
@@ -266,17 +273,20 @@ export default {
                     opacity: 0.7;
                     margin-right: 20px;
                 }
+
                 .main-wallet-currency {
                     color: $color-black;
                     opacity: 0.4;
                     margin-right: 10px;
                 }
+
                 .main-wallet-amount {
                     font-size: 22px;
                     color: $color-black;
                     opacity: 0.7;
                 }
             }
+
             .wallet-list-container {
                 width: 100%;
                 margin-top: 5px;
@@ -291,6 +301,7 @@ export default {
                     &:nth-child(3n) {
                         margin-right: 0;
                     }
+
                     .wallet-list-item-name {
                         font-size: 14px;
                         font-weight: bold;
@@ -298,6 +309,7 @@ export default {
                         opacity: 0.7;
                         padding-left: 12px;
                     }
+
                     .wallet-list-item-container {
                         padding-left: 12px;
 
@@ -305,6 +317,7 @@ export default {
                             color: $color-black;
                             opacity: 0.4;
                         }
+
                         .wallet-list-item-amount {
                             font-size: 18px;
                             color: $color-black;

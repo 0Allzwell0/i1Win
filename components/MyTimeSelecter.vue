@@ -1,13 +1,7 @@
 <template>
     <div class="deposit-transfer-time-container">
         <client-only>
-            <time-picker
-                id="transfer-time"
-                class="deposit-transfer-date-time"
-                format="HH:mm"
-                :value="currentTime"
-                hide-clear-button
-            />
+            <time-picker id="transfer-time" class="deposit-transfer-date-time" format="HH:mm" :value="currentTime" hide-clear-button />
         </client-only>
         <fa :icon="['fas', 'caret-down']" class="deposit-down" />
     </div>
@@ -34,34 +28,35 @@ export default {
 };
 </script>
 <style lang="scss">
-@import 'vue2-timepicker/dist/VueTimepicker.css';
+    @import 'vue2-timepicker/dist/VueTimepicker.css';
 
-.deposit-transfer-time-container {
-    position: relative;
-    width: 47%;
+    .deposit-transfer-time-container {
+        position: relative;
+        width: 47%;
 
-    .deposit-transfer-date-time {
-        width: 100%;
-
-        input {
+        .deposit-transfer-date-time {
             width: 100%;
-            height: 39px;
-            font-size: 15px;
-            border-radius: 5px;
-            border: 1px solid #cecece;
-            background: $color-white;
-            padding: 0 10px;
+
+            input {
+                width: 100%;
+                height: 39px;
+                font-size: 15px;
+                border-radius: 5px;
+                border: 1px solid #cecece;
+                background: $color-white;
+                padding: 0 10px;
+            }
+
+            .dropdown {
+                top: 39px;
+            }
         }
 
-        .dropdown {
-            top: 39px;
+        .deposit-down {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
         }
     }
-    .deposit-down {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-    }
-}
 </style>

@@ -452,10 +452,12 @@ export default {
             &.expand {
                 transition: margin-top 400ms;
             }
+
             .deposit-title-text {
                 width: 100%;
                 font-size: 15px;
             }
+
             .deposit-input-wrapper {
                 position: relative;
                 display: flex;
@@ -478,6 +480,7 @@ export default {
                         padding: 6px;
                     }
                 }
+
                 .deposit-down {
                     width: 15px;
                     font-size: 20px;
@@ -485,6 +488,7 @@ export default {
                     align-self: center;
                     margin-right: 8px;
                 }
+
                 .deposit-bonus-list-wrapper {
                     display: none;
                     position: absolute;
@@ -503,6 +507,7 @@ export default {
                     &.show {
                         display: block;
                     }
+
                     .deposit-bonus-list-item {
                         font-weight: normal;
                         padding: 10px 20px 5px 20px;
@@ -510,6 +515,7 @@ export default {
                         &.select-item {
                             padding: 15px 10px 8px 10px;
                         }
+
                         &.type-item {
                             font-weight: bold;
                             padding: 5px 10px;
@@ -517,6 +523,7 @@ export default {
                     }
                 }
             }
+
             .deposit-bank-detail-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -534,6 +541,7 @@ export default {
                     &.show {
                         display: block;
                     }
+
                     .deposit-bank-name-wrapper {
                         display: flex;
                         width: 100%;
@@ -544,6 +552,7 @@ export default {
                             margin-left: 12.5px;
                         }
                     }
+
                     .deposit-bank-account-wrapper {
                         display: flex;
                         width: 100%;
@@ -555,6 +564,7 @@ export default {
                         }
                     }
                 }
+
                 .deposit-copy-wrapper {
                     display: flex;
                     width: 100%;
@@ -563,11 +573,13 @@ export default {
                     .deposit-copy-img {
                         font-size: 18px;
                     }
+
                     .deposit-copy-text {
                         margin-left: 4%;
                     }
                 }
             }
+
             .deposit-amount-wrapper {
                 display: flex;
                 justify-content: space-between;
@@ -576,6 +588,7 @@ export default {
                 &.second {
                     margin-bottom: 24px;
                 }
+
                 .deposit-amount-dollars {
                     width: 23%;
                     height: 39px;
@@ -585,6 +598,7 @@ export default {
                     border-radius: 5px;
                     padding-top: 3px;
                 }
+
                 .deposit-amount-input {
                     width: 49%;
                     height: 39px;
@@ -595,15 +609,18 @@ export default {
                     padding: 2px 8px 0 10px;
                 }
             }
+
             .deposit-transfer-time-wrapper {
                 display: flex;
                 justify-content: space-between;
                 width: 100%;
                 margin: 7px 0 24px 0;
             }
+
             .deposit-warning-msg {
                 width: 100%;
             }
+
             .deposit-button {
                 width: 100%;
                 font-size: 17px;
@@ -618,6 +635,7 @@ export default {
                 &:active {
                     background: $color-yellow-linear;
                 }
+
                 &.allow {
                     opacity: 1;
                 }

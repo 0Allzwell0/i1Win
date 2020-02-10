@@ -1,26 +1,26 @@
 <template>
-	<main class="fishing-wrapper">
-		<!-- Carousel -->
-		<my-carousel />
+    <main class="fishing-wrapper">
+        <!-- Carousel -->
+        <my-carousel />
 
-		<!-- Announcement -->
-		<my-announcement />
+        <!-- Announcement -->
+        <my-announcement />
 
-		<!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
-		<my-game-tab />
+        <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
+        <my-game-tab />
 
-		<!-- Games -->
-		<ul class="fishing-container">
-			<li class="fishing-item-wrapper">
-				<div class="fishing-item-container">
-					<span class="fishing-item-name">Fishing God</span>
-					<span class="fishing-item-msg">{{ $t('fishing.fg_msg') }}</span>
-					<button class="fishing-play-now-btn" type="button" @click="openGame(421, 'fg')">{{ $t('common.play_now') }}</button>
-				</div>
-				<img class="fishing-img" src="/images/gm_fishing_god.png" />
-			</li>
-		</ul>
-	</main>
+        <!-- Games -->
+        <ul class="fishing-container">
+            <li class="fishing-item-wrapper">
+                <div class="fishing-item-container">
+                    <span class="fishing-item-name">Fishing God</span>
+                    <span class="fishing-item-msg">{{ $t('fishing.fg_msg') }}</span>
+                    <button class="fishing-play-now-btn" type="button" @click="openGame(421, 'fg')">{{ $t('common.play_now') }}</button>
+                </div>
+                <img class="fishing-img" src="/images/gm_fishing_god.png" />
+            </li>
+        </ul>
+    </main>
 </template>
 <script>
 import { mapGetters } from 'vuex';
@@ -66,64 +66,67 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-	.fishing-wrapper {
-		width: 100%;
-		height: 100%;
-		font-size: 12px;
-		font-family: $font-family;
+    .fishing-wrapper {
+        width: 100%;
+        height: 100%;
+        font-size: 12px;
+        font-family: $font-family;
 
-		.fishing-container {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			min-height: 62vh;
-			background: $background_img;
-			background-size: cover;
-			padding-bottom: 70px;
+        .fishing-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 62vh;
+            background: $background_img;
+            background-size: cover;
+            padding-bottom: 70px;
 
-			.fishing-item-wrapper {
-				display: flex;
-				width: 100%;
-				min-height: 165px;
+            .fishing-item-wrapper {
+                display: flex;
+                width: 100%;
+                min-height: 165px;
 
-				.fishing-img {
-					width: 57%;
-					align-self: center;
-				}
-				.fishing-item-container {
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					margin: 2% 2% 2% 4%;
+                .fishing-img {
+                    width: 57%;
+                    align-self: center;
+                }
 
-					.fishing-item-name {
-						font-size: 16px;
-						font-weight: bold;
-						margin-bottom: 5px;
-					}
-					.fishing-item-msg {
-						color: #575757;
-						height: 100%;
-					}
-					.fishing-play-now-btn {
-						width: 95px;
-						min-height: 35px;
-						font-weight: bold;
-						border: $border-style;
-						border-radius: 5px;
-						background: $color-yellow-linear-unpress;
-						margin-top: 10px;
+                .fishing-item-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin: 2% 2% 2% 4%;
 
-						&:active {
-							background: $color-yellow-linear;
-						}
-					}
-				}
+                    .fishing-item-name {
+                        font-size: 16px;
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                    }
 
-				&:nth-child(odd) {
-					background: rgba(0, 0, 0, 0.1);
-				}
-			}
-		}
-	}
+                    .fishing-item-msg {
+                        color: #575757;
+                        height: 100%;
+                    }
+
+                    .fishing-play-now-btn {
+                        width: 95px;
+                        min-height: 35px;
+                        font-weight: bold;
+                        border: $border-style;
+                        border-radius: 5px;
+                        background: $color-yellow-linear-unpress;
+                        margin-top: 10px;
+
+                        &:active {
+                            background: $color-yellow-linear;
+                        }
+                    }
+                }
+
+                &:nth-child(odd) {
+                    background: rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+    }
 </style>

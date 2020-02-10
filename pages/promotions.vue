@@ -58,94 +58,98 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.promotions-wrapper {
-    display: flex;
-    flex-direction: column;
-    background: $background_img;
-    background-size: cover;
-    width: 100%;
-    min-height: 100vh;
-    padding-bottom: 70px;
+    .promotions-wrapper {
+        display: flex;
+        flex-direction: column;
+        background: $background_img;
+        background-size: cover;
+        width: 100%;
+        min-height: 100vh;
+        padding-bottom: 70px;
 
-    .promotions-title {
-        font-family: $font-family;
-        font-size: 24px;
-        font-weight: bold;
-        text-shadow: $text-shadow;
-        align-self: center;
-        margin: 5% 0 0 0;
-    }
-    .promotions-list {
-        height: 100%;
-        background: rgba(0, 0, 0, 0.1);
-        padding: 3% 3% 0 3%;
-        margin: 5% 3% 0 3%;
+        .promotions-title {
+            font-family: $font-family;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: $text-shadow;
+            align-self: center;
+            margin: 5% 0 0 0;
+        }
 
-        .promotions-item {
-            display: inline-block;
-            width: 100%;
-            margin: 0 0 8% 0;
-            background: #eeeeee;
-            -webkit-box-shadow: 4px 4px 5px #494949;
-            box-shadow: 4px 4px 5px #494949;
+        .promotions-list {
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 3% 3% 0 3%;
+            margin: 5% 3% 0 3%;
 
-            .promotions-img {
+            .promotions-item {
+                display: inline-block;
                 width: 100%;
-            }
-            .promotions-text {
-                font-family: $font-family;
-                font-weight: bold;
-                font-size: 18px;
-                margin: 5% 0 0 4%;
-            }
-            .promotions-btn-wrapper {
-                display: flex;
-                justify-content: space-around;
-                width: 100%;
-                margin: 8% 0 3% 0;
+                margin: 0 0 8% 0;
+                background: #eeeeee;
+                -webkit-box-shadow: 4px 4px 5px #494949;
+                box-shadow: 4px 4px 5px #494949;
 
-                .promotions-btn {
-                    width: 45%;
+                .promotions-img {
+                    width: 100%;
+                }
+
+                .promotions-text {
                     font-family: $font-family;
                     font-weight: bold;
-                    font-size: 16px;
-                    border-radius: 5px;
-                    padding: 3% 0;
+                    font-size: 18px;
+                    margin: 5% 0 0 4%;
+                }
 
-                    &.detail-btn {
-                        border: 1px solid #000000;
-                        background: transparent;
-                        color: #494949;
-                    }
-                    &.right-btn {
+                .promotions-btn-wrapper {
+                    display: flex;
+                    justify-content: space-around;
+                    width: 100%;
+                    margin: 8% 0 3% 0;
+
+                    .promotions-btn {
                         width: 45%;
-                        color: $color-black;
-                        text-align: center;
-                        border: $border-style;
-                        background: $color-yellow-linear-unpress;
-                        border: solid 1px rgba(247, 147, 30, 0.4);
+                        font-family: $font-family;
+                        font-weight: bold;
+                        font-size: 16px;
+                        border-radius: 5px;
+                        padding: 3% 0;
 
-                        &:active {
-                            background: $color-yellow-linear;
+                        &.detail-btn {
+                            border: 1px solid #000000;
+                            background: transparent;
+                            color: #494949;
+                        }
+
+                        &.right-btn {
+                            width: 45%;
+                            color: $color-black;
+                            text-align: center;
+                            border: $border-style;
+                            background: $color-yellow-linear-unpress;
+                            border: solid 1px rgba(247, 147, 30, 0.4);
+
+                            &:active {
+                                background: $color-yellow-linear;
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 
-@media screen and (min-width: 600px) {
-    .promotions-wrapper {
-        .promotions-list {
-            .promotions-item {
-                width: calc((100% - 3%) / 2);
+    @media screen and (min-width: 600px) {
+        .promotions-wrapper {
+            .promotions-list {
+                .promotions-item {
+                    width: calc((100% - 3%) / 2);
 
-                &:not(:nth-child(2n)) {
-                    margin-right: 2%;
+                    &:not(:nth-child(2n)) {
+                        margin-right: 2%;
+                    }
                 }
             }
         }
     }
-}
 </style>

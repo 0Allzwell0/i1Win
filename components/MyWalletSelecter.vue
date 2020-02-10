@@ -102,81 +102,88 @@ export default {
 };
 </script>
 <style lang="scss">
-.transfer-input-wrapper {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 39px;
-    border-radius: 5px;
-    border: 1px solid #cecece;
-    background: $color-white;
-    margin: 7px 0 24px 0;
-
-    .transfer-game-input {
+    .transfer-input-wrapper {
+        position: relative;
         display: flex;
-        align-items: center;
         width: 100%;
-        font-size: 14px;
-        background: $color-white;
+        height: 39px;
         border-radius: 5px;
-        text-align: left;
-        padding-left: 10px;
-
-        .transfer-game-img {
-            width: 119px;
-        }
-        .transfer-game-text {
-            margin-left: -85px;
-        }
-    }
-    .transfer-down {
-        width: 15px;
-        font-size: 20px;
-        color: $color-black;
-        align-self: center;
-        margin-right: 8px;
-    }
-    .transfer-games-list {
-        display: none;
-        position: absolute;
-        z-index: 10;
-        top: 38px;
-        left: 0;
-        width: 100%;
-        height: 230px;
-        font-weight: normal;
-        font-size: 14px;
         border: 1px solid #cecece;
         background: $color-white;
-        overflow-y: scroll;
-        margin-bottom: 70px;
+        margin: 7px 0 24px 0;
 
-        &.show {
-            display: block;
-        }
-        .transfer-game-item {
-            position: relative;
+        .transfer-game-input {
             display: flex;
-            justify-content: space-between;
             align-items: center;
             width: 100%;
-            border-bottom: 1px solid #cecece;
-            padding: 10px 0 10px 10px;
+            font-size: 14px;
+            background: $color-white;
+            border-radius: 5px;
+            text-align: left;
+            padding-left: 10px;
 
-            &.active {
-                display: none;
-            }
             .transfer-game-img {
                 width: 119px;
             }
+
             .transfer-game-text {
-                position: absolute;
-                left: 45px;
+                margin-left: -85px;
             }
-            .transfer-maintenance-text {
-                margin-right: 15px;
+        }
+
+        .transfer-down {
+            width: 15px;
+            font-size: 20px;
+            color: $color-black;
+            align-self: center;
+            margin-right: 8px;
+        }
+
+        .transfer-games-list {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            top: 38px;
+            left: 0;
+            width: 100%;
+            height: 230px;
+            font-weight: normal;
+            font-size: 14px;
+            border: 1px solid #cecece;
+            background: $color-white;
+            overflow-y: scroll;
+            margin-bottom: 70px;
+
+            &.show {
+                display: block;
+            }
+
+            .transfer-game-item {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                border-bottom: 1px solid #cecece;
+                padding: 10px 0 10px 10px;
+
+                &.active {
+                    display: none;
+                }
+
+                .transfer-game-img {
+                    width: 119px;
+                }
+
+                .transfer-game-text {
+                    position: absolute;
+                    left: 45px;
+                }
+
+                .transfer-maintenance-text {
+                    margin-right: 15px;
+                }
             }
         }
     }
-}
 </style>

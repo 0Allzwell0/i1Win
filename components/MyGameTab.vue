@@ -60,44 +60,46 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.tabs-wrapper {
-    display: flex;
-    width: 100%;
-    height: 100%;
-
-    .tab-container {
+    .tabs-wrapper {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         width: 100%;
+        height: 100%;
 
-        .tab-item {
+        .tab-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: $color-black;
             width: 100%;
-            height: 100%;
 
-            .tab-image {
-                width: 31px;
-                align-self: center;
-                margin: 6px 0 4px 0;
-            }
-            .tab-text {
-                font-weight: bold;
-                color: $color-gray;
-                text-align: center;
-                margin: 2.5px 0;
-            }
-        }
-        &.active {
             .tab-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                background: $color-black;
+                width: 100%;
+                height: 100%;
+
+                .tab-image {
+                    width: 31px;
+                    align-self: center;
+                    margin: 6px 0 4px 0;
+                }
+
                 .tab-text {
-                    color: $color-yellow;
+                    font-weight: bold;
+                    color: $color-gray;
+                    text-align: center;
+                    margin: 2.5px 0;
+                }
+            }
+
+            &.active {
+                .tab-item {
+                    .tab-text {
+                        color: $color-yellow;
+                    }
                 }
             }
         }
     }
-}
 </style>

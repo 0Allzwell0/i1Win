@@ -12,28 +12,29 @@
 export default {};
 </script>
 <style lang="scss" scoped>
-.my-modal-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 33vh;
-    padding: 0;
+    .my-modal-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 33vh;
+        padding: 0;
 
-    .my-modal-container {
-        position: relative;
-        width: 80%;
-        max-width: 550px;
+        .my-modal-container {
+            position: relative;
+            width: 80%;
+            max-width: 550px;
 
-        .my-modal-close {
-            position: absolute;
-            z-index: 1051;
-            top: 7%;
-            right: 4%;
-            width: 20px;
-        }
-        .my-modal-image {
-            width: 100%;
+            .my-modal-close {
+                position: absolute;
+                z-index: 1051;
+                top: 7%;
+                right: 4%;
+                width: 20px;
+            }
+
+            .my-modal-image {
+                width: 100%;
+            }
         }
     }
-}
 </style>
