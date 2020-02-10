@@ -75,7 +75,7 @@ const actions = {
         if (response.status === 200) {
             commit(types.CHECK_USERNAME_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.CHECK_USERNAME_FAIL, { data: response.data, status: reponse.status })
+            commit(types.CHECK_USERNAME_FAIL, { data: response.data, status: response.status })
         }
     },
 
@@ -88,7 +88,7 @@ const actions = {
         if (response.status === 200) {
             commit(types.CHECK_MOBILE_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.CHECK_MOBILE_FAIL, { data: response.data, status: reponse.status })
+            commit(types.CHECK_MOBILE_FAIL, { data: response.data, status: response.status })
         }
     }
 }
