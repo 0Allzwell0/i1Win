@@ -156,8 +156,6 @@
 			};
 		},
 		mounted() {
-			_this = this;
-
 			// Change CSS When "Input" Occurs With "keyup" Event
 			$('.register-input-text').keyup(el => {
 				let elTarget = el.target;
@@ -586,7 +584,7 @@
                         left: -18px;
                         font-size: 30px;
                         font-family: 'Catamaran', $font-family;
-                        color: $color-yellow;
+                        color: #b01015;
                     }
 
                     &:last-child::before {

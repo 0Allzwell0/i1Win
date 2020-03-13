@@ -100,7 +100,9 @@
   },
   "fishing": {
     "cf_msg": "Use 3 powerful weapons to capture up to 20 species of sea creatures and earn a big bonus.",
-    "fg_msg": "Professional tools for all level of fish hunters, easy to bet, next generation fishing game."
+    "fg_msg": "Professional tools for all level of fish hunters, easy to bet, next generation fishing game.",
+    "fj_msg": "Only need coin 1 and you can catch the fish.",
+    "bh_msg": "Many kind valley of bird hunting waiting for you to shoot it."
   },
   "slots": {
     "all": "All",

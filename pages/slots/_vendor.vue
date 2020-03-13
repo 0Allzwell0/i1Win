@@ -62,7 +62,7 @@ export default {
     },
     data() {
         return {
-            vendorList: ['plt', 'spg', 'ygg', 'gpi', 'bng', 'jok', 'ifun', 'ks9', 'cq9', 'mg', 'dt'],
+            vendorList: ['cq9', 'spg', 'bsg', 'bng', 'plt', 'gpi', 'ygg', 'jok', 'mg', 'dt', 'ifun', 'ks9'],
             typeList: ['All', 'Popular', 'New', 'Jackpot', 'Table'],
             productCode: null,
             tab: 'all',

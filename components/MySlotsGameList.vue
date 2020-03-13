@@ -277,6 +277,7 @@ export default {
             .slots-game-list-item {
                 display: inline-block;
                 width: calc((100% - 13.2%) / 3);
+                height: calc((100% - 13.2%) / 3);
                 margin-top: 5%;
                 background: $color-black;
                 border-radius: 5px;

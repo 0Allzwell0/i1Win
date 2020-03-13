@@ -14,7 +14,13 @@ function getCUI() {
         website_id: WEBSITE_ID,
         account_id: ACCOUNT_ID
     })
-    let cui = JSON.parse(localStorage.getItem('userData')).cui || Base64.encode(json)
+
+    let cui = null
+    if (localStorage.getItem('userData')) {
+        let userData = localStorage.getItem('userData')
+        cui = JSON.parse(userData).cui
+    }
+
     return cui
 }
 
