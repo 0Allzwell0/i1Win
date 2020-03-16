@@ -14,7 +14,7 @@
             <ul class="download-slots-content-wrapper">
                 <!-- Playtech -->
                 <li class="download-slots-content-container">
-                    <img class="download-slots-img" src="/images/download_plt.png" />
+                    <img class="download-slots-img" src="/images/download/plt.png" />
                     <div class="download-slots-login-id-wrapper">
                         <div class="download-slots-login-id-container">
                             <span class="download-slots-id-title">{{ $t('download.login_id') }} :</span>
@@ -22,13 +22,13 @@
                         </div>
                     </div>
                     <button class="download-slots-download-btn" @click="openDownloadURL('plt')">
-                        <img class="download-slots-download-img android-img" src="/images/android.png" />
+                        <img class="download-slots-download-img android-img" src="/images/download/android.png" />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
                     </button>
                 </li>
                 <!-- Asia Gaming (AG) -->
                 <li class="download-slots-content-container">
-                    <img class="download-slots-img" src="/images/download_ag.png" />
+                    <img class="download-slots-img" src="/images/download/ag.png" />
                     <div class="download-slots-login-id-wrapper">
                         <div class="download-slots-login-id-container">
                             <span class="download-slots-id-title">{{ $t('download.login_id') }} :</span>
@@ -36,14 +36,14 @@
                         </div>
                     </div>
                     <button class="download-slots-download-btn" @click="openDownloadURL('ag')">
-                        <img class="download-slots-download-img android-img" src="/images/android.png" />
-                        <img class="download-slots-download-img ios-img" src="/images/ios.png" />
+                        <img class="download-slots-download-img android-img" src="/images/download/android.png" />
+                        <img class="download-slots-download-img ios-img" src="/images/download/ios.png" />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
                     </button>
                 </li>
                 <!-- Dream Gaming (DG) -->
                 <li class="download-slots-content-container">
-                    <img class="download-slots-img" src="/images/download_dg.png" />
+                    <img class="download-slots-img" src="/images/download/dg.png" />
                     <div class="download-slots-login-id-wrapper">
                         <div class="download-slots-login-id-container">
                             <span class="download-slots-id-title">{{ $t('download.login_id') }} :</span>
@@ -51,8 +51,8 @@
                         </div>
                     </div>
                     <button class="download-slots-download-btn" @click="openDownloadURL('dg')">
-                        <img class="download-slots-download-img android-img" src="/images/android.png" />
-                        <img class="download-slots-download-img ios-img" src="/images/ios.png" />
+                        <img class="download-slots-download-img android-img" src="/images/download/android.png" />
+                        <img class="download-slots-download-img ios-img" src="/images/download/ios.png" />
                         <span class="download-slots-download-text">{{ $t('download.application') }}</span>
                     </button>
                 </li>
@@ -132,7 +132,7 @@ export default {
 
         .download-slots-container {
             width: 100%;
-            background: url('/images/download_livecasino_bg.png') no-repeat;
+            background: url('/images/download/livecasino_bg.png') no-repeat;
             background-size: 100%;
             text-align: center;
 

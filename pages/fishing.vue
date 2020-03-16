@@ -17,10 +17,10 @@
                     <span class="fishing-item-msg">{{ $t('fishing.fg_msg') }}</span>
                     <button class="fishing-play-now-btn" type="button" @click="openGame(421, 'fg')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="fishing-img" src="/images/gm_fishing_god.png" />
+                <img class="fishing-img" src="/images/fishing/fg.png" />
             </li>
             <li class="fishing-item-wrapper">
-                <img class="fishing-img" src="/images/gm_league_of_fishing_joy.png" />
+                <img class="fishing-img" src="/images/fishing/lofj.png" />
                 <div class="fishing-item-container">
                     <span class="fishing-item-name">League Of Fishing Joy</span>
                     <span class="fishing-item-msg">{{ $t('fishing.fj_msg') }}</span>
@@ -33,7 +33,7 @@
                     <span class="fishing-item-msg">{{ $t('fishing.bh_msg') }}</span>
                     <button class="fishing-play-now-btn" type="button" @click="openGame(1773, 'bh')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="fishing-img" src="/images/gm_league_of_bird_hunting.png" />
+                <img class="fishing-img" src="/images/fishing/lobh.png" />
             </li>
         </ul>
     </main>

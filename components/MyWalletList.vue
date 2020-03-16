@@ -67,7 +67,7 @@ export default {
         this.routeName();
         setTimeout(() => {
             this.getWallets();
-        }, 500);
+        }, 1000);
     },
     methods: {
         // Get Wallets

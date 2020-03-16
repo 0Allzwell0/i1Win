@@ -19,7 +19,7 @@
                             <span class="slots-game-name">CQ9</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_cq9.png" />
+                        <img class="slots-game-img" src="/images/slots/cq9.png" />
                     </nuxt-link>
                 </li>
                 <!-- Spadegaming -->
@@ -29,7 +29,7 @@
                             <span class="slots-game-name">SPG</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_spg.png" />
+                        <img class="slots-game-img" src="/images/slots/spg.png" />
                     </nuxt-link>
                 </li>
                 <!-- BESTSOFT -->
@@ -39,7 +39,7 @@
                             <span class="slots-game-name">BSG</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_bsg.png" />
+                        <img class="slots-game-img" src="/images/slots/bsg.png" />
                     </nuxt-link>
                 </li>
                 <!-- Booongo -->
@@ -49,7 +49,7 @@
                             <span class="slots-game-name">BNG</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_bng.png" />
+                        <img class="slots-game-img" src="/images/slots/bng.png" />
                     </nuxt-link>
                 </li>
                 <!-- Playtech -->
@@ -59,7 +59,7 @@
                             <span class="slots-game-name">PLT</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_plt.png" />
+                        <img class="slots-game-img" src="/images/slots/plt.png" />
                     </nuxt-link>
                 </li>
                 <!-- GPI -->
@@ -69,7 +69,7 @@
                             <span class="slots-game-name">GPI</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_gpi.png" />
+                        <img class="slots-game-img" src="/images/slots/gpi.png" />
                     </nuxt-link>
                 </li>
                 <!-- Yggdrasil -->
@@ -79,7 +79,7 @@
                             <span class="slots-game-name">YGG</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_ygg.png" />
+                        <img class="slots-game-img" src="/images/slots/ygg.png" />
                     </nuxt-link>
                 </li>
                 <!-- Joker -->
@@ -89,7 +89,7 @@
                             <span class="slots-game-name">JOKER</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_joker.png" />
+                        <img class="slots-game-img" src="/images/slots/joker.png" />
                     </nuxt-link>
                 </li>
                 <!-- Microgaming -->
@@ -99,7 +99,7 @@
                             <span class="slots-game-name">MG</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_mg.png" />
+                        <img class="slots-game-img" src="/images/slots/mg.png" />
                     </nuxt-link>
                 </li>
                 <!-- Dreamtech -->
@@ -109,7 +109,7 @@
                             <span class="slots-game-name">DT</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_dt.png" />
+                        <img class="slots-game-img" src="/images/slots/dt.png" />
                     </nuxt-link>
                 </li>
                 <!-- ifun -->
@@ -119,7 +119,7 @@
                             <span class="slots-game-name">ifun</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_ifun.png" />
+                        <img class="slots-game-img" src="/images/slots/ifun.png" />
                     </nuxt-link>
                 </li>
                 <!-- 918Kiss -->
@@ -129,7 +129,7 @@
                             <span class="slots-game-name">918Kiss</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots_918kiss.png" />
+                        <img class="slots-game-img" src="/images/slots/918kiss.png" />
                     </nuxt-link>
                 </li>
             </ul>

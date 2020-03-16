@@ -1,27 +1,27 @@
 <template>
     <main class="livecasino-plt-wrapper">
         <!-- Logo -->
-        <img class="livecasino-plt-logo-img" src="/images/wallet_plt.png" />
+        <img class="livecasino-plt-logo-img" src="/images/livecasino/plt_logo.png" />
 
         <!-- Games -->
         <ul class="livecasino-plt-container">
             <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/plt_live_7_seat_baccarat.png" />
+                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_7bal.png" />
                 <span class="livecasino-plt-item-name">Live 7 Seat Baccarat</span>
                 <button class="livecasino-plt-item-btn" @click="openGame('7bal')">{{ $t('common.play_now') }}</button>
             </li>
             <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/plt_baccarat_live.png" />
+                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_bal.png" />
                 <span class="livecasino-plt-item-name">Baccarat Live</span>
                 <button class="livecasino-plt-item-btn" @click="openGame('bal')">{{ $t('common.play_now') }}</button>
             </li>
             <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/plt_live_french_roulette.png" />
+                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_rofl.png" />
                 <span class="livecasino-plt-item-name">Live French Roulette</span>
                 <button class="livecasino-plt-item-btn" @click="openGame('rofl')">{{ $t('common.play_now') }}</button>
             </li>
             <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/plt_roulette_live.png" />
+                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_rol.png" />
                 <span class="livecasino-plt-item-name">Roulette Live</span>
                 <button class="livecasino-plt-item-btn" @click="openGame('rol')">{{ $t('common.play_now') }}</button>
             </li>

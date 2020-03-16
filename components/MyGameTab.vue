@@ -5,7 +5,7 @@
             <nuxt-link class="tab-item" :to="$i18n.path('livecasino')">
                 <img
                     class="tab-image"
-                    :src="$route.name.indexOf('livecasino') === -1 ? '/images/game_live_casino.png' : '/images/game_live_casino_click.png'"
+                    :src="$route.name.indexOf('livecasino') === -1 ? '/images/nav/livecasino.png' : '/images/nav/livecasino_active.png'"
                 />
                 <span class="tab-text">{{ $t('home.tab.livecasino') }}</span>
             </nuxt-link>
@@ -15,7 +15,7 @@
             <nuxt-link class="tab-item" :to="$i18n.path('sports')">
                 <img
                     class="tab-image"
-                    :src="$route.name.indexOf('sports') === -1 ? '/images/game_sports.png' : '/images/game_sports_click.png'"
+                    :src="$route.name.indexOf('sports') === -1 ? '/images/nav/sports.png' : '/images/nav/sports_active.png'"
                 />
                 <span class="tab-text">{{ $t('home.tab.sports') }}</span>
             </nuxt-link>
@@ -25,7 +25,7 @@
             <nuxt-link class="tab-item" :to="$i18n.path('slots')">
                 <img
                     class="tab-image"
-                    :src="$route.name.indexOf('slots') === -1 ? '/images/game_slots.png' : '/images/game_slots_click.png'"
+                    :src="$route.name.indexOf('slots') === -1 ? '/images/nav/slots.png' : '/images/nav/slots_active.png'"
                 />
                 <span class="tab-text">{{ $t('home.tab.slots') }}</span>
             </nuxt-link>
@@ -35,7 +35,7 @@
             <nuxt-link class="tab-item" :to="$i18n.path('lottery')">
                 <img
                     class="tab-image"
-                    :src="$route.name.indexOf('lottery') === -1 ? '/images/game_lottery.png' : '/images/game_lottery_click.png'"
+                    :src="$route.name.indexOf('lottery') === -1 ? '/images/nav/lottery.png' : '/images/nav/lottery_active.png'"
                 />
                 <span class="tab-text">{{ $t('home.tab.lottery') }}</span>
             </nuxt-link>
@@ -45,7 +45,7 @@
             <nuxt-link class="tab-item" :to="$i18n.path('fishing')">
                 <img
                     class="tab-image"
-                    :src="$route.name.indexOf('fishing') === -1 ? '/images/game_fishing.png' : '/images/game_fishing_click.png'"
+                    :src="$route.name.indexOf('fishing') === -1 ? '/images/nav/fishing.png' : '/images/nav/fishing_active.png'"
                 />
                 <span class="tab-text">{{ $t('home.tab.fishing') }}</span>
             </nuxt-link>

@@ -1,11 +1,11 @@
 <template>
     <header class="header-wrapper">
         <!-- Menu -->
-        <img class="header-menu-img" src="/images/menu.png" @click="showMenu()" />
+        <img class="header-menu-img" src="/images/header/menu.png" @click="showMenu()" />
         <!-- Logo -->
         <h1 class="header-logo-wrapper">
             <nuxt-link class="header-logo-container" :to="$i18n.path('')" title="i1win Home">
-                <img class="header-logo-img" src="/images/logo.png" alt="i1win" />
+                <img class="header-logo-img" src="/images/header/logo.png" alt="i1win" />
             </nuxt-link>
         </h1>
         <!-- 尚未登入前顯示 -->

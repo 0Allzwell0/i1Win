@@ -26,10 +26,10 @@
             <ul class="games-content-wrapper">
                 <!-- Live Casino -->
                 <li class="game-wrapper">
-                    <img class="game-image" src="/images/home_livecasino.png" />
+                    <img class="game-image" src="/images/home/livecasino.png" />
                     <div class="game-right-wrapper">
                         <span class="game-title-wrapper">
-                            <img class="game-icon" src="/images/home_livecasino_icon.png" />
+                            <img class="game-icon" src="/images/home/livecasino_icon.png" />
                             <span class="game-title">{{ $t('home.livecasino') }}</span>
                         </span>
                         <p class="game-descript">{{ $t('home.livecasino_msg') }}</p>
@@ -38,10 +38,10 @@
                 </li>
                 <!-- Sports -->
                 <li class="game-wrapper">
-                    <img class="game-image" src="/images/home_sports.png" />
+                    <img class="game-image" src="/images/home/sports.png" />
                     <div class="game-right-wrapper">
                         <span class="game-title-wrapper">
-                            <img class="game-icon" src="/images/home_sports_icon.png" />
+                            <img class="game-icon" src="/images/home/sports_icon.png" />
                             <span class="game-title">{{ $t('home.sport_events') }}</span>
                         </span>
                         <p class="game-descript">{{ $t('home.sport_events_msg') }}</p>
@@ -50,10 +50,10 @@
                 </li>
                 <!-- Slots -->
                 <li class="game-wrapper">
-                    <img class="game-image" src="/images/home_slots.png" />
+                    <img class="game-image" src="/images/home/slots.png" />
                     <div class="game-right-wrapper">
                         <span class="game-title-wrapper">
-                            <img class="game-icon" src="/images/home_slots_icon.png" />
+                            <img class="game-icon" src="/images/home/slots_icon.png" />
                             <span class="game-title">{{ $t('home.slot_games') }}</span>
                         </span>
                         <p class="game-descript">{{ $t('home.slot_games_msg') }}</p>
@@ -65,15 +65,15 @@
                 <li class="bottom-games-wrapper">
                     <div class="bottom-games-container">
                         <nuxt-link class="bottom-game-item" :to="$i18n.path('lottery')">
-                            <img class="bottom-game-image" src="/images/home_lottery.png" />
+                            <img class="bottom-game-image" src="/images/home/lottery.png" />
                             <span class="bottom-game-name">{{ $t('home.online_lottery') }}</span>
                         </nuxt-link>
                         <nuxt-link class="bottom-game-item" :to="$i18n.path('fishing')">
-                            <img class="bottom-game-image" src="/images/home_fishing.png" />
+                            <img class="bottom-game-image" src="/images/home/fishing.png" />
                             <span class="bottom-game-name">{{ $t('home.cash_fishing') }}</span>
                         </nuxt-link>
                         <nuxt-link class="bottom-game-item" :to="$i18n.path('promotions')">
-                            <img class="bottom-game-image" src="/images/home_promotion.png" />
+                            <img class="bottom-game-image" src="/images/home/promotion.png" />
                             <span class="bottom-game-name">{{ $t('home.cash_rebate') }}</span>
                         </nuxt-link>
                     </div>
@@ -217,7 +217,7 @@ export default {
                 .game-wrapper {
                     display: flex;
                     width: 100%;
-                    background: url('/images/game_background.png');
+                    background: url('/images/home/game_bg.png');
                     background-size: cover;
                     border-radius: 5px;
                     box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
@@ -293,7 +293,7 @@ export default {
                             justify-content: center;
                             align-items: center;
                             width: 100%;
-                            background: url('/images/game_background.png');
+                            background: url('/images/home/game_bg.png');
                             background-size: cover;
                             border-radius: 5px;
                             box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);

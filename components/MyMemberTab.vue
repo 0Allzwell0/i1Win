@@ -6,7 +6,7 @@
                 :to="$i18n.path('member/deposit')"
                 :class="{'active': $route.name.indexOf('deposit') !== -1}"
             >
-                <img class="member-tab-image" src="/images/deposit.png" />
+                <img class="member-tab-image" src="/images/member/nav/deposit.png" />
                 <span class="member-tab-text">{{ $t('wallet.deposit') }}</span>
             </nuxt-link>
         </li>
@@ -16,7 +16,7 @@
                 :to="$i18n.path('member/withdrawal')"
                 :class="{'active': $route.name.indexOf('withdrawal') !== -1}"
             >
-                <img class="member-tab-image" src="/images/withdraw.png" />
+                <img class="member-tab-image" src="/images/member/nav/withdraw.png" />
                 <span class="member-tab-text">{{ $t('wallet.withdrawal') }}</span>
             </nuxt-link>
         </li>
@@ -26,7 +26,7 @@
                 :to="$i18n.path('member/transfer')"
                 :class="{'active': $route.name.indexOf('transfer') !== -1}"
             >
-                <img class="member-tab-image" src="/images/transfer.png" />
+                <img class="member-tab-image" src="/images/member/nav/transfer.png" />
                 <span class="member-tab-text">{{ $t('wallet.transfer') }}</span>
             </nuxt-link>
         </li>
@@ -36,7 +36,7 @@
                 :to="$i18n.path('member/history')"
                 :class="{'active': $route.name.indexOf('history') !== -1}"
             >
-                <img class="member-tab-image" src="/images/history.png" />
+                <img class="member-tab-image" src="/images/member/nav/history.png" />
                 <span class="member-tab-text">{{ $t('wallet.history') }}</span>
             </nuxt-link>
         </li>

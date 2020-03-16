@@ -8,7 +8,7 @@
                 :to="$i18n.path('')"
                 :class="{'active': $route.name === 'index' || $route.name === 'lang'}"
             >
-                <img class="footer-btn-img" src="/images/btn_home.png" alt />
+                <img class="footer-btn-img" src="/images/footer/home.png" alt />
                 <span class="footer-btn-text">{{ $t('footer.home') }}</span>
             </nuxt-link>
         </div>
@@ -20,7 +20,7 @@
                 :to="$i18n.path('promotions')"
                 :class="{'active': $route.name.indexOf('promotions') != -1}"
             >
-                <img class="footer-btn-img" src="/images/btn_promotion.png" alt />
+                <img class="footer-btn-img" src="/images/footer/promotion.png" alt />
                 <span class="footer-btn-text">{{ $t('footer.promotions') }}</span>
             </nuxt-link>
         </div>
@@ -33,14 +33,14 @@
                 :class="{'active': $route.name.indexOf('deposit') != -1 || $route.name.indexOf('withdrawal') != -1 ||
                         $route.name.indexOf('transfer') != -1 || $route.name.indexOf('history') != -1 }"
             >
-                <img class="footer-btn-img" src="/images/btn_wallet.png" alt />
+                <img class="footer-btn-img" src="/images/footer/wallet.png" alt />
                 <span class="footer-btn-text">{{ $t('footer.wallet') }}</span>
             </div>
         </div>
         <!-- Line -->
         <div class="footer-btn-wrapper">
             <a class="footer-btn-container" href="https://line.me/R/ti/p/%40y3thai">
-                <img class="footer-btn-img line-image" src="/images/btn_line.svg" alt />
+                <img class="footer-btn-img line-image" src="/images/footer/line.svg" alt />
             </a>
         </div>
         <!-- Blank -->

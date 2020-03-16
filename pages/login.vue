@@ -12,7 +12,7 @@
 
             <!-- Username -->
             <div class="login-input-wrapper">
-                <img class="login-input-img" src="/images/username_image.png" />
+                <img class="login-input-img" src="/images/username_img.png" />
                 <input
                     class="login-input-text"
                     id="loginUsername"
@@ -28,7 +28,7 @@
 
             <!-- Password -->
             <div class="login-input-wrapper">
-                <img class="login-input-img" src="/images/password_image.png" />
+                <img class="login-input-img" src="/images/password_img.png" />
                 <input
                     class="login-input-text"
                     id="loginPassword"

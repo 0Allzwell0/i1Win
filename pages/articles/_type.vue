@@ -14,7 +14,10 @@ export default {
     computed: {
         ...mapGetters('user', {
             articleHTML: 'GetArticles'
-        })
+        }),
+        ...mapGetters({
+            language: 'GetLanguage'
+        }),
     },
     mounted() {
         this.getHTML(this.$route.params.type);
@@ -30,27 +33,45 @@ export default {
 
             switch (articleName) {
                 case 'about-us': {
-                    articleCode = 'ABOUTUS_EN';
+                    if(this.language === 'th')
+                        articleCode = 'ABOUTUS_TH';
+                    else
+                        articleCode = 'ABOUTUS_EN';
                     break;
                 }
                 case 'how-to-join': {
-                    articleCode = 'HOWJOIN_EN';
+                    if(this.language === 'th')
+                        articleCode = 'HOWJOIN_TH';
+                    else
+                        articleCode = 'HOWJOIN_EN';
                     break;
                 }
                 case 'support': {
-                    articleCode = 'SUPPORT_EN';
+                    if(this.language === 'th')
+                        articleCode = 'SUPPORT_TH';
+                    else
+                        articleCode = 'SUPPORT_EN';
                     break;
                 }
                 case 'responsible-gaming': {
-                    articleCode = 'RESPONSIBLE_EN';
+                    if(this.language === 'th')
+                        articleCode = 'RESPONSIBLE_TH';
+                    else
+                        articleCode = 'RESPONSIBLE_EN';
                     break;
                 }
                 case 'terms-of-use': {
-                    articleCode = 'TERM_EN';
+                    if(this.language === 'th')
+                        articleCode = 'TERMS_TH';
+                    else
+                        articleCode = 'TERM_EN';
                     break;
                 }
                 case 'privacy-policy': {
-                    articleCode = 'PRIVACY_EN';
+                    if(this.language === 'th')
+                        articleCide = 'PRIVACY_TH';
+                    else
+                        articleCode = 'PRIVACY_EN';
                     break;
                 }
             }

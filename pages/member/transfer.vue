@@ -72,11 +72,11 @@ export default {
             isEnough: false
         };
     },
-    beforeMount() {
-        this.$store.dispatch('wallet/getBalance', 'main').then(() => {
-            this.availableBalance = this.balance;
-        });
-    },
+    // beforeMount() {
+    //     this.$store.dispatch('wallet/getBalance', 'main').then(() => {
+    //         this.availableBalance = this.balance;
+    //     });
+    // },
     mounted() {
         let scrollTop = $('.wallet-list-container').height();
         $('.transfer-container').css('margin-top', -scrollTop);
@@ -196,8 +196,7 @@ export default {
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: calc(100% - 115px);
-            background: url('/images/background_img.jpg');
+            background: $background_img;
             background-size: cover;
             font-family: $font-family;
             font-size: 12px;

@@ -11,7 +11,7 @@
                 :key="`deposit-bank-${index}`"
                 @click.stop="selectDepositBank(item.accountNumber, item.name, item.bank)"
             >
-                <img class="bank-img" :src="`/images/bank_${item.bank}.png`" />
+                <img class="bank-img" :src="`/images/member/bank/${item.bank}.png`" />
             </li>
         </ul>
 
@@ -24,7 +24,7 @@
                 :key="`withdrawal-bank-${index}`"
                 @click.stop="selectWithdrawalBank(item.code.toLowerCase(), item.name)"
             >
-                <img class="bank-img" :src="`/images/bank_${item.code.toLowerCase()}.png`" />
+                <img class="bank-img" :src="`/images/member/bank/${item.code.toLowerCase()}.png`" />
             </li>
         </ul>
     </div>
@@ -79,7 +79,7 @@ export default {
         // Select Deposit Bank
         selectDepositBank(accountNumber, name, bank) {
             if (bank) {
-                $('.bank-input').html(`<img class="bank-img" src="/images/bank_${bank}.png" />`);
+                $('.bank-input').html(`<img class="bank-img" src="/images/member/bank/${bank}.png" />`);
                 this.bankOK = true;
             } else {
                 $('.bank-input').text(this.$t('common.please_select'));
@@ -93,7 +93,7 @@ export default {
         // Select Withdrawal Bank
         selectWithdrawalBank(code, name) {
             if (code) {
-                $('.bank-input').html(`<img class="bank-img" src="/images/bank_${code}.png" />`);
+                $('.bank-input').html(`<img class="bank-img" src="/images/member/bank/${code}.png" />`);
                 this.bankOK = true;
             } else {
                 $('.bank-input').text(this.$t('common.please_select'));

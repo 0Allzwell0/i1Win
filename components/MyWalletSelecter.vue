@@ -9,7 +9,7 @@
         <ul class="transfer-games-list" :class="{'show': showGamesList}">
             <li class="transfer-game-item" @click="selectGame('none', 0, 0)">{{ $t('common.please_select') }}</li>
             <li class="transfer-game-item" @click="selectGame('main', 1, 0)" :class="{'active': hideGame === 'main'}">
-                <img class="transfer-game-img" :src="`/images/wallet_main.png`" />
+                <img class="transfer-game-img" :src="`/images/member/wallet/main.png`" />
                 <span class="transfer-game-text">{{ $t('wallet.main_wallet') }}</span>
             </li>
             <li
@@ -19,7 +19,7 @@
                 :key="`transfer_game_${index}`"
                 @click="selectGame(item.code.toLowerCase(), item.isActive, item.isBlocked)"
             >
-                <img class="transfer-game-img" :src="`/images/wallet_${item.code.toLowerCase()}.png`" />
+                <img class="transfer-game-img" :src="`/images/member/wallet/${item.code.toLowerCase()}.png`" />
                 <span class="transfer-maintenance-text" v-if="(item.isBlocked !== 0)">{{ $t('transfer.maintenance') }}</span>
             </li>
         </ul>
@@ -90,12 +90,12 @@ export default {
                 $(`.transfer-input-${this.type}`).text(this.$t('common.please_select'));
             } else if (game === 'main') {
                 $(`.transfer-input-${this.type}`).html(
-                    `<img class="transfer-game-img" src="/images/wallet_main.png" />
+                    `<img class="transfer-game-img" src="/images/member/wallet/main.png" />
                     <span class="transfer-game-text">${this.$t('wallet.main_wallet')}</span>
                     `
                 );
             } else {
-                $(`.transfer-input-${this.type}`).html(`<img class="transfer-game-img" src="/images/wallet_${game}.png" />`);
+                $(`.transfer-input-${this.type}`).html(`<img class="transfer-game-img" src="/images/member/wallet/${game}.png" />`);
             }
         }
     }

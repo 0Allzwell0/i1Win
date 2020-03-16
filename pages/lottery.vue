@@ -17,10 +17,10 @@
                     <span class="lottery-item-msg">{{ $t('lottery.thailottery_msg') }}</span>
                     <button class="lottery-play-now-btn" type="button" @click="openGame('thailottery')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="lottery-img" src="/images/gm_thailottery.png" />
+                <img class="lottery-img" src="/images/lottery/thailottery.png" />
             </li>
             <li class="lottery-item-wrapper">
-                <img class="lottery-img" src="/images/gm_diamond.png" />
+                <img class="lottery-img" src="/images/lottery/diamond.png" />
                 <div class="lottery-item-container">
                     <span class="lottery-item-name">{{ $t('lottery.diamond') }}</span>
                     <span class="lottery-item-msg">{{ $t('lottery.diamond_msg') }}</span>
@@ -33,10 +33,10 @@
                     <span class="lottery-item-msg">{{ $t('lottery.ruby_msg') }}</span>
                     <button class="lottery-play-now-btn" type="button" @click="openGame('ruby')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="lottery-img" src="/images/gm_ruby.png" />
+                <img class="lottery-img" src="/images/lottery/ruby.png" />
             </li>
             <li class="lottery-item-wrapper">
-                <img class="lottery-img" src="/images/gm_sapphire.png" />
+                <img class="lottery-img" src="/images/lottery/sapphire.png" />
                 <div class="lottery-item-container">
                     <span class="lottery-item-name">{{ $t('lottery.sapphire') }}</span>
                     <span class="lottery-item-msg">{{ $t('lottery.sapphire_msg') }}</span>

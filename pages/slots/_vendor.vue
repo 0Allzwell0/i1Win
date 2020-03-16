@@ -19,7 +19,7 @@
                     <ul class="slots-games-vendor-list">
                         <li class="slots-games-vendor-item" v-for="(vendor, index) in vendorList" :key="`vendor_${index}`">
                             <nuxt-link :to="$i18n.path(`slots/${vendor}`)">
-                                <img class="slots-games-vendor-img" :src="`/images/wallet_${vendor}.png`" />
+                                <img class="slots-games-vendor-img" :src="`/images/member/wallet/${vendor}.png`" />
                             </nuxt-link>
                         </li>
                     </ul>
@@ -78,7 +78,7 @@ export default {
         $('.tab-slots').addClass('active');
 
         // Show Tthe Vendor's Image Of The Selected Game
-        $('.slots-games-vendor-btn').html(`<img class="btn-image" src="/images/wallet_${this.productCode}.png" />`);
+        $('.slots-games-vendor-btn').html(`<img class="btn-image" src="/images/member/wallet/${this.productCode}.png" />`);
 
         // Show Default Game Type => "All"
         $('.slots-games-type-btn').text(this.$t('slots.all'));

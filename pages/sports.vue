@@ -12,7 +12,7 @@
         <!-- Games -->
         <ul class="sports-container">
             <li class="sports-item-wrapper">
-                <img class="sports-item-img" src="/images/gm_sbobet.png" />
+                <img class="sports-item-img" src="/images/sports/sbo.png" />
                 <div class="sports-item-container">
                     <span class="sports-item-name">SBOBET</span>
                     <span class="sports-item-msg">{{ $t('sports.sbo_msg') }}</span>
@@ -25,7 +25,7 @@
                     <span class="sports-item-msg">{{ $t('sports.ibc_msg') }}</span>
                     <button class="sports-play-now-btn" type="button" @click="openGame('ibc')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="sports-item-img" src="/images/gm_ibcg.png" />
+                <img class="sports-item-img" src="/images/sports/ibcg.png" />
             </li>
         </ul>
     </main>

@@ -441,7 +441,7 @@ export default {
             flex-direction: column;
             justify-content: center;
             width: 100%;
-            background: url('/images/background_img.jpg');
+            background: $background_img;
             background-size: cover;
             font-family: $font-family;
             font-size: 12px;

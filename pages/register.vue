@@ -8,7 +8,7 @@
             <div class="register-input-wrapper">
                 <!-- Username -->
                 <div class="register-input-container">
-                    <img class="register-input-img" src="/images/username_image.png" />
+                    <img class="register-input-img" src="/images/username_img.png" />
                     <input
                         class="register-input-text"
                         id="input-username"
@@ -26,7 +26,7 @@
 
                 <!-- Password -->
                 <div class="register-input-container">
-                    <img class="register-input-img" src="/images/password_image.png" />
+                    <img class="register-input-img" src="/images/password_img.png" />
                     <input
                         class="register-input-text"
                         id="input-password"
@@ -45,7 +45,7 @@
 
                 <!-- Confirm Password -->
                 <div class="register-input-container">
-                    <img class="register-input-img" src="/images/password_image.png" />
+                    <img class="register-input-img" src="/images/password_img.png" />
                     <input
                         class="register-input-text"
                         id="input-confirm-psw"
@@ -68,7 +68,7 @@
 
                 <!-- Full Name -->
                 <div class="register-input-container">
-                    <img class="register-input-img fullname-img" src="/images/fullname_image.png" />
+                    <img class="register-input-img fullname-img" src="/images/fullname_img.png" />
                     <input
                         class="register-input-text"
                         id="input-fullname"
@@ -84,7 +84,7 @@
 
                 <!-- Mobile Number -->
                 <div class="register-input-container">
-                    <img class="register-input-img mobile-img" src="/images/mobile_image.png" />
+                    <img class="register-input-img mobile-img" src="/images/mobile_img.png" />
                     <input
                         class="register-input-text"
                         id="input-mobile"
@@ -100,7 +100,7 @@
 
                 <!-- Line ID -->
                 <div class="register-input-container">
-                    <img class="register-input-img line-img" src="/images/line_image.png" />
+                    <img class="register-input-img line-img" src="/images/line_img.png" />
                     <input class="register-input-text" id="input-line" type="text" placeholder="LINE ID" v-model="myLineID" />
                 </div>
             </div>

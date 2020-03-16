@@ -27,13 +27,7 @@
             </div>
 
             <!-- Search Button -->
-            <button
-                class="history-search-button"
-                type="submit"
-                @click="search()"
-                :disabled="requestState"
-                :class="{'allow': !requestState}"
-            >{{ $t('history.search') }}</button>
+            <button class="history-search-button" type="submit" @click="search()">{{ $t('history.search') }}</button>
 
             <!-- Secondary Content -->
             <div class="history-data-wrapper">
@@ -115,7 +109,6 @@ import MyDateSelecter from '~/components/MyDateSelecter';
 export default {
     computed: {
         ...mapGetters('history', {
-            requestState: 'GetRequestState',
             transactionData: 'GetTransactionData',
             statementData: 'GetStatementData',
             transferData: 'GetTransferData'
@@ -196,7 +189,7 @@ export default {
             flex-direction: column;
             width: 100%;
             min-height: calc(100vh - 116px);
-            background: url('/images/background_img.jpg');
+            background: $background_img;
             background-size: cover;
             font-family: $font-family;
             font-size: 12px;
@@ -262,15 +255,11 @@ export default {
                 border: $border-style;
                 align-self: center;
                 background: $color-yellow-linear-unpress;
-                opacity: 0.7;
+                opacity: 1;
                 padding: 3.5% 0 3.5% 0;
 
                 &:active {
                     background: $color-yellow-linear;
-                }
-
-                &.allow {
-                    opacity: 1;
                 }
             }
 
