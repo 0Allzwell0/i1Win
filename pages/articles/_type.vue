@@ -69,7 +69,7 @@ export default {
                 }
                 case 'privacy-policy': {
                     if(this.language === 'th')
-                        articleCide = 'PRIVACY_TH';
+                        articleCode = 'PRIVACY_TH';
                     else
                         articleCode = 'PRIVACY_EN';
                     break;
