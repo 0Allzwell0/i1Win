@@ -60,10 +60,10 @@
                 </div>
             </li>
             <li class="livecasino-item-wrapper">
-                <!-- Sexy Gaming -->
+                <!-- AE Sexy -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/livecasino/gm_sg.png" />
-                    <span class="livecasino-item-name">Sexy Gaming</span>
+                    <span class="livecasino-item-name">AE Sexy</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.sg_msg') }}</span>
                     <button class="livecasino-play-now-btn" type="button" @click="openGame('sb')">{{ $t('common.play_now') }}</button>
                 </div>
@@ -107,13 +107,15 @@ export default {
         // Open Live Casino Games
         openGame(productCode) {
             if (this.isLogined) {
-                this.$store.dispatch('game/getGameURL', {
-                    category: 'Livecasino',
-                    productCode,
-                    is_mobile: 1
-                }).then(() => {
-                    window.open(this.gameURL);
-                });
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        category: 'Livecasino',
+                        productCode,
+                        is_mobile: 1
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
                 this.$router.push({ path: this.$i18n.path('login') });
             }

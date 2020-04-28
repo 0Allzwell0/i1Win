@@ -1,41 +1,60 @@
 <template>
     <main class="fishing-wrapper">
-        <!-- Carousel -->
-        <my-carousel />
+        <!-- Carousel
+        <my-carousel />-->
 
-        <!-- Announcement -->
-        <my-announcement />
+        <!-- Announcement
+        <my-announcement />-->
+        <img src="/images/fishing/banner.jpg" />
 
         <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
         <my-game-tab />
 
-        <!-- Games -->
-        <ul class="fishing-container">
-            <li class="fishing-item-wrapper">
-                <div class="fishing-item-container">
-                    <span class="fishing-item-name">Fishing God</span>
-                    <span class="fishing-item-msg">{{ $t('fishing.fg_msg') }}</span>
-                    <button class="fishing-play-now-btn" type="button" @click="openGame(421, 'fg')">{{ $t('common.play_now') }}</button>
-                </div>
-                <img class="fishing-img" src="/images/fishing/fg.png" />
-            </li>
-            <li class="fishing-item-wrapper">
-                <img class="fishing-img" src="/images/fishing/lofj.png" />
-                <div class="fishing-item-container">
-                    <span class="fishing-item-name">League Of Fishing Joy</span>
-                    <span class="fishing-item-msg">{{ $t('fishing.fj_msg') }}</span>
-                    <button class="fishing-play-now-btn" type="button" @click="openGame(1774, 'fj')">{{ $t('common.play_now') }}</button>
-                </div>
-            </li>
-            <li class="fishing-item-wrapper">
-                <div class="fishing-item-container">
-                    <span class="fishing-item-name">League Of Bird Hunting</span>
-                    <span class="fishing-item-msg">{{ $t('fishing.bh_msg') }}</span>
-                    <button class="fishing-play-now-btn" type="button" @click="openGame(1773, 'bh')">{{ $t('common.play_now') }}</button>
-                </div>
-                <img class="fishing-img" src="/images/fishing/lobh.png" />
-            </li>
-        </ul>
+        <!-- Content -->
+        <div class="fishing-container">
+            <ul>
+                <!-- Bombing Fishing -->
+                <li @click="openGame('', 'bf')">
+                    <img src="/images/fishing/bf.png" alt="Bombing Fishing" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- Jackpot Fishing -->
+                <li @click="openGame('', 'jf')">
+                    <img src="/images/fishing/jf.png" alt="Jackpot Fishing" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- League Of Bird Hunting -->
+                <li @click="openGame(1773, 'bh')">
+                    <img src="/images/fishing/lobh.png" alt="League Of Bird Hunting" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- Dragon Assault Be A Dragon King -->
+                <li @click="openGame('', 'badk')">
+                    <img src="/images/fishing/badk.png" alt="Dragon Assault Be A Dragon King" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- Chain Long Fishing -->
+                <li @click="openGame('', 'clf')">
+                    <img src="/images/fishing/clf.png" alt="Chain Long Fishing" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- Fishing God -->
+                <li @click="openGame(421, 'fg')">
+                    <img src="/images/fishing/fg.png" alt="Fishing God" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- League Of Fishing Joy -->
+                <li @click="openGame(1774, 'fj')">
+                    <img src="/images/fishing/lofj.png" alt="League Of Fishing Joy" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+                <!-- Fishermen Gold -->
+                <li @click="openGame('', 'fmg')">
+                    <img src="/images/fishing/fmg.png" alt="Fishermen Gold" />
+                    <button type="bytton">{{ $t('common.play_now') }}</button>
+                </li>
+            </ul>
+        </div>
     </main>
 </template>
 <script>
@@ -66,14 +85,16 @@ export default {
         // Open Fishing Games
         openGame(gameID, productCode) {
             if (this.isLogined) {
-                this.$store.dispatch('game/getGameURL', {
-                    category: 'Fishing',
-                    productCode,
-                    gameID,
-                    is_mobile: 1
-                }).then(() => {
-                    window.open(this.gameURL);
-                });
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        category: 'Fishing',
+                        productCode,
+                        gameID,
+                        is_mobile: 1
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
                 this.$router.push(this.$i18n.path('login'));
             }
@@ -88,59 +109,42 @@ export default {
         font-size: 12px;
         font-family: $font-family;
 
+        > img {
+            width: 100%;
+        }
+
         .fishing-container {
-            display: flex;
-            flex-direction: column;
             width: 100%;
             min-height: 62vh;
-            background: $background_img;
+            background: url('../static/images/fishing/bg.jpg');
             background-size: cover;
             padding-bottom: 70px;
 
-            .fishing-item-wrapper {
+            > ul {
                 display: flex;
+                flex-wrap: wrap;
                 width: 100%;
-                min-height: 165px;
+                height: 100%;
+                padding: 10px 10px 0 10px;
 
-                .fishing-img {
-                    width: 57%;
-                    align-self: center;
-                }
-
-                .fishing-item-container {
+                > li {
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
-                    margin: 2% 2% 2% 4%;
+                    align-items: center;
+                    width: 50%;
+                    margin-bottom: 5%;
 
-                    .fishing-item-name {
-                        font-size: 16px;
-                        font-weight: bold;
-                        margin-bottom: 5px;
+                    > img {
+                        width: 100%;
                     }
 
-                    .fishing-item-msg {
-                        color: #575757;
-                        height: 100%;
+                    > button {
+                        width: 54%;
+                        background: linear-gradient(to bottom, #f6c200, #ce5700);
+                        border-radius: 0 0 20px 20px;
+                        padding: 2px 0;
+                        margin-top: -15%;
                     }
-
-                    .fishing-play-now-btn {
-                        width: 95px;
-                        min-height: 35px;
-                        font-weight: bold;
-                        border: $border-style;
-                        border-radius: 5px;
-                        background: $color-yellow-linear-unpress;
-                        margin-top: 10px;
-
-                        &:active {
-                            background: $color-yellow-linear;
-                        }
-                    }
-                }
-
-                &:nth-child(odd) {
-                    background: rgba(0, 0, 0, 0.1);
                 }
             }
         }

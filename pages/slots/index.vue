@@ -12,14 +12,14 @@
         <!-- Games -->
         <div class="slots-container">
             <ul class="slots-games-list">
-                <!-- CQ9 -->
-                <li class="slots-game-wrapper" id="cq9">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/cq9')">
+                <!-- Yggdrasil -->
+                <li class="slots-game-wrapper" id="ygg">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/ygg')">
                         <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">CQ9</span>
+                            <span class="slots-game-name">YGG</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots/cq9.png" />
+                        <img class="slots-game-img" src="/images/slots/ygg.png" />
                     </nuxt-link>
                 </li>
                 <!-- Spadegaming -->
@@ -32,14 +32,14 @@
                         <img class="slots-game-img" src="/images/slots/spg.png" />
                     </nuxt-link>
                 </li>
-                <!-- BESTSOFT -->
-                <li class="slots-game-wrapper" id="bsg">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/bsg')">
+                <!-- JILI -->
+                <li class="slots-game-wrapper" id="jili">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/jili')">
                         <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">BSG</span>
+                            <span class="slots-game-name">JILI</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots/bsg.png" />
+                        <img class="slots-game-img" src="/images/slots/jili.png" />
                     </nuxt-link>
                 </li>
                 <!-- Booongo -->
@@ -72,14 +72,14 @@
                         <img class="slots-game-img" src="/images/slots/gpi.png" />
                     </nuxt-link>
                 </li>
-                <!-- Yggdrasil -->
-                <li class="slots-game-wrapper" id="ygg">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/ygg')">
+                <!-- CQ9 -->
+                <li class="slots-game-wrapper" id="cq9">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/cq9')">
                         <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">YGG</span>
+                            <span class="slots-game-name">CQ9</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots/ygg.png" />
+                        <img class="slots-game-img" src="/images/slots/cq9.png" />
                     </nuxt-link>
                 </li>
                 <!-- Joker -->
@@ -130,6 +130,36 @@
                             <span class="slots-game-type">SLOTS</span>
                         </div>
                         <img class="slots-game-img" src="/images/slots/918kiss.png" />
+                    </nuxt-link>
+                </li>
+                <!-- BESTSOFT -->
+                <li class="slots-game-wrapper" id="bsg">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/bsg')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">BSG</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots/bsg.png" />
+                    </nuxt-link>
+                </li>
+                <!-- Simpleplay -->
+                <li class="slots-game-wrapper" id="sp">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/sp')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">SP</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots/sp.png" />
+                    </nuxt-link>
+                </li>
+                <!-- Maja -->
+                <li class="slots-game-wrapper" id="maja">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/maja')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">MAJA</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots/bsg.png" />
                     </nuxt-link>
                 </li>
             </ul>
