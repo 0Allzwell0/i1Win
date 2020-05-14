@@ -142,7 +142,7 @@ export default {
                         width: 54%;
                         background: linear-gradient(to bottom, #f6c200, #ce5700);
                         border-radius: 0 0 20px 20px;
-                        padding: 2px 0;
+                        padding: 3px 0;
                         margin-top: -15%;
                     }
                 }

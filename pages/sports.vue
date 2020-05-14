@@ -27,6 +27,14 @@
                 </div>
                 <img class="sports-item-img" src="/images/sports/ibcg.png" />
             </li>
+            <li class="sports-item-wrapper">
+                <img class="sports-item-img" src="/images/sports/bti.png" />
+                <div class="sports-item-container">
+                    <span class="sports-item-name">BTi</span>
+                    <span class="sports-item-msg">{{ $t('sports.bti_msg') }}</span>
+                    <button class="sports-play-now-btn" type="button" @click="openGame('bti')">{{ $t('common.play_now') }}</button>
+                </div>
+            </li>
         </ul>
     </main>
 </template>
@@ -58,13 +66,15 @@ export default {
         // Open Sports Games
         openGame(productCode) {
             if (this.isLogined) {
-                this.$store.dispatch('game/getGameURL', {
-                    category: 'Sports',
-                    productCode,
-                    is_mobile: 1
-                }).then(() => {
-                    window.open(this.gameURL);
-                });
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        category: 'Sports',
+                        productCode,
+                        is_mobile: 1
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
                 tthis.$router.push(this.$i18n.path('login'));
             }

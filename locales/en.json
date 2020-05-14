@@ -86,7 +86,8 @@
   },
   "sports": {
     "sbo_msg": "Easy bets. Win easily. Match bets to choose from. Every league. Don't miss the chance to grab money from us!",
-    "ibc_msg": "Enjoy betting while wahtching live matches. From various kinds of sports and must not miss the chance to win big prizes!"
+    "ibc_msg": "Enjoy betting while wahtching live matches. From various kinds of sports and must not miss the chance to win big prizes!",
+    "bti_msg": ""
   },
   "lottery": {
     "thailottery": "Thai Lottery",

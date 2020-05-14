@@ -156,10 +156,30 @@
                 <li class="slots-game-wrapper" id="maja">
                     <nuxt-link class="slots-game-container" :to="$i18n.path('slots/maja')">
                         <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">MAJA</span>
+                            <span class="slots-game-name">MaJa</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots/bsg.png" />
+                        <img class="slots-game-img" src="/images/slots/maja.png" />
+                    </nuxt-link>
+                </li>
+                <!-- Gamatron -->
+                <li class="slots-game-wrapper" id="gamatron">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/gamatron')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">Gamatron</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots/gamatron.png" />
+                    </nuxt-link>
+                </li>
+                <!-- Pragmatic Play -->
+                <li class="slots-game-wrapper" id="pplay">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/pplay')">
+                        <div class="slots-game-name-wrapper">
+                            <span class="slots-game-name">PPlay</span>
+                            <span class="slots-game-type">SLOTS</span>
+                        </div>
+                        <img class="slots-game-img" src="/images/slots/pplay.png" />
                     </nuxt-link>
                 </li>
             </ul>

@@ -12,6 +12,38 @@
         <!-- Games -->
         <ul class="livecasino-container">
             <li class="livecasino-item-wrapper">
+                <!-- Dream Gaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/livecasino/gm_dg.png" />
+                    <span class="livecasino-item-name">Dream Gaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.dg_msg') }}</span>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('dg')">{{ $t('common.play_now') }}</button>
+                </div>
+                <!-- AE Sexy -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/livecasino/gm_sg.png" />
+                    <span class="livecasino-item-name">AE Sexy</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.sg_msg') }}</span>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sb')">{{ $t('common.play_now') }}</button>
+                </div>
+            </li>
+            <li class="livecasino-item-wrapper">
+                <!-- Evolution Gaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/livecasino/gm_evo.png" />
+                    <span class="livecasino-item-name">Evolution Gaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.evo_msg') }}</span>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('evo')">{{ $t('common.play_now') }}</button>
+                </div>
+                <!-- Microgaming -->
+                <div class="livecasino-item-container">
+                    <img class="livecasino-item-img" src="/images/livecasino/gm_mg.png" />
+                    <span class="livecasino-item-name">Microgaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.mg_msg') }}</span>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('mg')">{{ $t('common.play_now') }}</button>
+                </div>
+            </li>
+            <li class="livecasino-item-wrapper">
                 <!-- Asia Gaming -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/livecasino/gm_ag.png" />
@@ -19,28 +51,12 @@
                     <span class="livecasino-item-msg">{{ $t('livecasino.ag_msg') }}</span>
                     <button class="livecasino-play-now-btn" type="button" @click="openGame('ag')">{{ $t('common.play_now') }}</button>
                 </div>
-                <!-- SA Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_sa.png" />
-                    <span class="livecasino-item-name">SA Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.sa_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sa')">{{ $t('common.play_now') }}</button>
-                </div>
-            </li>
-            <li class="livecasino-item-wrapper">
                 <!-- Gameplay Interactive -->
                 <div class="livecasino-item-container">
                     <img class="livecasino-item-img" src="/images/livecasino/gm_gpi.png" />
                     <span class="livecasino-item-name">Gameplay Interactive</span>
                     <span class="livecasino-item-msg">{{ $t('livecasino.gpi_msg') }}</span>
                     <button class="livecasino-play-now-btn" type="button" @click="openGame('gpi')">{{ $t('common.play_now') }}</button>
-                </div>
-                <!-- Evolution Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_evo.png" />
-                    <span class="livecasino-item-name">Evolution Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.evo_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('evo')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
             <li class="livecasino-item-wrapper">
@@ -51,28 +67,12 @@
                     <span class="livecasino-item-msg">{{ $t('livecasino.plt_msg') }}</span>
                     <nuxt-link class="livecasino-play-now-btn plt-btn" :to="$i18n.path('livecasino_plt')">{{ $t('common.play_now') }}</nuxt-link>
                 </div>
-                <!-- Dream Gaming -->
+                <!-- SA Gaming -->
                 <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_dg.png" />
-                    <span class="livecasino-item-name">Dream Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.dg_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('dg')">{{ $t('common.play_now') }}</button>
-                </div>
-            </li>
-            <li class="livecasino-item-wrapper">
-                <!-- AE Sexy -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_sg.png" />
-                    <span class="livecasino-item-name">AE Sexy</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.sg_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sb')">{{ $t('common.play_now') }}</button>
-                </div>
-                <!-- Microgaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_mg.png" />
-                    <span class="livecasino-item-name">Microgaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.mg_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('mg')">{{ $t('common.play_now') }}</button>
+                    <img class="livecasino-item-img" src="/images/livecasino/gm_sa.png" />
+                    <span class="livecasino-item-name">SA Gaming</span>
+                    <span class="livecasino-item-msg">{{ $t('livecasino.sa_msg') }}</span>
+                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sa')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
         </ul>
