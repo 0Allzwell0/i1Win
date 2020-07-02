@@ -14,5 +14,5 @@ export const PRIVATE_KEY = '-----BEGIN EC PRIVATE KEY-----\n' +
     '-----END EC PRIVATE KEY-----';
 export const WEBSITE_ID = '1';
 export const ACCOUNT_ID = '123';
-export const LOCALES = ['en', 'th'];
-export const DEFAULT_LOCALE = 'en';
+export const LOCALES = ['en-US', 'th-TH'];
+export const DEFAULT_LOCALE = 'en-US';

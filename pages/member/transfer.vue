@@ -72,15 +72,12 @@ export default {
             isEnough: false
         };
     },
-    // beforeMount() {
-    //     this.$store.dispatch('wallet/getBalance', 'main').then(() => {
-    //         this.availableBalance = this.balance;
-    //     });
-    // },
+    beforeMount() {
+        this.$store.dispatch('wallet/getBalance', 'main').then(() => {
+            this.availableBalance = this.balance;
+        });
+    },
     mounted() {
-        let scrollTop = $('.wallet-list-container').height();
-        $('.transfer-container').css('margin-top', -scrollTop);
-
         // Check Amount
         $('.transfer-input').keyup(() => {
             this.checkAmount();
@@ -150,29 +147,30 @@ export default {
 
         // Transfer Submit
         transfer() {
-            this.$store.dispatch('wallet/transfer',
-            {
-                from: this.fromGame,
-                to: this.toGame,
-                amount: this.amount
-            }).then(() => {
-                if (this.httpStatus === 422) {
-                    let msgArray = [];
-                    $('#errorMsg .error-msg-container').html('');
-                    for (let i in this.responseMsg) {
-                        msgArray.push(this.responseMsg[i]);
+            this.$store
+                .dispatch('wallet/transfer', {
+                    from: this.fromGame,
+                    to: this.toGame,
+                    amount: this.amount
+                })
+                .then(() => {
+                    if (this.httpStatus === 422) {
+                        let msgArray = [];
+                        $('#errorMsg .error-msg-container').html('');
+                        for (let i in this.responseMsg) {
+                            msgArray.push(this.responseMsg[i]);
+                        }
+                        for (let j = 0; j < msgArray.length; j++) {
+                            $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
+                        }
+                    } else if (this.httpStatus === 200) {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('transfer.success_msg')}</div>`);
+                    } else {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
                     }
-                    for (let j = 0; j < msgArray.length; j++) {
-                        $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
-                    }
-                } else if (this.httpStatus === 200) {
-                    $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('transfer.success_msg')}</div>`);
-                } else {
-                    $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
-                }
 
-                $('#errorMsg').modal('show');
-            });
+                    $('#errorMsg').modal('show');
+                });
         }
     }
 };

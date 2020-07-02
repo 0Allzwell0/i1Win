@@ -12,174 +12,13 @@
         <!-- Games -->
         <div class="slots-container">
             <ul class="slots-games-list">
-                <!-- Yggdrasil -->
-                <li class="slots-game-wrapper" id="ygg">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/ygg')">
+                <li class="slots-game-wrapper" v-for="(item, index) in games" :key="`slots-${index}`">
+                    <nuxt-link class="slots-game-container" :to="$i18n.path(`slots/${item.code}`)">
                         <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">YGG</span>
+                            <span class="slots-game-name">{{ item.name }}</span>
                             <span class="slots-game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" src="/images/slots/ygg.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Spadegaming -->
-                <li class="slots-game-wrapper" id="spg">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/spg')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">SPG</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/spg.png" />
-                    </nuxt-link>
-                </li>
-                <!-- JILI -->
-                <li class="slots-game-wrapper" id="jili">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/jili')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">JILI</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/jili.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Booongo -->
-                <li class="slots-game-wrapper" id="bng">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/bng')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">BNG</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/bng.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Playtech -->
-                <li class="slots-game-wrapper" id="plt">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/plt')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">PLT</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/plt.png" />
-                    </nuxt-link>
-                </li>
-                <!-- GPI -->
-                <li class="slots-game-wrapper" id="gpi">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/gpi')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">GPI</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/gpi.png" />
-                    </nuxt-link>
-                </li>
-                <!-- CQ9 -->
-                <li class="slots-game-wrapper" id="cq9">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/cq9')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">CQ9</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/cq9.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Joker -->
-                <li class="slots-game-wrapper" id="jok">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/jok')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">JOKER</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/joker.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Microgaming -->
-                <li class="slots-game-wrapper" id="mg">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/mg')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">MG</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/mg.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Dreamtech -->
-                <li class="slots-game-wrapper" id="dt">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/dt')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">DT</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/dt.png" />
-                    </nuxt-link>
-                </li>
-                <!-- ifun -->
-                <li class="slots-game-wrapper" id="ifun">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/ifun')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">ifun</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/ifun.png" />
-                    </nuxt-link>
-                </li>
-                <!-- 918Kiss -->
-                <li class="slots-game-wrapper" id="kiss918">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/ks9')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">918Kiss</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/918kiss.png" />
-                    </nuxt-link>
-                </li>
-                <!-- BESTSOFT -->
-                <li class="slots-game-wrapper" id="bsg">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/bsg')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">BSG</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/bsg.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Simpleplay -->
-                <li class="slots-game-wrapper" id="sp">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/sp')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">SP</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/sp.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Maja -->
-                <li class="slots-game-wrapper" id="maja">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/maja')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">MaJa</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/maja.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Gamatron -->
-                <li class="slots-game-wrapper" id="gamatron">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/gamatron')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">Gamatron</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/gamatron.png" />
-                    </nuxt-link>
-                </li>
-                <!-- Pragmatic Play -->
-                <li class="slots-game-wrapper" id="pplay">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path('slots/pplay')">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">PPlay</span>
-                            <span class="slots-game-type">SLOTS</span>
-                        </div>
-                        <img class="slots-game-img" src="/images/slots/pplay.png" />
+                        <img class="slots-game-img" :src="`/images/slots/${item.code}.png`" />
                     </nuxt-link>
                 </li>
             </ul>
@@ -196,6 +35,27 @@ export default {
         MyCarousel,
         MyAnnouncement,
         MyGameTab
+    },
+    data() {
+        return {
+            games: [
+                { code: 'ygg', name: 'YGG' },
+                { code: 'spg', name: 'SPG' },
+                { code: 'jili', name: 'JILI' },
+                { code: 'bng', name: 'BNG' },
+                { code: 'plt', name: 'PLT' },
+                { code: 'gpi', name: 'GPI' },
+                { code: 'cq9', name: 'CQ9' },
+                { code: 'joker', name: 'JOKER' },
+                { code: 'mg', name: 'MG' },
+                { code: 'dt', name: 'DT' },
+                { code: 'ifun', name: 'iFun' },
+                { code: 'ks9', name: '918Kiss' },
+                { code: 'sp', name: 'SP' },
+                { code: 'maja', name: 'MaJa' },
+                { code: 'pplay', name: 'PPlay' }
+            ]
+        };
     },
     mounted() {
         // Set Game Tab CSS
