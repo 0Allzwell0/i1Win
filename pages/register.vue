@@ -458,7 +458,6 @@ export default {
             if (status === 422) {
                 if (this.regErrorMsg.username) {
                     this.usernameError = true;
-                    $('#errorUsername .msg-text').text(this.regErrorMsg.username);
                     $('#inputUsername, #errorUsername').removeClass('is-valid');
                     $('#inputUsername, #errorUsername').addClass('is-invalid');
                 } else {
@@ -468,7 +467,6 @@ export default {
 
                 if (this.regErrorMsg.password) {
                     this.passwordError = true;
-                    $('#errorPassword .msg-text').text(this.regErrorMsg.password);
                     $('#inputPassword, #errorPassword').removeClass('is-valid');
                     $('#inputPassword, #errorPassword').addClass('is-invalid');
                 } else {
@@ -478,7 +476,6 @@ export default {
 
                 if (this.regErrorMsg.password_confirmation) {
                     this.confirmPSWError = true;
-                    $('#errorConfirmPSW .msg-text').text(this.regErrorMsg.password_confirmation);
                     $('#inputConfirmPSW, #errorConfirmPSW').removeClass('is-valid');
                     $('#inputConfirmPSW, #errorConfirmPSW').addClass('is-invalid');
                 } else {
@@ -488,7 +485,6 @@ export default {
 
                 if (this.regErrorMsg.fullname) {
                     this.fullnameError = true;
-                    $('#errorFullname .msg-text').text(this.regErrorMsg.fullname);
                     $('#inputFullname, #errorFullname').removeClass('is-valid');
                     $('#inputFullname, #errorFullname').addClass('is-invalid');
                 } else {
@@ -498,7 +494,6 @@ export default {
 
                 if (this.regErrorMsg.mobile) {
                     this.mobileError = true;
-                    $('#errorMobile .msg-text').text(this.regErrorMsg.mobile);
                     $('#inputMobile, #errorMobile').removeClass('is-valid');
                     $('#inputMobile, #errorMobile').addClass('is-invalid');
                 } else {
