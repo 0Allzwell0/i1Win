@@ -1,29 +1,29 @@
 <template>
     <main class="livecasino-plt-wrapper">
         <!-- Logo -->
-        <img class="livecasino-plt-logo-img" src="/images/livecasino/plt_logo.png" />
+        <img src="/images/livecasino/plt_logo.png" alt />
 
         <!-- Games -->
-        <ul class="livecasino-plt-container">
-            <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_7bal.png" />
-                <span class="livecasino-plt-item-name">Live 7 Seat Baccarat</span>
-                <button class="livecasino-plt-item-btn" @click="openGame('7bal')">{{ $t('common.play_now') }}</button>
+        <ul>
+            <li>
+                <img src="/images/livecasino/plt_7bal.png" alt="Live 7 Seat Baccarat" />
+                <span>Live 7 Seat Baccarat</span>
+                <button type="button" @click="openGame('7bal')">{{ $t('common.play_now') }}</button>
             </li>
-            <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_bal.png" />
-                <span class="livecasino-plt-item-name">Baccarat Live</span>
-                <button class="livecasino-plt-item-btn" @click="openGame('bal')">{{ $t('common.play_now') }}</button>
+            <li>
+                <img src="/images/livecasino/plt_bal.png" alt="Baccarat Live" />
+                <span>Baccarat Live</span>
+                <button type="button" @click="openGame('bal')">{{ $t('common.play_now') }}</button>
             </li>
-            <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_rofl.png" />
-                <span class="livecasino-plt-item-name">Live French Roulette</span>
-                <button class="livecasino-plt-item-btn" @click="openGame('rofl')">{{ $t('common.play_now') }}</button>
+            <li>
+                <img src="/images/livecasino/plt_rofl.png" alt="Live French Roulette" />
+                <span>Live French Roulette</span>
+                <button type="button" @click="openGame('rofl')">{{ $t('common.play_now') }}</button>
             </li>
-            <li class="livecasino-plt-item">
-                <img class="livecasino-plt-item-img" src="/images/livecasino/plt_rol.png" />
-                <span class="livecasino-plt-item-name">Roulette Live</span>
-                <button class="livecasino-plt-item-btn" @click="openGame('rol')">{{ $t('common.play_now') }}</button>
+            <li>
+                <img src="/images/livecasino/plt_rol.png" alt="Roulette Live" />
+                <span>Roulette Live</span>
+                <button type="button" @click="openGame('rol')">{{ $t('common.play_now') }}</button>
             </li>
         </ul>
     </main>
@@ -44,13 +44,15 @@ export default {
         // Open Live Casino Playtech Games
         openGame(productCode) {
             if (this.isLogined) {
-                this.$store.dispatch('game/getGameURL', {
-                    category: 'Livecasino',
-                    productCode,
-                    is_mobile: 1
-                }).then(() => {
-                    window.open(this.gameURL);
-                });
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        category: 'Livecasino',
+                        productCode,
+                        is_mobile: 1
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
                 this.$router.push(this.$i18n.path('login'));
             }
@@ -64,40 +66,40 @@ export default {
         flex-direction: column;
         align-items: center;
         width: 100%;
-        min-height: calc(100vh - 53px);
+        min-height: calc(100vh - 20px);
         font-family: $font-family;
         background: $background_img;
         background-size: cover;
         padding-bottom: 70px;
 
-        .livecasino-plt-logo-img {
+        > img {
             width: 70%;
-            margin: 4% -25% 5% 0;
+            margin: 4% 0 5% 0;
         }
 
-        .livecasino-plt-container {
+        > ul {
             display: inline-block;
             width: 100%;
             height: 100%;
 
-            .livecasino-plt-item {
+            > li {
                 display: inline-block;
                 width: calc((100% - 45px) / 2);
                 text-align: center;
                 margin: 10px;
 
-                .livecasino-plt-item-img {
+                > img {
                     width: 100%;
                 }
 
-                .livecasino-plt-item-name {
+                > span {
                     width: 100%;
                     font-size: 13px;
                     font-weight: bold;
                     padding: 7px 0 7px 0;
                 }
 
-                .livecasino-plt-item-btn {
+                > button {
                     width: 80%;
                     min-height: 35px;
                     font-size: 16px;

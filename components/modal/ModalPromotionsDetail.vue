@@ -1,9 +1,9 @@
 <template>
     <div class="promotions-detail-wrapper">
         <!-- Close Button -->
-        <fa :icon="['fas', 'times']" class="detail-close" data-dismiss="modal" />
+        <fa :icon="['fas', 'times']" class="modal-close" data-dismiss="modal" />
 
-        <div class="detail-wrapper" v-html="htmlContent"></div>
+        <div class="detail-container" v-html="htmlContent"></div>
     </div>
 </template>
 
@@ -29,13 +29,13 @@ export default {
         border-radius: 5px;
         padding-bottom: 5%;
 
-        .detail-close {
+        .modal-close {
             font-size: 26px;
             align-self: flex-end;
             margin: 10px 15px 0 0;
         }
 
-        .detail-wrapper {
+        .detail-container {
             width: 100%;
             height: 100%;
             font-weight: bold;

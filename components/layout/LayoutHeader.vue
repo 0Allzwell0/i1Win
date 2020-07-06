@@ -1,20 +1,23 @@
 <template>
-    <header class="header-wrapper">
+    <header>
         <!-- Menu -->
-        <img class="header-menu-img" src="/images/header/menu.png" @click="showMenu()" />
+        <img src="/images/header/menu.png" @click="showMenu()" alt />
+
         <!-- Logo -->
-        <h1 class="header-logo-wrapper">
-            <nuxt-link class="header-logo-container" :to="$i18n.path('')" title="i1win Home">
-                <img class="header-logo-img" src="/images/header/logo.png" alt="i1win" />
+        <h1>
+            <nuxt-link :to="$i18n.path('')" title="i1win Home">
+                <img src="/images/header/logo.png" alt="i1win" />
             </nuxt-link>
         </h1>
+
         <!-- 尚未登入前顯示 -->
-        <div class="header-button-wrapper" v-if="!isLogined">
-            <nuxt-link class="header-button" :to="$i18n.path('login')">{{ $t('common.login') }}</nuxt-link>
-            <nuxt-link class="header-button header-register" :to="$i18n.path('register')">{{ $t('common.register') }}</nuxt-link>
+        <div class="header-btn-wrapper" v-if="!isLogined">
+            <nuxt-link :to="$i18n.path('login')">{{ $t('common.login') }}</nuxt-link>
+            <nuxt-link class="header-register" :to="$i18n.path('register')">{{ $t('common.register') }}</nuxt-link>
         </div>
+
         <!-- 已登入後顯示 -->
-        <nuxt-link class="header-deposit" :to="$i18n.path('member/deposit')" v-if="isLogined">{{ $t('wallet.deposit') }}</nuxt-link>
+        <nuxt-link :to="$i18n.path('member/deposit')" v-if="isLogined">{{ $t('member.deposit') }}</nuxt-link>
     </header>
 </template>
 
@@ -41,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .header-wrapper {
+    header {
         position: relative;
         z-index: 1;
         display: flex;
@@ -52,32 +55,32 @@ export default {
         background: $color-black;
         padding: 2px 0 9px 0;
 
-        .header-menu-img {
+        > img {
             height: 25px;
             margin: 8px 0 0 15px;
         }
 
-        .header-logo-wrapper {
+        > h1 {
             width: 90px;
             padding-right: 5px;
             margin-left: 11px;
 
-            .header-logo-container {
+            > a {
                 width: 100%;
 
-                img {
+                > img {
                     width: 100%;
                 }
             }
         }
 
-        .header-button-wrapper {
+        .header-btn-wrapper {
             position: absolute;
             right: 7px;
             top: 11px;
             font-size: 14px;
 
-            .header-button {
+            > a {
                 display: inline-block;
                 width: 80px;
                 color: $color-yellow;
@@ -95,7 +98,7 @@ export default {
             }
         }
 
-        .header-deposit {
+        > a {
             position: absolute;
             right: 7px;
             top: 11px;

@@ -2,20 +2,21 @@
     <div>
         <div class="slots-game-list-wrapper">
             <ul class="slots-game-list-container"></ul>
-            <div class="slots-game-page-selector">
-                <button class="slots-game-btn prev-btn" type="button" data-page="prev">{{ $t('slots.previous') }}</button>
-                <ul class="slots-game-num-btns-wrapper"></ul>
-                <button class="slots-game-btn next-btn" type="button" data-page="next">{{ $t('slots.next') }}</button>
+            <div class="page-selector">
+                <button class="prev-btn" type="button" data-page="prev">{{ $t('slots.previous') }}</button>
+                <ul class="num-btn-wrapper"></ul>
+                <button class="next-btn" type="button" data-page="next">{{ $t('slots.next') }}</button>
             </div>
         </div>
 
         <!-- Free Play Modal -->
-        <my-free-play-modal :showButton="showFreePlayBTN" :nowPosition="nowPosition" />
+        <modal-game-play :show-button="showFreePlayBTN" :now-position="nowPosition" :game-img="gameImg" :game-name="gameName"></modal-game-play>
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyFreePlayModal from './MyFreePlayModal';
+
+import ModalGamePlay from '@/components/modal/ModalGamePlay';
 
 export default {
     computed: {
@@ -28,7 +29,7 @@ export default {
         })
     },
     components: {
-        MyFreePlayModal
+        ModalGamePlay
     },
     props: { tab: { type: String } },
     data() {
@@ -40,6 +41,8 @@ export default {
             totalPages: null,
             currentPage: 1,
             nowPosition: null,
+            gameImg: null,
+            gameName: null,
             showFreePlayModal: false,
             showFreePlayBTN: true
         };
@@ -52,7 +55,7 @@ export default {
         }, 100);
 
         // Selected Page or Go Prev of Go Next
-        $('.slots-game-page-selector').click(el => {
+        $('.page-selector').click(el => {
             if (this.allDataSize) {
                 // 點擊到的頁碼
                 el.preventDefault();
@@ -70,7 +73,7 @@ export default {
                 }
 
                 $('.slots-game-list-container').empty();
-                $('.slots-game-num-btns-wrapper').empty();
+                $('.num-btn-wrapper').empty();
 
                 this.setSelector();
                 this.renderGames();
@@ -87,12 +90,10 @@ export default {
             this.currentPage = 1;
 
             $('.slots-game-list-container').empty();
-            $('.slots-game-num-btns-wrapper').empty();
+            $('.num-btn-wrapper').empty();
 
-            $('.slots-game-prev-btn').attr('disabled');
-            $('.slots-game-prev-btn').css('opacity', '0.4');
-            $('.slots-game-next-btn').attr('disabled');
-            $('.slots-game-next-btn').css('opacity', '0.4');
+            $('.page-selector > button').attr('disabled');
+            $('.page-selector > button').css('opacity', '0.4');
         },
 
         // Load Games
@@ -145,11 +146,9 @@ export default {
         renderSelector(startPage, endPage) {
             for (let i = startPage; i <= endPage; i++) {
                 if (i === this.currentPage) {
-                    $('.slots-game-num-btns-wrapper').append(
-                        '<li class="slots-game-num-btns active" data-page="' + i + '">' + i + '</li>'
-                    );
+                    $('.num-btn-wrapper').append('<li class="active" data-page="' + i + '">' + i + '</li>');
                 } else {
-                    $('.slots-game-num-btns-wrapper').append('<li class="slots-game-num-btns" data-page="' + i + '">' + i + '</li>');
+                    $('.num-btn-wrapper').append('<li data-page="' + i + '">' + i + '</li>');
                 }
             }
 
@@ -164,15 +163,11 @@ export default {
                 $('.next-btn').removeAttr('disabled');
                 $('.next-btn').css('opacity', '1');
             } else if (this.currentPage === 1 && this.totalPages <= 1) {
-                $('.prev-btn').attr('disabled', 'disabled');
-                $('.prev-btn').css('opacity', '0.4');
-                $('.next-btn').attr('disabled', 'disabled');
-                $('.next-btn').css('opacity', '0.4');
+                $('.prev-btn, .next-btn').attr('disabled', 'disabled');
+                $('.prev-btn, .next-btn').css('opacity', '0.4');
             } else {
-                $('.prev-btn').removeAttr('disabled');
-                $('.prev-btn').css('opacity', '1');
-                $('.next-btn').removeAttr('disabled');
-                $('.next-btn').css('opacity', '1');
+                $('.prev-btn, .next-btn').removeAttr('disabled');
+                $('.prev-btn, .next-btn').css('opacity', '1');
             }
         },
 
@@ -190,8 +185,8 @@ export default {
 
             for (let i = startIndex; i < endIndex; i++) {
                 $('.slots-game-list-container').append(
-                    `<li class="slots-game-list-item">
-                        <img class="slots-game-list-item-img" id="${this.allDataSize[i].id}" src="${this.allDataSize[i].image}" alt="${this.allDataSize[i].name}" />
+                    `<li>
+                        <img data-id="${this.allDataSize[i].id}" src="${this.allDataSize[i].image}" alt="${this.allDataSize[i].name}" />
                     </li>`
                 );
             }
@@ -202,14 +197,14 @@ export default {
         // Set Games Element To Be Able To Click
         setClick() {
             let _this = this;
-            $('.slots-game-list-item').click(function(el) {
+            $('.slots-game-list-container > li').click(function(el) {
                 let gameID = $(this)
                     .children()
-                    .attr('id');
+                    .data('id');
                 let gameName = $(this)
                     .children()
                     .attr('alt');
-                let gameImage = $(this)
+                let gameImg = $(this)
                     .children()
                     .attr('src');
 
@@ -231,7 +226,7 @@ export default {
 
                     // _this.checkBalance(gameID);
                 } else {
-                    _this.showModal(gameID, gameName, gameImage);
+                    _this.showModal(gameName, gameImg);
                 }
             });
         },
@@ -240,7 +235,7 @@ export default {
         checkBalance(code) {},
 
         // Show Modal
-        showModal(id, name, imgURL) {
+        showModal(gameName, gameImg) {
             // Record Position
             this.nowPosition = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
             let vendorCode = this.$route.params.vendor;
@@ -252,15 +247,15 @@ export default {
                 this.showFreePlayBTN = true;
             }
 
+            // Set Game Image & Name On Modal
+            this.gameImg = gameImg;
+            this.gameName = gameName;
+
             $('html, body').addClass('freezePage');
             $('#freeModal').css('display', 'block');
             setTimeout(() => {
-                $('.free-modal-container').addClass('show');
+                $('.game-modal-container').addClass('show');
             }, 100);
-
-            // Set Game Image & Name On Modal
-            $('.free-game-img').attr('src', imgURL);
-            $('.free-game-name').text(name);
         }
     }
 };
@@ -274,7 +269,7 @@ export default {
             width: 100%;
             padding: 0 0 35px 0;
 
-            .slots-game-list-item {
+            > li {
                 display: inline-block;
                 width: calc((100% - 13.2%) / 3);
                 height: calc((100% - 13.2%) / 3);
@@ -287,7 +282,7 @@ export default {
                     margin-right: 6.6%;
                 }
 
-                .slots-game-list-item-img {
+                > img {
                     width: 100%;
                     height: 100%;
                     border-radius: 5px;
@@ -295,33 +290,34 @@ export default {
             }
         }
 
-        .slots-game-page-selector {
+        .page-selector {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 30px;
 
-            .slots-game-btn {
+            > button {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 75px;
                 height: 100%;
                 font-size: 14px;
+                color: $color-black;
                 border-radius: 5px;
                 border: 1px solid $color-black;
                 background: transparent;
                 opacity: 0.4;
             }
 
-            .slots-game-num-btns-wrapper {
+            .num-btn-wrapper {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 height: 100%;
                 margin: 0 10px;
 
-                .slots-game-num-btns {
+                > li {
                     display: flex;
                     justify-content: center;
                     align-items: center;

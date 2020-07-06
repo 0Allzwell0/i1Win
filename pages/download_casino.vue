@@ -104,12 +104,12 @@ export default {
     methods: {
         openDownloadURL(code) {
             if (this.isLogined) {
-                if (code === 'plt' && pltData.url) {
-                    window.open(pltData.url);
-                } else if (code === 'ag' && dtData.url) {
-                    window.open(dtData.url);
-                } else if (code === 'dg' && agData.url) {
-                    window.open(agData.url);
+                if (code === 'plt' && this.pltData.url) {
+                    window.open(this.pltData.url);
+                } else if (code === 'ag' && this.dtData.url) {
+                    window.open(this.dtData.url);
+                } else if (code === 'dg' && this.agData.url) {
+                    window.open(this.agData.url);
                 } else {
                     alert('Can not download !');
                 }

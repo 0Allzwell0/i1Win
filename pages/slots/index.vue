@@ -1,24 +1,24 @@
 <template>
     <main class="slots-wrapper">
         <!-- Carousel -->
-        <my-carousel />
+        <the-carousel></the-carousel>
 
         <!-- Announcement -->
-        <my-announcement />
+        <the-announcement></the-announcement>
 
-        <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
-        <my-game-tab />
+        <!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
+        <the-game-nav-bar></the-game-nav-bar>
 
         <!-- Games -->
         <div class="slots-container">
-            <ul class="slots-games-list">
-                <li class="slots-game-wrapper" v-for="(item, index) in games" :key="`slots-${index}`">
-                    <nuxt-link class="slots-game-container" :to="$i18n.path(`slots/${item.code}`)">
-                        <div class="slots-game-name-wrapper">
-                            <span class="slots-game-name">{{ item.name }}</span>
-                            <span class="slots-game-type">SLOTS</span>
+            <ul>
+                <li v-for="(item, index) in games" :key="`slots-${index}`">
+                    <nuxt-link :to="$i18n.path(`slots/${item.code}`)">
+                        <div class="text-wrapper">
+                            <span class="game-name">{{ item.name }}</span>
+                            <span class="game-type">SLOTS</span>
                         </div>
-                        <img class="slots-game-img" :src="`/images/slots/${item.code}.png`" />
+                        <img :src="`/images/slots/${item.code}.png`" :alt="item.name" />
                     </nuxt-link>
                 </li>
             </ul>
@@ -26,15 +26,15 @@
     </main>
 </template>
 <script>
-import MyCarousel from '~/components/MyCarousel';
-import MyAnnouncement from '~/components/MyAnnouncement';
-import MyGameTab from '~/components/MyGameTab';
+import TheCarousel from '@/components/common/TheCarousel';
+import TheAnnouncement from '@/components/common/TheAnnouncement';
+import TheGameNavBar from '@/components/common/TheGameNavBar';
 
 export default {
     components: {
-        MyCarousel,
-        MyAnnouncement,
-        MyGameTab
+        TheCarousel,
+        TheAnnouncement,
+        TheGameNavBar
     },
     data() {
         return {
@@ -78,44 +78,44 @@ export default {
             background-size: cover;
             padding-bottom: 70px;
 
-            .slots-games-list {
+            > ul {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
                 width: 100%;
                 height: 100%;
-            }
 
-            .slots-game-wrapper {
-                position: relative;
-                width: 28%;
-                background: $color-black;
-                border-radius: 10px;
-                margin: 4% 0 0 4%;
+                > li {
+                    position: relative;
+                    width: 28%;
+                    background: $color-black;
+                    border-radius: 10px;
+                    margin: 4% 0 0 4%;
 
-                .slots-game-container {
-                    width: 100%;
-                    height: 100%;
-
-                    .slots-game-name-wrapper {
-                        position: absolute;
-                        top: 7px;
-                        left: 7px;
-
-                        .slots-game-name {
-                            color: $color-white;
-                            font-size: 16px;
-                            line-height: 18px;
-                        }
-
-                        .slots-game-type {
-                            color: #fdd609;
-                        }
-                    }
-
-                    .slots-game-img {
+                    > a {
                         width: 100%;
-                        border-radius: 10px;
+                        height: 100%;
+
+                        .text-wrapper {
+                            position: absolute;
+                            top: 7px;
+                            left: 7px;
+
+                            .game-name {
+                                color: $color-white;
+                                font-size: 16px;
+                                line-height: 18px;
+                            }
+
+                            .game-type {
+                                color: #fdd609;
+                            }
+                        }
+
+                        > img {
+                            width: 100%;
+                            border-radius: 10px;
+                        }
                     }
                 }
             }

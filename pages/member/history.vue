@@ -1,7 +1,7 @@
 <template>
     <main class="history-wrapper">
-        <!-- Tab -->
-        <my-member-tab />
+        <!-- Member Nav -->
+        <the-member-nav></the-member-nav>
 
         <!-- Primary Content -->
         <div class="history-container">
@@ -21,9 +21,9 @@
             <!-- Date -->
             <div class="history-date-wrapper">
                 <!-- From Date -->
-                <my-date-selecter class="from-date" v-on:getFromDate="getFromDate"></my-date-selecter>
+                <base-date-selector class="from-date" v-on:getFromDate="getFromDate"></base-date-selector>
                 <!-- To Date -->
-                <my-date-selecter class="to-date" v-on:getToDate="getToDate"></my-date-selecter>
+                <base-date-selector class="to-date" v-on:getToDate="getToDate"></base-date-selector>
             </div>
 
             <!-- Search Button -->
@@ -37,7 +37,7 @@
                     <ul class="history-data-title-bar-wrapper transaction-bar">
                         <li class="history-data-title title-date">{{ $t('history.date') }}</li>
                         <li class="history-data-title title-type">{{ $t('history.type') }}</li>
-                        <li class="history-data-title title-amount">{{ $t('wallet.amount') }}</li>
+                        <li class="history-data-title title-amount">{{ $t('member.amount') }}</li>
                         <li class="history-data-title title-status">{{ $t('history.status') }}</li>
                         <li class="history-data-title title-remark">{{ $t('history.remark') }}</li>
                     </ul>
@@ -82,7 +82,7 @@
                         <li class="history-data-title title-date">{{ $t('history.date') }}</li>
                         <li class="history-data-title title-from">{{ $t('history.from') }}</li>
                         <li class="history-data-title title-to">{{ $t('history.to') }}</li>
-                        <li class="history-data-title title-amount">{{ $t('wallet.amount') }}</li>
+                        <li class="history-data-title title-amount">{{ $t('member.amount') }}</li>
                         <li class="history-data-title title-status">{{ $t('history.status') }}</li>
                     </ul>
 
@@ -103,8 +103,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyMemberTab from '~/components/MyMemberTab';
-import MyDateSelecter from '~/components/MyDateSelecter';
+
+import TheMemberNav from '@/components/member/TheMemberNav';
+import BaseDateSelector from '@/components/member/BaseDateSelector';
 
 export default {
     computed: {
@@ -115,8 +116,8 @@ export default {
         })
     },
     components: {
-        MyMemberTab,
-        MyDateSelecter
+        TheMemberNav,
+        BaseDateSelector
     },
     data() {
         return {

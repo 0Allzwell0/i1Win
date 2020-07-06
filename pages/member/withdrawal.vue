@@ -1,67 +1,64 @@
 <template>
-    <main class="withdrawal-wrapper">
-        <!-- Error Message -->
-        <my-message-modal />
+    <main class="member-wrapper">
+        <!-- Message Modal-->
+        <modal-message></modal-message>
 
-        <!-- Tab -->
-        <my-member-tab />
+        <!-- Member Nav -->
+        <the-member-nav></the-member-nav>
 
         <!-- Wallet List -->
-        <my-wallet-list />
+        <the-wallet-list></the-wallet-list>
 
         <!-- Content -->
-        <div class="withdrawal-container">
+        <div class="member-container member-withdrawal">
             <!-- Available Balance -->
-            <h3 class="withdrawal-title-text">{{ $t('wallet.available_balance') }}</h3>
-            <div class="withdrawal-content-text">THB {{ balance || '0.00' }}</div>
+            <h3>{{ $t('member.available_balance') }}</h3>
+            <div class="input-wrapper">
+                <input type="text" :placeholder="$t('member.available_balance')" v-model="availableBalance" />
+            </div>
 
             <!-- Withdrawal Bank -->
-            <h3 class="withdrawal-title-text">{{ $t('withdrawal.withdrawal_to') }}</h3>
-            <my-banks-selecter v-on:getBank="getBank"></my-banks-selecter>
+            <h3>{{ $t('withdrawal.withdrawal_to') }}</h3>
+            <base-bank-selector v-on:selectedBank="getBank"></base-bank-selector>
 
-            <!-- Full Name -->
-            <h3 class="withdrawal-title-text">{{ $t('common.fullname') }}</h3>
-            <div class="withdrawal-content-text">{{ userData.fullname || 'Fullname' }}</div>
+            <!-- Fullname -->
+            <h3>{{ $t('member.fullname') }}</h3>
+            <div class="input-wrapper">
+                <input type="text" :placeholder="$t('member.fullname')" v-model="myFullname" disabled />
+            </div>
 
             <!-- Account Number -->
-            <h3 class="withdrawal-title-text">{{ $t('withdrawal.account_number') }}</h3>
-            <input
-                class="withdrawal-input account-number-input"
-                type="text"
-                v-model="accountNumber"
-                :placeholder="$t('withdrawal.account_number_placeholder')"
-            />
+            <h3>{{ $t('withdrawal.account_number') }}</h3>
+            <div class="input-wrapper">
+                <input type="number" :placeholder="$t('withdrawal.account_num_placeholder')" v-model="accountNumber" />
+            </div>
 
             <!-- Amount -->
-            <h3 class="withdrawal-title-text">{{ $t('wallet.amount') }} (THB)</h3>
-            <input class="withdrawal-input amount-input" type="number" :placeholder="amountPlaceholder" :disabled="amountAllowed" />
+            <h3>{{ $t('member.amount') }} (THB)</h3>
+            <div class="input-wrapper">
+                <input type="number" v-model="accountNumber" :placeholder="amountPlaceholder" :disabled="amountAllowed" />
+            </div>
 
-            <!-- Warning Message -->
-            <p class="withdrawal-warning-msg">{{ $t('withdrawal.withdrawal_msg') }}</p>
+            <!-- Descriptions -->
+            <p>{{ $t('withdrawal.withdrawal_msg') }}</p>
 
             <!-- Withdrawal Button -->
-            <button
-                class="withdrawal-button"
-                type="submit"
-                @click="withdrawal()"
-                :disabled="requestState || true"
-                :class="{'allow': requestState}"
-            >{{ $t('wallet.withdrawal') }}</button>
+            <button type="button" @click="withdrawal()">{{ $t('member.withdrawal') }}</button>
         </div>
     </main>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyMemberTab from '~/components/MyMemberTab';
-import MyWalletList from '~/components/MyWalletList';
-import MyBanksSelecter from '~/components/MyBanksSelecter';
-import MyMessageModal from '~/components/MyMessageModal';
+
+import ModalMessage from '@/components/modal/ModalMessage';
+import TheMemberNav from '@/components/member/TheMemberNav';
+import TheWalletList from '@/components/member/TheWalletList';
+import BaseBankSelector from '@/components/member/BaseBankSelector';
 
 export default {
     computed: {
         ...mapGetters('auth', {
-            accessToken: 'GetAccessToken',
-            userData: 'GetUserData'
+            accessToken: 'GetAccessToken'
         }),
         ...mapGetters('wallet', {
             httpStatus: 'GetHttpStatus',
@@ -72,51 +69,35 @@ export default {
         })
     },
     components: {
-        MyMemberTab,
-        MyWalletList,
-        MyBanksSelecter,
-        MyMessageModal
+        ModalMessage,
+        TheMemberNav,
+        TheWalletList,
+        BaseBankSelector
     },
     data() {
         return {
             availableBalance: null,
+            userData: null,
+            myFullname: null,
             accountNumber: null,
             accountNumberOK: false,
             amountOK: false,
             amountAllowed: false,
-            amountPlaceholder: null,
+            amountPlaceholder: this.$t('withdrawal.amount_placeholder') + '50',
             bankOK: false
         };
     },
-    // beforeMount() {
-    //     this.$store.dispatch('wallet/getBalance', 'main');
-    // },
+    beforeMount() {
+        this.$store.dispatch('wallet/getBalance', 'main');
+    },
     mounted() {
         let _this = this;
 
+        this.availableBalance = this.balance || '0.00';
+        this.userData = JSON.parse(localStorage.getItem('userData'));
+        this.myFullname = this.userData.fullname || this.$t('member.fullname');
+
         this.checkAmount();
-
-        // Check Account Number
-        $('.account-number-input').keyup(() => {
-            let accountNumLeng = $('.account-number-input').val().length;
-            if (accountNumLeng > 0) {
-                this.accountNumberOK = true;
-            } else {
-                this.accountNumberOK = false;
-            }
-            this.checkInfo();
-        });
-
-        // Check Amount
-        $('.amount-input').keyup(() => {
-            let amountLength = $('.amount-input').val().length;
-            if (amountLength > 0) {
-                this.amountOK = true;
-            } else {
-                this.amountOK = false;
-            }
-            _this.checkInfo();
-        });
     },
     methods: {
         // Check Amount Is Availabled To Input And Change "Placeholder"
@@ -148,152 +129,40 @@ export default {
         },
 
         // Get Selected Bank
-        getBank(accountNumber, bank, bankOK) {
-            this.selectedBank = bank;
-            this.bankOK = bankOK;
-            this.checkInfo();
-        },
-
-        // Cheeck Information To Allow "Withdrawal" Button
-        checkInfo() {
-            $('.withdrawal-button').removeClass('allow');
-            if (this.bankOK && this.accountNumberOK && this.amountOK) {
-                $('.withdrawal-button').addClass('allow');
-                $('.withdrawal-button').attr('disabled', false);
-            } else {
-                $('.withdrawal-button').attr('disabled', true);
-            }
+        getBank(accountNumber) {
+            this.selectedBank = accountNumber;
         },
 
         // Withdrawal Submit
         withdrawal() {
-            this.$store.dispatch('wallet/withdrawal',
-            {
-                toBank: this.selectedBank,
-                accountNumber: this.accountNumber,
-                amount: this.amount
-            }).then(() => {
-                if (this.httpStatus === 422) {
-                    let msgArray = [];
-                    $('#errorMsg .error-msg-container').html('');
-                    for (let i in this.responseMsg) {
-                        msgArray.push(this.responseMsg[i]);
+            this.$store
+                .dispatch('wallet/withdrawal', {
+                    toBank: this.selectedBank,
+                    accountNumber: this.accountNumber,
+                    amount: this.amount
+                })
+                .then(() => {
+                    if (this.httpStatus === 422) {
+                        let msgArray = [];
+                        $('#errorMsg .error-msg-container').html('');
+                        for (let i in this.responseMsg) {
+                            msgArray.push(this.responseMsg[i]);
+                        }
+                        for (let j = 0; j < msgArray.length; j++) {
+                            $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
+                        }
+                    } else if (this.httpStatus === 200) {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('withdrawal.success_msg')}</div>`);
+                    } else {
+                        $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
                     }
-                    for (let j = 0; j < msgArray.length; j++) {
-                        $('#errorMsg .error-msg-container').append(`<div class="error-msg">${j + 1}. ${msgArray[j]}</div>`);
-                    }
-                } else if (this.httpStatus === 200) {
-                    $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('withdrawal.success_msg')}</div>`);
-                } else {
-                    $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.responseMsg}</div>`);
-                }
 
-                $('#errorMsg').modal('show');
-            });
+                    $('#errorMsg').modal('show');
+                });
         }
     }
 };
 </script>
 <style lang="scss" scoped>
-    .withdrawal-wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-height: calc(100vh - 100px);
-        font-family: $font-family;
-        font-size: 14px;
-
-        .withdrawal-container {
-            position: absolute;
-            z-index: 1;
-            top: 161px;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            background: $background_img;
-            background-size: cover;
-            font-family: $font-family;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5% 5% 90px 5%;
-            transition: margin-top 400ms;
-
-            &.expand {
-                transition: margin-top 400ms;
-            }
-
-            .withdrawal-title-text {
-                width: 100%;
-                font-size: 15px;
-            }
-
-            .withdrawal-content-text {
-                width: 100%;
-                font-size: 14px;
-                color: rgba(25, 25, 25, 0.5);
-                border: 1px solid #cecece;
-                border-radius: 5px;
-                margin: 7px 0 24px 0;
-                padding: 10px 17px 7px 17px;
-            }
-
-            .withdrawal-input-wrapper {
-                position: relative;
-                display: flex;
-                width: 100%;
-                height: 39px;
-                border-radius: 5px;
-                border: 1px solid #cecece;
-                background: $color-white;
-                margin: 7px 0 24px 0;
-
-                .withdrawal-down {
-                    width: 15px;
-                    font-size: 20px;
-                    color: $color-black;
-                    align-self: center;
-                    margin-right: 8px;
-                }
-            }
-
-            .withdrawal-input {
-                width: 100%;
-                height: 39px;
-                font-size: 14px;
-                background: $color-white;
-                border-radius: 5px;
-                border: 1px solid #cecece;
-                padding-left: 10px;
-                margin: 7px 0 24px 0;
-            }
-
-            .withdrawal-warning-msg {
-                width: 100%;
-            }
-
-            .withdrawal-button {
-                width: 100%;
-                font-size: 17px;
-                font-weight: bold;
-                border: $border-style;
-                background: $color-yellow-linear-unpress;
-                border-radius: 5px;
-                opacity: 0.6;
-                padding: 16px 0 16px 0;
-                margin-top: 32px;
-
-                &:active {
-                    background: $color-yellow-linear;
-                }
-
-                &.allow {
-                    opacity: 1;
-                }
-            }
-        }
-    }
+    @import '@/assets/scss/PageMember.scss';
 </style>

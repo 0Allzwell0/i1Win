@@ -7,7 +7,7 @@
                 :class="{'active': $route.name.indexOf('deposit') !== -1}"
             >
                 <img class="member-tab-image" src="/images/member/nav/deposit.png" />
-                <span class="member-tab-text">{{ $t('wallet.deposit') }}</span>
+                <span class="member-tab-text">{{ $t('member.deposit') }}</span>
             </nuxt-link>
         </li>
         <li class="member-tab-container">
@@ -17,7 +17,7 @@
                 :class="{'active': $route.name.indexOf('withdrawal') !== -1}"
             >
                 <img class="member-tab-image" src="/images/member/nav/withdraw.png" />
-                <span class="member-tab-text">{{ $t('wallet.withdrawal') }}</span>
+                <span class="member-tab-text">{{ $t('member.withdrawal') }}</span>
             </nuxt-link>
         </li>
         <li class="member-tab-container">
@@ -27,7 +27,7 @@
                 :class="{'active': $route.name.indexOf('transfer') !== -1}"
             >
                 <img class="member-tab-image" src="/images/member/nav/transfer.png" />
-                <span class="member-tab-text">{{ $t('wallet.transfer') }}</span>
+                <span class="member-tab-text">{{ $t('member.transfer') }}</span>
             </nuxt-link>
         </li>
         <li class="member-tab-container">
@@ -37,7 +37,7 @@
                 :class="{'active': $route.name.indexOf('history') !== -1}"
             >
                 <img class="member-tab-image" src="/images/member/nav/history.png" />
-                <span class="member-tab-text">{{ $t('wallet.history') }}</span>
+                <span class="member-tab-text">{{ $t('member.history') }}</span>
             </nuxt-link>
         </li>
     </ul>

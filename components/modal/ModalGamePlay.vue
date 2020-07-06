@@ -1,16 +1,17 @@
 <template>
-    <div class="free-modal-wrapper" id="freeModal">
-        <div class="free-modal-container">
-            <fa :icon="['fas', 'times']" class="free-modal-close" @click="closeModal()" />
-            <div class="free-modal">
-                <img class="free-game-img" />
-                <span class="free-game-name"></span>
+    <div class="game-modal-wrapper" id="freeModal">
+        <div class="game-modal-container">
+            <fa :icon="['fas', 'times']" class="modal-close" @click="closeModal()" />
+            <div class="game-modal">
+                <img :src="gameImg" :alt="gameName" />
+                <span>{{ gameName }}</span>
                 <!-- 已登入時才顯示 -->
-                <button class="free-btn free-play-now" v-if="isLogined">{{ $t('common.play_now') }}</button>
+                <button class="btn-play-now" v-if="isLogined">{{ $t('common.play_now') }}</button>
+
                 <!-- 尚未登入時顯示 -->
-                <button class="free-btn free-login" v-if="!isLogined">{{ $t('common.login') }}</button>
-                <button class="free-btn free-register" v-if="!isLogined">{{ $t('common.register') }}</button>
-                <button class="free-btn free-try-now" v-if="showButton">{{ $t('common.try_now') }}</button>
+                <button class="btn-login" v-if="!isLogined">{{ $t('common.login') }}</button>
+                <button class="btn-register" v-if="!isLogined">{{ $t('common.register') }}</button>
+                <button class="btn-try-now" v-if="showButton">{{ $t('common.try_now') }}</button>
             </div>
         </div>
     </div>
@@ -20,6 +21,14 @@ import { mapGetters } from 'vuex';
 
 export default {
     props: {
+        gameImg: {
+            type: String,
+            default: ''
+        },
+        gameName: {
+            type: String,
+            default: ''
+        },
         showButton: {
             type: Boolean,
             default: true
@@ -36,19 +45,19 @@ export default {
     },
     mounted() {
         // When Click Button, Close Modal
-        $('.free-btn').click(() => {
+        $('.game-modal > button').click(() => {
             this.closeModal();
         });
 
         // When Click "Login" Button, Go To "Login" Page
-        $('.free-login').click(() => {
+        $('.btn-login').click(() => {
             setTimeout(() => {
                 this.$router.push({ path: this.$i18n.path('login') });
             }, 200);
         });
 
         // When Click "Register" Button, Go To "Register" Page
-        $('.free-register').click(() => {
+        $('.btn-register').click(() => {
             setTimeout(() => {
                 this.$router.push({ path: this.$i18n.path('register') });
             }, 200);
@@ -57,7 +66,7 @@ export default {
     methods: {
         // Close Modal
         closeModal() {
-            $('.free-modal-container').removeClass('show');
+            $('.game-modal-container').removeClass('show');
             setTimeout(() => {
                 $('#freeModal').css('display', 'none');
             }, 100);
@@ -70,7 +79,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-    .free-modal-wrapper {
+    .game-modal-wrapper {
         display: none;
         position: fixed;
         z-index: 1040;
@@ -82,7 +91,7 @@ export default {
         font-family: $font-family;
         font-size: 16px;
 
-        .free-modal-container {
+        .game-modal-container {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -106,7 +115,7 @@ export default {
                 transition: transform 300ms;
             }
 
-            .free-modal-close {
+            .modal-close {
                 position: absolute;
                 top: 10px;
                 right: 14px;
@@ -114,7 +123,7 @@ export default {
                 font-size: 26px;
             }
 
-            .free-modal {
+            .game-modal {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -125,17 +134,17 @@ export default {
                 border-radius: 5px;
                 box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.2);
 
-                .free-game-img {
+                > img {
                     width: 150px;
                     border-radius: 10px;
                 }
 
-                .free-game-name {
+                > span {
                     text-align: center;
                     margin: 20px 0;
                 }
 
-                .free-btn {
+                > button {
                     width: 150px;
                     height: 44px;
                     font-weight: bold;
@@ -143,7 +152,7 @@ export default {
                     border-radius: 5px;
                     margin-top: 10px;
 
-                    &.free-play-now {
+                    &.btn-play-now {
                         color: $color-white;
                         background: $color-yellow-linear-unpress;
 
@@ -152,12 +161,12 @@ export default {
                         }
                     }
 
-                    &.free-login {
+                    &.btn-login {
                         color: #feaa06;
                         background: transparent;
                     }
 
-                    &.free-register {
+                    &.btn-register {
                         border: solid 1.5px #feaa06;
                         background: $color-yellow-linear-unpress;
 
@@ -166,7 +175,7 @@ export default {
                         }
                     }
 
-                    &.free-try-now {
+                    &.btn-try-now {
                         color: $color-white;
                         background: $color-black-linear;
                         border: none;

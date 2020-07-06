@@ -1,35 +1,39 @@
 <template>
-    <main class="edit-profile-wrapper">
-        <!-- Error Message Modal -->
-        <my-message-modal />
+    <main class="member-wrapper">
+        <!-- Message Modal -->
+        <modal-message></modal-message>
 
-        <div class="edit-profile-container">
+        <div class="member-container">
             <!-- Title -->
-            <h2 class="edit-profile-title">{{ $t('edit_profile.title') }}</h2>
+            <h2>{{ $t('edit_profile.title') }}</h2>
 
             <!-- Full Name -->
-            <h3 class="edit-profile-small-title">{{ $t('common.fullname') }}</h3>
-            <p class="edit-profile-unchange-text">{{ myFullname }}</p>
+            <h3>{{ $t('member.fullname') }}</h3>
+            <div class="input-wrapper">
+                <input type="text" :placeholder="$t('edit_profile.fullname')" v-model="myFullname" disabled />
+            </div>
 
             <!-- Mobile Number -->
-            <h3 class="edit-profile-small-title">{{ $t('edit_profile.mobile_number') }}</h3>
-            <p class="edit-profile-unchange-text">{{ myMobile }}</p>
+            <h3>{{ $t('edit_profile.mobile_number') }}</h3>
+            <div class="input-wrapper">
+                <input type="number" :placeholder="$t('edit_profile.mobile_number')" v-model="myMobile" disabled />
+            </div>
 
             <!-- Line ID -->
-            <h3 class="edit-profile-small-title">LINE ID</h3>
-            <div class="edit-profile-input-wrapper">
-                <input class="edit-profile-input" type="text" placeholder="Line ID" v-model="myLineID" />
+            <h3>LINE ID</h3>
+            <div class="input-wrapper">
+                <input type="text" placeholder="Line ID" v-model="myLineID" />
             </div>
 
             <!-- Email -->
-            <h3 class="edit-profile-small-title">{{ $t('edit_profile.email') }}</h3>
-            <div class="edit-profile-input-wrapper">
-                <input class="edit-profile-input" type="email" :placeholder="$t('edit_profile.email')" v-model="myEmail" />
+            <h3>{{ $t('edit_profile.email') }}</h3>
+            <div class="input-wrapper">
+                <input type="email" :placeholder="$t('edit_profile.email')" v-model="myEmail" />
             </div>
 
             <!-- Birthday -->
-            <h3 class="edit-profile-small-title">{{ $t('edit_profile.birthday') }}</h3>
-            <div class="edit-profile-input-wrapper">
+            <h3>{{ $t('edit_profile.birthday') }}</h3>
+            <div class="input-wrapper">
                 <client-only>
                     <date-picker
                         :format="format"
@@ -41,25 +45,26 @@
             </div>
 
             <!-- Gender -->
-            <h3 class="edit-profile-small-title">{{ $t('edit_profile.gender') }}</h3>
-            <div class="edit-profile-gender-wrapper">
-                <button class="edit-profile-gender gender-male" @click="changeGender('1')">{{ $t('edit_profile.male') }}</button>
-                <button class="edit-profile-gender gender-female" @click="changeGender('2')">{{ $t('edit_profile.female') }}</button>
+            <h3>{{ $t('edit_profile.gender') }}</h3>
+            <div class="gender-wrapper">
+                <button class="btn-male" type="button" @click="changeGender('1')">{{ $t('edit_profile.male') }}</button>
+                <button class="btn-female" type="button" @click="changeGender('2')">{{ $t('edit_profile.female') }}</button>
             </div>
 
             <!-- Save Button -->
-            <button class="edit-profile-save-btn" type="submit" @click="editProfile()">{{ $t('common.submit') }}</button>
+            <button type="button" @click="editProfile()">{{ $t('common.submit') }}</button>
         </div>
     </main>
 </template>
 <script>
 import { en, th } from 'vuejs-datepicker/dist/locale';
 import { mapGetters } from 'vuex';
-import MyMessageModal from '~/components/MyMessageModal';
+
+import ModalMessage from '@/components/modal/ModalMessage';
 
 export default {
     components: {
-        MyMessageModal
+        ModalMessage
     },
     computed: {
         ...mapGetters('auth', {
@@ -93,22 +98,22 @@ export default {
         this.myBirthday = this.userData.birthday;
         this.myGender = this.userData.gender;
 
-        $('.edit-profile-gender').removeClass('active');
+        $('.gender-wrapper > button').removeClass('active');
         if (this.myGender === 1) {
-            $('.gender-male').addClass('active');
+            $('.btn-male').addClass('active');
         } else if (this.myGender === 2) {
-            $('.gender-female').addClass('active');
+            $('.btn-female').addClass('active');
         }
     },
     methods: {
         // Change Gender
         changeGender(gender) {
-            $('.edit-profile-gender').removeClass('active');
+            $('.gender-wrapper > button').removeClass('active');
             if (gender === '1') {
-                $('.gender-male').addClass('active');
+                $('.btn-male').addClass('active');
                 this.myGender = 1;
             } else if (gender === '2') {
-                $('.gender-female').addClass('active');
+                $('.btn-female').addClass('active');
                 this.myGender = 2;
             }
         },
@@ -150,120 +155,5 @@ export default {
 };
 </script>
 <style lang="scss">
-    .edit-profile-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-height: calc(100vh - 50px);
-        font-size: 12px;
-        font-weight: bold;
-        font-family: $font-family;
-        background-image: $background_img;
-        background-size: cover;
-        padding: 0 30px 90px 30px;
-
-        .edit-profile-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 414px;
-            height: 100%;
-
-            .edit-profile-title {
-                font-size: 24px;
-                margin: 25px 0 15px 0;
-            }
-
-            .edit-profile-small-title {
-                width: 100%;
-                font-size: 18px;
-                margin: 20px 0 5px 0;
-            }
-
-            .edit-profile-unchange-text {
-                width: 100%;
-                height: 40px;
-                line-height: 40px;
-                font-size: 14px;
-                opacity: 0.5;
-                border-radius: 5px;
-                border: 1px solid $color-gray;
-                padding-left: 13px;
-            }
-
-            .edit-profile-input-wrapper {
-                display: flex;
-                width: 100%;
-                border-radius: 5px;
-                border: 1px solid $color-gray;
-
-                .edit-profile-input {
-                    width: 100%;
-                    height: 38px;
-                    font-size: 14px;
-                    background: $color-white;
-                    border-radius: 5px;
-                    padding-left: 13px;
-                }
-
-                .vdp-datepicker {
-                    width: 100%;
-
-                    input {
-                        width: 100%;
-                        height: 38px;
-                        font-size: 14px;
-                        border-radius: 5px;
-                        padding-left: 13px;
-                    }
-
-                    .vdp-datepicker__calendar {
-                        width: 100%;
-                        max-width: 313px;
-                        margin-bottom: 20px;
-                    }
-                }
-            }
-
-            .edit-profile-gender-wrapper {
-                display: flex;
-                width: 100%;
-
-                .edit-profile-gender {
-                    width: 80px;
-                    min-height: 35px;
-                    color: $color-gray;
-                    font-size: 14px;
-                    font-weight: bold;
-                    border-radius: 5px;
-                    background: rgba(53, 53, 53, 0.9);
-
-                    &.gender-male {
-                        margin-right: 8px;
-                    }
-
-                    &.active {
-                        color: $color-black;
-                        background: $color-yellow-linear;
-                    }
-                }
-            }
-
-            .edit-profile-save-btn {
-                width: 100%;
-                min-height: 52px;
-                font-size: 18px;
-                border: $border-style;
-                background: $color-yellow-linear-unpress;
-                border-radius: 5px;
-                margin-top: 50px;
-
-                &:active {
-                    background: $color-yellow-linear;
-                }
-            }
-        }
-    }
+    @import '@/assets/scss/PageMember.scss';
 </style>

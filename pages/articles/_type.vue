@@ -1,7 +1,7 @@
 <template>
     <main class="article-wrapper">
         <!-- Title -->
-        <h2 class="article-title">{{ articleHTML.name }}</h2>
+        <h2>{{ articleHTML.name }}</h2>
 
         <!-- Content -->
         <div class="article-html" v-html="articleHTML.body" />
@@ -17,7 +17,7 @@ export default {
         }),
         ...mapGetters({
             language: 'GetLanguage'
-        }),
+        })
     },
     mounted() {
         this.getHTML(this.$route.params.type);
@@ -33,45 +33,33 @@ export default {
 
             switch (articleName) {
                 case 'about-us': {
-                    if(this.language === 'th')
-                        articleCode = 'ABOUTUS_TH';
-                    else
-                        articleCode = 'ABOUTUS_EN';
+                    if (this.language === 'th') articleCode = 'ABOUTUS_TH';
+                    else articleCode = 'ABOUTUS_EN';
                     break;
                 }
                 case 'how-to-join': {
-                    if(this.language === 'th')
-                        articleCode = 'HOWJOIN_TH';
-                    else
-                        articleCode = 'HOWJOIN_EN';
+                    if (this.language === 'th') articleCode = 'HOWJOIN_TH';
+                    else articleCode = 'HOWJOIN_EN';
                     break;
                 }
                 case 'support': {
-                    if(this.language === 'th')
-                        articleCode = 'SUPPORT_TH';
-                    else
-                        articleCode = 'SUPPORT_EN';
+                    if (this.language === 'th') articleCode = 'SUPPORT_TH';
+                    else articleCode = 'SUPPORT_EN';
                     break;
                 }
                 case 'responsible-gaming': {
-                    if(this.language === 'th')
-                        articleCode = 'RESPONSIBLE_TH';
-                    else
-                        articleCode = 'RESPONSIBLE_EN';
+                    if (this.language === 'th') articleCode = 'RESPONSIBLE_TH';
+                    else articleCode = 'RESPONSIBLE_EN';
                     break;
                 }
                 case 'terms-of-use': {
-                    if(this.language === 'th')
-                        articleCode = 'TERMS_TH';
-                    else
-                        articleCode = 'TERM_EN';
+                    if (this.language === 'th') articleCode = 'TERMS_TH';
+                    else articleCode = 'TERM_EN';
                     break;
                 }
                 case 'privacy-policy': {
-                    if(this.language === 'th')
-                        articleCode = 'PRIVACY_TH';
-                    else
-                        articleCode = 'PRIVACY_EN';
+                    if (this.language === 'th') articleCode = 'PRIVACY_TH';
+                    else articleCode = 'PRIVACY_EN';
                     break;
                 }
             }
@@ -88,7 +76,7 @@ export default {
         background-size: cover;
         overflow: auto;
 
-        .article-title {
+        > h2 {
             width: 100%;
             font-family: $font-family;
             font-weight: bold;

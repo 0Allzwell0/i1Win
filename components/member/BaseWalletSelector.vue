@@ -10,7 +10,7 @@
             <li class="transfer-game-item" @click="selectGame('none', 0, 0)">{{ $t('common.please_select') }}</li>
             <li class="transfer-game-item" @click="selectGame('main', 1, 0)" :class="{'active': hideGame === 'main'}">
                 <img class="transfer-game-img" :src="`/images/member/wallet/main.png`" />
-                <span class="transfer-game-text">{{ $t('wallet.main_wallet') }}</span>
+                <span class="transfer-game-text">{{ $t('member.main_wallet') }}</span>
             </li>
             <li
                 class="transfer-game-item"
@@ -91,7 +91,7 @@ export default {
             } else if (game === 'main') {
                 $(`.transfer-input-${this.type}`).html(
                     `<img class="transfer-game-img" src="/images/member/wallet/main.png" />
-                    <span class="transfer-game-text">${this.$t('wallet.main_wallet')}</span>
+                    <span class="transfer-game-text">${this.$t('member.main_wallet')}</span>
                     `
                 );
             } else {
@@ -110,7 +110,6 @@ export default {
         border-radius: 5px;
         border: 1px solid #cecece;
         background: $color-white;
-        margin: 7px 0 24px 0;
 
         .transfer-game-input {
             display: flex;

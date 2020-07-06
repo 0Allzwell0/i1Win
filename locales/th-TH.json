@@ -3,7 +3,7 @@
     "logout": "เงินฝาก",
     "account": "บัญชี",
     "edit_profile": "ข้อมูลส่วนตัว",
-    "change_password": "เปลี่ยนรหัสผ่าน",
+    "change_psw": "เปลี่ยนรหัสผ่าน",
     "infor_center": "ข้อมูลศูนย์",
     "about_us": "เกี่ยวกับเรา",
     "how_to_join": "วิธีการเข้าร่วม",
@@ -21,7 +21,7 @@
     "wallet": "กระเป่"
   },
   "home": {
-    "tab": {
+    "nav": {
       "livecasino": "คาสิโนสด",
       "sports": "กีฬา",
       "slots": "สล็อต",
@@ -49,7 +49,7 @@
   },
   "register": {
     "registration": "ลงทะเบียน",
-    "confirm_password": "ยืนยันรหัสผ่าน",
+    "confirm_psw": "ยืนยันรหัสผ่าน",
     "select_bank": "กรุณาเลือกธนาคารถอน",
     "bank_account_num": "หมายเลขบัญชีธนาคาร",
     "mobile_number": "หมายเลขโทรศัพท์มือถือ",
@@ -132,15 +132,15 @@
     "female": "หญิง",
     "success_msg": "เปลี่ยนโปรไฟล์สำเร็จ !!"
   },
-  "change_password": {
+  "change_psw": {
     "title": "เปลี่ยนรหัสผ่าน",
-    "current_password": "รหัสผ่านปัจจุบัน",
-    "new_password": "รหัสผ่านใหม่",
-    "confirm_password": "ยืนยันรหัสผ่านใหม่",
+    "current_psw": "รหัสผ่านปัจจุบัน",
+    "new_psw": "รหัสผ่านใหม่",
+    "confirm_psw": "ยืนยันรหัสผ่านใหม่",
     "success_msg": "เปลี่ยนรหัสผ่านสำเร็จ !!",
     "no_match_msg": "รหัสผ่านไม่ตรงกัน !!"
   },
-  "wallet": {
+  "member": {
     "deposit": "ฝากเงิน",
     "withdrawal": "ถอนเงิน",
     "transfer": "โอรเงิน",
@@ -150,6 +150,7 @@
     "close_wallet": "ปิดกระเป๋าเงิน",
     "main_wallet": "กระเป๋าหลัก",
     "account_number": "หมายเลขบัญชี : ",
+    "fullname": "ชื่อนามสกุล",
     "amount": "จำนวน",
     "available_balance": "ยอดเงินคงเหลือ"
   },
@@ -172,7 +173,7 @@
     "minimum_withdrawal": "ถอนขั้นต่ำ THB 500",
     "withdrawal_msg": "โปรดตรวจสอบให้แน่ใจว่า คุณกรอกรายละเอียดบัญชีธนาคารที่ถูกต้องเพื่อหลีกเลี่ยงความไม่สะดวกใด ๆ และใช้ถอนเงินอื่นไม่ยอมรับเรา.",
     "account_number": "หมายเลขบัญชี",
-    "account_number_placeholder": "โปรดระบุบัญชีธนาคารที่มีชื่อเต็มตรงกัน",
+    "account_num_placeholder": "โปรดระบุบัญชีธนาคารที่มีชื่อเต็มตรงกัน",
     "amount_placeholder": "ถอนขั้นต่ำคือ THB ",
     "today_withdraw_total": "จำนวนการถอนเงินสะสมเกินขีด จำกัด ในวันนี้โปรดติดต่อฝ่ายบริการลูกค้า.",
     "today_count": "จำนวนการถอนได้เกินขีด จำกัด ในวันนี้โปรดติดต่อฝ่ายบริการลูกค้า.",

@@ -1,104 +1,90 @@
 <template>
-    <main class="deposit-wrapper">
-        <!-- Error Message -->
-        <my-message-modal />
+    <main class="member-wrapper">
+        <!-- Message Modal-->
+        <modal-message></modal-message>
 
-        <!-- Tab -->
-        <my-member-tab />
+        <!-- Member Nav -->
+        <the-member-nav></the-member-nav>
 
         <!-- Wallet List -->
-        <my-wallet-list />
+        <the-wallet-list></the-wallet-list>
 
         <!-- Content -->
-        <div class="deposit-container">
+        <div class="member-container member-deposit">
             <!-- Deposit Bank -->
-            <h3 class="deposit-title-text">{{ $t('deposit.deposit_to') }}</h3>
-            <my-banks-selecter v-on:getBank="getBank"></my-banks-selecter>
+            <h3>{{ $t('deposit.deposit_to') }}</h3>
+            <base-bank-selector v-on:selectedBank="getBank"></base-bank-selector>
 
             <!-- Bank Detail -->
-            <h3 class="deposit-title-text">{{ $t('deposit.bank_detail') }}</h3>
-            <div class="deposit-bank-detail-wrapper">
-                <div class="deposit-detail-container">
-                    <div class="deposit-bank-name-wrapper">
-                        <span class="deposit-bank-name-title">{{ $t('deposit.name') }}</span>
-                        <span class="deposit-bank-name-value"></span>
+            <h3>{{ $t('deposit.bank_detail') }}</h3>
+            <div class="detail-wrapper">
+                <div class="detail-container">
+                    <div class="name-wrapper">
+                        <span>{{ $t('deposit.name') }}</span>
+                        <span class="name-value"></span>
                     </div>
-                    <div class="deposit-bank-account-wrapper">
-                        <span class="deposit-bank-account-title">{{ $t('wallet.account_number') }}</span>
-                        <span class="deposit-bank-account-value"></span>
+                    <div class="account-wrapper">
+                        <span>{{ $t('member.account_number') }}</span>
+                        <span class="account-value"></span>
                     </div>
                 </div>
-                <div class="deposit-copy-wrapper">
-                    <fa :icon="['fas', 'copy']" class="deposit-copy-img" />
-                    <span class="deposit-copy-text">{{ $t('deposit.copy_account_number') }}</span>
+                <div class="copy-wrapper">
+                    <fa :icon="['fas', 'copy']" class="copy-icon" />
+                    <span>{{ $t('deposit.copy_account_number') }}</span>
                 </div>
             </div>
 
             <!-- Amount -->
-            <h3 class="deposit-title-text">{{ $t('wallet.amount') }} (THB)</h3>
-            <div class="deposit-amount-wrapper">
-                <button class="deposit-amount-dollars" type="button" @click="setAmount(250)">฿ 250</button>
-                <button class="deposit-amount-dollars" type="button" @click="setAmount(500)">฿ 500</button>
-                <button class="deposit-amount-dollars" type="button" @click="setAmount(1000)">฿ 1000</button>
-                <button class="deposit-amount-dollars" type="button" @click="setAmount(2000)">฿ 2000</button>
+            <h3>{{ $t('member.amount') }} (THB)</h3>
+            <div class="amount-wrapper">
+                <button type="button" @click="setAmount(250)">฿ 250</button>
+                <button type="button" @click="setAmount(500)">฿ 500</button>
+                <button type="button" @click="setAmount(1000)">฿ 1000</button>
+                <button type="button" @click="setAmount(2000)">฿ 2000</button>
             </div>
-            <div class="deposit-amount-wrapper second">
-                <button class="deposit-amount-dollars" type="button" @click="setAmount(3000)">฿ 3000</button>
-                <button class="deposit-amount-dollars" type="button" @click="setAmount(5000)">฿ 5000</button>
-                <input class="deposit-amount-input" type="number" placeholder="THB" />
+            <div class="amount-wrapper second">
+                <button type="button" @click="setAmount(3000)">฿ 3000</button>
+                <button type="button" @click="setAmount(5000)">฿ 5000</button>
+                <input type="number" placeholder="THB" />
             </div>
 
             <!-- Transfer Time -->
-            <h3 class="deposit-title-text">{{ $t('deposit.transfer_time') }}</h3>
-            <div class="deposit-transfer-time-wrapper">
-                <my-date-selecter></my-date-selecter>
-                <my-time-selecter></my-time-selecter>
+            <h3>{{ $t('deposit.transfer_time') }}</h3>
+            <div class="date-time-wrapper">
+                <base-date-selector></base-date-selector>
+                <base-time-selector></base-time-selector>
             </div>
 
             <!-- Reference Number -->
-            <h3 class="deposit-title-text">{{ $t('deposit.reference_number') }}</h3>
-            <div class="deposit-input-wrapper">
-                <input
-                    class="deposit-input reference-input"
-                    type="text"
-                    :placeholder="$t('deposit.reference_msg')"
-                    v-model="referenceNo"
-                />
+            <h3>{{ $t('deposit.reference_number') }}</h3>
+            <div class="input-wrapper">
+                <input type="text" :placeholder="$t('deposit.reference_msg')" v-model="referenceNo" />
             </div>
 
             <!-- Upload File -->
-            <h3 class="deposit-title-text">{{ $t('deposit.file_input') }}</h3>
-            <div class="deposit-input-wrapper">
-                <input
-                    id="upload-file-input"
-                    class="deposit-input"
-                    type="file"
-                    :placeholder="$t('deposit.no_file_select')"
-                    @change="getFile"
-                />
+            <h3>{{ $t('deposit.file_input') }}</h3>
+            <div class="input-wrapper">
+                <input class="input-upload" type="file" :placeholder="$t('deposit.no_file_select')" @change="getFile" />
             </div>
 
             <!-- Bonus -->
-            <h3 class="deposit-title-text">{{ $t('footer.promotions') }}</h3>
-            <div class="deposit-input-wrapper">
-                <button class="deposit-input bonus-input" type="button" @click="showBonusList()">{{ $t('common.please_select') }}</button>
-                <fa :icon="['fas', 'caret-down']" class="deposit-down" />
-                <ul class="deposit-bonus-list-wrapper" :class="{'show': isShowBonusList}">
-                    <li
-                        class="deposit-bonus-list-item select-item"
-                        @click="selectBonus('none', 'none')"
-                    >{{ $t('common.please_select') }}</li>
-                    <li
-                        class="deposit-bonus-list-item type-item"
-                        v-for="(typeItem, index) in newBonusList"
-                        :key="`bonus_type_${index}`"
-                    >
+            <h3>{{ $t('footer.promotions') }}</h3>
+            <div class="input-wrapper">
+                <button
+                    class="input-bonus"
+                    type="button"
+                    :value="$t('common.please_select')"
+                    @click="showBonusList()"
+                >{{ $t('common.please_select') }}</button>
+                <fa :icon="['fas', 'caret-down']" class="icon-down" />
+                <ul v-show="isShowBonusList">
+                    <li class="item-select" @click="selectBonus(null, null)">{{ $t('common.please_select') }}</li>
+                    <li class="item-type" v-for="(typeItem, index) in newBonusList" :key="`bonus_type_${index}`">
                         {{ typeItem.type }}
                         <ul>
                             <li
-                                class="deposit-bonus-list-item bonus-item"
                                 v-for="(item, index) in typeItem.bonus"
-                                :key="`bonus_item_${index}`"
+                                :key="`bonus-${index}`"
                                 @click="selectBonus(item.name, item.code)"
                             >{{ item.name }}</li>
                         </ul>
@@ -106,46 +92,40 @@
                 </ul>
             </div>
 
-            <!-- Warning Message -->
-            <p class="deposit-warning-msg">{{ $t('deposit.agree_certify') }}</p>
+            <!-- Descriptions -->
+            <p>{{ $t('deposit.agree_certify') }}</p>
 
             <!-- Deposit Button -->
-            <button
-                class="deposit-button"
-                type="submit"
-                @click="deposit()"
-                :disabled="requestState || true"
-                :class="{'allow': requestState}"
-            >{{ $t('wallet.deposit') }}</button>
+            <button type="button" @click="deposit()">{{ $t('member.deposit') }}</button>
         </div>
     </main>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyMemberTab from '~/components/MyMemberTab';
-import MyWalletList from '~/components/MyWalletList';
-import MyDateSelecter from '~/components/MyDateSelecter';
-import MyTimeSelecter from '~/components/MyTimeSelecter';
-import MyBanksSelecter from '~/components/MyBanksSelecter';
-import MyMessageModal from '~/components/MyMessageModal';
+
+import ModalMessage from '@/components/modal/ModalMessage';
+import TheMemberNav from '@/components/member/TheMemberNav';
+import TheWalletList from '@/components/member/TheWalletList';
+import BaseBankSelector from '@/components/member/BaseBankSelector';
+import BaseDateSelector from '@/components/member/BaseDateSelector';
+import BaseTimeSelector from '@/components/member/BaseTimeSelector';
 
 export default {
     computed: {
         ...mapGetters('wallet', {
             httpStatus: 'GetHttpStatus',
-            requestState: 'GetRequestState',
             responseMsg: 'GetResponseMsg',
             bonusList: 'GetBonus',
             limits: 'GetLimits'
         })
     },
     components: {
-        MyMemberTab,
-        MyWalletList,
-        MyDateSelecter,
-        MyTimeSelecter,
-        MyBanksSelecter,
-        MyMessageModal
+        ModalMessage,
+        TheMemberNav,
+        TheWalletList,
+        BaseBankSelector,
+        BaseDateSelector,
+        BaseTimeSelector
     },
     data() {
         return {
@@ -160,10 +140,6 @@ export default {
             newBonusList: null,
             selectedBonus: null,
             isShowBonusList: false,
-            bankOK: false,
-            amountOK: false,
-            referenceOK: false,
-            upLoadFileOK: false,
             bonusOK: false
         };
     },
@@ -183,30 +159,10 @@ export default {
         // When Touch Others Place, "Promotion" List Will Close
         $(document).click(el => {
             let touchEl = $(el.target)[0].className;
-            if (touchEl.indexOf('bonus-input') === -1 && touchEl.indexOf('bonus-item') === -1) {
+
+            if (touchEl !== 'input-bonus') {
                 this.isShowBonusList = false;
             }
-        });
-
-        // Check Amount Input
-        $('.deposit-amount-input').keyup(function() {
-            if (parseFloat($(this).val()) > 0) {
-                _this.checkAmount();
-            } else {
-                _this.amountOK = false;
-            }
-            _this.checkInfo();
-        });
-
-        // Check Reference Input
-        $('.reference-input').keyup(() => {
-            let referenceNum = $('.reference-input').val();
-            if (referenceNum.length > 0) {
-                this.referenceOK = true;
-            } else {
-                this.referenceOK = false;
-            }
-            this.checkInfo();
         });
     },
     methods: {
@@ -274,33 +230,26 @@ export default {
             if (e.target.files[0]) {
                 if (e.target.files[0].size < 2097152) {
                     this.upLoadFile = e.target.files[0];
-                    this.upLoadFileOK = true;
                 } else {
                     $('#errorMsg .error-msg-container').text(this.$t('deposit.upload_file_error'));
                     $('#errorMsg').modal('show');
                     this.upLoadFile = null;
-                    this.upLoadFileOK = false;
                 }
             } else {
                 this.upLoadFile = null;
-                this.upLoadFileOK = false;
             }
-
-            this.checkInfo();
         },
 
         // Get selected bank
-        getBank(accountNumber, name, bankOK) {
-            if (bankOK) {
-                $('.deposit-bank-name-value').text(name);
-                $('.deposit-bank-account-value').text(accountNumber);
-                $('.deposit-detail-container').addClass('show');
+        getBank(accountNumber, name) {
+            if (accountNumber && name) {
+                $('.name-value').text(name);
+                $('.account-value').text(accountNumber);
+                $('.detail-container').addClass('show');
             } else {
-                $('.deposit-detail-container').removeClass('show');
+                $('.detail-container').removeClass('show');
             }
             this.accountNumber = accountNumber;
-            this.bankOK = bankOK;
-            this.checkInfo();
         },
 
         // Set deposit amount
@@ -308,38 +257,10 @@ export default {
             if (this.choiceAmount != amount) {
                 this.totalAmount = amount;
                 this.choiceAmount = amount;
-                $('.deposit-amount-input').val(amount);
+                $('.amount-wrapper > input').val(amount);
             } else {
                 this.totalAmount = this.totalAmount + amount;
-                $('.deposit-amount-input').val(this.totalAmount);
-            }
-            this.checkAmount();
-            this.checkInfo();
-        },
-
-        // Check deposit amount
-        checkAmount() {
-            if (this.totalAmount > 0) {
-                if (this.limits) {
-                    if (this.totalAmount <= this.limits.maxDeposit) {
-                        this.amountOK = true;
-                    } else {
-                        this.amountOK = false;
-                    }
-
-                    if (this.totalAmount >= this.limits.minDeposit) {
-                        this.amountOK = true;
-                    } else {
-                        this.amountOK = false;
-                    }
-                } else {
-                    if (this.totalAmount > 50000) this.amountOK = true;
-                    else this.amountOK = false;
-                    if (this.totalAmount < 30) this.amountOK = true;
-                    else this.amountOK = false;
-                }
-            } else {
-                this.amountOK = false;
+                $('.amount-wrapper > input').val(this.totalAmount);
             }
         },
 
@@ -360,28 +281,14 @@ export default {
 
         // Select bonus
         selectBonus(name, code) {
-            if (name !== 'none' && code !== 'none') {
-                $('.bonus-input').text(name);
-                this.bonusOK = true;
+            if (name && code) {
+                $('.input-bonus').text(name);
             } else {
-                $('.bonus-input').text(this.$t('common.please_select'));
-                this.bonusOK = false;
+                $('.input-bonus').text(this.$t('common.please_select'));
             }
 
             this.selectedBonus = code;
             this.isShowBonusList = false;
-            this.checkInfo();
-        },
-
-        // Check information to allow "Deposit" button
-        checkInfo() {
-            $('.deposit-button').removeClass('allow');
-            if (this.bankOK && this.amountOK && this.referenceOK && this.upLoadFileOK && this.bonusOK) {
-                $('.deposit-button').addClass('allow');
-                $('.deposit-button').attr('disabled', false);
-            } else {
-                $('.deposit-button').attr('disabled', true);
-            }
         },
 
         // Deposit submit
@@ -422,224 +329,5 @@ export default {
 };
 </script>
 <style lang="scss">
-    .deposit-wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-height: calc(100vh - 100px);
-        font-family: $font-family;
-        font-size: 14px;
-
-        .deposit-container {
-            position: absolute;
-            z-index: 1;
-            top: 161px;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            background: $background_img;
-            background-size: cover;
-            font-family: $font-family;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5% 5% 90px 5%;
-            transition: margin-top 400ms;
-
-            &.expand {
-                transition: margin-top 400ms;
-            }
-
-            .deposit-title-text {
-                width: 100%;
-                font-size: 15px;
-            }
-
-            .deposit-input-wrapper {
-                position: relative;
-                display: flex;
-                width: 100%;
-                height: 39px;
-                border-radius: 5px;
-                border: 1px solid #cecece;
-                background: $color-white;
-                margin: 7px 0 24px 0;
-
-                .deposit-input {
-                    width: 100%;
-                    font-size: 14px;
-                    background: $color-white;
-                    border-radius: 5px;
-                    text-align: left;
-                    padding-left: 10px;
-
-                    &#upload-file-input {
-                        padding: 6px;
-                    }
-                }
-
-                .deposit-down {
-                    width: 15px;
-                    font-size: 20px;
-                    color: $color-black;
-                    align-self: center;
-                    margin-right: 8px;
-                }
-
-                .deposit-bonus-list-wrapper {
-                    display: none;
-                    position: absolute;
-                    z-index: 10;
-                    top: 38px;
-                    left: 0;
-                    width: 100%;
-                    max-height: 250px;
-                    font-size: 15px;
-                    border-radius: 5px;
-                    border: 1px solid #cecece;
-                    background: $color-white;
-                    overflow-y: auto;
-                    margin-bottom: 100px;
-
-                    &.show {
-                        display: block;
-                    }
-
-                    .deposit-bonus-list-item {
-                        font-weight: normal;
-                        padding: 10px 20px 5px 20px;
-
-                        &.select-item {
-                            padding: 15px 10px 8px 10px;
-                        }
-
-                        &.type-item {
-                            font-weight: bold;
-                            padding: 5px 10px;
-                        }
-                    }
-                }
-            }
-
-            .deposit-bank-detail-wrapper {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                color: $color-white-gray;
-                padding: 10px;
-                margin: 7px 0 24px 0;
-                border: 1px solid #cecece;
-                border-radius: 5px;
-
-                .deposit-detail-container {
-                    display: none;
-                    width: 100%;
-
-                    &.show {
-                        display: block;
-                    }
-
-                    .deposit-bank-name-wrapper {
-                        display: flex;
-                        width: 100%;
-
-                        .deposit-bank-name-value {
-                            font-size: 13px;
-                            color: $color-black;
-                            margin-left: 12.5px;
-                        }
-                    }
-
-                    .deposit-bank-account-wrapper {
-                        display: flex;
-                        width: 100%;
-
-                        .deposit-bank-account-value {
-                            font-size: 13px;
-                            color: $color-black;
-                            margin-left: 12.5px;
-                        }
-                    }
-                }
-
-                .deposit-copy-wrapper {
-                    display: flex;
-                    width: 100%;
-                    margin-top: 5px;
-
-                    .deposit-copy-img {
-                        font-size: 18px;
-                    }
-
-                    .deposit-copy-text {
-                        margin-left: 4%;
-                    }
-                }
-            }
-
-            .deposit-amount-wrapper {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 7px;
-
-                &.second {
-                    margin-bottom: 24px;
-                }
-
-                .deposit-amount-dollars {
-                    width: 23%;
-                    height: 39px;
-                    font-size: 18px;
-                    color: $color-yellow;
-                    background: $color-black;
-                    border-radius: 5px;
-                    padding-top: 3px;
-                }
-
-                .deposit-amount-input {
-                    width: 49%;
-                    height: 39px;
-                    font-size: 16px;
-                    border-radius: 5px;
-                    border: 1px solid #cecece;
-                    background: $color-white;
-                    padding: 2px 8px 0 10px;
-                }
-            }
-
-            .deposit-transfer-time-wrapper {
-                display: flex;
-                justify-content: space-between;
-                width: 100%;
-                margin: 7px 0 24px 0;
-            }
-
-            .deposit-warning-msg {
-                width: 100%;
-            }
-
-            .deposit-button {
-                width: 100%;
-                font-size: 17px;
-                font-weight: bold;
-                border: $border-style;
-                background: $color-yellow-linear-unpress;
-                border-radius: 5px;
-                opacity: 0.6;
-                padding: 16px 0 16px 0;
-                margin-top: 32px;
-
-                &:active {
-                    background: $color-yellow-linear;
-                }
-
-                &.allow {
-                    opacity: 1;
-                }
-            }
-        }
-    }
+    @import '@/assets/scss/PageMember.scss';
 </style>

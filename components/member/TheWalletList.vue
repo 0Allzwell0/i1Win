@@ -3,7 +3,7 @@
         <!-- Total Wallet -->
         <div class="total-wallet-wrapper">
             <div class="total-wallet-container">
-                <span class="total-wallet-text">{{ $t('wallet.total') }}</span>
+                <span class="total-wallet-text">{{ $t('member.total') }}</span>
                 <span class="total-wallet-currency">THB</span>
             </div>
             <span class="total-wallet-amount">{{ totalWallet.toFixed(2) }}</span>
@@ -12,14 +12,14 @@
                     <div class="expand-close-column"></div>
                     <div class="expand-close-row"></div>
                 </div>
-                <span class="expand-close-text">{{ $t('wallet.expand_wallet') }}</span>
+                <span class="expand-close-text">{{ $t('member.expand_wallet') }}</span>
             </div>
         </div>
 
         <!-- Main Wallet & Wallets List -->
         <div class="wallet-list-wrapper">
             <div class="main-wallet-container">
-                <span class="main-wallet-text">{{ $t('wallet.main_wallet') }}</span>
+                <span class="main-wallet-text">{{ $t('member.main_wallet') }}</span>
                 <span class="main-wallet-currency">THB</span>
                 <span class="main-wallet-amount">{{ mainWallet.toFixed(2) }}</span>
             </div>
@@ -51,7 +51,8 @@ export default {
             totalWallet: 0,
             walletList: [],
             expandWallet: false,
-            route_name: null,
+            scrollHeight: null,
+            routeName: null,
             getBalance: null,
             temp: 0
         };
@@ -64,7 +65,7 @@ export default {
         });
     },
     mounted() {
-        this.routeName();
+        this.getRouteName();
         setTimeout(() => {
             this.getWallets();
         }, 1000);
@@ -106,51 +107,51 @@ export default {
         },
 
         // Get Route Name
-        routeName() {
-            this.route_name = this.$route.name;
+        getRouteName() {
+            this.routeName = this.$route.name;
 
-            if (this.route_name.indexOf('deposit') !== -1) {
-                this.route_name = 'deposit';
-            } else if (this.route_name.indexOf('withdrawal') !== -1) {
-                this.route_name = 'withdrawal';
-            } else if (this.route_name.indexOf('transfer') !== -1) {
-                this.route_name = 'transfer';
+            if (this.routeName.indexOf('deposit') !== -1) {
+                this.routeName = 'deposit';
+            } else if (this.routeName.indexOf('withdrawal') !== -1) {
+                this.routeName = 'withdrawal';
+            } else if (this.routeName.indexOf('transfer') !== -1) {
+                this.routeName = 'transfer';
             } else {
-                this.route_name = null;
+                this.routeName = null;
             }
         },
 
-        // Expand Or Close Wallet List
+        // Expand or Hide Wallet List
         expandWalletList() {
-            let scrollHeight = $('.wallet-list-wrapper').height();
+            this.scrollHeight = $('.wallet-list-container').height();
 
             if (!this.expandWallet) {
                 $('.expand-close-img').addClass('expand');
-                $('.expand-close-text').text(this.$t('wallet.close_wallet'));
+                $('.expand-close-text').text(this.$t('member.close_wallet'));
 
-                if (this.route_name === 'deposit') {
-                    $('.deposit-container').addClass('expand');
-                    $('.deposit-container').css('margin-top', scrollHeight);
-                } else if (this.route_name === 'withdrawal') {
-                    $('.withdrawal-container').addClass('expand');
-                    $('.withdrawal-container').css('margin-top', scrollHeight);
-                } else if (this.route_name === 'transfer') {
-                    $('.transfer-container').addClass('expand');
-                    $('.transfer-container').css('margin-top', scrollHeight);
+                if (this.routeName === 'deposit') {
+                    $('.member-deposit').addClass('expand');
+                    $('.member-deposit').css('top', 273 + this.scrollHeight);
+                } else if (this.routeName === 'withdrawal') {
+                    $('.member-withdrawal').addClass('expand');
+                    $('.member-withdrawal').css('top', 273 + this.scrollHeight);
+                } else if (this.routeName === 'transfer') {
+                    $('.member-transfer').addClass('expand');
+                    $('.member-transfer').css('top', 273 + this.scrollHeight);
                 }
             } else {
                 $('.expand-close-img').removeClass('expand');
-                $('.expand-close-text').text(this.$t('wallet.expand_wallet'));
+                $('.expand-close-text').text(this.$t('member.expand_wallet'));
 
-                if (this.route_name === 'deposit') {
-                    $('.deposit-container').removeClass('expand');
-                    $('.deposit-container').css('margin-top', 0);
-                } else if (this.route_name === 'withdrawal') {
-                    $('.withdrawal-container').removeClass('expand');
-                    $('.withdrawal-container').css('margin-top', 0);
-                } else if (this.route_name === 'transfer') {
-                    $('.transfer-container').removeClass('expand');
-                    $('.transfer-container').css('margin-top', 0);
+                if (this.routeName === 'deposit') {
+                    $('.member-deposit').removeClass('expand');
+                    $('.member-deposit').css('top', '');
+                } else if (this.routeName === 'withdrawal') {
+                    $('.member-withdrawal').removeClass('expand');
+                    $('.member-withdrawal').css('top', '');
+                } else if (this.routeName === 'transfer') {
+                    $('.member-transfer').removeClass('expand');
+                    $('.member-transfer').css('top', '');
                 }
             }
             this.expandWallet = !this.expandWallet;

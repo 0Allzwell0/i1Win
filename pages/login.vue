@@ -2,7 +2,7 @@
     <main class="login-wrapper">
         <div class="login-container">
             <!-- Close Button -->
-            <fa :icon="['fas', 'times']" class="login-close" @click="$router.push({path: $i18n.path('')})" />
+            <fa :icon="['fas', 'times']" class="btn-close" @click="$router.push({path: $i18n.path('')})" />
 
             <!-- Title -->
             <h2 class="login-title">{{ $t('common.login') }}</h2>
@@ -11,66 +11,44 @@
             <p class="login-msg msg2">{{ $t('login.login_msg2') }}</p>
 
             <!-- Username -->
-            <div class="login-input-wrapper">
-                <img class="login-input-img" src="/images/username_img.png" />
-                <input
-                    class="login-input-text"
-                    id="loginUsername"
-                    type="text"
-                    :placeholder="$t('common.username')"
-                    v-model="myUsername"
-                />
+            <div class="input-wrapper">
+                <img src="/images/username_img.png" :alt="$t('common.username')" />
+                <input type="text" :placeholder="$t('common.username')" v-model="myUsername" />
             </div>
             <!-- Username Error Message-->
-            <ul class="login-error-msg" v-if="usernameError">
-                <li class="error-msg" v-for="(item, index) in loginErrorMsg.username" :key="`usn-${index}`">{{ item }}</li>
+            <ul class="error-msg" v-if="usernameError">
+                <li v-for="(item, index) in loginErrorMsg.username" :key="`usn-${index}`">{{ item }}</li>
             </ul>
 
             <!-- Password -->
-            <div class="login-input-wrapper">
-                <img class="login-input-img" src="/images/password_img.png" />
-                <input
-                    class="login-input-text"
-                    id="loginPassword"
-                    type="password"
-                    :placeholder="$t('common.password')"
-                    v-model="myPassword"
-                />
-                <img class="login-eye-icon" :src="passwordEyes" @click="showPassword()" />
+            <div class="input-wrapper">
+                <img src="/images/password_img.png" :alt="$t('common.password')" />
+                <input id="inputPassword" type="password" :placeholder="$t('common.password')" v-model="myPassword" />
+                <img class="eye-icon" :src="passwordEyes" @click="showPassword()" />
             </div>
-            <ul class="login-error-msg">
+            <ul class="error-msg">
                 <!-- Password Error Message-->
-                <li
-                    class="error-msg"
-                    v-show="passwordError"
-                    v-for="(item, index) in loginErrorMsg.password"
-                    :key="`psw-${index}`"
-                >{{ item }}</li>
+                <li v-show="passwordError" v-for="(item, index) in loginErrorMsg.password" :key="`psw-${index}`">{{ item }}</li>
                 <!-- Login Error Message-->
-                <li
-                    class="error-msg"
-                    v-show="loginError"
-                    v-for="(item, index) in loginErrorMsg.login"
-                    :key="`login-${index}`"
-                >{{ item }}</li>
+                <li v-show="loginError" v-for="(item, index) in loginErrorMsg.login" :key="`login-${index}`">{{ item }}</li>
             </ul>
             <!-- Others Error Message-->
-            <div class="login-error-msg" v-if="othersError">{{ loginErrorMsg.others }}</div>
+            <div class="error-msg" v-if="othersError">{{ loginErrorMsg.others }}</div>
 
             <!-- Forgot Password -->
-            <span class="forgot-password" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
-            <span class="forgot-prompt-wrapper" :class="{'show': showForgotMsg}">
-                <div class="forgot-prompt-title">{{ $t('login.forgot_password') }}</div>
-                <div class="forgot-prompt-msg">{{ $t('login.forgot_password_msg') }}</div>
+            <span class="forgot-psw" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
+            <span class="prompt-wrapper" v-show="showForgotMsg">
+                <div class="prompt-title">{{ $t('login.forgot_password') }}</div>
+                <div class="prompt-msg">{{ $t('login.forgot_password_msg') }}</div>
             </span>
 
             <!-- Login Button -->
-            <button class="login-button" type="submit" @click="login()">{{ $t('common.login') }}</button>
+            <button type="button" @click="login()">{{ $t('common.login') }}</button>
 
             <!-- Remind Message -->
-            <p class="login-remind-message">
+            <p class="remind-msg">
                 {{ $t('login.login_msg3') }}
-                <nuxt-link class="login-register" :to="$i18n.path('register')">{{ $t('common.register') }}</nuxt-link>
+                <nuxt-link :to="$i18n.path('register')">{{ $t('common.register') }}</nuxt-link>
             </p>
         </div>
     </main>
@@ -98,6 +76,14 @@ export default {
             othersError: false
         };
     },
+    mounted() {
+        $(document).click(el => {
+            let touchEl = el.target.className;
+            if (touchEl !== 'forgot-psw' && touchEl !== 'prompt-wrapper' && touchEl !== 'prompt-title' && touchEl !== 'prompt-msg') {
+                this.showForgotMsg = false;
+            }
+        });
+    },
     methods: {
         // Show or Hidden "Forgot Password" Message
         showMsg() {
@@ -106,14 +92,14 @@ export default {
 
         // Show or Hidden Password
         showPassword() {
-            let pswInputType = $('#loginPassword').attr('type');
+            let pswInputType = $('#inputPassword').attr('type');
 
             if (pswInputType === 'password') {
                 this.passwordEyes = '/images/open_eye.png';
-                $('#loginPassword').attr('type', 'text');
+                $('#inputPassword').attr('type', 'text');
             } else if (pswInputType === 'text') {
                 this.passwordEyes = '/images/close_eye.png';
-                $('#loginPassword').attr('type', 'password');
+                $('#inputPassword').attr('type', 'password');
             }
         },
 
@@ -195,14 +181,14 @@ export default {
             max-width: 454px;
             padding: 10px 20px 0 20px;
 
-            .login-close {
+            .btn-close {
                 position: absolute;
                 right: 17px;
                 top: 15px;
                 font-size: 26px;
             }
 
-            .login-title {
+            > h2 {
                 width: 100%;
                 font-size: 20px;
                 font-weight: bold;
@@ -213,7 +199,7 @@ export default {
                 margin: 35px 0 30px 0;
             }
 
-            .login-msg {
+            > p {
                 font-size: 14px;
                 text-align: center;
 
@@ -222,7 +208,7 @@ export default {
                 }
             }
 
-            .login-input-wrapper {
+            .input-wrapper {
                 position: relative;
                 display: flex;
                 justify-content: center;
@@ -231,14 +217,14 @@ export default {
                 border-radius: 5px;
                 margin-bottom: 25px;
 
-                .login-input-img {
+                > img {
                     width: 30px;
                     height: 30px;
                     align-self: center;
                     margin-left: 9px;
                 }
 
-                .login-input-text {
+                > input {
                     flex: 1;
                     height: 40px;
                     font-size: 16px;
@@ -249,15 +235,17 @@ export default {
                     padding-right: 40px;
                 }
 
-                .login-eye-icon {
+                .eye-icon {
                     position: absolute;
                     top: 13px;
                     right: 10px;
+                    width: auto;
                     height: 16px;
+                    margin-left: 0;
                 }
             }
 
-            .login-error-msg {
+            .error-msg {
                 width: 100%;
                 font-size: 13px;
                 color: $color-red;
@@ -266,14 +254,13 @@ export default {
                 margin: -24px 0 6px 0;
             }
 
-            .forgot-password {
+            .forgot-psw {
                 font-size: 14px;
                 font-weight: bold;
                 align-self: flex-end;
             }
 
-            .forgot-prompt-wrapper {
-                display: none;
+            .prompt-wrapper {
                 position: absolute;
                 z-index: 10;
                 top: 320px;
@@ -296,7 +283,7 @@ export default {
                     border-bottom: 15px solid $color-white;
                 }
 
-                .forgot-prompt-title {
+                .prompt-title {
                     width: 100%;
                     font-size: 16px;
                     font-weight: bold;
@@ -304,7 +291,7 @@ export default {
                     margin-bottom: 10px;
                 }
 
-                .forgot-prompt-msg {
+                .prompt-msg {
                     width: 100%;
                     font-size: 12px;
                     line-height: 18px;
@@ -315,7 +302,7 @@ export default {
                 }
             }
 
-            .login-button {
+            > button {
                 width: 100%;
                 height: 45px;
                 font-size: 17px;
@@ -330,13 +317,11 @@ export default {
                 }
             }
 
-            .login-remind-message {
+            .remind-msg {
                 width: 100%;
-                font-size: 14px;
-                text-align: center;
                 margin-bottom: 20px;
 
-                .login-register {
+                > a {
                     display: inline-block;
                     font-weight: bold;
                     color: $color-yellow;

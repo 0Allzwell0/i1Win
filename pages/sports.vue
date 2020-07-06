@@ -1,38 +1,43 @@
 <template>
     <main class="sports-wrapper">
         <!-- Carousel -->
-        <my-carousel />
+        <the-carousel></the-carousel>
 
         <!-- Announcement -->
-        <my-announcement />
+        <the-announcement></the-announcement>
 
-        <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
-        <my-game-tab />
+        <!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
+        <the-game-nav-bar></the-game-nav-bar>
 
         <!-- Games -->
         <ul class="sports-container">
-            <li class="sports-item-wrapper">
-                <img class="sports-item-img" src="/images/sports/sbo.png" />
-                <div class="sports-item-container">
-                    <span class="sports-item-name">SBOBET</span>
-                    <span class="sports-item-msg">{{ $t('sports.sbo_msg') }}</span>
-                    <button class="sports-play-now-btn" type="button" @click="openGame('sbo')">{{ $t('common.play_now') }}</button>
+            <!-- SBOBET -->
+            <li>
+                <img src="/images/sports/sbo.png" alt="SBOBET" />
+                <div class="item-wrapper">
+                    <span>SBOBET</span>
+                    <p>{{ $t('sports.sbo_msg') }}</p>
+                    <button type="button" @click="openGame('sbo')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
-            <li class="sports-item-wrapper">
-                <div class="sports-item-container">
-                    <span class="sports-item-name">ONE BOOK</span>
-                    <span class="sports-item-msg">{{ $t('sports.ibc_msg') }}</span>
-                    <button class="sports-play-now-btn" type="button" @click="openGame('ibc')">{{ $t('common.play_now') }}</button>
+
+            <!-- ONE BOOK -->
+            <li>
+                <div class="item-wrapper">
+                    <span>ONE BOOK</span>
+                    <p>{{ $t('sports.ibc_msg') }}</p>
+                    <button type="button" @click="openGame('ibc')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="sports-item-img" src="/images/sports/ibcg.png" />
+                <img src="/images/sports/ibcg.png" alt="ONE BOOK" />
             </li>
-            <li class="sports-item-wrapper">
-                <img class="sports-item-img" src="/images/sports/bti.png" />
-                <div class="sports-item-container">
-                    <span class="sports-item-name">BTi</span>
-                    <span class="sports-item-msg">{{ $t('sports.bti_msg') }}</span>
-                    <button class="sports-play-now-btn" type="button" @click="openGame('bti')">{{ $t('common.play_now') }}</button>
+
+            <!-- Bti -->
+            <li>
+                <img src="/images/sports/bti.png" alt="BTi" />
+                <div class="item-wrapper">
+                    <span>BTi</span>
+                    <p>{{ $t('sports.bti_msg') }}</p>
+                    <button type="button" @click="openGame('bti')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
         </ul>
@@ -40,9 +45,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyCarousel from '~/components/MyCarousel';
-import MyAnnouncement from '~/components/MyAnnouncement';
-import MyGameTab from '~/components/MyGameTab';
+
+import TheCarousel from '@/components/common/TheCarousel';
+import TheAnnouncement from '@/components/common/TheAnnouncement';
+import TheGameNavBar from '@/components/common/TheGameNavBar';
 
 export default {
     computed: {
@@ -54,14 +60,11 @@ export default {
         })
     },
     components: {
-        MyCarousel,
-        MyAnnouncement,
-        MyGameTab
+        TheCarousel,
+        TheAnnouncement,
+        TheGameNavBar
     },
-    mounted() {
-        // Set Game Tab CSS
-        $('.tab-sports').addClass('active');
-    },
+    mounted() {},
     methods: {
         // Open Sports Games
         openGame(productCode) {
@@ -98,35 +101,35 @@ export default {
             background-size: cover;
             padding-bottom: 70px;
 
-            .sports-item-wrapper {
+            > li {
                 display: flex;
                 width: 100%;
                 min-height: 206px;
 
-                .sports-item-img {
+                > img {
                     width: 57%;
                     align-self: center;
                     margin-top: -8px;
                 }
 
-                .sports-item-container {
+                .item-wrapper {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
                     margin: 8px 8px 8px 15px;
 
-                    .sports-item-name {
+                    > span {
                         font-size: 15px;
                         font-weight: bold;
                         margin-bottom: 5px;
                     }
 
-                    .sports-item-msg {
+                    > p {
                         color: #575757;
                         height: 100%;
                     }
 
-                    .sports-play-now-btn {
+                    > button {
                         width: 95px;
                         min-height: 35px;
                         font-weight: bold;

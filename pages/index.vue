@@ -1,80 +1,79 @@
 <template>
-    <main class="primary-wrapper">
-        <!-- Ad Pop Up -->
-        <my-popup />
-
+    <main class="home-wrapper">
         <!-- Carousel -->
-        <my-carousel />
+        <the-carousel></the-carousel>
 
         <!-- Announcement -->
-        <my-announcement />
+        <the-announcement></the-announcement>
 
-        <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
-        <my-game-tab />
+        <!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
+        <the-game-nav-bar></the-game-nav-bar>
 
-        <div class="secondary-wrapper">
+        <div class="home-container">
             <!-- Jackpot -->
             <div class="jackpot-wrapper">
                 <span class="jackpot-container">
                     <span class="jackpot-title">{{ $t('home.jackpot') }}</span>
                     <span class="jackpot-currency">THB</span>
                 </span>
-                <span class="jackpot-amount" id="amountText">1,830,082,162.31</span>
+                <span class="jackpot-amount">1,830,082,162.31</span>
             </div>
 
             <!-- Games -->
-            <ul class="games-content-wrapper">
+            <ul>
                 <!-- Live Casino -->
-                <li class="game-wrapper">
-                    <img class="game-image" src="/images/home/livecasino.png" />
-                    <div class="game-right-wrapper">
-                        <span class="game-title-wrapper">
-                            <img class="game-icon" src="/images/home/livecasino_icon.png" />
-                            <span class="game-title">{{ $t('home.livecasino') }}</span>
+                <li>
+                    <img src="/images/home/livecasino.png" :alt="$t('home.livecasino')" />
+                    <div class="right-wrapper">
+                        <span>
+                            <img src="/images/home/livecasino_icon.png" alt />
+                            <span>{{ $t('home.livecasino') }}</span>
                         </span>
-                        <p class="game-descript">{{ $t('home.livecasino_msg') }}</p>
-                        <nuxt-link class="game-play-now-btn" :to="$i18n.path('livecasino')">{{ $t('common.play_now') }}</nuxt-link>
+                        <p>{{ $t('home.livecasino_msg') }}</p>
+                        <nuxt-link :to="$i18n.path('livecasino')">{{ $t('common.play_now') }}</nuxt-link>
                     </div>
                 </li>
+
                 <!-- Sports -->
-                <li class="game-wrapper">
-                    <img class="game-image" src="/images/home/sports.png" />
-                    <div class="game-right-wrapper">
-                        <span class="game-title-wrapper">
-                            <img class="game-icon" src="/images/home/sports_icon.png" />
-                            <span class="game-title">{{ $t('home.sport_events') }}</span>
+                <li>
+                    <img src="/images/home/sports.png" :alt="$t('home.sport_events')" />
+                    <div class="right-wrapper">
+                        <span>
+                            <img src="/images/home/sports_icon.png" alt />
+                            <span>{{ $t('home.sport_events') }}</span>
                         </span>
-                        <p class="game-descript">{{ $t('home.sport_events_msg') }}</p>
-                        <nuxt-link class="game-play-now-btn" :to="$i18n.path('sports')">{{ $t('common.play_now') }}</nuxt-link>
+                        <p>{{ $t('home.sport_events_msg') }}</p>
+                        <nuxt-link :to="$i18n.path('sports')">{{ $t('common.play_now') }}</nuxt-link>
                     </div>
                 </li>
+
                 <!-- Slots -->
-                <li class="game-wrapper">
-                    <img class="game-image" src="/images/home/slots.png" />
-                    <div class="game-right-wrapper">
-                        <span class="game-title-wrapper">
-                            <img class="game-icon" src="/images/home/slots_icon.png" />
-                            <span class="game-title">{{ $t('home.slot_games') }}</span>
+                <li>
+                    <img src="/images/home/slots.png" :alt="$t('home.slot_games')" />
+                    <div class="right-wrapper">
+                        <span>
+                            <img src="/images/home/slots_icon.png" alt />
+                            <span>{{ $t('home.slot_games') }}</span>
                         </span>
-                        <p class="game-descript">{{ $t('home.slot_games_msg') }}</p>
-                        <nuxt-link class="game-play-now-btn" :to="$i18n.path('slots')">{{ $t('common.play_now') }}</nuxt-link>
+                        <p>{{ $t('home.slot_games_msg') }}</p>
+                        <nuxt-link :to="$i18n.path('slots')">{{ $t('common.play_now') }}</nuxt-link>
                     </div>
                 </li>
 
                 <!-- Bottom Three Games -->
-                <li class="bottom-games-wrapper">
-                    <div class="bottom-games-container">
-                        <nuxt-link class="bottom-game-item" :to="$i18n.path('lottery')">
-                            <img class="bottom-game-image" src="/images/home/lottery.png" />
-                            <span class="bottom-game-name">{{ $t('home.online_lottery') }}</span>
+                <li class="bottom-wrapper">
+                    <div class="bottom-container">
+                        <nuxt-link :to="$i18n.path('lottery')">
+                            <img src="/images/home/lottery.png" :alt="$t('home.online_lottery')" />
+                            <span>{{ $t('home.online_lottery') }}</span>
                         </nuxt-link>
-                        <nuxt-link class="bottom-game-item" :to="$i18n.path('fishing')">
-                            <img class="bottom-game-image" src="/images/home/fishing.png" />
-                            <span class="bottom-game-name">{{ $t('home.cash_fishing') }}</span>
+                        <nuxt-link :to="$i18n.path('fishing')">
+                            <img src="/images/home/fishing.png" :alt="$t('home.cash_fishing')" />
+                            <span>{{ $t('home.cash_fishing') }}</span>
                         </nuxt-link>
-                        <nuxt-link class="bottom-game-item" :to="$i18n.path('promotions')">
-                            <img class="bottom-game-image" src="/images/home/promotion.png" />
-                            <span class="bottom-game-name">{{ $t('home.cash_rebate') }}</span>
+                        <nuxt-link :to="$i18n.path('promotions')">
+                            <img src="/images/home/promotion.png" :alt="$t('home.cash_rebate')" />
+                            <span>{{ $t('home.cash_rebate') }}</span>
                         </nuxt-link>
                     </div>
                 </li>
@@ -84,17 +83,16 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyPopup from '~/components/MyPopup';
-import MyCarousel from '~/components/MyCarousel';
-import MyAnnouncement from '~/components/MyAnnouncement';
-import MyGameTab from '~/components/MyGameTab';
+
+import TheCarousel from '@/components/common/TheCarousel';
+import TheAnnouncement from '@/components/common/TheAnnouncement';
+import TheGameNavBar from '@/components/common/TheGameNavBar';
 
 export default {
     components: {
-        MyPopup,
-        MyCarousel,
-        MyAnnouncement,
-        MyGameTab
+        TheCarousel,
+        TheAnnouncement,
+        TheGameNavBar
     },
     computed: {
         ...mapGetters('user', {
@@ -131,7 +129,7 @@ export default {
             this.lastThreeString = this.numberString.substring(this.numberString.length - 3, this.numberString.length);
             this.amountString = this.toThousands(this.tempString) + this.lastThreeString;
 
-            $('#amountText').text(this.amountString);
+            $('.jackpot-amount').text(this.amountString);
         },
 
         // Add a comma every 3 digits
@@ -151,13 +149,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-    .primary-wrapper {
+    .home-wrapper {
         width: 100%;
         height: 100%;
         font-size: 12px;
         font-family: $font-family;
 
-        .secondary-wrapper {
+        .home-container {
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -208,44 +206,44 @@ export default {
                 }
             }
 
-            .games-content-wrapper {
+            > ul {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 width: 100%;
 
-                .game-wrapper {
+                > li {
                     display: flex;
                     width: 100%;
                     background: url('/images/home/game_bg.png');
                     background-size: cover;
                     border-radius: 5px;
                     box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
-                    margin-top: 5%;
                     padding: 3% 2%;
+                    margin-top: 5%;
 
-                    .game-image {
+                    > img {
                         width: 50%;
                         height: 100%;
                     }
 
-                    .game-right-wrapper {
+                    .right-wrapper {
                         display: flex;
                         flex-direction: column;
                         width: 100%;
                         color: $color-black;
                         padding: 0 3%;
 
-                        .game-title-wrapper {
+                        > span {
                             display: flex;
                             align-items: center;
                             width: 100%;
 
-                            .game-icon {
+                            > img {
                                 width: 16%;
                             }
 
-                            .game-title {
+                            > span {
                                 width: 100%;
                                 font-size: 16px;
                                 font-weight: bold;
@@ -254,13 +252,13 @@ export default {
                             }
                         }
 
-                        .game-descript {
+                        > p {
                             width: 100%;
                             height: 100%;
                             margin: 8% 0 0 0;
                         }
 
-                        .game-play-now-btn {
+                        > a {
                             width: 60%;
                             min-height: 30px;
                             line-height: 30px;
@@ -268,26 +266,26 @@ export default {
                             text-align: center;
                             border-radius: 5px;
                             border: 1px solid rgba(247, 147, 30, 0.4);
-                            background-image: $color-yellow-linear-unpress;
+                            background: $color-yellow-linear-unpress;
 
                             &:active {
-                                background-image: $color-yellow-linear;
+                                background: $color-yellow-linear;
                             }
                         }
                     }
                 }
 
-                .bottom-games-wrapper {
+                .bottom-wrapper {
                     width: 100%;
 
-                    .bottom-games-container {
+                    .bottom-container {
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         width: 100%;
                         margin-top: 5%;
 
-                        .bottom-game-item {
+                        > a {
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
@@ -299,14 +297,14 @@ export default {
                             box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.3);
                             margin: 0 3% 0 0;
 
-                            .bottom-game-image {
+                            > img {
                                 width: 90%;
                                 height: auto;
                             }
 
-                            .bottom-game-name {
+                            > span {
                                 width: 100%;
-                                color: #000000;
+                                color: $color-black;
                                 text-align: center;
                                 margin: -13% 0 2% 0;
                             }
@@ -322,10 +320,10 @@ export default {
     }
 
     // RWD
-    // Screen: 360px ~
+    // Screen: 375px ~
     @media screen and (min-width: 375px) {
-        .primary-wrapper {
-            .secondary-wrapper {
+        .home-wrapper {
+            .home-container {
                 .jackpot-wrapper {
                     .jackpot-amount {
                         font-size: 25px;

@@ -1,30 +1,28 @@
 <template>
     <div class="bank-input-wrapper">
-        <button class="bank-input" type="button" @click.stop="expandBankList()">{{ $t('common.please_select') }}</button>
+        <button class="bank-btn" type="button" @click.stop="expandBankList()">{{ $t('common.please_select') }}</button>
         <fa :icon="['fas', 'caret-down']" class="bank-down" />
         <!-- Deposit -->
-        <ul class="bank-list" :class="{'show': showBankList}" v-if="isDeposit">
-            <li class="bank-item please-select" @click.stop="selectDepositBank(null, null, null)">{{ $t('common.please_select') }}</li>
+        <ul v-show="showBankList" v-if="isDeposit">
+            <li class="please-select" @click.stop="selectDepositBank(null, null, null)">{{ $t('common.please_select') }}</li>
             <li
-                class="bank-item"
                 v-for="(item, index) in banks"
                 :key="`deposit-bank-${index}`"
                 @click.stop="selectDepositBank(item.accountNumber, item.name, item.bank)"
             >
-                <img class="bank-img" :src="`/images/member/bank/${item.bank}.png`" />
+                <img :src="`/images/member/bank/${item.bank}.png`" :alt="item.bank" />
             </li>
         </ul>
 
         <!-- Withdrawal -->
-        <ul class="bank-list" :class="{'show': showBankList}" v-if="isWithdrawal">
-            <li class="bank-item please-select" @click.stop="selectWithdrawalBank(null, null)">{{ $t('common.please_select') }}</li>
+        <ul v-show="showBankList" v-if="isWithdrawal">
+            <li class="please-select" @click.stop="selectWithdrawalBank(null, null)">{{ $t('common.please_select') }}</li>
             <li
-                class="bank-item"
                 v-for="(item, index) in banks"
                 :key="`withdrawal-bank-${index}`"
-                @click.stop="selectWithdrawalBank(item.code.toLowerCase(), item.name)"
+                @click.stop="selectWithdrawalBank(item.code.toLowerCase())"
             >
-                <img class="bank-img" :src="`/images/member/bank/${item.code.toLowerCase()}.png`" />
+                <img :src="`/images/member/bank/${item.code.toLowerCase()}.png`" :alt="item.code" />
             </li>
         </ul>
     </div>
@@ -66,8 +64,12 @@ export default {
         }
 
         // When Touch Others Place, "Bank" List Will Close
-        $(document).click(() => {
-            this.showBankList = false;
+        $(document).click(el => {
+            let touchEl = el.target.className;
+
+            if (touchEl !== 'bank-btn' && touchEl !== 'bank-mg') {
+                this.showBankList = false;
+            }
         });
     },
     methods: {
@@ -79,28 +81,25 @@ export default {
         // Select Deposit Bank
         selectDepositBank(accountNumber, name, bank) {
             if (bank) {
-                $('.bank-input').html(`<img class="bank-img" src="/images/member/bank/${bank}.png" />`);
-                this.bankOK = true;
+                $('.bank-input-wrapper > button').html(`<img class="bank-img" src="/images/member/bank/${bank}.png" alt="${bank}" />`);
             } else {
-                $('.bank-input').text(this.$t('common.please_select'));
-                this.bankOK = false;
+                $('.bank-input-wrapper > button').text(this.$t('common.please_select'));
             }
 
             this.showBankList = false;
-            this.$emit('getBank', accountNumber, name, this.bankOK);
+            this.$emit('selectedBank', accountNumber, name);
         },
 
         // Select Withdrawal Bank
-        selectWithdrawalBank(code, name) {
+        selectWithdrawalBank(code) {
             if (code) {
-                $('.bank-input').html(`<img class="bank-img" src="/images/member/bank/${code}.png" />`);
-                this.bankOK = true;
+                $('.bank-input-wrapper > button').html(`<img class="bank-img" src="/images/member/bank/${code}.png" alt="${code}" />`);
             } else {
-                $('.bank-input').text(this.$t('common.please_select'));
-                this.bankOK = false;
+                $('.bank-input-wrapper > button').text(this.$t('common.please_select'));
             }
 
             this.showBankList = false;
+            this.$emit('selectedBank', code);
         }
     }
 };
@@ -114,9 +113,8 @@ export default {
         border-radius: 5px;
         border: 1px solid #cecece;
         background: $color-white;
-        margin: 7px 0 24px 0;
 
-        .bank-input {
+        > button {
             width: 100%;
             font-size: 14px;
             background: $color-white;
@@ -124,22 +122,22 @@ export default {
             text-align: left;
             padding-left: 10px;
 
-            .bank-img {
+            > img {
                 width: auto;
                 max-width: 119px;
             }
         }
 
         .bank-down {
-            width: 15px;
+            position: absolute;
+            z-index: 1;
+            top: 9px;
+            right: 9px;
             font-size: 20px;
             color: $color-black;
-            align-self: center;
-            margin-right: 8px;
         }
 
-        .bank-list {
-            display: none;
+        > ul {
             position: absolute;
             z-index: 10;
             top: 38px;
@@ -152,10 +150,7 @@ export default {
             background: $color-white;
             overflow-y: scroll;
 
-            &.show {
-                display: block;
-            }
-            .bank-item {
+            > li {
                 font-size: 15px;
                 width: 100%;
                 border-bottom: 1px solid #cecece;
@@ -165,7 +160,7 @@ export default {
                     padding: 12px 0 12px 10px;
                 }
 
-                .bank-img {
+                > img {
                     width: auto;
                     max-width: 119px;
                 }

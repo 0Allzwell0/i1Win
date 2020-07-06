@@ -1,16 +1,17 @@
 <template>
     <div class="body-wrapper" :check="checkStatus()">
-        <Header />
-        <Menu />
+        <layout-header></layout-header>
+        <layout-menu></layout-menu>
         <nuxt />
-        <Footer />
+        <layout-footer></layout-footer>
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import Header from '~/components/MyHeader';
-import Menu from '~/components/MyMenu';
-import Footer from '~/components/MyFooter';
+
+import LayoutHeader from '@/components/layout/LayoutHeader';
+import LayoutMenu from '@/components/layout/LayoutMenu';
+import LayoutFooter from '@/components/layout/LayoutFooter';
 
 export default {
     computed: {
@@ -31,9 +32,9 @@ export default {
         })
     },
     components: {
-        Header,
-        Menu,
-        Footer
+        LayoutHeader,
+        LayoutMenu,
+        LayoutFooter
     },
     mounted() {
         // Loading Animation
@@ -66,14 +67,15 @@ export default {
 };
 </script>
 <style lang="scss">
-body {
-    width: 100%;
-    height: 100%;
-}
-.body-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    .body-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
 </style>

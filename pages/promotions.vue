@@ -30,7 +30,7 @@
 
                 <!-- Detail Modal -->
                 <div class="modal fade" :id="`detail_${index}`" tabindex="-1" role="dialog" aria-hidden="true">
-                    <my-promotions-detail class="modal-dialog" role="document" :htmlContent="item.body" />
+                    <modal-promotions-detail class="modal-dialog" role="document" :htmlContent="item.body"></modal-promotions-detail>
                 </div>
             </li>
         </ul>
@@ -38,7 +38,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyPromotionsDetail from '~/components/MyPromotionsDetail';
+
+import ModalPromotionsDetail from '@/components/modal/ModalPromotionsDetail';
 
 export default {
     computed: {
@@ -50,7 +51,7 @@ export default {
         })
     },
     components: {
-        MyPromotionsDetail
+        ModalPromotionsDetail
     },
     mounted() {
         this.$store.dispatch('user/getPromotions');

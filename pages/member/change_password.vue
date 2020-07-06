@@ -1,65 +1,46 @@
 <template>
-    <main class="change-password-wrapper">
-        <!-- Error Message Modal -->
-        <my-message-modal />
+    <main class="member-wrapper">
+        <!-- Message Modal -->
+        <modal-message></modal-message>
 
-        <div class="change-password-container">
+        <div class="member-container">
             <!-- Title -->
-            <h2 class="change-password-title">{{ $t('change_password.title') }}</h2>
+            <h2>{{ $t('change_psw.title') }}</h2>
 
             <!-- Currrent Password -->
-            <h3 class="change-password-samall-title">{{ $t('change_password.current_password') }}</h3>
-            <div class="change-password-input-wrapper">
-                <input
-                    class="change-password-input current-input"
-                    type="password"
-                    :placeholder="$t('change_password.current_password')"
-                    v-model="myCurrentPSW"
-                />
-                <img class="change-password-eye current-eye" src="/images/close_eye.png" @click="showPassword('current')" />
+            <h3>{{ $t('change_psw.current_psw') }}</h3>
+            <div class="input-wrapper">
+                <input class="current-input" type="password" :placeholder="$t('change_psw.current_psw')" v-model="myCurrentPSW" />
+                <img class="current-eye" src="/images/close_eye.png" @click="showPassword('current')" alt="Eye" />
             </div>
 
             <!-- New Password -->
-            <h3 class="change-password-samall-title">{{ $t('change_password.new_password') }}</h3>
-            <div class="change-password-input-wrapper">
-                <input
-                    class="change-password-input new-input"
-                    type="password"
-                    :placeholder="$t('change_password.new_password')"
-                    v-model="myNewPSW"
-                />
-                <img class="change-password-eye new-eye" src="/images/close_eye.png" @click="showPassword('new')" />
+            <h3>{{ $t('change_psw.new_psw') }}</h3>
+            <div class="input-wrapper">
+                <input class="new-input" type="password" :placeholder="$t('change_psw.new_psw')" v-model="myNewPSW" />
+                <img class="new-eye" src="/images/close_eye.png" @click="showPassword('new')" alt="Eye" />
             </div>
 
             <!-- Confirm New Password -->
-            <h3 class="change-password-samall-title">{{ $t('change_password.confirm_password') }}</h3>
-            <div class="change-password-input-wrapper">
-                <input
-                    class="change-password-input confirm-input"
-                    type="password"
-                    :placeholder="$t('change_password.confirm_password')"
-                    v-model="myConfirmNewPSW"
-                />
-                <img class="change-password-eye confirm-eye" src="/images/close_eye.png" @click="showPassword('confirm')" />
+            <h3>{{ $t('change_psw.confirm_psw') }}</h3>
+            <div class="input-wrapper">
+                <input class="confirm-input" type="password" :placeholder="$t('change_psw.confirm_psw')" v-model="myConfirmNewPSW" />
+                <img class="confirm-eye" src="/images/close_eye.png" @click="showPassword('confirm')" alt="Eye" />
             </div>
 
             <!-- Change Button -->
-            <button
-                class="change-password-btn"
-                type="submit"
-                @click="changePassword()"
-                :disabled="!allowClick"
-            >{{ $t('common.submit') }}</button>
+            <button type="button" @click="changePassword()">{{ $t('common.submit') }}</button>
         </div>
     </main>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyMessageModal from '~/components/MyMessageModal';
+
+import ModalMessage from '@/components/modal/ModalMessage';
 
 export default {
     components: {
-        MyMessageModal
+        ModalMessage
     },
     computed: {
         ...mapGetters('user', {
@@ -74,33 +55,10 @@ export default {
             showConfirm: false,
             myCurrentPSW: null,
             myNewPSW: null,
-            myConfirmNewPSW: null,
-            allowClick: false
+            myConfirmNewPSW: null
         };
     },
-    mounted() {
-        $('.change-password-input').on('keyup blur', () => {
-            let currentPSWLength = null;
-            let newPSWLength = null;
-            let confirmNewPSWLength = null;
-
-            if (this.myCurrentPSW) {
-                currentPSWLength = this.myCurrentPSW.length;
-            }
-            if (this.myNewPSW) {
-                newPSWLength = this.myNewPSW.length;
-            }
-            if (this.myConfirmNewPSW) {
-                confirmNewPSWLength = this.myConfirmNewPSW.length;
-            }
-
-            if (currentPSWLength > 0 && newPSWLength > 0 && confirmNewPSWLength > 0) {
-                this.allowClick = true;
-            } else {
-                this.allowClick = false;
-            }
-        });
-    },
+    mounted() {},
     methods: {
         // Show or Hide Password
         showPassword(type) {
@@ -144,22 +102,20 @@ export default {
                     this.showResponseMsg();
                 });
             } else if (this.myNewPSW !== this.myConfirmNewPSW) {
-                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('change_password.no_match_msg')}</div>`);
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('change_psw.no_match_msg')}</div>`);
             }
         },
 
         // Show Error Message Modal
         showResponseMsg() {
             if (this.httpStatus === 204) {
-                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('change_password.success_msg')}</div>`);
+                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('change_psw.success_msg')}</div>`);
             } else if (this.httpStatus === 422) {
                 $('#errorMsg .error-msg-container').html('');
                 if (this.changePSWErrorMsg.password) {
                     let arrayLength = this.changePSWErrorMsg.password.length;
                     for (let i = 0; i < arrayLength; i++) {
-                        $('#errorMsg .error-msg-container').append(
-                            `<div class="error-msg">${this.changePSWErrorMsg.password[i]}</div>`
-                        );
+                        $('#errorMsg .error-msg-container').append(`<div class="error-msg">${this.changePSWErrorMsg.password[i]}</div>`);
                     }
                 }
 
@@ -190,76 +146,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-    .change-password-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        min-height: calc(100vh - 50px);
-        font-size: 12px;
-        font-weight: bold;
-        font-family: $font-family;
-        background-image: $background_img;
-        background-size: cover;
-        padding: 0 30px 90px 30px;
-
-        .change-password-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 414px;
-            height: 100%;
-
-            .change-password-title {
-                font-size: 24px;
-                margin: 25px 0 15px 0;
-            }
-
-            .change-password-samall-title {
-                width: 100%;
-                font-size: 18px;
-                margin: 30px 0 10px 0;
-            }
-
-            .change-password-input-wrapper {
-                position: relative;
-                display: flex;
-                width: 100%;
-                border-radius: 5px;
-                border: 1px solid $color-gray;
-
-                .change-password-input {
-                    width: 100%;
-                    height: 38px;
-                    font-size: 14px;
-                    background: $color-white;
-                    border-radius: 5px;
-                    padding-left: 13px;
-                }
-
-                .change-password-eye {
-                    position: absolute;
-                    top: 13px;
-                    right: 8px;
-                    height: 12px;
-                    filter: brightness(50%);
-                }
-            }
-
-            .change-password-btn {
-                width: 100%;
-                min-height: 52px;
-                font-size: 18px;
-                border: $border-style;
-                background: $color-yellow-linear-unpress;
-                border-radius: 5px;
-                margin-top: 50px;
-
-                &:active {
-                    background: $color-yellow-linear;
-                }
-            }
-        }
-    }
+    @import '@/assets/scss/PageMember.scss';
 </style>

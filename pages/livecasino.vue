@@ -1,78 +1,82 @@
 <template>
     <main class="livecasino-wrapper">
         <!-- Carousel -->
-        <my-carousel />
+        <the-carousel></the-carousel>
 
         <!-- Announcement -->
-        <my-announcement />
+        <the-announcement></the-announcement>
 
-        <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
-        <my-game-tab />
+        <!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
+        <the-game-nav-bar></the-game-nav-bar>
 
         <!-- Games -->
         <ul class="livecasino-container">
-            <li class="livecasino-item-wrapper">
+            <li>
                 <!-- Dream Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_dg.png" />
-                    <span class="livecasino-item-name">Dream Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.dg_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('dg')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_dg.png" alt="Dream Gaming" />
+                    <span>Dream Gaming</span>
+                    <p>{{ $t('livecasino.dg_msg') }}</p>
+                    <button type="button" @click="openGame('dg')">{{ $t('common.play_now') }}</button>
                 </div>
+
                 <!-- AE Sexy -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_sg.png" />
-                    <span class="livecasino-item-name">AE Sexy</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.sg_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sb')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_sg.png" alt="AE Sexy" />
+                    <span>AE Sexy</span>
+                    <p>{{ $t('livecasino.sg_msg') }}</p>
+                    <button type="button" @click="openGame('sb')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
-            <li class="livecasino-item-wrapper">
+            <li>
                 <!-- Evolution Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_evo.png" />
-                    <span class="livecasino-item-name">Evolution Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.evo_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('evo')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_evo.png" alt="Evolution Gaming" />
+                    <span>Evolution Gaming</span>
+                    <p>{{ $t('livecasino.evo_msg') }}</p>
+                    <button type="button" @click="openGame('evo')">{{ $t('common.play_now') }}</button>
                 </div>
+
                 <!-- Microgaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_mg.png" />
-                    <span class="livecasino-item-name">Microgaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.mg_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('mg')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_mg.png" alt="Microgaming" />
+                    <span>Microgaming</span>
+                    <span>{{ $t('livecasino.mg_msg') }}</span>
+                    <button type="button" @click="openGame('mg')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
-            <li class="livecasino-item-wrapper">
+            <li>
                 <!-- Asia Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_ag.png" />
-                    <span class="livecasino-item-name">Asia Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.ag_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('ag')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_ag.png" alt="Asia Gaming" />
+                    <span>Asia Gaming</span>
+                    <p>{{ $t('livecasino.ag_msg') }}</p>
+                    <button type="button" @click="openGame('ag')">{{ $t('common.play_now') }}</button>
                 </div>
+
                 <!-- Gameplay Interactive -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_gpi.png" />
-                    <span class="livecasino-item-name">Gameplay Interactive</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.gpi_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('gpi')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_gpi.png" alt="Gameplay Interactive" />
+                    <span>Gameplay Interactive</span>
+                    <p>{{ $t('livecasino.gpi_msg') }}</p>
+                    <button type="button" @click="openGame('gpi')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
-            <li class="livecasino-item-wrapper">
+            <li>
                 <!-- Playtech -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_plt.png" />
-                    <span class="livecasino-item-name">Playtech</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.plt_msg') }}</span>
-                    <nuxt-link class="livecasino-play-now-btn plt-btn" :to="$i18n.path('livecasino_plt')">{{ $t('common.play_now') }}</nuxt-link>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_plt.png" alt="Playtech" />
+                    <span>Playtech</span>
+                    <p>{{ $t('livecasino.plt_msg') }}</p>
+                    <nuxt-link :to="$i18n.path('livecasino_plt')">{{ $t('common.play_now') }}</nuxt-link>
                 </div>
+
                 <!-- SA Gaming -->
-                <div class="livecasino-item-container">
-                    <img class="livecasino-item-img" src="/images/livecasino/gm_sa.png" />
-                    <span class="livecasino-item-name">SA Gaming</span>
-                    <span class="livecasino-item-msg">{{ $t('livecasino.sa_msg') }}</span>
-                    <button class="livecasino-play-now-btn" type="button" @click="openGame('sa')">{{ $t('common.play_now') }}</button>
+                <div class="item-wrapper">
+                    <img src="/images/livecasino/gm_sa.png" alt="SA Gaming" />
+                    <span>SA Gaming</span>
+                    <p>{{ $t('livecasino.sa_msg') }}</p>
+                    <button type="button" @click="openGame('sa')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
         </ul>
@@ -80,9 +84,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyCarousel from '~/components/MyCarousel';
-import MyAnnouncement from '~/components/MyAnnouncement';
-import MyGameTab from '~/components/MyGameTab';
+
+import TheCarousel from '@/components/common/TheCarousel';
+import TheAnnouncement from '@/components/common/TheAnnouncement';
+import TheGameNavBar from '@/components/common/TheGameNavBar';
 
 export default {
     computed: {
@@ -94,15 +99,11 @@ export default {
         })
     },
     components: {
-        MyCarousel,
-        MyAnnouncement,
-        MyGameTab
+        TheCarousel,
+        TheAnnouncement,
+        TheGameNavBar
     },
-    mounted() {
-        // Set Game Tab CSS
-        $('.tab-container').removeClass('active');
-        $('.tab-livecasino').addClass('active');
-    },
+    mounted() {},
     methods: {
         // Open Live Casino Games
         openGame(productCode) {
@@ -139,7 +140,7 @@ export default {
             background-size: cover;
             padding-bottom: 70px;
 
-            .livecasino-item-wrapper {
+            > li {
                 display: flex;
                 padding: 7px;
                 color: $color-black;
@@ -148,7 +149,7 @@ export default {
                     background: rgba(173, 173, 173, 0.4);
                 }
 
-                .livecasino-item-container {
+                .item-wrapper {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
@@ -156,22 +157,22 @@ export default {
                     padding: 7px 7px 0 7px;
                     background: transparent;
 
-                    .livecasino-item-img {
+                    > img {
                         width: 100%;
                     }
 
-                    .livecasino-item-name {
+                    > span {
                         font-size: 15px;
                         font-weight: bold;
                         margin: 10px 0 5px 0;
                     }
 
-                    .livecasino-item-msg {
+                    > p {
                         height: 100%;
                         color: #575757;
                     }
 
-                    .livecasino-play-now-btn {
+                    > button {
                         width: 95px;
                         min-height: 35px;
                         font-weight: bold;
@@ -183,13 +184,20 @@ export default {
                         &:active {
                             background: $color-yellow-linear;
                         }
+                    }
 
-                        &.plt-btn {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            color: $color-black;
-                        }
+                    > a {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 95px;
+                        min-height: 35px;
+                        color: $color-black;
+                        font-weight: bold;
+                        background: $color-yellow-linear-unpress;
+                        border: $border-style;
+                        border-radius: 5px;
+                        margin-top: 15px;
                     }
                 }
             }

@@ -3,7 +3,7 @@
     "logout": "Logout",
     "account": "Account",
     "edit_profile": "Edit Profile",
-    "change_password": "Change Password",
+    "change_psw": "Change Password",
     "infor_center": "Info Center",
     "about_us": "About Us",
     "how_to_join": "How to Join",
@@ -21,7 +21,7 @@
     "wallet": "Wallet"
   },
   "home": {
-    "tab": {
+    "nav": {
       "livecasino": "Casino",
       "sports": "Sports",
       "slots": "Slots",
@@ -49,7 +49,7 @@
   },
   "register": {
     "registration": "REGISTRATION",
-    "confirm_password": "Confirm Password",
+    "confirm_psw": "Confirm Password",
     "select_bank": "Please select withdrawal bank",
     "bank_account_num": "Bank Account Number",
     "mobile_number": "Mobile Number",
@@ -132,15 +132,15 @@
     "female": "Female",
     "success_msg": "Change Profile Success !!"
   },
-  "change_password": {
+  "change_psw": {
     "title": "Change Password",
-    "current_password": "Current Password",
-    "new_password": "New Password",
-    "confirm_password": "Confirm Password",
+    "current_psw": "Current Password",
+    "new_psw": "New Password",
+    "confirm_psw": "Confirm Password",
     "success_msg": "Change Password Success !!",
     "no_match_msg": "Password does not match !!"
   },
-  "wallet": {
+  "member": {
     "deposit": "Deposit",
     "withdrawal": "Withdrawal",
     "transfer": "Transfer",
@@ -150,6 +150,7 @@
     "close_wallet": "Close Wallet",
     "main_wallet": "Main Wallet",
     "account_number": "Account Number : ",
+    "fullname": "Fullname",
     "amount": "Amount",
     "available_balance": "Available Balance"
   },
@@ -172,7 +173,7 @@
     "minimum_withdrawal": "Minimum Withdrawal THB 500",
     "withdrawal_msg": "Please make sure that you fill up accurate bank account details to avoid any inconveniences & using third-party withdrawal is NOT accepted by us.",
     "account_number": "Account Number",
-    "account_number_placeholder": "Please provide bank account with matching full name",
+    "account_num_placeholder": "Please provide bank account with matching full name",
     "amount_placeholder": "Minimum withdrawal is THB ",
     "today_withdraw_total": "The accumulated withdrawal amount has exceeded the limit today, please contact customer service.",
     "today_count": "The number of withdrawals has exceeded the limit today, please contact customer service.",

@@ -20,13 +20,6 @@ export default {
         finish() {
             setTimeout(() => {
                 this.loading = false;
-
-                if (this.$route.name === 'index') {
-                    setTimeout(() => {
-                        // Show Ad Popup
-                        // $('#myPopupModal').modal('show');
-                    }, 300);
-                }
             }, 1000);
         }
     }

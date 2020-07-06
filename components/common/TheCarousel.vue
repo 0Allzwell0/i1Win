@@ -86,6 +86,7 @@ export default {
                 opacity: 0.5;
                 margin: 0 4px 4px 4px;
             }
+
             .swiper-pagination-bullet-active {
                 background: $color-yellow;
                 opacity: 1;

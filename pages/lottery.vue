@@ -1,46 +1,46 @@
 <template>
     <main class="lottery-wrapper">
         <!-- Carousel -->
-        <my-carousel />
+        <the-carousel></the-carousel>
 
         <!-- Announcement -->
-        <my-announcement />
+        <the-announcement></the-announcement>
 
-        <!-- Game Types Of Tab => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
-        <my-game-tab />
+        <!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
+        <the-game-nav-bar></the-game-nav-bar>
 
         <!-- Games -->
         <ul class="lottery-container">
-            <li class="lottery-item-wrapper">
-                <div class="lottery-item-container">
-                    <span class="lottery-item-name">{{ $t('lottery.thailottery') }}</span>
-                    <span class="lottery-item-msg">{{ $t('lottery.thailottery_msg') }}</span>
-                    <button class="lottery-play-now-btn" type="button" @click="openGame('thailottery')">{{ $t('common.play_now') }}</button>
+            <li>
+                <div class="item-wrapper">
+                    <span>{{ $t('lottery.thailottery') }}</span>
+                    <p>{{ $t('lottery.thailottery_msg') }}</p>
+                    <button type="button" @click="openGame('thailottery')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="lottery-img" src="/images/lottery/thailottery.png" />
+                <img src="/images/lottery/thailottery.png" :alt="$t('lottery.thailottery')" />
             </li>
-            <li class="lottery-item-wrapper">
-                <img class="lottery-img" src="/images/lottery/diamond.png" />
-                <div class="lottery-item-container">
-                    <span class="lottery-item-name">{{ $t('lottery.diamond') }}</span>
-                    <span class="lottery-item-msg">{{ $t('lottery.diamond_msg') }}</span>
-                    <button class="lottery-play-now-btn" type="button" @click="openGame('diamond')">{{ $t('common.play_now') }}</button>
+            <li>
+                <img src="/images/lottery/diamond.png" :alt="$t('lottery.diamond')" />
+                <div class="item-wrapper">
+                    <span>{{ $t('lottery.diamond') }}</span>
+                    <p>{{ $t('lottery.diamond_msg') }}</p>
+                    <button type="button" @click="openGame('diamond')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
-            <li class="lottery-item-wrapper">
-                <div class="lottery-item-container">
-                    <span class="lottery-item-name">{{ $t('lottery.ruby') }}</span>
-                    <span class="lottery-item-msg">{{ $t('lottery.ruby_msg') }}</span>
-                    <button class="lottery-play-now-btn" type="button" @click="openGame('ruby')">{{ $t('common.play_now') }}</button>
+            <li>
+                <div class="item-wrapper">
+                    <span>{{ $t('lottery.ruby') }}</span>
+                    <p>{{ $t('lottery.ruby_msg') }}</p>
+                    <button type="button" @click="openGame('ruby')">{{ $t('common.play_now') }}</button>
                 </div>
-                <img class="lottery-img" src="/images/lottery/ruby.png" />
+                <img src="/images/lottery/ruby.png" :alt="$t('lottery.ruby')" />
             </li>
-            <li class="lottery-item-wrapper">
-                <img class="lottery-img" src="/images/lottery/sapphire.png" />
-                <div class="lottery-item-container">
-                    <span class="lottery-item-name">{{ $t('lottery.sapphire') }}</span>
-                    <span class="lottery-item-msg">{{ $t('lottery.sapphire_msg') }}</span>
-                    <button class="lottery-play-now-btn" type="button" @click="openGame('sapphire')">{{ $t('common.play_now') }}</button>
+            <li>
+                <img src="/images/lottery/sapphire.png" :alt="$t('lottery.sapphire')" />
+                <div class="item-wrapper">
+                    <span>{{ $t('lottery.sapphire') }}</span>
+                    <p>{{ $t('lottery.sapphire_msg') }}</p>
+                    <button type="button" @click="openGame('sapphire')">{{ $t('common.play_now') }}</button>
                 </div>
             </li>
         </ul>
@@ -48,9 +48,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import MyCarousel from '~/components/MyCarousel';
-import MyAnnouncement from '~/components/MyAnnouncement';
-import MyGameTab from '~/components/MyGameTab';
+
+import TheCarousel from '@/components/common/TheCarousel';
+import TheAnnouncement from '@/components/common/TheAnnouncement';
+import TheGameNavBar from '@/components/common/TheGameNavBar';
 
 export default {
     computed: {
@@ -62,25 +63,24 @@ export default {
         })
     },
     components: {
-        MyCarousel,
-        MyAnnouncement,
-        MyGameTab
+        TheCarousel,
+        TheAnnouncement,
+        TheGameNavBar
     },
-    mounted() {
-        // Set Game Tab CSS
-        $('.tab-lottery').addClass('active');
-    },
+    mounted() {},
     methods: {
         // Open Lottery Games
         openGame(productCode) {
             if (this.isLogined) {
-                this.$store.dispatch('game/getGameURL', {
-                    category: 'Lottery',
-                    productCode,
-                    is_mobile: 1
-                }).then(() => {
-                    window.open(this.gameURL);
-                });
+                this.$store
+                    .dispatch('game/getGameURL', {
+                        category: 'Lottery',
+                        productCode,
+                        is_mobile: 1
+                    })
+                    .then(() => {
+                        window.open(this.gameURL);
+                    });
             } else {
                 this.$router.push(this.$i18n.path('login'));
             }
@@ -104,34 +104,34 @@ export default {
             background-size: cover;
             padding-bottom: 70px;
 
-            .lottery-item-wrapper {
+            > li {
                 display: flex;
                 width: 100%;
                 min-height: 165px;
 
-                .lottery-img {
+                > img {
                     width: 57%;
                     align-self: center;
                 }
 
-                .lottery-item-container {
+                .item-wrapper {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     margin: 2% 2% 2% 4%;
 
-                    .lottery-item-name {
+                    > span {
                         font-size: 16px;
                         font-weight: bold;
                         margin-bottom: 5px;
                     }
 
-                    .lottery-item-msg {
+                    > p {
                         color: #575757;
                         height: 100%;
                     }
 
-                    .lottery-play-now-btn {
+                    > button {
                         width: 95px;
                         min-height: 35px;
                         font-weight: bold;

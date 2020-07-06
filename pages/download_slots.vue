@@ -112,11 +112,11 @@ export default {
         openDownloadURL(code) {
             if (this.isLogined) {
                 if (code == 'plt') {
-                    window.open(pltData.url);
+                    window.open(this.pltData.url);
                 } else if (code == 'joker') {
-                    window.open(jokerData.url);
+                    window.open(this.jokerData.url);
                 } else if (code == '918kiss') {
-                    window.open(kiss918Data.url);
+                    window.open(this.kiss918Data.url);
                 }
             } else {
                 this.$router.push({ path: this.$i18n.path('login') });

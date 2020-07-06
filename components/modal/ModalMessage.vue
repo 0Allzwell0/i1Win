@@ -1,7 +1,7 @@
 <template>
     <div class="modal fade" id="errorMsg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog error-msg-wrapper" role="document">
-            <img class="modal-close" src="/images/modal_close.svg" />
+            <fa :icon="['fas', 'times']" class="modal-close" data-dismiss="modal" />
             <div class="error-msg-container"></div>
         </div>
     </div>
@@ -25,7 +25,8 @@ export default {};
             position: absolute;
             right: -20px;
             top: -20px;
-            width: 8%;
+            color: $color-black;
+            font-size: 26px;
         }
 
         .error-msg-container {
