@@ -6,20 +6,20 @@
         <!-- Primary Content -->
         <div class="history-container">
             <!-- History Tab -->
-            <ul class="history-tab-wrapper list-group">
-                <li class="history-tab-container transaction-tab">
-                    <a class="history-tab active" data-toggle="list" href="#historyTransaction">{{ $t('history.transaction') }}</a>
+            <ul class="list-group">
+                <li class="transaction-tab">
+                    <a class="active show" data-toggle="list" href="#historyTransaction">{{ $t('history.transaction') }}</a>
                 </li>
-                <li class="history-tab-container statement-tab">
-                    <a class="history-tab" data-toggle="list" href="#historyStatement">{{ $t('history.statement') }}</a>
+                <li class="statement-tab">
+                    <a data-toggle="list" href="#historyStatement">{{ $t('history.statement') }}</a>
                 </li>
-                <li class="history-tab-container transfer-tab">
-                    <a class="history-tab" data-toggle="list" href="#historyTransfer">{{ $t('history.transfer') }}</a>
+                <li class="transfer-tab">
+                    <a data-toggle="list" href="#historyTransfer">{{ $t('history.transfer') }}</a>
                 </li>
             </ul>
 
             <!-- Date -->
-            <div class="history-date-wrapper">
+            <div class="history-date">
                 <!-- From Date -->
                 <base-date-selector class="from-date" v-on:getFromDate="getFromDate"></base-date-selector>
                 <!-- To Date -->
@@ -27,73 +27,73 @@
             </div>
 
             <!-- Search Button -->
-            <button class="history-search-button" type="submit" @click="search()">{{ $t('history.search') }}</button>
+            <button type="button" @click="search()">{{ $t('history.search') }}</button>
 
             <!-- Secondary Content -->
-            <div class="history-data-wrapper">
+            <div class="data-list-wrapper">
                 <!-- Transaction -->
-                <div class="history-data-container tab-pane fade show active" id="historyTransaction">
+                <div class="data-list-container tab-pane fade show active" id="historyTransaction">
                     <!-- Transaction Title Bar -->
-                    <ul class="history-data-title-bar-wrapper transaction-bar">
-                        <li class="history-data-title title-date">{{ $t('history.date') }}</li>
-                        <li class="history-data-title title-type">{{ $t('history.type') }}</li>
-                        <li class="history-data-title title-amount">{{ $t('member.amount') }}</li>
-                        <li class="history-data-title title-status">{{ $t('history.status') }}</li>
-                        <li class="history-data-title title-remark">{{ $t('history.remark') }}</li>
+                    <ul class="title-bar transaction-bar">
+                        <li class="title-date">{{ $t('history.date') }}</li>
+                        <li class="title-type">{{ $t('history.type') }}</li>
+                        <li class="title-amount">{{ $t('member.amount') }}</li>
+                        <li class="title-status">{{ $t('history.status') }}</li>
+                        <li class="title-remark">{{ $t('history.remark') }}</li>
                     </ul>
 
                     <!-- Transaction Data List -->
-                    <ul class="history-data-list transaction-list">
-                        <li class="history-data-list-item" v-for="(item, index) in transactionData" :key="`transaction-${index}`">
-                            <span class="data-list-item item-date">{{ item.date }}</span>
-                            <span class="data-list-item item-type">{{ item.type }}</span>
-                            <span class="data-list-item item-amount">{{ item.amount }}</span>
-                            <span class="data-list-item item-status">{{ item.status }}</span>
-                            <span class="data-list-item item-remark">{{ item.remark }}</span>
+                    <ul class="data-list transaction-list">
+                        <li v-for="(item, index) in transactionData" :key="`transaction-${index}`">
+                            <span class="item-date">{{ item.date }}</span>
+                            <span class="item-type">{{ item.type }}</span>
+                            <span class="item-amount">{{ item.amount }}</span>
+                            <span class="item-status">{{ item.status }}</span>
+                            <span class="item-remark">{{ item.remark }}</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Statement -->
-                <div class="history-data-container tab-pane fade" id="historyStatement">
+                <div class="data-list-container tab-pane fade" id="historyStatement">
                     <!-- Statement Title Bar -->
-                    <ul class="history-data-title-bar-wrapper statement-bar">
-                        <li class="history-data-title title-type">{{ $t('history.type') }}</li>
-                        <li class="history-data-title title-turnover">{{ $t('history.turnover') }}</li>
-                        <li class="history-data-title title-winloss">{{ $t('history.winloss') }}</li>
-                        <li class="history-data-title title-active_bet">{{ $t('history.active_bet') }}</li>
+                    <ul class="title-bar statement-bar">
+                        <li class="title-type">{{ $t('history.type') }}</li>
+                        <li class="title-turnover">{{ $t('history.turnover') }}</li>
+                        <li class="title-winloss">{{ $t('history.winloss') }}</li>
+                        <li class="title-active_bet">{{ $t('history.active_bet') }}</li>
                     </ul>
 
                     <!-- Statement Data List -->
-                    <ul class="history-data-list statement-list">
-                        <li class="history-data-list-item" v-for="(item, index) in statementData" :key="`statement-${index}`">
-                            <span class="data-list-item item-type">{{ item.type }}</span>
-                            <span class="data-list-item item-turnover">{{ item.turnover }}</span>
-                            <span class="data-list-item item-winloss">{{ item.winloss }}</span>
-                            <span class="data-list-item item-active_bet">{{ item.active_bet }}</span>
+                    <ul class="data-list statement-list">
+                        <li v-for="(item, index) in statementData" :key="`statement-${index}`">
+                            <span class="item-type">{{ item.type }}</span>
+                            <span class="item-turnover">{{ item.turnover }}</span>
+                            <span class="item-winloss">{{ item.winloss }}</span>
+                            <span class="item-active_bet">{{ item.active_bet }}</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Transfer -->
-                <div class="history-data-container tab-pane fade" id="historyTransfer">
+                <div class="data-list-container tab-pane fade" id="historyTransfer">
                     <!-- Transfer Title Bar -->
-                    <ul class="history-data-title-bar-wrapper transfer-bar">
-                        <li class="history-data-title title-date">{{ $t('history.date') }}</li>
-                        <li class="history-data-title title-from">{{ $t('history.from') }}</li>
-                        <li class="history-data-title title-to">{{ $t('history.to') }}</li>
-                        <li class="history-data-title title-amount">{{ $t('member.amount') }}</li>
-                        <li class="history-data-title title-status">{{ $t('history.status') }}</li>
+                    <ul class="title-bar transfer-bar">
+                        <li class="title-date">{{ $t('history.date') }}</li>
+                        <li class="title-from">{{ $t('history.from') }}</li>
+                        <li class="title-to">{{ $t('history.to') }}</li>
+                        <li class="title-amount">{{ $t('member.amount') }}</li>
+                        <li class="title-status">{{ $t('history.status') }}</li>
                     </ul>
 
                     <!-- Transfer Data List -->
-                    <ul class="history-data-list transfer-list">
-                        <li class="history-data-list-item" v-for="(item, index) in transferData" :key="`transfer-${index}`">
-                            <span class="data-list-item item-date">{{ item.date }}</span>
-                            <span class="data-list-item item-from">{{ item.from }}</span>
-                            <span class="data-list-item item-to">{{ item.to }}</span>
-                            <span class="data-list-item item-amount">{{ item.amount }}</span>
-                            <span class="data-list-item item-status">{{ item.status }}</span>
+                    <ul class="data-list transfer-list">
+                        <li v-for="(item, index) in transferData" :key="`transfer-${index}`">
+                            <span class="item-date">{{ item.date }}</span>
+                            <span class="item-from">{{ item.from }}</span>
+                            <span class="item-to">{{ item.to }}</span>
+                            <span class="item-amount">{{ item.amount }}</span>
+                            <span class="item-status">{{ item.status }}</span>
                         </li>
                     </ul>
                 </div>
@@ -129,10 +129,10 @@ export default {
     mounted() {
         let _this = this;
 
-        this.getHistoryData('Transaction');
+        // this.getHistoryData('Transaction');
 
         // Judge Selected Tab
-        $('.history-tab-container').click(function() {
+        $('.list-group > li').click(function() {
             let type = $(this).attr('class');
             if (type.indexOf('transaction') !== -1) {
                 _this.currentTab = 'Transaction';
@@ -196,36 +196,19 @@ export default {
             font-size: 12px;
             padding-bottom: 90px;
 
-            .history-tab-wrapper {
+            > ul {
                 display: flex;
                 flex-direction: row;
                 margin: 30px 15px 10px 15px;
 
-                .history-tab-container {
+                > li {
                     display: flex;
                     width: 100%;
                     border-top: $border-style;
                     border-left: $border-style;
                     border-bottom: $border-style;
 
-                    &:first-child {
-                        border-radius: 20px 0 0 20px;
-
-                        .history-tab {
-                            border-radius: 20px 0 0 20px;
-                        }
-                    }
-
-                    &:last-child {
-                        border-radius: 0 20px 20px 0;
-                        border-right: $border-style;
-
-                        .history-tab {
-                            border-radius: 0 20px 20px 0;
-                        }
-                    }
-
-                    .history-tab {
+                    > a {
                         width: 100%;
                         color: $color-black;
                         font-weight: bold;
@@ -239,16 +222,33 @@ export default {
                             background: $color-yellow;
                         }
                     }
+
+                    &:first-child {
+                        border-radius: 20px 0 0 20px;
+
+                        > a {
+                            border-radius: 20px 0 0 20px;
+                        }
+                    }
+
+                    &:last-child {
+                        border-radius: 0 20px 20px 0;
+                        border-right: $border-style;
+
+                        > a {
+                            border-radius: 0 20px 20px 0;
+                        }
+                    }
                 }
             }
 
-            .history-date-wrapper {
+            .history-date {
                 display: flex;
                 justify-content: space-between;
                 margin: 4% 8% 6% 8%;
             }
 
-            .history-search-button {
+            > button {
                 width: 85%;
                 font-size: 19px;
                 font-weight: bold;
@@ -264,14 +264,14 @@ export default {
                 }
             }
 
-            .history-data-wrapper {
+            .data-list-wrapper {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
                 height: 100%;
                 padding: 6% 0 0 0;
 
-                .history-data-container {
+                .data-list-container {
                     display: flex;
                     flex-direction: column;
 
@@ -283,7 +283,7 @@ export default {
                         display: flex;
                     }
 
-                    .history-data-title-bar-wrapper {
+                    .title-bar {
                         display: flex;
                         width: 100%;
                         font-size: 14px;
@@ -293,7 +293,7 @@ export default {
                         padding: 3% 1% 3% 1%;
                         text-align: center;
 
-                        .history-data-title {
+                        > li {
                             flex: 1;
                         }
 
@@ -314,6 +314,7 @@ export default {
                                 flex: 1;
                             }
                         }
+
                         &.transfer-bar {
                             .title-date {
                                 flex: 1.05;
@@ -332,12 +333,13 @@ export default {
                             }
                         }
                     }
-                    .history-data-list {
+
+                    .data-list {
                         width: 100%;
                         height: 300px;
                         overflow-y: auto;
 
-                        .history-data-list-item {
+                        > li {
                             display: flex;
                             width: 100%;
                             font-weight: bold;
@@ -349,7 +351,7 @@ export default {
                                 background: rgba(105, 105, 105, 0.5);
                             }
 
-                            .data-list-item {
+                            > span {
                                 flex: 1;
 
                                 &.item-date {
