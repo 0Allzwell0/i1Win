@@ -36,7 +36,7 @@
             <!-- Amount -->
             <h3>{{ $t('member.amount') }} (THB)</h3>
             <div class="input-wrapper">
-                <input type="number" v-model="accountNumber" :placeholder="amountPlaceholder" :disabled="amountAllowed" />
+                <input type="number" v-model="myAmount" :placeholder="amountPlaceholder" :disabled="amountAllowed" />
             </div>
 
             <!-- Descriptions -->
@@ -81,14 +81,12 @@ export default {
             myFullname: null,
             accountNumber: null,
             accountNumberOK: false,
+            myAmount: null,
             amountOK: false,
             amountAllowed: false,
             amountPlaceholder: this.$t('withdrawal.amount_placeholder') + '50',
             bankOK: false
         };
-    },
-    beforeMount() {
-        this.$store.dispatch('wallet/getBalance', 'main');
     },
     mounted() {
         let _this = this;
@@ -129,8 +127,8 @@ export default {
         },
 
         // Get Selected Bank
-        getBank(accountNumber) {
-            this.selectedBank = accountNumber;
+        getBank(bank) {
+            this.selectedBank = bank;
         },
 
         // Withdrawal Submit
@@ -139,7 +137,7 @@ export default {
                 .dispatch('wallet/withdrawal', {
                     toBank: this.selectedBank,
                     accountNumber: this.accountNumber,
-                    amount: this.amount
+                    amount: this.myAmount
                 })
                 .then(() => {
                     if (this.httpStatus === 422) {

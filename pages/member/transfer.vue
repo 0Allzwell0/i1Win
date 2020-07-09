@@ -28,7 +28,7 @@
             <!-- Amount -->
             <h3>{{ $t('member.amount') }} (THB)</h3>
             <div class="input-wrapper">
-                <input type="text" :placeholder="$t('member.amount')" v-model="amount" :disabled="!isEnough" />
+                <input class="input-amount" type="text" :placeholder="$t('member.amount')" v-model="amount" :disabled="!isEnough" />
             </div>
 
             <!-- Transfer Button -->
@@ -77,7 +77,7 @@ export default {
     },
     mounted() {
         // Check Amount
-        $('.transfer-input').keyup(() => {
+        $('.input-amount').keyup(() => {
             this.checkAmount();
         });
     },
@@ -87,7 +87,7 @@ export default {
             this.fromGame = game;
             if (this.fromGame === 'none') {
                 this.fromGameOK = false;
-                this.amount = '-';
+                this.amount = '0.00';
                 this.checkAmount();
             } else {
                 this.fromGameOK = true;

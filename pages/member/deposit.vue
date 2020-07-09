@@ -70,12 +70,7 @@
             <!-- Bonus -->
             <h3>{{ $t('footer.promotions') }}</h3>
             <div class="input-wrapper">
-                <button
-                    class="input-bonus"
-                    type="button"
-                    :value="$t('common.please_select')"
-                    @click="showBonusList()"
-                >{{ $t('common.please_select') }}</button>
+                <button class="input-bonus" type="button" @click="showBonusList()">{{ $t('common.please_select') }}</button>
                 <fa :icon="['fas', 'caret-down']" class="icon-down" />
                 <ul v-show="isShowBonusList">
                     <li class="item-select" @click="selectBonus(null, null)">{{ $t('common.please_select') }}</li>
