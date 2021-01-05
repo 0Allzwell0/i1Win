@@ -1,159 +1,177 @@
 <template>
-    <main class="member-wrapper">
-        <!-- Message Modal -->
-        <modal-message></modal-message>
+	<main class="member-wrapper">
+		<!-- Message Modal -->
+		<modal-message></modal-message>
 
-        <div class="member-container">
-            <!-- Title -->
-            <h2>{{ $t('edit_profile.title') }}</h2>
+		<div class="member-container">
+			<!-- Title -->
+			<h2>{{ $t('edit_profile.title') }}</h2>
 
-            <!-- Full Name -->
-            <h3>{{ $t('member.fullname') }}</h3>
-            <div class="input-wrapper">
-                <input type="text" :placeholder="$t('edit_profile.fullname')" v-model="myFullname" disabled />
-            </div>
+			<!-- Full Name -->
+			<h3>{{ $t('member.fullname') }}</h3>
+			<div class="form-wrapper">
+				<input class="form-fullname" type="text" v-model="myFullname" :placeholder="$t('edit_profile.fullname')" />
+			</div>
 
-            <!-- Mobile Number -->
-            <h3>{{ $t('edit_profile.mobile_number') }}</h3>
-            <div class="input-wrapper">
-                <input type="number" :placeholder="$t('edit_profile.mobile_number')" v-model="myMobile" disabled />
-            </div>
+			<!-- Mobile Number -->
+			<h3>{{ $t('edit_profile.mobile_number') }}</h3>
+			<div class="form-wrapper">
+				<input class="form-mobile" type="number" v-model="myMobile" :placeholder="$t('edit_profile.mobile_number')" />
+			</div>
 
-            <!-- Line ID -->
-            <h3>LINE ID</h3>
-            <div class="input-wrapper">
-                <input type="text" placeholder="Line ID" v-model="myLineID" />
-            </div>
+			<!-- Line ID -->
+			<h3>LINE ID</h3>
+			<div class="form-wrapper">
+				<input type="text" v-model="myLineID" placeholder="Line ID" />
+			</div>
 
-            <!-- Email -->
-            <h3>{{ $t('edit_profile.email') }}</h3>
-            <div class="input-wrapper">
-                <input type="email" :placeholder="$t('edit_profile.email')" v-model="myEmail" />
-            </div>
+			<!-- Email -->
+			<h3>{{ $t('edit_profile.email') }}</h3>
+			<div class="form-wrapper">
+				<input type="email" v-model="myEmail" :placeholder="$t('edit_profile.email')" />
+			</div>
 
-            <!-- Birthday -->
-            <h3>{{ $t('edit_profile.birthday') }}</h3>
-            <div class="input-wrapper">
-                <client-only>
-                    <date-picker
-                        :format="format"
-                        :language="language"
-                        :placeholder="$t('edit_profile.birthday')"
-                        v-model="myBirthday"
-                    />
-                </client-only>
-            </div>
+			<!-- Birthday -->
+			<h3>{{ $t('edit_profile.birthday') }}</h3>
+			<div class="form-wrapper">
+				<base-date-selector class="form-long" :birthday="myBirthday"></base-date-selector>
+			</div>
 
-            <!-- Gender -->
-            <h3>{{ $t('edit_profile.gender') }}</h3>
-            <div class="gender-wrapper">
-                <button class="btn-male" type="button" @click="changeGender('1')">{{ $t('edit_profile.male') }}</button>
-                <button class="btn-female" type="button" @click="changeGender('2')">{{ $t('edit_profile.female') }}</button>
-            </div>
+			<!-- Gender -->
+			<h3>{{ $t('edit_profile.gender') }}</h3>
+			<div class="gender-wrapper">
+				<button class="gender-male" type="button" @click="changeGender(1)">{{ $t('edit_profile.male') }}</button>
+				<button class="gender-female" type="button" @click="changeGender(2)">{{ $t('edit_profile.female') }}</button>
+			</div>
 
-            <!-- Save Button -->
-            <button type="button" @click="editProfile()">{{ $t('common.submit') }}</button>
-        </div>
-    </main>
+			<!-- Save Button -->
+			<button type="button" @click="saveChange()">{{ $t('common.submit') }}</button>
+		</div>
+	</main>
 </template>
 <script>
-import { en, th } from 'vuejs-datepicker/dist/locale';
-import { mapGetters } from 'vuex';
+	import { mapGetters } from 'vuex';
+	import BaseDateSelector from '@/components/member/BaseDateSelector';
+	import ModalMessage from '@/components/modal/ModalMessage';
 
-import ModalMessage from '@/components/modal/ModalMessage';
+	export default {
+		components: {
+			BaseDateSelector,
+			ModalMessage,
+		},
+		computed: {
+			...mapGetters('user', {
+				httpStatus: 'GetHttpStatus',
+				profileErrorMsg: 'GetProfileErrorMsg',
+			}),
+		},
+		data() {
+			return {
+				myFullname: null,
+				myMobile: null,
+				myLineID: null,
+				myEmail: null,
+				myBirthday: null,
+				myGender: 1,
+			};
+		},
+		beforeMount() {
+			this.setUserData();
+		},
+		mounted() {
+			// Set Gender CSS
+			$('.gender-wrapper > button').removeClass('active');
+			if (this.myGender === 1) {
+				$('.gender-male').addClass('active');
+			} else if (this.myGender === 2) {
+				$('.gender-female').addClass('active');
+			}
 
-export default {
-    components: {
-        ModalMessage
-    },
-    computed: {
-        ...mapGetters('auth', {
-            isLogined: 'GetLogined'
-        }),
-        ...mapGetters('user', {
-            httpStatus: 'GetHttpStatus',
-            profileData: 'GetProfileData',
-            profileErrorMsg: 'GetProfileErrorMsg'
-        })
-    },
-    data() {
-        return {
-            format: 'yyyy-MM-dd',
-            language: this.$i18n.locale === 'th' ? th : en,
-            userData: null,
-            myFullname: null,
-            myMobile: null,
-            myLineID: null,
-            myEmail: null,
-            myBirthday: null,
-            myGender: '1'
-        };
-    },
-    mounted() {
-        this.userData = JSON.parse(localStorage.getItem('userData'));
-        this.myFullname = this.userData.fullname;
-        this.myMobile = this.userData.mobile;
-        this.myLineID = this.userData.line_id;
-        this.myEmail = this.userData.email;
-        this.myBirthday = this.userData.birthday;
-        this.myGender = this.userData.gender;
+			// If "fullname" has a value, set "input" to "disabled", otherwise cancel "disabled
+			if (!this.myFullname) {
+				$('.form-fullname').attr('disabled', false);
+			} else {
+				$('.form-fullname').attr('disabled', true);
+			}
 
-        $('.gender-wrapper > button').removeClass('active');
-        if (this.myGender === 1) {
-            $('.btn-male').addClass('active');
-        } else if (this.myGender === 2) {
-            $('.btn-female').addClass('active');
-        }
-    },
-    methods: {
-        // Change Gender
-        changeGender(gender) {
-            $('.gender-wrapper > button').removeClass('active');
-            if (gender === '1') {
-                $('.btn-male').addClass('active');
-                this.myGender = 1;
-            } else if (gender === '2') {
-                $('.btn-female').addClass('active');
-                this.myGender = 2;
-            }
-        },
+			// If "mobile" has a value, set "input" to "disabled", otherwise cancel "disabled
+			if (!this.myMobile) {
+				$('.form-mobile').attr('disabled', false);
+			} else {
+				$('.form-mobile').attr('disabled', true);
+			}
+		},
+		methods: {
+			// Set User Data
+			setUserData() {
+				let userData = JSON.parse(localStorage.getItem('userData'));
 
-        // Edit Profile Submit
-        editProfile() {
-            this.$store
-                .dispatch('user/editProfile', {
-                    line_id: this.myLineID,
-                    email: this.myEmail,
-                    birthday: this.myBirthday,
-                    gender: this.myGender
-                })
-                .then(() => {
-                    if (this.httpStatus === 204) {
-                        this.userData.line_id = this.myLineID;
-                        this.userData.email = this.myEmail;
-                        this.userData.birthday = this.myBirthday;
-                        this.userData.gender = this.myGender;
+				this.myFullname = userData.fullname;
+				this.myMobile = userData.mobile;
+				this.myLineID = userData.line_id;
+				this.myBirthday = userData.birthday;
+				this.myEmail = userData.email;
+				this.myGender = userData.gender;
 
-                        localStorage.setItem('userData', JSON.stringify(this.userData));
-                    }
+				// if (userData && !profileData) {
+				// 	this.myFullname = userData.fullname;
+				// 	this.myMobile = userData.mobile;
+				// 	this.myLineID = userData.line_id;
+				// 	this.myBirthday = userData.birthday;
+				// 	this.myEmail = userData.email;
+				// 	this.gender = userData.gender;
+				// } else if (userData && profileData) {
+				// 	this.myFullname = userData.fullname;
+				// 	this.myMobile = userData.mobile;
+				// 	this.myLineID = profileData.line_id;
+				// 	this.myBirthday = profileData.birthday;
+				// 	this.myEmail = profileData.email;
+				// 	this.gender = profileData.gender;
+				// }
+			},
 
-                    this.showResponseMsg();
-                });
-        },
+			// Change Gender
+			changeGender(gender) {
+				$('.gender-wrapper > button').removeClass('active');
+				if (gender === 1) {
+					$('.gender-male').addClass('active');
+					this.myGender = 1;
+				} else if (gender === 2) {
+					$('.gender-female').addClass('active');
+					this.myGender = 2;
+				}
+			},
 
-        // Show Response Message
-        showResponseMsg() {
-            if (this.httpStatus === 204) {
-                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.$t('edit_profile.success_msg')}</div>`);
-            } else {
-                $('#errorMsg .error-msg-container').html(`<div class="error-msg">${this.profileErrorMsg}</div>`);
-            }
+			// Edit Profile Submit
+			saveChange() {
+				// Show Loading Animation
+				this.$nuxt.$loading.start();
 
-            $('#errorMsg').modal('show');
-        }
-    }
-};
+				this.myBirthday = $('.date-selector-container input').val();
+
+				this.$store
+					.dispatch('user/editProfile', {
+						line_id: this.myLineID,
+						email: this.myEmail,
+						birthday: this.myBirthday,
+						gender: this.myGender,
+					})
+					.then(() => {
+						// Hide Loading Animation
+						this.$nuxt.$loading.finish();
+
+						$('.msg-list').html('');
+						if (this.httpStatus === 204) {
+							$('.msg-list').append(`<li>${this.$t('edit_profile.success_msg')}</li>`);
+						} else {
+							$('.msg-list').append(`<li>${this.profileErrorMsg}</li>`);
+						}
+						$('#modalMessage').modal('show');
+					});
+			},
+		},
+	};
 </script>
 <style lang="scss">
-    @import '@/assets/scss/PageMember.scss';
+	@import '@/assets/scss/PageMember.scss';
 </style>

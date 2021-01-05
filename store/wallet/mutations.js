@@ -4,17 +4,13 @@ const mutations = {
     // ================================================================ Get Wallets
     // Get Wallets Success
     [type.GET_WALLETS_SUCCESS](state, { data, status }) {
-        state.wallets = []
-        // Put the data of the object into the array in sequence
-        for (let i in data) {
-            state.wallets.push(data[i]);
-        }
+        state.wallets = data.wallets
         state.httpStatus = status
     },
 
     // Get Wallets Fail
     [type.GET_WALLETS_FAIL](state, status) {
-        state.wallets = []
+        state.wallets = null
         state.httpStatus = status
     },
 
@@ -91,7 +87,13 @@ const mutations = {
     [type.DWT_FAIL](state, { data, status }) {
         state.requestState = false
         state.httpStatus = status
-        state.responseMsg = data
+        if (status === 401) {
+            state.responseMsg = data.msg
+        } else if (status === 422) {
+            state.responseMsg = data.errors
+        } else {
+            state.responseMsg = data
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Language from '~/middleware/getLanguage'
+import LANGUAGE from '~/middleware/getLanguage'
 import JWT from '~/middleware/jwt'
 import { API_DOMAIN } from '~/environment'
 
@@ -11,14 +11,14 @@ class AuthService {
 
         try {
             response = await axios({
-                method: 'GET',
+                method: 'POST',
                 timeout: 5000,
                 url: 'api/login',
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -41,7 +41,7 @@ class AuthService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -65,7 +65,7 @@ class AuthService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -89,7 +89,7 @@ class AuthService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {

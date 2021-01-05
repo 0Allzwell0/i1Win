@@ -4,6 +4,10 @@ const webpack = require('webpack')
 module.exports = {
   mode: 'universal',
 
+  // server: {
+  //   port: 3001
+  // },
+
   /*
    ** Headers of the page
    */
@@ -34,14 +38,14 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: '@/components/common/BaseLoading.vue',
+  loading: '@/components/common/TheLoading.vue',
 
   /*
    ** Global CSS
    */
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
-    '@/assets/css/swiper.min.css',
+    '@/assets/css/minify/swiper.min.css',
     '@/assets/css/css_reset.css',
     '@/assets/css/main.css'
   ],
@@ -55,8 +59,8 @@ module.exports = {
     { src: "~plugins/swiper.min.js", ssr: false },
     { src: '~plugins/font-awesome.js', ssr: false },
     { src: '~plugins/i18n.js' },
-    { src: "~plugins/datepicker.js", ssr: false },
-    { src: "~plugins/timepicker.js", ssr: false }
+    { src: '~plugins/datepicker.js', ssr: false },
+    { src: '~plugins/timepicker.js', ssr: false }
   ],
 
   router: {
@@ -98,7 +102,7 @@ module.exports = {
    */
   build: {
     styleResources: {
-      scss: './assets/scss/default.scss'
+      scss: './assets/scss/variables.scss'
     },
     vendor: [
       'jquery',
@@ -116,18 +120,6 @@ module.exports = {
         jquery: 'jquery',
         'window.jQuery': 'jquery'
       })
-    ],
-
-    extend(config, ctx) {
-      /* Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      } */
-    }
+    ]
   }
 }

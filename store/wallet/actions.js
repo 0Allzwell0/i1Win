@@ -113,7 +113,7 @@ const actions = {
 
         commit(types.REQUEST_DWT)
         const response = await WalletService.deposit(payload, formData)
-        if (response.status === 200) {
+        if (response.status === 204) {
             commit(types.DWT_SUCCESS, { data: response.data, status: response.status })
         } else {
             commit(types.DWT_FAIL, { data: response.data, status: response.status })
@@ -127,7 +127,7 @@ const actions = {
         const payload = { cui, toBank, accountNumber, amount, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.withdrawal(payload)
-        if (response.status === 200) {
+        if (response.status === 204) {
             commit(types.DWT_SUCCESS, response.status)
         } else {
             commit(types.DWT_FAIL, { data: response.data, status: response.status })
@@ -141,7 +141,7 @@ const actions = {
         const payload = { cui, from, amount, to, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.transfer(payload)
-        if (response.status === 200) {
+        if (response.status === 204) {
             commit(types.DWT_SUCCESS, response.status)
         } else {
             commit(types.DWT_FAIL, { data: response.data, status: response.status })

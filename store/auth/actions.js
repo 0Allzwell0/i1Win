@@ -51,16 +51,7 @@ const actions = {
         commit(types.REQUEST_AUTH)
         const response = await AuthService.register(payload)
         if (response.status === 200) {
-            commit(types.REGISTER_SUCCESS, {
-                data: response.data,
-                status: response.status,
-                username,
-                password,
-                password_confirmation,
-                fullname,
-                mobile,
-                line_id
-            })
+            commit(types.REGISTER_SUCCESS, { data: response.data, status: response.status })
         } else {
             commit(types.REGISTER_FAIL, { data: response.data, status: response.status })
         }

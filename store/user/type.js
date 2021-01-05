@@ -11,6 +11,10 @@ export const REQUEST_EDIT_PROFILE = 'REQUEST_EDIT_PROFILE'
 export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
 export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 
+// ================================================================ Get Download Data
+export const GET_DOWNLOAD_SUCCESS = 'GET_DOWNLOAD_SUCCESS'
+export const GET_DOWNLOAD_FAIL = 'GET_DOWNLOAD_FAIL'
+
 // ================================================================ Get Banners
 export const GET_BANNERS_SUCCESS = 'GET_BANNERS_SUCCESS'
 export const GET_BANNERS_FAIL = 'GET_BANNERS_FAIL'

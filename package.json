@@ -1,7 +1,7 @@
 {
   "name": "i1win",
   "version": "1.0.0",
-  "description": "My stellar Nuxt.js project",
+  "description": "My laudable Nuxt.js project",
   "author": "Allzwell",
   "private": true,
   "scripts": {
@@ -11,35 +11,31 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-beta.19",
-    "bootstrap": "^4.0.0",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "bootstrap": "^4.1.3",
+    "bootstrap-vue": "^2.21.1",
     "clipboard": "^2.0.4",
     "cross-env": "^5.2.0",
     "css-loader": "^3.2.0",
     "express": "^4.16.4",
-    "fibers": "^4.0.1",
     "jquery": "^3.4.1",
     "js-base64": "^2.5.1",
     "jsonwebtoken": "^8.5.1",
     "nuxt": "^2.0.0",
     "nuxt-fontawesome": "^0.4.0",
+    "qs": "^6.9.3",
     "sass": "^1.3.0",
     "sass-loader": "^8.0.0",
     "sass-resources-loader": "^2.0.1",
     "vue-i18n": "^8.14.1",
     "vue2-timepicker": "^1.0.0",
-    "vuejs-datepicker": "^1.6.2",
-    "vuex": "^3.1.1"
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
     "node-sass": "^4.13.1",
-    "nodemon": "^1.18.9",
-    "vue-jest": "^4.0.0-0"
+    "nodemon": "^1.18.9"
   }
 }

@@ -36,7 +36,7 @@ const actions = {
             lang: localStorage.getItem('LANGUAGE') || 'en',
             exp
         }
-        const response = await GameService.getGamesBefore(payload, productCode)
+        const response = await GameService.getGamesBefore(payload, 'Playtech')
         if (response.status === 200) {
             commit(types.GET_GAMES_LIST_SUCCESS, { data: response.data.games, status: response.status })
         } else {
@@ -55,7 +55,7 @@ const actions = {
             lang: localStorage.getItem('LANGUAGE') || 'en',
             exp
         }
-        const response = await GameService.getGamesAfter(payload, productCode)
+        const response = await GameService.getGamesAfter(payload, 'Playtech')
         if (response.status === 200) {
             commit(types.GET_GAMES_LIST_SUCCESS, { data: response.data.games, status: response.status })
         } else {
@@ -64,21 +64,15 @@ const actions = {
     },
 
     // Get Game URL
-    async getGameURL({ commit }, { isDownload, category, productCode, gameID }) {
+    async getGameURL({ commit }, { category, productCode, gameID }) {
         const exp = getExpTimestamp()
         const cui = getCUI()
         const payload = { cui, category, productCode, gameID, is_mobile: 1, exp }
         const response = await GameService.getGameURL(payload)
         if (response.status === 200) {
-            if (isDownload)
-                commit(types.GET_DOWNLOAD_DATA_SUCCESS, { productCode, data: response.data, status: response.status })
-            else
-                commit(types.GET_GAME_URL_SUCCESS, { data: response.data, status: response.status })
+            commit(types.GET_GAME_URL_SUCCESS, { data: response.data, status: response.status })
         } else {
-            if (isDownload)
-                commit(types.GET_DOWNLOAD_DATA_FAIL, { productCode, status: response.status })
-            else
-                commit(types.GET_GAME_URL_FAIL, { data: response.data, status: response.status })
+            commit(types.GET_GAME_URL_FAIL, { data: response.data, status: response.status })
         }
     }
 }

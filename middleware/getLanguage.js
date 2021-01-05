@@ -1,4 +1,4 @@
-class Language {
+class LANGUAGE {
     static getLanguage() {
         let language = localStorage.getItem('LANGUAGE') || 'en-US';
         if (language === 'en-US') {
@@ -9,4 +9,4 @@ class Language {
     }
 }
 
-export default Language
+export default LANGUAGE

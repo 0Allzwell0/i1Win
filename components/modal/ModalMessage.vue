@@ -1,43 +1,43 @@
 <template>
-    <div class="modal fade" id="errorMsg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog error-msg-wrapper" role="document">
-            <fa :icon="['fas', 'times']" class="modal-close" data-dismiss="modal" />
-            <div class="error-msg-container"></div>
-        </div>
-    </div>
+	<div class="modal fade" id="modalMessage" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="msg-modal modal-dialog" role="document">
+			<fa class="modal-close" data-dismiss="modal" :icon="['fas', 'times']" />
+			<ul class="msg-list"></ul>
+		</div>
+	</div>
 </template>
 <script>
-export default {};
+	export default {};
 </script>
 <style lang="scss">
-    .error-msg-wrapper {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        background: $color-white;
-        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
-        margin: 30vh 14% 0 14%;
-        padding: 30px 10px;
+	.msg-modal {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 10px;
+		background: $color-white;
+		box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+		margin: 30vh 14% 0 14%;
+		padding: 60px 10px 30px 10px;
 
-        .modal-close {
-            position: absolute;
-            right: -20px;
-            top: -20px;
-            color: $color-black;
-            font-size: 26px;
-        }
+		.modal-close {
+			position: absolute;
+			right: 15px;
+			top: 10px;
+			color: $color-black;
+			font-size: 26px;
+		}
 
-        .error-msg-container {
-            font-family: $font-family;
-            font-size: 14px;
+		> ul {
+			font-family: $font-family;
+			font-size: 14px;
 
-            .error-msg {
-                text-indent: -15px;
-                margin-left: 15px;
-                padding: 5px 0;
-            }
-        }
-    }
+			> li {
+				list-style-type: decimal;
+				padding: 5px 0;
+				margin-left: 15px;
+			}
+		}
+	}
 </style>

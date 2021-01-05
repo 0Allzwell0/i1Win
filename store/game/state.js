@@ -1,28 +1,7 @@
 const state = () => ({
-    errorMessage: null,
+    errorMsg: null,
     gamesList: null,
     gameURL: null,
-    downloadType: null,
-    downloadPLT: {
-        url: null,
-        loginID: 'null'
-    },
-    downloadAG: {
-        url: null,
-        loginID: 'null'
-    },
-    downloadDT: {
-        url: null,
-        loginID: 'null'
-    },
-    downloadJOKER: {
-        url: null,
-        loginID: 'null'
-    },
-    download918KISS: {
-        url: null,
-        loginID: 'null'
-    },
     /*pltData: {
         domain: '',
         params: {

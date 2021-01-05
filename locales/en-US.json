@@ -81,13 +81,17 @@
     "sa_msg": "The best in Asian-themed games with the hottest girl.",
     "gpi_msg": "Join the game and win the best bonus.",
     "evo_msg": "The best casinos have classic game and high-quality video, come and join it.",
-    "sg_msg": "Real-time baccarat provider. Direct from the Casino.",
-    "mg_msg": "One of the most popular casino among Asia. Enjoy the great casino."
+    "sb_msg": "Real-time baccarat provider. Direct from the Casino.",
+    "mg_msg": "One of the most popular casino among Asia. Enjoy the great casino.",
+    "pplay_msg": "Player can enjoy wide range of Live Casino products.",
+    "pplay_megawheel_msg": "Player can enjoy wide range of Live Casino products.",
+    "ptg_msg": "High quality and classic game on here come and play it.",
+    "xg_msg": "High quality and classic game on here come and play it."
   },
   "sports": {
     "sbo_msg": "Easy bets. Win easily. Match bets to choose from. Every league. Don't miss the chance to grab money from us!",
     "ibc_msg": "Enjoy betting while wahtching live matches. From various kinds of sports and must not miss the chance to win big prizes!",
-    "bti_msg": ""
+    "bti_msg": "Easy bets. Win easily. Match bets to choose from. Every league. Don't miss the chance to grab money from us!"
   },
   "lottery": {
     "thailottery": "Thai Lottery",
@@ -97,7 +101,9 @@
     "ruby": "Ruby",
     "ruby_msg": "Easy bet and win with 2D & 3D lottos!",
     "sapphire": "Sapphire",
-    "sapphire_msg": "Bet anytime, anywhere every 3 minutes!"
+    "sapphire_msg": "Bet anytime, anywhere every 3 minutes!",
+    "kk": "I1WIN Lotto 5",
+    "kk_msg": "The best lottery on i1win come and play it."
   },
   "fishing": {
     "cf_msg": "Use 3 powerful weapons to capture up to 20 species of sea creatures and earn a big bonus.",
@@ -124,6 +130,7 @@
   },
   "edit_profile": {
     "title": "Edit Profile",
+    "fullname": "Fullname",
     "mobile_number": "Mobile Number",
     "email": "Email",
     "birthday": "Birthday",
@@ -166,7 +173,8 @@
     "no_file_select": "No File Select",
     "upload_file_error": "File size must smaller than 2MB.",
     "agree_certify": "I certify that I have read and agreed to the Promotions Terms & Conditions.",
-    "success_msg": "Deposit Success !!"
+    "success_msg": "Deposit Success !!",
+    "error_msg": "Deposit Error !!"
   },
   "withdrawal": {
     "withdrawal_to": "Withdrawal To",
@@ -178,13 +186,15 @@
     "today_withdraw_total": "The accumulated withdrawal amount has exceeded the limit today, please contact customer service.",
     "today_count": "The number of withdrawals has exceeded the limit today, please contact customer service.",
     "insufficient_balance": "Insufficient balance",
-    "success_msg": "Withdrawal Success !!"
+    "success_msg": "Withdrawal Success !!",
+    "error_msg": "Withdrawal Error !!"
   },
   "transfer": {
     "transfer_from": "Transfer From",
     "transfer_to": "Transfer To",
     "maintenance": "[Maintenance]",
-    "success_msg": "Transfer Success !!"
+    "success_msg": "Transfer Success !!",
+    "error_msg": "Transfer Error !!"
   },
   "history": {
     "transaction": "Transaction",
@@ -210,6 +220,7 @@
     "play_now": "Play Now",
     "try_now": "Try Now",
     "submit": "Submit",
-    "please_select": "Please select..."
+    "please_select": "Please select...",
+    "error_403": "Unknown user info."
   }
 }

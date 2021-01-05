@@ -3,6 +3,7 @@ const getters = {
     GetChangePSWErrorMsg: state => state.changePSWErrorMsg,
     GetProfileErrorMsg: state => state.profileErrorMsg,
     GetProfilData: state => state.profileData,
+    GetDownloadData: state => state.downloadData,
     GetBanners: state => state.banners,
     GetAnnouncements: state => state.announcements,
     GetArticles: state => state.articles,

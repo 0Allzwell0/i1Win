@@ -1,34 +1,35 @@
 .member-wrapper {
-    display: flex;
+    display       : flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: calc(100vh - 50px);
-    font-size: 12px;
-    font-weight: bold;
-    font-family: $font-family;
-    background: $color-white;
+    align-items   : center;
+    width         : 100%;
+    min-height    : calc(100vh - 50px);
+    font-size     : 12px;
+    font-weight   : bold;
+    font-family   : $font-family;
+    background    : $color-white;
 
     .member-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 414px;
-        height: 100%;
+        display         : flex;
+        flex-direction  : column;
+        align-items     : center;
+        width           : 100%;
+        max-width       : 414px;
+        height          : 100%;
+        min-height      : calc(100vh - 54px);
         background-image: $background_img;
-        background-size: cover;
-        padding: 0 25px 90px 25px;
-        overflow-y: auto;
+        background-size : cover;
+        padding         : 0 25px 90px 25px;
+        overflow-y      : auto;
 
         &.member-deposit,
         &.member-withdrawal,
         &.member-transfer {
-            position: absolute;
-            z-index: 1;
-            top: 273px;
-            left: 0;
-            height: auto;
+            position  : absolute;
+            z-index   : 1;
+            top       : 273px;
+            left      : 0;
+            height    : auto;
             transition: all 400ms;
 
             &.expand {
@@ -36,80 +37,80 @@
             }
         }
 
-        > h2 {
-            width: 100%;
-            font-size: 24px;
+        >h2 {
+            width     : 100%;
+            font-size : 24px;
             text-align: center;
-            padding: 30px 0 15px 0;
+            padding   : 30px 0 15px 0;
         }
 
-        > h3 {
-            width: 100%;
+        >h3 {
+            width    : 100%;
             font-size: 16px;
-            padding: 20px 0 5px 0;
+            padding  : 20px 0 5px 0;
         }
 
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            width: 100%;
+        .form-wrapper {
+            position     : relative;
+            display      : flex;
+            width        : 100%;
             border-radius: 5px;
-            border: 1px solid $color-gray;
+            border       : 1px solid $color-gray;
 
-            > input,
-            > button {
-                width: 100%;
-                height: 38px;
-                font-size: 14px;
-                background: $color-white;
+            >input,
+            >button {
+                width        : 100%;
+                height       : 38px;
+                font-size    : 14px;
+                background   : $color-white;
                 border-radius: 5px;
-                text-align: left;
-                padding-left: 13px;
+                text-align   : left;
+                padding-left : 13px;
 
                 &:disabled {
                     background: rgba(219, 219, 219, 0.6);
                 }
 
-                &.input-upload {
+                &.form-upload {
                     padding: 7px;
                 }
             }
 
-            > img {
+            >img {
                 position: absolute;
-                top: 13px;
-                right: 8px;
-                height: 12px;
-                filter: brightness(50%);
+                top     : 13px;
+                right   : 8px;
+                height  : 12px;
+                filter  : brightness(50%);
             }
 
             .icon-down {
-                position: absolute;
-                z-index: 1;
-                top: 9px;
-                right: 9px;
+                position : absolute;
+                z-index  : 1;
+                top      : 9px;
+                right    : 9px;
                 font-size: 20px;
-                color: $color-black;
+                color    : $color-black;
             }
 
-            > ul {
-                position: absolute;
-                z-index: 10;
-                top: 38px;
-                left: 0;
-                width: 100%;
-                max-height: 250px;
-                font-size: 15px;
+            >ul {
+                position     : absolute;
+                z-index      : 10;
+                top          : 38px;
+                left         : 0;
+                width        : 100%;
+                max-height   : 250px;
+                font-size    : 15px;
                 border-radius: 5px;
-                border: 1px solid #cecece;
-                background: $color-white;
-                overflow-y: auto;
+                border       : 1px solid #cecece;
+                background   : $color-white;
+                overflow-y   : auto;
                 margin-bottom: 100px;
 
-                > li {
-                    width: 100%;
+                >li {
+                    width      : 100%;
                     font-weight: normal;
-                    padding: 10px 20px 5px 20px;
+                    padding    : 10px 20px 5px 20px;
 
                     &.item-select {
                         padding: 10px;
@@ -117,16 +118,16 @@
 
                     &.item-type {
                         font-weight: bold;
-                        padding: 0px 10px 5px 10px;
+                        padding    : 0px 10px 5px 10px;
 
-                        > ul {
-                            width: 100%;
+                        >ul {
+                            width : 100%;
                             height: 100%;
 
-                            > li {
-                                width: 100%;
+                            >li {
+                                width      : 100%;
                                 font-weight: normal;
-                                padding: 5px 15px;
+                                padding    : 5px 15px;
                             }
                         }
                     }
@@ -137,58 +138,58 @@
                 width: 100%;
 
                 input {
-                    width: 100%;
-                    height: 38px;
-                    font-size: 14px;
+                    width        : 100%;
+                    height       : 38px;
+                    font-size    : 14px;
                     border-radius: 5px;
-                    padding-left: 13px;
+                    padding-left : 13px;
                 }
 
                 .vdp-datepicker__calendar {
-                    width: 100%;
-                    max-width: 323px;
+                    width        : 100%;
+                    max-width    : 323px;
                     margin-bottom: 20px;
                 }
             }
         }
 
         .gender-wrapper {
-            display: flex;
-            width: 100%;
+            display       : flex;
+            width         : 100%;
             padding-bottom: 10px;
 
-            > button {
-                width: 80px;
-                min-height: 35px;
-                color: $color-gray;
-                font-size: 14px;
-                font-weight: bold;
+            >button {
+                width        : 80px;
+                min-height   : 35px;
+                color        : $color-gray;
+                font-size    : 14px;
+                font-weight  : bold;
                 border-radius: 5px;
-                background: rgba(53, 53, 53, 0.9);
+                background   : rgba(53, 53, 53, 0.9);
 
-                &.btn-male {
+                &:first-child {
                     margin-right: 8px;
                 }
 
                 &.active {
-                    color: $color-black;
+                    color     : $color-black;
                     background: $color-yellow-linear;
                 }
             }
         }
 
         .detail-wrapper {
-            display: flex;
+            display       : flex;
             flex-direction: column;
-            width: 100%;
-            color: $color-white-gray;
-            border: 1px solid #cecece;
-            border-radius: 5px;
-            padding: 10px;
+            width         : 100%;
+            color         : $color-white-gray;
+            border        : 1px solid #cecece;
+            border-radius : 5px;
+            padding       : 10px;
 
             .detail-container {
                 display: none;
-                width: 100%;
+                width  : 100%;
 
                 &.show {
                     display: block;
@@ -196,95 +197,106 @@
 
                 .name-wrapper {
                     display: flex;
-                    width: 100%;
+                    width  : 100%;
 
                     .name-value {
-                        font-size: 13px;
-                        color: $color-black;
+                        font-size  : 13px;
+                        color      : $color-black;
                         margin-left: 12.5px;
                     }
                 }
 
                 .account-wrapper {
                     display: flex;
-                    width: 100%;
+                    width  : 100%;
 
                     .account-value {
-                        font-size: 13px;
-                        color: $color-black;
+                        font-size  : 13px;
+                        color      : $color-black;
                         margin-left: 12.5px;
                     }
                 }
             }
 
             .copy-wrapper {
-                display: flex;
-                width: 100%;
+                display   : flex;
+                width     : 100%;
                 margin-top: 5px;
 
                 .copy-icon {
                     font-size: 18px;
                 }
 
-                > span {
+                >span {
                     margin-left: 4%;
                 }
             }
         }
 
         .amount-wrapper {
-            display: flex;
+            display        : flex;
             justify-content: space-between;
-            width: 100%;
+            width          : 100%;
 
             &.second {
                 margin-top: 10px;
             }
 
-            > button {
-                width: 23%;
-                height: 39px;
-                font-size: 18px;
-                color: $color-yellow;
-                background: $color-black;
+            >button {
+                width        : 23%;
+                height       : 39px;
+                font-size    : 18px;
+                color        : $color-yellow;
+                background   : $color-black;
                 border-radius: 5px;
-                padding-top: 3px;
+                padding-top  : 3px;
             }
 
-            > input {
-                width: 49%;
-                height: 39px;
-                font-size: 16px;
+            >input {
+                width        : 49%;
+                height       : 39px;
+                font-size    : 16px;
                 border-radius: 5px;
-                border: 1px solid #cecece;
-                background: $color-white;
-                padding: 2px 8px 0 10px;
+                border       : 1px solid #cecece;
+                background   : $color-white;
+                padding      : 2px 8px 0 10px;
             }
         }
 
-        .date-time-wrapper {
-            display: flex;
+        .form-transfer-time {
             justify-content: space-between;
-            width: 100%;
+            border         : none;
+
+            .date-selector-wrapper {
+                .date-selector-container {
+                    .vdp-datepicker__calendar {
+                        width: 260px;
+                    }
+                }
+            }
         }
 
-        > p {
-            width: 100%;
+        >p {
+            width      : 100%;
             padding-top: 20px;
         }
 
-        > button {
-            width: 100%;
-            min-height: 52px;
-            font-size: 18px;
-            font-weight: bold;
-            border: $border-style;
-            background: $color-yellow-linear-unpress;
+        >button {
+            width        : 100%;
+            min-height   : 52px;
+            font-size    : 18px;
+            font-weight  : bold;
+            border       : $border-style;
+            background   : $color-yellow-linear-unpress;
             border-radius: 5px;
-            margin-top: 30px;
+            margin-top   : 30px;
 
             &:active {
                 background: $color-yellow-linear;
+            }
+
+            &:disabled {
+                opacity: 0.5;
             }
         }
     }

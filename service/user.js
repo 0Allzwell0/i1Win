@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Language from '~/middleware/getLanguage'
+import LANGUAGE from '~/middleware/getLanguage'
 import JWT from '~/middleware/jwt'
 import { API_DOMAIN, WEBSITE_ID } from '~/environment'
 
@@ -18,7 +18,7 @@ class UserService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -42,7 +42,31 @@ class UserService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
+                }
+            })
+        } catch (error) {
+            return error.response
+        }
+
+        return response
+    }
+
+    // Get Download Data
+    static async getDownload(payload) {
+        let response = null
+        let accessToken = JWT.sign(payload)
+
+        try {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: 'api/member/downloads/info',
+                baseURL: API_DOMAIN,
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -64,7 +88,7 @@ class UserService {
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 },
                 params: {
                     is_mobile: 1,
@@ -90,7 +114,7 @@ class UserService {
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 },
                 params: {
                     website_id: WEBSITE_ID
@@ -115,7 +139,7 @@ class UserService {
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 },
                 params: {
                     website_id: WEBSITE_ID
@@ -140,7 +164,7 @@ class UserService {
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 },
                 params: {
                     is_mobile: 1,
@@ -166,7 +190,7 @@ class UserService {
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 },
                 params: {
                     website_id: WEBSITE_ID

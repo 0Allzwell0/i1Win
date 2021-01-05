@@ -1,5 +1,5 @@
 import axios from '~/plugins/axios'
-import Language from '~/middleware/getLanguage'
+import LANGUAGE from '~/middleware/getLanguage'
 import JWT from '~/middleware/jwt'
 import { API_DOMAIN } from '~/environment'
 
@@ -18,7 +18,7 @@ class GameService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -42,7 +42,7 @@ class GameService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
@@ -66,7 +66,7 @@ class GameService {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
-                    'Accept-Language': Language.getLanguage()
+                    'Accept-Language': LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {

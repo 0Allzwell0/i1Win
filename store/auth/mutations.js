@@ -23,6 +23,14 @@ const mutations = {
             password: null,
             others: null
         }
+        state.regErrorMsg = {
+            username: null,
+            password: null,
+            confirm_psw: null,
+            fullname: null,
+            mobile: null,
+            others: null
+        }
 
         setLocalStorage('isLogined', 'false')
     },
@@ -47,6 +55,14 @@ const mutations = {
             login: null,
             username: null,
             password: null,
+            others: null
+        }
+        state.regErrorMsg = {
+            username: null,
+            password: null,
+            confirm_psw: null,
+            fullname: null,
+            mobile: null,
             others: null
         }
 
@@ -111,15 +127,17 @@ const mutations = {
         state.requestState = false
         state.httpStatus = status
         if (status === 422) {
-            if (data.login) {
-                state.loginErrorMsg.login = data.login
+            if (data.errors.login) {
+                state.loginErrorMsg.login = data.errors.login
             }
-            if (data.username) {
-                state.loginErrorMsg.username = data.username
+            if (data.errors.username) {
+                state.loginErrorMsg.username = data.errors.username[0]
             }
-            if (data.password) {
-                state.loginErrorMsg.password = data.password
+            if (data.errors.password) {
+                state.loginErrorMsg.password = data.errors.password[0]
             }
+        } else if (status === 401) {
+            state.loginErrorMsg.others = data.msg
         } else {
             state.loginErrorMsg.others = data
         }
@@ -128,18 +146,18 @@ const mutations = {
     },
 
     // ================================================================ Register Success
-    [type.REGISTER_SUCCESS](state, { data, status, username, fullname, mobile, line_id, cui }) {
+    [type.REGISTER_SUCCESS](state, { data, status }) {
         state.isLogined = true
         state.userData = {
-            cui: cui,
-            username: username,
-            fullname: fullname,
-            birthday: null,
-            mobile: mobile,
-            email: null,
-            gender: null,
-            line_id: line_id,
-            uid: null
+            cui: data.cui,
+            username: data.username,
+            fullname: data.fullname,
+            birthday: data.birthday,
+            mobile: data.mobile,
+            email: data.email,
+            gender: data.gender,
+            line_id: data.line_id,
+            uid: data.uid
         }
         state.requestState = false
         state.httpStatus = status
@@ -172,23 +190,23 @@ const mutations = {
         state.requestState = false
         state.httpStatus = status
         if (status === 422) {
-            if (data.username) {
-                state.regErrorMsg.username = data.username
+            if (data.errors.username) {
+                state.regErrorMsg.username = data.errors.username[0]
             }
-            if (data.password) {
-                state.regErrorMsg.password = data.password
+            if (data.errors.password) {
+                state.regErrorMsg.password = data.errors.password[0]
             }
-            if (data.password_confirmation) {
-                state.regErrorMsg.confirm_psw = data.password_confirmation
+            if (data.errors.password_confirmation) {
+                state.regErrorMsg.confirm_psw = data.errors.password_confirmation[0]
             }
-            if (data.fullname) {
-                state.regErrorMsg.fullname = data.fullname
+            if (data.errors.fullname) {
+                state.regErrorMsg.fullname = data.errors.fullname[0]
             }
-            if (data.mobile) {
-                state.regErrorMsg.mobile = data.mobile
+            if (data.errors.mobile) {
+                state.regErrorMsg.mobile = data.errors.mobile[0]
             }
         } else {
-            state.regErrorMsg.others = data
+            state.regErrorMsg.others = data.errors
         }
 
         setLocalStorage('isLogined', 'false')

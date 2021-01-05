@@ -1,95 +1,83 @@
 <template>
-    <ul class="member-tab-wrapper">
-        <li class="member-tab-container">
-            <nuxt-link
-                class="member-tab"
-                :to="$i18n.path('member/deposit')"
-                :class="{'active': $route.name.indexOf('deposit') !== -1}"
-            >
-                <img class="member-tab-image" src="/images/member/nav/deposit.png" />
-                <span class="member-tab-text">{{ $t('member.deposit') }}</span>
-            </nuxt-link>
-        </li>
-        <li class="member-tab-container">
-            <nuxt-link
-                class="member-tab"
-                :to="$i18n.path('member/withdrawal')"
-                :class="{'active': $route.name.indexOf('withdrawal') !== -1}"
-            >
-                <img class="member-tab-image" src="/images/member/nav/withdraw.png" />
-                <span class="member-tab-text">{{ $t('member.withdrawal') }}</span>
-            </nuxt-link>
-        </li>
-        <li class="member-tab-container">
-            <nuxt-link
-                class="member-tab"
-                :to="$i18n.path('member/transfer')"
-                :class="{'active': $route.name.indexOf('transfer') !== -1}"
-            >
-                <img class="member-tab-image" src="/images/member/nav/transfer.png" />
-                <span class="member-tab-text">{{ $t('member.transfer') }}</span>
-            </nuxt-link>
-        </li>
-        <li class="member-tab-container">
-            <nuxt-link
-                class="member-tab"
-                :to="$i18n.path('member/history')"
-                :class="{'active': $route.name.indexOf('history') !== -1}"
-            >
-                <img class="member-tab-image" src="/images/member/nav/history.png" />
-                <span class="member-tab-text">{{ $t('member.history') }}</span>
-            </nuxt-link>
-        </li>
-    </ul>
+	<ul class="member-tab-wrapper">
+		<li class="member-tab-container">
+			<nuxt-link class="member-tab" :to="$i18n.path('member/deposit')" :class="{ active: $route.name.indexOf('deposit') !== -1 }">
+				<img class="member-tab-image" src="/images/member/nav/deposit.png" />
+				<span class="member-tab-text">{{ $t('member.deposit') }}</span>
+			</nuxt-link>
+		</li>
+		<li class="member-tab-container">
+			<nuxt-link
+				class="member-tab"
+				:to="$i18n.path('member/withdrawal')"
+				:class="{ active: $route.name.indexOf('withdrawal') !== -1 }"
+			>
+				<img class="member-tab-image" src="/images/member/nav/withdraw.png" />
+				<span class="member-tab-text">{{ $t('member.withdrawal') }}</span>
+			</nuxt-link>
+		</li>
+		<li class="member-tab-container">
+			<nuxt-link class="member-tab" :to="$i18n.path('member/transfer')" :class="{ active: $route.name.indexOf('transfer') !== -1 }">
+				<img class="member-tab-image" src="/images/member/nav/transfer.png" />
+				<span class="member-tab-text">{{ $t('member.transfer') }}</span>
+			</nuxt-link>
+		</li>
+		<li class="member-tab-container">
+			<nuxt-link class="member-tab" :to="$i18n.path('member/history')" :class="{ active: $route.name.indexOf('history') !== -1 }">
+				<img class="member-tab-image" src="/images/member/nav/history.png" />
+				<span class="member-tab-text">{{ $t('member.history') }}</span>
+			</nuxt-link>
+		</li>
+	</ul>
 </template>
 <script>
-export default {};
+	export default {};
 </script>
 <style lang="scss" scoped>
-    .member-tab-wrapper {
-        display: flex;
-        flex-direction: row;
-        font-family: $font-family;
-        font-size: 14px;
-        width: 100%;
+	.member-tab-wrapper {
+		display: flex;
+		flex-direction: row;
+		font-family: $font-family;
+		font-size: 14px;
+		width: 100%;
 
-        .member-tab-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            border-bottom: 2px solid $color-black-gray;
-            border-right: 1px solid $color-black-gray;
+		.member-tab-container {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			border-bottom: 2px solid $color-black-gray;
+			border-right: 1px solid $color-black-gray;
 
-            &:last-child {
-                border-right: none;
-            }
+			&:last-child {
+				border-right: none;
+			}
 
-            .member-tab {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                background: $color-white;
-                opacity: 0.4;
+			.member-tab {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				background: $color-white;
+				opacity: 0.4;
 
-                &.active {
-                    opacity: 1;
-                    background: $color-yellow;
-                }
+				&.active {
+					opacity: 1;
+					background: $color-yellow;
+				}
 
-                .member-tab-image {
-                    align-self: center;
-                    width: 35px;
-                    padding-top: 9px;
-                }
+				.member-tab-image {
+					align-self: center;
+					width: 35px;
+					padding-top: 9px;
+				}
 
-                .member-tab-text {
-                    font-weight: bold;
-                    color: $color-black;
-                    text-align: center;
-                    align-self: center;
-                    padding: 4px 0;
-                }
-            }
-        }
-    }
+				.member-tab-text {
+					font-weight: bold;
+					color: $color-black;
+					text-align: center;
+					align-self: center;
+					padding: 4px 0;
+				}
+			}
+		}
+	}
 </style>

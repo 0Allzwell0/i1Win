@@ -6,31 +6,51 @@ const mutations = {
     [type.REQUEST_EDIT_PROFILE](state) {
         state.requestState = true
         state.httpStatus = null
-        state.profileErrorMsg = null
         state.profileData = {
             birthday: null,
             email: null,
             gender: null,
-            line_id: null,
+            line_id: null
         }
+        state.profileErrorMsg = null
     },
 
     // Edit Profile Success
     [type.EDIT_PROFILE_SUCCESS](state, { status, line_id, email, birthday, gender }) {
-        state.profileData.birthday = birthday
-        state.profileData.email = email
-        state.profileData.line_id = line_id
-        state.profileData.gender = gender
         state.requestState = false
-        state.profileErrorMsg = null
         state.httpStatus = status
+        state.profileData = {
+            line_id: line_id,
+            email: email,
+            birthday: birthday,
+            gender: gender
+        }
+        state.profileErrorMsg = null
+
+        let userData = JSON.parse(localStorage.getItem('userData'))
+        userData.birthday = birthday
+        userData.email = email
+        userData.line_id = line_id
+        userData.gender = gender
+
+        setLocalStorage('userData', JSON.stringify(userData))
     },
 
     // Edit Profile Fail
     [type.EDIT_PROFILE_FAIL](state, { data, status }) {
         state.requestState = false
-        state.profileErrorMsg = data
         state.httpStatus = status
+        state.profileData = {
+            line_id: null,
+            email: null,
+            birthday: null,
+            gender: null
+        }
+        if (status === 401) {
+            state.profileErrorMsg = data.msg
+        } else {
+            state.profileErrorMsg = data
+        }
     },
 
     // =========================================================== Change Passowrd
@@ -63,18 +83,33 @@ const mutations = {
         state.requestState = false
         state.httpStatus = status
         if (status === 422) {
-            if (data.password) {
-                state.changePSWErrorMsg.password = data.password
+            if (data.errors.password) {
+                state.changePSWErrorMsg.password = data.errors.password
             }
-            if (data.new_password) {
-                state.changePSWErrorMsg.new_password = data.new_password
+            if (data.errors.new_password) {
+                state.changePSWErrorMsg.new_password = data.errors.new_password
             }
-            if (data.confirm_new_password) {
-                state.changePSWErrorMsg.confirm_new_password = data.confirm_new_password
+            if (data.errors.confirm_new_password) {
+                state.changePSWErrorMsg.confirm_new_password = data.errors.confirm_new_password
             }
+        } else if (status === 401) {
+            state.changePSWErrorMsg.others = data.msg
         } else {
             state.changePSWErrorMsg.others = data
         }
+    },
+
+    // =========================================================== Get Downalod Data
+    // Get Download Data Success
+    [type.GET_DOWNLOAD_SUCCESS](state, { data, status }) {
+        state.downloadData = data
+        state.status = status
+    },
+
+    // Get Download Data Fail
+    [type.GET_DOWNLOAD_FAIL](state, status) {
+        state.downloadData = null
+        state.status = status
     },
 
     // =========================================================== Get Banners
@@ -141,6 +176,16 @@ const mutations = {
         state.articles = null
         state.httpStatus = status
     }
+}
+
+// Set Local Storage
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, value)
+}
+
+// Get Local Storage
+function getLocalStorage(key) {
+    return localStorage.getItem(key)
 }
 
 export default mutations

@@ -1,333 +1,308 @@
 <template>
-    <main class="login-wrapper">
-        <div class="login-container">
-            <!-- Close Button -->
-            <fa :icon="['fas', 'times']" class="btn-close" @click="$router.push({path: $i18n.path('')})" />
+	<main class="login-wrapper">
+		<div class="login-container">
+			<!-- Close Button -->
+			<fa :icon="['fas', 'times']" class="btn-close" @click="$router.push({ path: $i18n.path('') })" />
 
-            <!-- Title -->
-            <h2 class="login-title">{{ $t('common.login') }}</h2>
+			<!-- Title -->
+			<h2 class="login-title">{{ $t('common.login') }}</h2>
 
-            <p class="login-msg msg1">{{ $t('login.login_msg1') }}</p>
-            <p class="login-msg msg2">{{ $t('login.login_msg2') }}</p>
+			<p class="login-msg msg1">{{ $t('login.login_msg1') }}</p>
+			<p class="login-msg msg2">{{ $t('login.login_msg2') }}</p>
 
-            <!-- Username -->
-            <div class="input-wrapper">
-                <img src="/images/username_img.png" :alt="$t('common.username')" />
-                <input type="text" :placeholder="$t('common.username')" v-model="myUsername" />
-            </div>
-            <!-- Username Error Message-->
-            <ul class="error-msg" v-if="usernameError">
-                <li v-for="(item, index) in loginErrorMsg.username" :key="`usn-${index}`">{{ item }}</li>
-            </ul>
+			<!-- Username -->
+			<div class="input-wrapper">
+				<img src="/images/username_img.png" :alt="$t('common.username')" />
+				<input type="text" :placeholder="$t('common.username')" v-model="myUsername" />
+			</div>
+			<!-- Username Error Message-->
+			<div class="error-msg error-username"></div>
 
-            <!-- Password -->
-            <div class="input-wrapper">
-                <img src="/images/password_img.png" :alt="$t('common.password')" />
-                <input id="inputPassword" type="password" :placeholder="$t('common.password')" v-model="myPassword" />
-                <img class="eye-icon" :src="passwordEyes" @click="showPassword()" />
-            </div>
-            <ul class="error-msg">
-                <!-- Password Error Message-->
-                <li v-show="passwordError" v-for="(item, index) in loginErrorMsg.password" :key="`psw-${index}`">{{ item }}</li>
-                <!-- Login Error Message-->
-                <li v-show="loginError" v-for="(item, index) in loginErrorMsg.login" :key="`login-${index}`">{{ item }}</li>
-            </ul>
-            <!-- Others Error Message-->
-            <div class="error-msg" v-if="othersError">{{ loginErrorMsg.others }}</div>
+			<!-- Password -->
+			<div class="input-wrapper">
+				<img src="/images/password_img.png" :alt="$t('common.password')" />
+				<input id="inputPassword" type="password" :placeholder="$t('common.password')" v-model="myPassword" />
+				<img class="eye-icon" :src="passwordEyes" @click="showPassword()" />
+			</div>
+			<div class="error-msg error-password"></div>
 
-            <!-- Forgot Password -->
-            <span class="forgot-psw" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
-            <span class="prompt-wrapper" v-show="showForgotMsg">
-                <div class="prompt-title">{{ $t('login.forgot_password') }}</div>
-                <div class="prompt-msg">{{ $t('login.forgot_password_msg') }}</div>
-            </span>
+			<!-- Forgot Password -->
+			<span class="forgot-psw" @click="showMsg()">{{ $t('login.forgot_password') }}</span>
+			<span class="prompt-wrapper" v-show="showForgotMsg">
+				<div class="prompt-title">{{ $t('login.forgot_password') }}</div>
+				<div class="prompt-msg">{{ $t('login.forgot_password_msg') }}</div>
+			</span>
 
-            <!-- Login Button -->
-            <button type="button" @click="login()">{{ $t('common.login') }}</button>
+			<!-- Login Button -->
+			<button type="button" @click="login()">{{ $t('common.login') }}</button>
 
-            <!-- Remind Message -->
-            <p class="remind-msg">
-                {{ $t('login.login_msg3') }}
-                <nuxt-link :to="$i18n.path('register')">{{ $t('common.register') }}</nuxt-link>
-            </p>
-        </div>
-    </main>
+			<!-- Remind Message -->
+			<p class="remind-msg">
+				{{ $t('login.login_msg3') }}
+				<nuxt-link :to="$i18n.path('register')">{{ $t('common.register') }}</nuxt-link>
+			</p>
+		</div>
+	</main>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+	import { mapGetters } from 'vuex';
 
-export default {
-    computed: {
-        ...mapGetters('auth', {
-            isLogined: 'GetLogined',
-            httpStatus: 'GetHttpStatus',
-            loginErrorMsg: 'GetLoginErrorMsg'
-        })
-    },
-    data() {
-        return {
-            myUsername: null,
-            myPassword: null,
-            passwordEyes: '/images/close_eye.png',
-            showForgotMsg: false,
-            usernameError: false,
-            passwordError: false,
-            loginError: false,
-            othersError: false
-        };
-    },
-    mounted() {
-        $(document).click(el => {
-            let touchEl = el.target.className;
-            if (touchEl !== 'forgot-psw' && touchEl !== 'prompt-wrapper' && touchEl !== 'prompt-title' && touchEl !== 'prompt-msg') {
-                this.showForgotMsg = false;
-            }
-        });
-    },
-    methods: {
-        // Show or Hidden "Forgot Password" Message
-        showMsg() {
-            this.showForgotMsg = !this.showForgotMsg;
-        },
+	export default {
+		computed: {
+			...mapGetters('auth', {
+				isLogined: 'GetLogined',
+				httpStatus: 'GetHttpStatus',
+				loginErrorMsg: 'GetLoginErrorMsg',
+			}),
+		},
+		data() {
+			return {
+				myUsername: null,
+				myPassword: null,
+				passwordEyes: '/images/close_eye.png',
+				showForgotMsg: false,
+			};
+		},
+		mounted() {
+			$(document).click((el) => {
+				let touchEl = el.target.className;
+				if (touchEl !== 'forgot-psw' && touchEl !== 'prompt-wrapper' && touchEl !== 'prompt-title' && touchEl !== 'prompt-msg') {
+					this.showForgotMsg = false;
+				}
+			});
+		},
+		methods: {
+			// Show or Hidden "Forgot Password" Message
+			showMsg() {
+				this.showForgotMsg = !this.showForgotMsg;
+			},
 
-        // Show or Hidden Password
-        showPassword() {
-            let pswInputType = $('#inputPassword').attr('type');
+			// Show or Hidden Password
+			showPassword() {
+				let pswInputType = $('#inputPassword').attr('type');
 
-            if (pswInputType === 'password') {
-                this.passwordEyes = '/images/open_eye.png';
-                $('#inputPassword').attr('type', 'text');
-            } else if (pswInputType === 'text') {
-                this.passwordEyes = '/images/close_eye.png';
-                $('#inputPassword').attr('type', 'password');
-            }
-        },
+				if (pswInputType === 'password') {
+					this.passwordEyes = '/images/open_eye.png';
+					$('#inputPassword').attr('type', 'text');
+				} else if (pswInputType === 'text') {
+					this.passwordEyes = '/images/close_eye.png';
+					$('#inputPassword').attr('type', 'password');
+				}
+			},
 
-        // Login
-        login() {
-            // Show Loading Animation
-            this.$nuxt.$loading.start();
+			// Login
+			login() {
+				// Show Loading Animation
+				this.$nuxt.$loading.start();
 
-            this.$store
-                .dispatch('auth/login', {
-                    username: this.myUsername,
-                    password: this.myPassword
-                })
-                .then(() => {
-                    // If Login Success, Go To "Home" Page.
-                    if (this.isLogined) {
-                        this.$router.push(this.$i18n.path(''));
-                    }
+				this.$store
+					.dispatch('auth/login', {
+						username: this.myUsername,
+						password: this.myPassword,
+					})
+					.then(() => {
+						// Hide Loading Animation
+						this.$nuxt.$loading.finish();
 
-                    // If Login Fail, Show Error Message
-                    if (this.httpStatus && this.httpStatus !== 200) {
-                        this.$nuxt.$loading.finish();
-                        this.showErrorMsg(this.httpStatus);
-                    } else {
-                        this.usernameError = false;
-                        this.passwordError = false;
-                        this.loginError = false;
-                        this.othersError = false;
-                    }
-                });
-        },
+						if (this.httpStatus === 200) {
+							this.$router.push(this.$i18n.path(''));
+						} else if (this.httpStatus === 422) {
+							$('.error-msg').text('');
+							$('.error-msg').removeClass('show');
 
-        // Show Error Message
-        showErrorMsg(status) {
-            if (status === 422) {
-                setTimeout(() => {
-                    if (this.loginErrorMsg.username) {
-                        this.usernameError = true;
-                    } else {
-                        this.usernameError = false;
-                    }
-                    if (this.loginErrorMsg.password) {
-                        this.passwordError = true;
-                    } else {
-                        this.passwordError = false;
-                    }
-                    if (this.loginErrorMsg.login) {
-                        this.loginError = true;
-                    } else {
-                        this.loginError = false;
-                    }
-                }, 200);
-            }
-            if (status === 401 || status === 403) {
-                this.othersError = true;
-            } else {
-                this.othersError = false;
-            }
-        }
-    }
-};
+							if (this.loginErrorMsg.login) {
+								$('.error-password').text(this.loginErrorMsg.login);
+								$('.error-password').addClass('show');
+							}
+							if (this.loginErrorMsg.username) {
+								$('.error-username').text(this.loginErrorMsg.username);
+								$('.error-username').addClass('show');
+							}
+							if (this.loginErrorMsg.password) {
+								$('.error-password').text(this.loginErrorMsg.password);
+								$('.error-password').addClass('show');
+							}
+						} else {
+							$('.error-password').text(this.loginErrorMsg.others);
+							$('.error-password').addClass('show');
+						}
+					});
+			},
+		},
+	};
 </script>
 <style lang="scss" scoped>
-    .login-wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: calc(100vh - 53px);
-        width: 100%;
-        font-family: $font-family;
-        color: $color-gray;
-        background: $color-black;
+	.login-wrapper {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-height: calc(100vh - 53px);
+		width: 100%;
+		font-family: $font-family;
+		color: $color-gray;
+		background: $color-black;
 
-        .login-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 454px;
-            padding: 10px 20px 0 20px;
+		.login-container {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			max-width: 454px;
+			padding: 10px 20px 0 20px;
 
-            .btn-close {
-                position: absolute;
-                right: 17px;
-                top: 15px;
-                font-size: 26px;
-            }
+			.btn-close {
+				position: absolute;
+				right: 17px;
+				top: 15px;
+				font-size: 26px;
+			}
 
-            > h2 {
-                width: 100%;
-                font-size: 20px;
-                font-weight: bold;
+			> h2 {
+				width: 100%;
+				font-size: 20px;
+				font-weight: bold;
 
-                text-align: center;
-                border-bottom: 1px solid $color-gray;
-                padding-bottom: 10px;
-                margin: 35px 0 30px 0;
-            }
+				text-align: center;
+				border-bottom: 1px solid $color-gray;
+				padding-bottom: 10px;
+				margin: 35px 0 30px 0;
+			}
 
-            > p {
-                font-size: 14px;
-                text-align: center;
+			> p {
+				font-size: 14px;
+				text-align: center;
 
-                &.msg2 {
-                    margin: 5px 0 25px 0;
-                }
-            }
+				&.msg2 {
+					margin: 5px 0 25px 0;
+				}
+			}
 
-            .input-wrapper {
-                position: relative;
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                background: $color-white;
-                border-radius: 5px;
-                margin-bottom: 25px;
+			.input-wrapper {
+				position: relative;
+				display: flex;
+				justify-content: center;
+				width: 100%;
+				background: $color-white;
+				border-radius: 5px;
+				margin-bottom: 25px;
 
-                > img {
-                    width: 30px;
-                    height: 30px;
-                    align-self: center;
-                    margin-left: 9px;
-                }
+				> img {
+					width: 30px;
+					height: 30px;
+					align-self: center;
+					margin-left: 9px;
+				}
 
-                > input {
-                    flex: 1;
-                    height: 40px;
-                    font-size: 16px;
-                    border-radius: 5px;
-                    background: $color-white;
-                    padding-top: 3px;
-                    margin-left: 10px;
-                    padding-right: 40px;
-                }
+				> input {
+					flex: 1;
+					height: 40px;
+					font-size: 16px;
+					border-radius: 5px;
+					background: $color-white;
+					padding-top: 3px;
+					margin-left: 10px;
+					padding-right: 40px;
+				}
 
-                .eye-icon {
-                    position: absolute;
-                    top: 13px;
-                    right: 10px;
-                    width: auto;
-                    height: 16px;
-                    margin-left: 0;
-                }
-            }
+				.eye-icon {
+					position: absolute;
+					top: 13px;
+					right: 10px;
+					width: auto;
+					height: 16px;
+					margin-left: 0;
+				}
+			}
 
-            .error-msg {
-                width: 100%;
-                font-size: 13px;
-                color: $color-red;
-                font-weight: bold;
-                text-align: center;
-                margin: -24px 0 6px 0;
-            }
+			.error-msg {
+				width: 100%;
+				line-height: 20px;
+				font-size: 13px;
+				color: $color-red;
+				font-weight: bold;
+				text-align: center;
+				margin: 0 0 6px 0;
 
-            .forgot-psw {
-                font-size: 14px;
-                font-weight: bold;
-                align-self: flex-end;
-            }
+				&.show {
+					margin: -20px 0 6px 0;
+				}
+			}
 
-            .prompt-wrapper {
-                position: absolute;
-                z-index: 10;
-                top: 320px;
-                right: 20px;
-                width: 170px;
-                color: $color-black;
-                border-radius: 10px;
-                box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.4);
-                background: $color-white;
-                padding: 10px;
+			.forgot-psw {
+				font-size: 14px;
+				font-weight: bold;
+				align-self: flex-end;
+			}
 
-                &::before {
-                    content: '';
-                    display: inline-block;
-                    position: absolute;
-                    top: -15px;
-                    right: 20px;
-                    border-left: 10px solid transparent;
-                    border-right: 10px solid transparent;
-                    border-bottom: 15px solid $color-white;
-                }
+			.prompt-wrapper {
+				position: absolute;
+				z-index: 10;
+				top: 345px;
+				right: 20px;
+				width: 170px;
+				color: $color-black;
+				border-radius: 10px;
+				box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.4);
+				background: $color-white;
+				padding: 10px;
 
-                .prompt-title {
-                    width: 100%;
-                    font-size: 16px;
-                    font-weight: bold;
-                    text-align: center;
-                    margin-bottom: 10px;
-                }
+				&::before {
+					content: '';
+					display: inline-block;
+					position: absolute;
+					top: -15px;
+					right: 20px;
+					border-left: 10px solid transparent;
+					border-right: 10px solid transparent;
+					border-bottom: 15px solid $color-white;
+				}
 
-                .prompt-msg {
-                    width: 100%;
-                    font-size: 12px;
-                    line-height: 18px;
-                }
+				.prompt-title {
+					width: 100%;
+					font-size: 16px;
+					font-weight: bold;
+					text-align: center;
+					margin-bottom: 10px;
+				}
 
-                &.show {
-                    display: block;
-                }
-            }
+				.prompt-msg {
+					width: 100%;
+					font-size: 12px;
+					line-height: 18px;
+				}
 
-            > button {
-                width: 100%;
-                height: 45px;
-                font-size: 17px;
-                font-weight: bold;
-                border: $border-style;
-                background: $color-yellow-linear-unpress;
-                border-radius: 5px;
-                margin: 50px 0 30px 0;
+				&.show {
+					display: block;
+				}
+			}
 
-                &:active {
-                    background: $color-yellow-linear;
-                }
-            }
+			> button {
+				width: 100%;
+				height: 45px;
+				font-size: 17px;
+				font-weight: bold;
+				border: $border-style;
+				background: $color-yellow-linear-unpress;
+				border-radius: 5px;
+				margin: 50px 0 30px 0;
 
-            .remind-msg {
-                width: 100%;
-                margin-bottom: 20px;
+				&:active {
+					background: $color-yellow-linear;
+				}
+			}
 
-                > a {
-                    display: inline-block;
-                    font-weight: bold;
-                    color: $color-yellow;
-                    margin-top: -3px;
-                }
-            }
-        }
-    }
+			.remind-msg {
+				width: 100%;
+				margin-bottom: 20px;
+
+				> a {
+					display: inline-block;
+					font-weight: bold;
+					color: $color-yellow;
+					margin-top: -3px;
+				}
+			}
+		}
+	}
 </style>

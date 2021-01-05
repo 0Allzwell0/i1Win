@@ -17,88 +17,21 @@ const mutations = {
     // =========================================================== Get Game URL
     // Get Game URL Success
     [type.GET_GAME_URL_SUCCESS](state, { data, status }) {
-        state.gameURL = data
+        state.gameURL = data.url
         state.httpStatus = status
     },
 
     // Get Game URL Fail
     [type.GET_GAME_URL_FAIL](state, { data, status }) {
-        state.errorMessage = data
         state.gameURL = null
         state.httpStatus = status
-    },
-
-    // ================================================================ Get Download Page All Games's "Login ID"、"Download URL"
-    // Get "Login ID"、"Download URL" Success
-    [type.GET_DOWNLOAD_DATA_SUCCESS](state, { productCode, data, status }) {
-        switch (productCode) {
-            case 'plt': {
-                state.downloadPLT.loginID = data.loginID
-                state.downloadPLT.url = data.gameURL
-                break;
-            }
-            case 'ag': {
-                state.downloadAG.loginID = data.loginID
-                state.downloadAG.url = data.gameURL
-                break;
-            }
-            case 'dt': {
-                state.downloadDT.loginID = data.loginID
-                state.downloadDT.url = data.gameURL
-                break;
-            }
-            case 'jok': {
-                state.downloadJOKER.loginID = data.loginID
-                state.downloadJOKER.url = data.gameURL
-                break;
-            }
-            case 'ks9': {
-                state.download918KISS.loginID = data.loginID
-                state.download918KISS.url = data.gameURL
-                break;
-            }
-            default: {
-                break;
-            }
+        if (status === 401) {
+            state.errorMsg = data.msg
+        } else if (status === 422) {
+            state.errorMsg = data.errors.system[0]
+        } else {
+            state.errorMsg = data
         }
-
-        state.httpStatus = status
-    },
-
-    // Get "Login ID"、"Download URL" Fail
-    [type.GET_DOWNLOAD_DATA_FAIL](state, { productCode, status }) {
-        switch (productCode) {
-            case 'plt': {
-                state.downloadPLT.loginID = null
-                state.downloadPLT.url = null
-                break;
-            }
-            case 'ag': {
-                state.downloadAG.loginID = null
-                state.downloadAG.url = null
-                break;
-            }
-            case 'dt': {
-                state.downloadDT.loginID = null
-                state.downloadDT.url = null
-                break;
-            }
-            case 'jok': {
-                state.downloadJOKER.loginID = null
-                state.downloadJOKER.url = null
-                break;
-            }
-            case 'ks9': {
-                state.download918KISS.loginID = null
-                state.download918KISS.url = null
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-
-        state.httpStatus = status
     },
 
     // ================================================================ Get "Playtech DT" Game Data (Slot、Live Casino)

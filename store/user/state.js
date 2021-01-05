@@ -4,7 +4,7 @@ const state = () => ({
         birthday: null,
         email: null,
         gender: null,
-        line_id: null,
+        line_id: null
     },
     profileErrorMsg: null,
     changePSWErrorMsg: {
@@ -13,6 +13,7 @@ const state = () => ({
         confirm_new_password: null,
         others: null
     },
+    downloadData: null,
     banners: null,
     announcements: null,
     jackpot: parseFloat(1830082162),
