@@ -10,13 +10,25 @@
 			<!-- Full Name -->
 			<h3>{{ $t('member.fullname') }}</h3>
 			<div class="form-wrapper">
-				<input class="form-fullname" type="text" v-model="myFullname" :placeholder="$t('edit_profile.fullname')" />
+				<input
+					class="form-fullname"
+					type="text"
+					v-model="myFullname"
+					:placeholder="$t('edit_profile.fullname')"
+					:disabled="fullnameDisabled"
+				/>
 			</div>
 
 			<!-- Mobile Number -->
 			<h3>{{ $t('edit_profile.mobile_number') }}</h3>
 			<div class="form-wrapper">
-				<input class="form-mobile" type="number" v-model="myMobile" :placeholder="$t('edit_profile.mobile_number')" />
+				<input
+					class="form-mobile"
+					type="number"
+					v-model="myMobile"
+					:placeholder="$t('edit_profile.mobile_number')"
+					:disabled="mobileDisabled"
+				/>
 			</div>
 
 			<!-- Line ID -->
@@ -73,6 +85,8 @@
 				myEmail: null,
 				myBirthday: null,
 				myGender: 1,
+				fullnameDisabled: false,
+				mobileDisabled: false,
 			};
 		},
 		beforeMount() {
@@ -89,16 +103,16 @@
 
 			// If "fullname" has a value, set "input" to "disabled", otherwise cancel "disabled
 			if (!this.myFullname) {
-				$('.form-fullname').attr('disabled', false);
+				this.fullnameDisabled = false;
 			} else {
-				$('.form-fullname').attr('disabled', true);
+				this.fullnameDisabled = true;
 			}
 
 			// If "mobile" has a value, set "input" to "disabled", otherwise cancel "disabled
 			if (!this.myMobile) {
-				$('.form-mobile').attr('disabled', false);
+				this.mobileDisabled = false;
 			} else {
-				$('.form-mobile').attr('disabled', true);
+				this.mobileDisabled = true;
 			}
 		},
 		methods: {
@@ -112,22 +126,6 @@
 				this.myBirthday = userData.birthday;
 				this.myEmail = userData.email;
 				this.myGender = userData.gender;
-
-				// if (userData && !profileData) {
-				// 	this.myFullname = userData.fullname;
-				// 	this.myMobile = userData.mobile;
-				// 	this.myLineID = userData.line_id;
-				// 	this.myBirthday = userData.birthday;
-				// 	this.myEmail = userData.email;
-				// 	this.gender = userData.gender;
-				// } else if (userData && profileData) {
-				// 	this.myFullname = userData.fullname;
-				// 	this.myMobile = userData.mobile;
-				// 	this.myLineID = profileData.line_id;
-				// 	this.myBirthday = profileData.birthday;
-				// 	this.myEmail = profileData.email;
-				// 	this.gender = profileData.gender;
-				// }
 			},
 
 			// Change Gender
