@@ -401,7 +401,7 @@
 		> p {
 			font-family: sans-serif;
 			font-size: 16px;
-			color: $color-black;
+			color: $color-white;
 			text-align: center;
 			padding-top: 10px;
 		}

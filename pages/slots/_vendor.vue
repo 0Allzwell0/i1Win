@@ -174,8 +174,6 @@
 <style lang="scss">
 	.slots-wrapper {
 		width: 100%;
-		height: 100%;
-		min-height: calc(100vh - 110px);
 		font-size: 12px;
 		font-family: $font-family;
 		background: $background_img;
@@ -183,6 +181,7 @@
 
 		.slots-container {
 			width: 100%;
+			min-height: calc(100vh - 177px);
 			background: $color-black;
 			padding-bottom: 90px;
 
