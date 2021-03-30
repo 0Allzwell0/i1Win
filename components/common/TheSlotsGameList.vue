@@ -3,13 +3,19 @@
 		<!-- Game Modal -->
 		<modal-game-play ref="child" :game-img="gameImg" :game-name="gameName"></modal-game-play>
 
-		<div class="game-list-wrapper">
-			<ul></ul>
-			<div class="page-selector">
+		<div class="games-content">
+			<ul id="gamesList"></ul>
+			<div class="pagination-selector">
 				<button class="btn-prev" type="button" data-page="prev">{{ $t('slots.previous') }}</button>
-				<ul></ul>
+				<ul id="pagePagination"></ul>
 				<button class="btn-next" type="button" data-page="next">{{ $t('slots.next') }}</button>
 			</div>
+		</div>
+
+		<!-- No Games -->
+		<div class="no-games">
+			<img src="/images/slots/icon_exclamation.svg" alt="" />
+			<p>{{ $t('slots.no_game_msg') }}</p>
 		</div>
 	</div>
 </template>
@@ -27,6 +33,7 @@
 				gameURL: 'GetGameURL',
 				httpStatus: 'GetHttpStatus',
 				errorMsg: 'GetErrorMsg',
+				networkError: 'GetNetworkError',
 			}),
 		},
 		components: {
@@ -35,7 +42,7 @@
 		props: {
 			productCode: {
 				type: String,
-				default: 'playtech',
+				default: '',
 			},
 			selectedType: {
 				type: String,
@@ -55,11 +62,11 @@
 		},
 		mounted() {
 			setTimeout(() => {
-				this.loadGames();
+				if (this.productCode !== 'pgsl') this.loadGames('all');
 			}, 100);
 
 			// Selected Page or Go Prev of Go Next
-			$('.page-selector').click((el) => {
+			$('.pagination-selector').click((el) => {
 				if (this.allDataSize) {
 					// 點擊到的頁碼
 					el.preventDefault();
@@ -76,11 +83,17 @@
 						}
 					}
 
-					$('.game-list-wrapper > ul').empty();
-					$('.page-selector > ul').empty();
+					$('#gamesList').empty();
+					$('#pagePagination').empty();
 
 					this.setSelector();
 					this.renderGames();
+					$('html, body').animate(
+						{
+							scrollTop: 0,
+						},
+						800
+					);
 				}
 			});
 		},
@@ -93,28 +106,39 @@
 				this.totalPages = null;
 				this.currentPage = 1;
 
-				$('.game-list-wrapper > ul').empty();
-				$('.page-selector > ul').empty();
+				$('#gamesList').empty();
+				$('#pagePagination').empty();
 
-				$('.page-selector > button').attr('disabled');
-				$('.page-selector > button').css('opacity', '0.4');
+				$('.pagination-selector > button').attr('disabled', true);
 			},
 
 			// Load Games
-			loadGames() {
+			loadGames(type) {
+				// Show Loading Animation
+				this.$nuxt.$loading.start();
+
 				this.initialData();
 
 				this.$store
 					.dispatch(this.isLogined ? 'game/getGamesAfter' : 'game/getGamesBefore', {
 						productCode: this.productCode,
-						tab: this.selectedType,
+						tab: type,
 					})
 					.then(() => {
-						this.allDataSize = this.gamesList;
-						this.lastPageSize = this.allDataSize.length % this.pageSize;
+						if (this.gamesList && this.gamesList.length > 0) {
+							$('.no-games').removeClass('show');
+							$('.games-content').addClass('show');
+							this.allDataSize = this.gamesList;
+							this.lastPageSize = this.allDataSize.length % this.pageSize;
+							this.setSelector();
+							this.renderGames();
+						} else {
+							$('.no-games').addClass('show');
+							$('.games-content').removeClass('show');
+						}
 
-						this.setSelector();
-						this.renderGames();
+						// Hide Loading Animation
+						this.$nuxt.$loading.finish();
 					});
 			},
 
@@ -153,28 +177,22 @@
 			renderSelector(startPage, endPage) {
 				for (let i = startPage; i <= endPage; i++) {
 					if (i === this.currentPage) {
-						$('.page-selector > ul').append('<li class="active" data-page="' + i + '">' + i + '</li>');
+						$('#pagePagination').append('<li class="active" data-page="' + i + '">' + i + '</li>');
 					} else {
-						$('.page-selector > ul').append('<li data-page="' + i + '">' + i + '</li>');
+						$('#pagePagination').append('<li data-page="' + i + '">' + i + '</li>');
 					}
 				}
 
 				if (this.currentPage === this.totalPages && this.totalPages > 1) {
 					$('.btn-prev').attr('disabled', false);
-					$('.btn-prev').css('opacity', '1');
 					$('.btn-next').attr('disabled', true);
-					$('.btn-next').css('opacity', '0.4');
 				} else if (this.currentPage === 1 && this.totalPages > 1) {
 					$('.btn-prev').attr('disabled', true);
-					$('.btn-prev').css('opacity', '0.4');
 					$('.btn-next').attr('disabled', false);
-					$('.btn-next').css('opacity', '1');
 				} else if (this.currentPage === 1 && this.totalPages <= 1) {
 					$('.btn-prev, .btn-next').attr('disabled', true);
-					$('.btn-prev, .btn-next').css('opacity', '0.4');
 				} else {
 					$('.btn-prev, .btn-next').attr('disabled', false);
-					$('.btn-prev, .btn-next').css('opacity', '1');
 				}
 			},
 
@@ -191,10 +209,8 @@
 				}
 
 				for (let i = startIndex; i < endIndex; i++) {
-					$('.game-list-wrapper > ul').append(
-						`<li data-id="${this.allDataSize[i].id}">
-	                        <img src="${this.allDataSize[i].image}" alt="${this.allDataSize[i].name}" />
-	                    </li>`
+					$('#gamesList').append(
+						`<li data-id="${this.allDataSize[i].id}"><img src="${this.allDataSize[i].image}" alt="${this.allDataSize[i].name}" /></li>`
 					);
 				}
 
@@ -203,28 +219,40 @@
 
 			// Set Games Element To Be Able To Click
 			setClick() {
-				$('.game-list-wrapper > ul > li').click((el) => {
-					let gameID = $(el.currentTarget).data('id');
+				$('#gamesList > li').click((el) => {
+					let game_id = $(el.currentTarget).data('id');
 					this.gameName = $(el.currentTarget).children().attr('alt');
 					this.gameImg = $(el.currentTarget).children().attr('src');
 
 					if (this.isLogined) {
-						_this.$store
+						// Show Loading Animation
+						this.$nuxt.$loading.start();
+
+						this.$store
 							.dispatch('game/getGameURL', {
-								category: 'Slots',
-								productCode: this.productCode,
-								gameID,
+								category: 'slot',
+								product_code: this.productCode,
+								game_id,
 							})
 							.then(() => {
-								if (this.httpStatus === 200) {
-									window.open(this.gameURL);
-								} else if (this.httpStatus === 403) {
-									$('.msg-list').html('');
-									$('.msg-list').append(`<li>${this.$t('common.error_403')}</li>`);
-									$('#modalMessage').modal('show');
+								// Hide Loading Animation
+								this.$nuxt.$loading.finish();
+
+								$('.msg-list').html('');
+								if (this.httpStatus && !this.networkError) {
+									if (this.httpStatus === 200) {
+										window.open(this.gameURL);
+									} else {
+										if (this.httpStatus === 403) {
+											$('.msg-list').append(`<li>${this.$t('common.error_403')}</li>`);
+										} else {
+											$('.msg-list').append(`<li>${this.errorMsg}</li>`);
+										}
+
+										$('#modalMessage').modal('show');
+									}
 								} else {
-									$('.msg-list').html('');
-									$('.msg-list').append(`<li>${this.errorMsg}</li>`);
+									$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
 									$('#modalMessage').modal('show');
 								}
 							});
@@ -233,17 +261,50 @@
 					}
 				});
 			},
+
+			// Search Games
+			searchGames(gameName) {
+				// Show Loading Animation
+				this.$nuxt.$loading.start();
+
+				this.initialData();
+
+				this.$store.dispatch('game/searchGames', gameName).then(() => {
+					if (this.gamesList && this.gamesList.length > 0) {
+						$('.type-navbar > li').removeClass('active');
+						$('.no-games').removeClass('show');
+						$('.games-content').addClass('show');
+						this.allDataSize = this.gamesList;
+						this.lastPageSize = this.allDataSize.length % this.pageSize;
+						this.setSelector();
+						this.renderGames();
+					} else {
+						$('.no-games').addClass('show');
+						$('.games-content').removeClass('show');
+					}
+
+					// Hide Loading Animation
+					this.$nuxt.$loading.finish();
+				});
+			},
 		},
 	};
 </script>
 <style lang="scss">
-	.game-list-wrapper {
+	.games-content {
+		display: none;
 		width: 100%;
 		height: 100%;
 
+		&.show {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
 		> ul {
 			width: 100%;
-			padding: 0 0 35px 0;
+			padding: 0 4% 35px 4%;
 
 			> li {
 				display: inline-block;
@@ -266,7 +327,7 @@
 			}
 		}
 
-		.page-selector {
+		.pagination-selector {
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -279,11 +340,14 @@
 				width: 75px;
 				height: 100%;
 				font-size: 14px;
-				color: $color-black;
+				color: $color-white;
 				border-radius: 5px;
-				border: 1px solid $color-black;
+				border: 1px solid $color-white;
 				background: transparent;
-				opacity: 0.4;
+
+				&:disabled {
+					opacity: 0.4;
+				}
 			}
 
 			> ul {
@@ -299,10 +363,9 @@
 					align-items: center;
 					width: 30px;
 					height: 100%;
-					color: $color-black;
-					border: 1px solid $color-black;
+					color: $color-white;
+					border: 1px solid $color-white;
 					border-radius: 50%;
-					background: transparent;
 					margin-right: 10px;
 
 					&:last-child {
@@ -310,12 +373,37 @@
 					}
 
 					&.active {
+						color: $color-black;
 						border: 0;
 						box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
 						background: $color-yellow-linear;
 					}
 				}
 			}
+		}
+	}
+
+	.no-games {
+		display: none;
+		width: 100%;
+		padding-top: 30px;
+
+		&.show {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		> img {
+			width: 30%;
+		}
+
+		> p {
+			font-family: sans-serif;
+			font-size: 16px;
+			color: $color-black;
+			text-align: center;
+			padding-top: 10px;
 		}
 	}
 </style>

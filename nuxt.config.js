@@ -2,11 +2,11 @@ const pkg = require('./package')
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'universal',
+  telemetry: false,
 
-  // server: {
-  //   port: 3001
-  // },
+  server: {
+    port: 3001
+  },
 
   /*
    ** Headers of the page
@@ -45,9 +45,7 @@ module.exports = {
    */
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
-    '@/assets/css/minify/swiper.min.css',
     '@/assets/css/css_reset.css',
-    '@/assets/css/main.css'
   ],
 
   /*
@@ -56,7 +54,6 @@ module.exports = {
   plugins: [
     { src: "~plugins/bootstrap.js", ssr: false },
     { src: "~plugins/jquery.marquee.js", ssr: false },
-    { src: "~plugins/swiper.min.js", ssr: false },
     { src: '~plugins/font-awesome.js', ssr: false },
     { src: '~plugins/i18n.js' },
     { src: '~plugins/datepicker.js', ssr: false },

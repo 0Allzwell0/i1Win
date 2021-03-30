@@ -1,6 +1,6 @@
 class LANGUAGE {
     static getLanguage() {
-        let language = localStorage.getItem('LANGUAGE') || 'en-US';
+        let language = localStorage.getItem('LANGUAGE') || 'th-TH';
         if (language === 'en-US') {
             return 'en'
         } else if (language === 'th-TH') {

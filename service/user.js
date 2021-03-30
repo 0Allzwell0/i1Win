@@ -22,7 +22,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -46,7 +47,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -70,7 +72,35 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
+        }
+
+        return response
+    }
+
+    // Get PopUp Data
+    static async getPopUp() {
+        let response = null
+
+        try {
+            response = await axios({
+                method: 'GET',
+                timeout: 5000,
+                url: 'res/popup',
+                baseURL: API_DOMAIN,
+                headers: {
+                    'Accept': 'applicatioin/json',
+                    'Accept-language': LANGUAGE.getLanguage()
+                },
+                params: {
+                    is_mobile: 1,
+                    website_id: WEBSITE_ID
+                }
+            })
+        } catch (error) {
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -83,7 +113,7 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'res/banners',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -96,7 +126,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -109,7 +140,7 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'res/announcements',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -121,7 +152,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -134,7 +166,7 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'res/jackpot',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -146,7 +178,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -159,7 +192,7 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'res/promotions',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -172,7 +205,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -185,7 +219,7 @@ class UserService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: `res/article/${code}`,
                 baseURL: API_DOMAIN,
                 headers: {
@@ -197,7 +231,8 @@ class UserService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response

@@ -53,6 +53,7 @@
 				isLogined: 'GetLogined',
 				httpStatus: 'GetHttpStatus',
 				loginErrorMsg: 'GetLoginErrorMsg',
+				networkError: 'GetNetworkError',
 			}),
 		},
 		data() {
@@ -104,26 +105,31 @@
 						// Hide Loading Animation
 						this.$nuxt.$loading.finish();
 
-						if (this.httpStatus === 200) {
-							this.$router.push(this.$i18n.path(''));
-						} else if (this.httpStatus === 422) {
-							$('.error-msg').text('');
-							$('.error-msg').removeClass('show');
+						$('.error-msg').text('');
+						$('.error-msg').removeClass('show');
 
-							if (this.loginErrorMsg.login) {
-								$('.error-password').text(this.loginErrorMsg.login);
-								$('.error-password').addClass('show');
-							}
-							if (this.loginErrorMsg.username) {
-								$('.error-username').text(this.loginErrorMsg.username);
-								$('.error-username').addClass('show');
-							}
-							if (this.loginErrorMsg.password) {
-								$('.error-password').text(this.loginErrorMsg.password);
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 200 && this.isLogined) {
+								this.$router.push(this.$i18n.path(''));
+							} else if (this.httpStatus === 422) {
+								if (this.loginErrorMsg.login) {
+									$('.error-password').text(this.loginErrorMsg.login);
+									$('.error-password').addClass('show');
+								}
+								if (this.loginErrorMsg.username) {
+									$('.error-username').text(this.loginErrorMsg.username);
+									$('.error-username').addClass('show');
+								}
+								if (this.loginErrorMsg.password) {
+									$('.error-password').text(this.loginErrorMsg.password);
+									$('.error-password').addClass('show');
+								}
+							} else {
+								$('.error-password').text(this.loginErrorMsg.others);
 								$('.error-password').addClass('show');
 							}
 						} else {
-							$('.error-password').text(this.loginErrorMsg.others);
+							$('.error-password').text(this.$t('common.network_error'));
 							$('.error-password').addClass('show');
 						}
 					});
@@ -225,7 +231,7 @@
 				margin: 0 0 6px 0;
 
 				&.show {
-					margin: -20px 0 6px 0;
+					margin: -25px 0 11px 0;
 				}
 			}
 

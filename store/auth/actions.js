@@ -1,26 +1,22 @@
-import { Base64 } from 'js-base64';
-import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import AuthService from '~/service/auth'
 
 // Set Timestamp
 function getExpTimestamp() {
-    return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
+    let exp = Math.floor(Date.now() / 1000)
+    localStorage.setItem('EXP', exp)
+    return Math.floor(exp) + 600 // 10 min
 }
 
-// Get CUI (Base64_Encode([website_id, account_id]))
+// Get CUI
 function getCUI() {
-    let json = JSON.stringify({
-        website_id: WEBSITE_ID
-    })
-
     let cui = null
     if (localStorage.getItem('userData')) {
         let userData = localStorage.getItem('userData')
         cui = JSON.parse(userData).cui
     }
 
-    return cui || Base64.encode(json)
+    return cui
 }
 
 const actions = {
@@ -31,10 +27,14 @@ const actions = {
         let payload = { username, password, cui, exp }
         commit(types.REQUEST_AUTH)
         const response = await AuthService.login(payload)
-        if (response.status === 200) {
-            commit(types.LOGIN_SUCCESS, { data: response.data, status: response.status })
+        if (response.status) {
+            if (response.status === 200) {
+                commit(types.LOGIN_SUCCESS, { data: response.data, status: response.status })
+            } else {
+                commit(types.LOGIN_FAIL, { data: response.data, status: response.status })
+            }
         } else {
-            commit(types.LOGIN_FAIL, { data: response.data, status: response.status })
+            commit(types.NETWORK_ERROR)
         }
     },
 
@@ -50,10 +50,14 @@ const actions = {
         const payload = { username, password, fullname, password_confirmation, mobile, line_id, cui, exp }
         commit(types.REQUEST_AUTH)
         const response = await AuthService.register(payload)
-        if (response.status === 200) {
-            commit(types.REGISTER_SUCCESS, { data: response.data, status: response.status })
+        if (response.status) {
+            if (response.status === 200) {
+                commit(types.REGISTER_SUCCESS, { data: response.data, status: response.status })
+            } else {
+                commit(types.REGISTER_FAIL, { data: response.data, status: response.status })
+            }
         } else {
-            commit(types.REGISTER_FAIL, { data: response.data, status: response.status })
+            commit(types.NETWORK_ERROR)
         }
     },
 
@@ -66,7 +70,7 @@ const actions = {
         if (response.status === 200) {
             commit(types.CHECK_USERNAME_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.CHECK_USERNAME_FAIL, { data: response.data, status: response.status })
+            commit(types.CHECK_USERNAME_FAIL, response.status)
         }
     },
 
@@ -79,7 +83,7 @@ const actions = {
         if (response.status === 200) {
             commit(types.CHECK_MOBILE_SUCCESS, { data: response.data, status: response.status })
         } else {
-            commit(types.CHECK_MOBILE_FAIL, { data: response.data, status: response.status })
+            commit(types.CHECK_MOBILE_FAIL, response.status)
         }
     }
 }

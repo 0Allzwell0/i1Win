@@ -9,8 +9,5 @@ export const GET_GAMES_LIST_FAIL = 'GET_GAMES_LIST_FAIL'
 export const GET_GAME_URL_SUCCESS = 'GET_GAME_URL_SUCCESS'
 export const GET_GAME_URL_FAIL = 'GET_GAME_URL_FAIL'
 
-// ================================================================ Get Playtech DT Game Data
-export const GET_PLT_DT_DATA = 'GET_PLT_DT_DATA'
-
-// ================================================================ Get Joker Game Data
-export const GET_JOKER_DATA = 'GET_JOKER_DATA'
+// ================================================================ Network  Error
+export const NETWORK_ERROR = "NETWORK_ERROR"

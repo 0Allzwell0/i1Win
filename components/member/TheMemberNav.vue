@@ -1,31 +1,27 @@
 <template>
-	<ul class="member-tab-wrapper">
-		<li class="member-tab-container">
-			<nuxt-link class="member-tab" :to="$i18n.path('member/deposit')" :class="{ active: $route.name.indexOf('deposit') !== -1 }">
-				<img class="member-tab-image" src="/images/member/nav/deposit.png" />
-				<span class="member-tab-text">{{ $t('member.deposit') }}</span>
+	<ul class="member-navbar">
+		<li>
+			<nuxt-link :to="$i18n.path('member/deposit_thirdparty')" :class="{ active: $route.name.indexOf('deposit') !== -1 }">
+				<img src="/images/member/nav/deposit.png" alt="" />
+				<span>{{ $t('member.deposit') }}</span>
 			</nuxt-link>
 		</li>
-		<li class="member-tab-container">
-			<nuxt-link
-				class="member-tab"
-				:to="$i18n.path('member/withdrawal')"
-				:class="{ active: $route.name.indexOf('withdrawal') !== -1 }"
-			>
-				<img class="member-tab-image" src="/images/member/nav/withdraw.png" />
-				<span class="member-tab-text">{{ $t('member.withdrawal') }}</span>
+		<li>
+			<nuxt-link :to="$i18n.path('member/withdrawal')" :class="{ active: $route.name.indexOf('withdrawal') !== -1 }">
+				<img src="/images/member/nav/withdraw.png" alt="" />
+				<span>{{ $t('member.withdrawal') }}</span>
 			</nuxt-link>
 		</li>
-		<li class="member-tab-container">
-			<nuxt-link class="member-tab" :to="$i18n.path('member/transfer')" :class="{ active: $route.name.indexOf('transfer') !== -1 }">
-				<img class="member-tab-image" src="/images/member/nav/transfer.png" />
-				<span class="member-tab-text">{{ $t('member.transfer') }}</span>
+		<li>
+			<nuxt-link :to="$i18n.path('member/transfer')" :class="{ active: $route.name.indexOf('transfer') !== -1 }">
+				<img src="/images/member/nav/transfer.png" alt="" />
+				<span>{{ $t('member.transfer') }}</span>
 			</nuxt-link>
 		</li>
-		<li class="member-tab-container">
-			<nuxt-link class="member-tab" :to="$i18n.path('member/history')" :class="{ active: $route.name.indexOf('history') !== -1 }">
-				<img class="member-tab-image" src="/images/member/nav/history.png" />
-				<span class="member-tab-text">{{ $t('member.history') }}</span>
+		<li>
+			<nuxt-link :to="$i18n.path('member/history')" :class="{ active: $route.name.indexOf('history') !== -1 }">
+				<img src="/images/member/nav/history.png" alt="" />
+				<span>{{ $t('member.history') }}</span>
 			</nuxt-link>
 		</li>
 	</ul>
@@ -34,14 +30,14 @@
 	export default {};
 </script>
 <style lang="scss" scoped>
-	.member-tab-wrapper {
+	.member-navbar {
 		display: flex;
 		flex-direction: row;
 		font-family: $font-family;
 		font-size: 14px;
 		width: 100%;
 
-		.member-tab-container {
+		> li {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
@@ -52,7 +48,7 @@
 				border-right: none;
 			}
 
-			.member-tab {
+			> a {
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -64,13 +60,13 @@
 					background: $color-yellow;
 				}
 
-				.member-tab-image {
+				> img {
 					align-self: center;
 					width: 35px;
 					padding-top: 9px;
 				}
 
-				.member-tab-text {
+				> span {
 					font-weight: bold;
 					color: $color-black;
 					text-align: center;

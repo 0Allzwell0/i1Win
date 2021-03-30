@@ -1,3 +1,6 @@
+// ================================================================ NETWORK_ERROR
+export const NETWORK_ERROR = 'NETWORK_ERROR'
+
 // ================================================================ Initial State
 export const INITIAL_STATE = 'INITIAL_STATE'
 
@@ -14,6 +17,10 @@ export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 // ================================================================ Get Download Data
 export const GET_DOWNLOAD_SUCCESS = 'GET_DOWNLOAD_SUCCESS'
 export const GET_DOWNLOAD_FAIL = 'GET_DOWNLOAD_FAIL'
+
+// ================================================================ Get PopUp Data
+export const GET_POPUP_SUCCESS = "GET_POPUP_SUCCESS"
+export const GET_POPUP_FAIL = "GET_POPUP_FAIL"
 
 // ================================================================ Get Banners
 export const GET_BANNERS_SUCCESS = 'GET_BANNERS_SUCCESS'

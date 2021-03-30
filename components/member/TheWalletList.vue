@@ -42,12 +42,12 @@
 		computed: {
 			...mapGetters('wallet', {
 				wallets: 'GetWallets',
+				mainWallet: 'GetMainWallet',
 				balance: 'GetBalance',
 			}),
 		},
 		data() {
 			return {
-				mainWallet: 0,
 				totalWallet: 0,
 				walletList: [],
 				expandWallet: false,
@@ -60,20 +60,20 @@
 		beforeMount() {
 			// Get Main Balance
 			this.$store.dispatch('wallet/getBalance', 'main').then(() => {
-				this.mainWallet = this.balance;
+				this.$store.commit('wallet/SET_MAIN_WALLET_BALANCE', this.balance);
 				this.totalWallet = this.totalWallet + this.mainWallet;
 			});
 		},
 		mounted() {
 			this.getRouteName();
-			setTimeout(() => {
-				this.getWallets();
-			}, 1000);
+			this.getWallets();
 		},
 		methods: {
 			// Get Wallets
 			getWallets() {
 				this.$store.dispatch('wallet/getWallets').then(() => {
+					this.scrollHeight = $('.wallet-list-container').height();
+					$('.member-container').css('margin-top', -this.scrollHeight);
 					this.getWalletBalance();
 				});
 			},
@@ -91,8 +91,8 @@
 
 					if (isActive === 1 && isBlocked === 0) {
 						this.$store.dispatch('wallet/getBalance', productCode).then(() => {
-							if (this.balance) {
-								$(`#${productCode} .wallet-list-item-amount`).text(this.balance);
+							if (this.balance >= 0) {
+								$(`#${productCode} .wallet-list-item-amount`).text(this.balance.toFixed(2));
 								this.totalWallet = this.totalWallet + this.balance;
 							}
 						});
@@ -123,35 +123,27 @@
 
 			// Expand or Hide Wallet List
 			expandWalletList() {
-				this.scrollHeight = $('.wallet-list-container').height();
-
 				if (!this.expandWallet) {
 					$('.expand-close-img').addClass('expand');
 					$('.expand-close-text').text(this.$t('member.close_wallet'));
 
 					if (this.routeName === 'deposit') {
-						$('.member-deposit').addClass('expand');
-						$('.member-deposit').css('top', 273 + this.scrollHeight);
+						$('.member-deposit').css('margin-top', 0);
 					} else if (this.routeName === 'withdrawal') {
-						$('.member-withdrawal').addClass('expand');
-						$('.member-withdrawal').css('top', 273 + this.scrollHeight);
+						$('.member-withdrawal').css('margin-top', 0);
 					} else if (this.routeName === 'transfer') {
-						$('.member-transfer').addClass('expand');
-						$('.member-transfer').css('top', 273 + this.scrollHeight);
+						$('.member-transfer').css('margin-top', 0);
 					}
 				} else {
 					$('.expand-close-img').removeClass('expand');
 					$('.expand-close-text').text(this.$t('member.expand_wallet'));
 
 					if (this.routeName === 'deposit') {
-						$('.member-deposit').removeClass('expand');
-						$('.member-deposit').css('top', '');
+						$('.member-deposit').css('margin-top', -this.scrollHeight);
 					} else if (this.routeName === 'withdrawal') {
-						$('.member-withdrawal').removeClass('expand');
-						$('.member-withdrawal').css('top', '');
+						$('.member-withdrawal').css('margin-top', -this.scrollHeight);
 					} else if (this.routeName === 'transfer') {
-						$('.member-transfer').removeClass('expand');
-						$('.member-transfer').css('top', '');
+						$('.member-transfer').css('margin-top', -this.scrollHeight);
 					}
 				}
 				this.expandWallet = !this.expandWallet;

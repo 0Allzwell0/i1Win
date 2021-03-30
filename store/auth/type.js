@@ -30,3 +30,6 @@ export const CHECK_MOBILE_SUCCESS = "CHECK_MOBILE_SUCCESS"
 
 // ================================================================ Check Mobile Fail
 export const CHECK_MOBILE_FAIL = "CHECK_MOBILE_FAIL"
+
+// ================================================================ Network Error
+export const NETWORK_ERROR = "NETWORK_ERROR"

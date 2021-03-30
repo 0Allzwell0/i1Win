@@ -17,7 +17,7 @@
 		</div>
 
 		<!-- 已登入後顯示 -->
-		<nuxt-link :to="$i18n.path('member/deposit')" v-if="isLogined">{{ $t('member.deposit') }}</nuxt-link>
+		<nuxt-link :to="$i18n.path('member/deposit_thirdparty')" v-if="isLogined">{{ $t('member.deposit') }}</nuxt-link>
 	</header>
 </template>
 
@@ -33,7 +33,7 @@
 		methods: {
 			// Show Menu
 			showMenu() {
-				$('.menu-background').css('display', 'block');
+				$('.menu-background').show();
 				setTimeout(() => {
 					$('.menu-wrapper').addClass('show-menu');
 				}, 100);

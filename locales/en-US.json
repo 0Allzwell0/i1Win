@@ -68,6 +68,7 @@
     "mobile_ok": "Mobile number is OK.",
     "mobile_error1": "Please enter 9 to 10 digit characters.",
     "mobile_error2": "The mobile number has already been taken.",
+    "mobile_error3": "The first digit cannot be 0",
     "special_symbols": "Can not use special symbols."
   },
   "promotions": {
@@ -91,7 +92,7 @@
   "sports": {
     "sbo_msg": "Easy bets. Win easily. Match bets to choose from. Every league. Don't miss the chance to grab money from us!",
     "ibc_msg": "Enjoy betting while wahtching live matches. From various kinds of sports and must not miss the chance to win big prizes!",
-    "bti_msg": "Easy bets. Win easily. Match bets to choose from. Every league. Don't miss the chance to grab money from us!"
+    "bti_msg": "Some of the bet odds in the market, both Asian and European Odds."
   },
   "lottery": {
     "thailottery": "Thai Lottery",
@@ -112,12 +113,15 @@
     "bh_msg": "Many kind valley of bird hunting waiting for you to shoot it."
   },
   "slots": {
+    "no_game_msg": "Sorry! There are currently no games to play in this category.",
+    "search_msg": "Search for games in English",
     "all": "All",
     "popular": "Popular",
     "new": "New",
     "jackpot": "Jackpot",
     "table": "Table",
     "previous": "Previous",
+    "favorite": "Favorite",
     "next": "Next"
   },
   "download": {
@@ -126,7 +130,8 @@
     "livecasino": "Live Casino",
     "slots": "Slots",
     "login_id": "Login ID",
-    "application": "Mobile Application"
+    "application": "Mobile Application",
+    "please_login": "Please login to continue"
   },
   "edit_profile": {
     "title": "Edit Profile",
@@ -162,8 +167,10 @@
     "available_balance": "Available Balance"
   },
   "deposit": {
+    "deposit_methods": "Deposit Methods",
     "deposit_to": "Deposit To",
     "bank_detail": "Bank Detail",
+    "minimum_deposit": "Minimum Deposit Is THB ",
     "name": "Name : ",
     "copy_account_number": "Copy Account Number",
     "transfer_time": "Transfer Time",
@@ -204,9 +211,9 @@
     "type": "Type",
     "status": "Status",
     "remark": "Remark",
-    "turnover": "Turnover",
+    "stake": "Stake",
     "winloss": "Win/Loss",
-    "active_bet": "Active Bet",
+    "active": "Active Bet",
     "date": "Date",
     "from": "From",
     "to": "To"
@@ -221,6 +228,8 @@
     "try_now": "Try Now",
     "submit": "Submit",
     "please_select": "Please select...",
-    "error_403": "Unknown user info."
+    "error_403": "Unknown user info.",
+    "network_error": "Network Error !!",
+    "please_login": "Please login to continue !!"
   }
 }

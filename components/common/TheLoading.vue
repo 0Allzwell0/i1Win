@@ -1,11 +1,6 @@
 <template>
-	<div class="spinner-wrapper" v-show="loading">
-		<div class="spinner-container">
-			<div class="spinner"></div>
-			<div class="spinner"></div>
-			<div class="spinner"></div>
-		</div>
-		<div class="spinner-backdrop"></div>
+	<div class="loading-content" v-show="loading">
+		<div class="loader"></div>
 	</div>
 </template>
 <script>
@@ -20,7 +15,14 @@
 			finish() {
 				setTimeout(() => {
 					this.loading = false;
-				}, 1000);
+
+					if (this.$route.name === 'index') {
+						setTimeout(() => {
+							// Show Ad Popup
+							// $('#myPopupModal').modal('show');
+						}, 300);
+					}
+				}, 500);
 			},
 		},
 	};
@@ -33,84 +35,34 @@
 		overflow-y: hidden;
 	}
 
-	@-webkit-keyframes sk-bouncedelay {
-		0%,
-		80%,
-		100% {
-			-webkit-transform: scale(0);
-			transform: scale(0);
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
 		}
-
-		40% {
-			-webkit-transform: scale(1);
-			transform: scale(1);
+		to {
+			transform: rotate(360deg);
 		}
 	}
 
-	@keyframes sk-bouncedelay {
-		0%,
-		80%,
-		100% {
-			-webkit-transform: scale(0);
-			transform: scale(0);
-		}
-
-		40% {
-			-webkit-transform: scale(1);
-			transform: scale(1);
-		}
-	}
-
-	.spinner-container {
+	.loading-content {
 		position: fixed;
-		text-align: center;
-		width: 100%;
-		top: 50%;
-		left: 50%;
 		z-index: 9999;
-		-webkit-transform: translate(-50%, -50%);
-		transform: translate(-50%, -50%);
-
-		.check-text {
-			display: inline-block;
-			color: $color-yellow;
-			font-size: 18px;
-			font-weight: bold;
-			margin-right: 10px;
-		}
-
-		.spinner {
-			display: inline-block;
-			width: 15px;
-			height: 15px;
-			background-color: $color-yellow;
-			border-radius: 100%;
-			-webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-			animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-			margin-bottom: -2px;
-
-			&:nth-child(2) {
-				-webkit-animation-delay: -0.16s;
-				animation-delay: -0.16s;
-			}
-
-			&:nth-child(3) {
-				-webkit-animation-delay: -0.08s;
-				animation-delay: -0.08s;
-			}
-
-			&:last-child {
-				-webkit-animation-delay: -0.04s;
-				animation-delay: -0.04s;
-			}
-		}
-	}
-
-	.spinner-backdrop {
-		position: fixed;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.8);
-		z-index: 9998;
+		background: rgba(0, 0, 0, 0.5);
+		overflow: hidden;
+
+		.loader {
+			position: absolute;
+			top: 40%;
+			left: 43%;
+			width: 60px;
+			height: 60px;
+			font-size: 10px;
+			border-radius: 50%;
+			border: 6px solid #ddb904;
+			border-left: 6px solid rgba(255, 255, 255, 0.9);
+			animation: spin 1.1s infinite linear;
+		}
 	}
 </style>

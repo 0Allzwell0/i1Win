@@ -1,5 +1,8 @@
 <template>
 	<main class="home-wrapper">
+		<!-- PopUp Modal -->
+		<modal-pop-up></modal-pop-up>
+
 		<!-- Carousel -->
 		<the-carousel></the-carousel>
 
@@ -84,12 +87,14 @@
 <script>
 	import { mapGetters } from 'vuex';
 
+	import ModalPopUp from '@/components/modal/ModalPopUp';
 	import TheCarousel from '@/components/common/TheCarousel';
 	import TheAnnouncement from '@/components/common/TheAnnouncement';
 	import TheGameNavBar from '@/components/common/TheGameNavBar';
 
 	export default {
 		components: {
+			ModalPopUp,
 			TheCarousel,
 			TheAnnouncement,
 			TheGameNavBar,
@@ -281,6 +286,9 @@
 
 				.bottom-wrapper {
 					width: 100%;
+					background: transparent;
+					box-shadow: none;
+					margin-top: 0;
 
 					.bottom-container {
 						display: flex;

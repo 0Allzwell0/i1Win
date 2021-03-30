@@ -40,7 +40,7 @@
 			</div>
 
 			<!-- Descriptions -->
-			<p>{{ $t('withdrawal.withdrawal_msg') }}</p>
+			<p class="remind-msg">{{ $t('withdrawal.withdrawal_msg') }}</p>
 
 			<!-- Withdrawal Button -->
 			<button type="button" @click="withdrawal()" :disabled="isDisabled">{{ $t('member.withdrawal') }}</button>
@@ -58,10 +58,11 @@
 		computed: {
 			...mapGetters('wallet', {
 				httpStatus: 'GetHttpStatus',
-				requestState: 'GetRequestState',
 				responseMsg: 'GetResponseMsg',
+				networkError: 'GetNetworkError',
 				wallets: 'GetWallets',
 				balance: 'GetBalance',
+				mainWallet: 'GetMainWallet',
 				limits: 'GetLimits',
 			}),
 		},
@@ -86,12 +87,17 @@
 				isDisabled: true,
 			};
 		},
+		beforeMount() {
+			// Get Main Balance
+			this.$store.dispatch('wallet/getBalance', 'main').then(() => {
+				this.$store.commit('wallet/SET_MAIN_WALLET_BALANCE', this.balance);
+				this.availableBalance = this.mainWallet.toFixed(2);
+				this.checkAmount();
+			});
+		},
 		mounted() {
-			this.availableBalance = `THB ${this.balance.toFixed(2) || '0.00'}`;
 			this.userData = JSON.parse(localStorage.getItem('userData'));
 			this.myFullname = this.userData.fullname || this.$t('member.fullname');
-
-			this.checkAmount();
 
 			// Check Account Number
 			$('.input-account-number').keyup(() => {
@@ -129,7 +135,7 @@
 						} else if (this.limits.todayCount >= this.limits.maxDaily) {
 							this.amountAllowed = true;
 							this.amountPlaceholder = this.$t('withdrawal.today_count');
-						} else if (this.balance < this.limits.minWithdraw || this.balance <= 0) {
+						} else if (this.mainWallet < this.limits.minWithdraw || this.mainWallet <= 0) {
 							this.amountAllowed = true;
 							this.amountPlaceholder = this.$t('withdrawal.insufficient_balance');
 						} else {
@@ -180,24 +186,43 @@
 						// Hide Loading Animation
 						this.$nuxt.$loading.finish();
 
-						if (this.httpStatus === 422) {
-							let msgArray = [];
-							$('.msg-list').html('');
-							for (let i in this.responseMsg) {
-								msgArray.push(this.responseMsg[i]);
+						this.isDisabled = false;
+
+						$('.msg-list').html('');
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 204 || this.httpStatus === 200) {
+								this.reload();
+							} else if (this.httpStatus === 403) {
+								$('.msg-list').html(`<li>${this.responseMsg}</li>`);
+								$('#modalMessage').modal('show');
+							} else if (this.httpStatus === 422) {
+								this.showErrorMessage();
+								$('#modalMessage').modal('show');
 							}
-							for (let j = 0; j < msgArray.length; j++) {
-								$('.msg-list').append(`<li>${msgArray[j]}</li>`);
-							}
-						} else if (this.httpStatus === 403) {
-							$('.msg-list').html(`<li>${this.responseMsg}</li>`);
-						} else if (this.httpStatus === 204) {
-							$('.msg-list').html(`<li>${this.$t('withdrawal.success_msg')}</li>`);
 						} else {
-							$('.msg-list').html(`<li>${this.$t('withdrawal.error_msg')}</li>`);
+							$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
+							$('#modalMessage').modal('show');
 						}
-						$('#modalMessage').modal('show');
 					});
+			},
+
+			// Sort And Display Error Messages
+			showErrorMessage() {
+				let msgArray = [];
+				for (let error of this.responseMsg) {
+					if (error.amount) {
+						msgArray.push(error.amount[0]);
+					}
+					if (error.toBank) {
+						msgArray.push(error.toBank[0]);
+					}
+					if (error.accountNumber) {
+						msgArray.push(error.accountNumber[0]);
+					}
+				}
+				for (let j = 0; j < msgArray.length; j++) {
+					$('.msg-list').append(`<li>${msgArray[j]}</li>`);
+				}
 			},
 		},
 	};

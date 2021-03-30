@@ -12,7 +12,7 @@ class HistoryService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'api/history/transaction',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -22,7 +22,8 @@ class HistoryService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -36,7 +37,7 @@ class HistoryService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'api/history/statement',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -46,7 +47,8 @@ class HistoryService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -60,7 +62,7 @@ class HistoryService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'api/history/transfer',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -70,7 +72,8 @@ class HistoryService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response

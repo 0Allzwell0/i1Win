@@ -23,8 +23,13 @@ const mutations = {
 
     // Get Amount Fail
     [type.GET_BALANCE_FAIL](state, status) {
-        state.balance = 0.00
+        state.balance = '-'
         state.httpStatus = status
+    },
+
+    // ================================================================ Set Main Wallet Balance
+    [type.SET_MAIN_WALLET_BALANCE](state, amount) {
+        state.mainWallet = amount
     },
 
     // ================================================================ Get Limits
@@ -74,26 +79,61 @@ const mutations = {
         state.requestState = true
         state.httpStatus = null
         state.responseMsg = null
+        state.networkError = false
     },
 
     // Despoit、Withdrawal、Transfer Success
-    [type.DWT_SUCCESS](state, { data, status }) {
+    [type.DWT_SUCCESS](state, status) {
         state.requestState = false
         state.httpStatus = status
-        state.responseMsg = data
+        state.responseMsg = null
+        state.networkError = false
+    },
+
+    // Deposit Thirdparty Success
+    [type.THIRDPARTY_PAYMENT_SUCCESS](state, { data, status }) {
+        state.requestState = false
+        state.httpStatus = status
+        state.responseMsg = null
+        state.networkError = false
+        state.thirdpartyURL = data
+    },
+
+    // Deposit Thirdparty Fail
+    [type.THIRDPARTY_PAYMENT_FAIL](state, { data, status }) {
+        state.requestState = false
+        state.httpStatus = status
+        state.networkError = false
+        state.thirdpartyURL = null
+        if (status === 422) {
+            state.responseMsg = data.errors
+        } else if (status === 401) {
+            state.responseMsg = data.msg
+        } else {
+            state.responseMsg = data
+        }
     },
 
     // Deposit、Withdrawal、Transfer Fail
     [type.DWT_FAIL](state, { data, status }) {
         state.requestState = false
         state.httpStatus = status
-        if (status === 401) {
-            state.responseMsg = data.msg
-        } else if (status === 422) {
+        state.networkError = false
+        if (status === 422) {
             state.responseMsg = data.errors
+        } else if (status === 401) {
+            state.responseMsg = data.msg
         } else {
             state.responseMsg = data
         }
+    },
+
+    // ================================================================ Network Error
+    [type.NETWORK_ERROR](state) {
+        state.requestState = false
+        state.httpStatus = null
+        state.responseMsg = null
+        state.networkError = true
     }
 }
 

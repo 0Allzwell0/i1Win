@@ -27,7 +27,9 @@ const state = () => ({
         mobile: null,
         others: null
     },
-    isUsed: false
+    networkError: null,
+    isRegister: null,
+    isExisted: null
 })
 
 export default state

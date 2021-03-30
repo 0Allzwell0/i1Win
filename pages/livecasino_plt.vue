@@ -88,15 +88,16 @@
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
-		min-height: calc(100vh - 20px);
+		height: 100%;
+		min-height: calc(100vh - 110px);
+		font-size: 12px;
 		font-family: $font-family;
 		background: $background_img;
 		background-size: cover;
-		padding-bottom: 70px;
+		padding-bottom: 90px;
 
 		> img {
 			width: 70%;
-			margin: 4% 0 5% 0;
 		}
 
 		> ul {

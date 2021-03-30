@@ -37,7 +37,7 @@
 			<!-- Amount -->
 			<h3>{{ $t('member.amount') }} (THB)</h3>
 			<div class="amount-wrapper">
-				<button type="button" @click="setAmount(250)">฿ 250</button>
+				<button type="button" @click="setAmount(100)">฿ 100</button>
 				<button type="button" @click="setAmount(500)">฿ 500</button>
 				<button type="button" @click="setAmount(1000)">฿ 1000</button>
 				<button type="button" @click="setAmount(2000)">฿ 2000</button>
@@ -47,6 +47,8 @@
 				<button type="button" @click="setAmount(5000)">฿ 5000</button>
 				<input type="number" placeholder="THB" v-model="totalAmount" />
 			</div>
+			<!-- Amount Remind -->
+			<p class="amount-remind-msg" v-if="limits">{{ $t('deposit.minimum_deposit') }} {{ limits.minDeposit }}</p>
 
 			<!-- Transfer Time -->
 			<h3>{{ $t('deposit.transfer_time') }}</h3>
@@ -86,7 +88,7 @@
 			</div>
 
 			<!-- Descriptions -->
-			<p>{{ $t('deposit.agree_certify') }}</p>
+			<p class="remind-msg">{{ $t('deposit.agree_certify') }}</p>
 
 			<!-- Deposit Button -->
 			<button type="button" @click="deposit()" :disabled="isDisabled">{{ $t('member.deposit') }}</button>
@@ -107,6 +109,7 @@
 			...mapGetters('wallet', {
 				httpStatus: 'GetHttpStatus',
 				responseMsg: 'GetResponseMsg',
+				networkError: 'GetNetworkError',
 				bonusList: 'GetBonus',
 				limits: 'GetLimits',
 			}),
@@ -254,15 +257,15 @@
 					this.accountNumber = null;
 					this.bankOK = false;
 				}
+				this.checkInfo();
 			},
 
 			// Set deposit amount
 			setAmount(amount) {
-				if (this.choiceAmount != amount) {
-					this.totalAmount = amount;
-					this.choiceAmount = amount;
+				if (this.totalAmount) {
+					this.totalAmount = parseFloat(this.totalAmount) + amount;
 				} else {
-					this.totalAmount = this.totalAmount + amount;
+					this.totalAmount = amount;
 				}
 
 				this.checkAmount();
@@ -356,24 +359,54 @@
 						// Hide loading animation
 						this.$nuxt.$loading.finish();
 
-						if (this.httpStatus === 422) {
-							let msgArray = [];
-							$('.msg-list').html('');
-							for (let i in this.responseMsg) {
-								msgArray.push(this.responseMsg[i]);
+						this.isDisabled = false;
+
+						$('.msg-list').html('');
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 204 || this.httpStatus === 200) {
+								this.reload();
+							} else if (this.httpStatus === 403) {
+								$('.msg-list').html(`<li>${this.responseMsg}</li>`);
+								$('#modalMessage').modal('show');
+							} else if (this.httpStatus === 422) {
+								this.showErrorMessage();
+								$('#modalMessage').modal('show');
 							}
-							for (let j = 0; j < msgArray.length; j++) {
-								$('.msg-list').append(`<li>${msgArray[j]}</li>`);
-							}
-						} else if (this.httpStatus === 403) {
-							$('.msg-list').html(`<li>${this.responseMsg}</li>`);
-						} else if (this.httpStatus === 204) {
-							$('.msg-list').html(`<li>${this.$t('deposit.success_msg')}</li>`);
 						} else {
-							$('.msg-list').html(`<li>${this.$t('deposit.error_msg')}</li>`);
+							$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
+							$('#modalMessage').modal('show');
 						}
-						$('#modalMessage').modal('show');
 					});
+			},
+
+			// Sort And Display Error Messages
+			showErrorMessage() {
+				let msgArray = [];
+				for (let error of this.responseMsg) {
+					if (error.amount) {
+						for (let i = 0; i < error.amount.length; i++) {
+							msgArray.push(error.amount[i]);
+						}
+					}
+					if (error.accountNumber) {
+						for (let i = 0; i < error.accountNumber.length; i++) {
+							msgArray.push(error.accountNumber[i]);
+						}
+					}
+					if (error.receipt) {
+						for (let i = 0; i < error.receipt.length; i++) {
+							msgArray.push(error.receipt[i]);
+						}
+					}
+					if (error.ledger) {
+						for (let i = 0; i < error.ledger.length; i++) {
+							msgArray.push(error.ledger[i]);
+						}
+					}
+				}
+				for (let j = 0; j < msgArray.length; j++) {
+					$('.msg-list').append(`<li>${msgArray[j]}</li>`);
+				}
 			},
 		},
 	};

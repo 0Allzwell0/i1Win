@@ -1,24 +1,23 @@
 <template>
-	<div class="transfer-input-wrapper">
-		<button :class="`transfer-game-input transfer-input-${type}`" type="button" @click.stop="expandGameList()">
+	<div class="wallets-selector">
+		<button :class="`wallet-${type}`" type="button" @click.stop="expandGameList()">
 			{{ $t('common.please_select') }}
 		</button>
-		<fa :icon="['fas', 'caret-down']" class="transfer-down" />
-		<ul class="transfer-games-list" :class="{ show: showGamesList }">
-			<li class="transfer-game-item" @click="selectGame('none', 0, 0)">{{ $t('common.please_select') }}</li>
-			<li class="transfer-game-item" @click="selectGame('main', 1, 0)" :class="{ active: hideGame === 'main' }">
-				<img class="transfer-game-img" :src="`/images/member/wallet/main.png`" />
-				<span class="transfer-game-text">{{ $t('member.main_wallet') }}</span>
+		<fa :icon="['fas', 'caret-down']" class="icon-down" />
+		<ul :class="{ show: showGamesList }">
+			<li @click="selectGame('none', 0, 0)">{{ $t('common.please_select') }}</li>
+			<li @click="selectGame('main', 1, 0)" :class="{ active: hideGame === 'main' }">
+				<img :src="`/images/member/wallet/main.png`" alt="" />
+				<span class="wallet-name">{{ $t('member.main_wallet') }}</span>
 			</li>
 			<li
-				class="transfer-game-item"
 				:class="{ active: hideGame === item.code.toLowerCase() }"
 				v-for="(item, index) in wallets"
 				:key="`transfer_game_${index}`"
 				@click="selectGame(item.code.toLowerCase(), item.isActive, item.isBlocked)"
 			>
-				<img class="transfer-game-img" :src="`/images/member/wallet/${item.code.toLowerCase()}.png`" />
-				<span class="transfer-maintenance-text" v-if="item.isBlocked !== 0">{{ $t('transfer.maintenance') }}</span>
+				<img :src="`/images/member/wallet/${item.code.toLowerCase()}.png`" alt="" />
+				<span class="maintenance-text" v-if="item.isBlocked !== 0">{{ $t('transfer.maintenance') }}</span>
 			</li>
 		</ul>
 	</div>
@@ -85,22 +84,20 @@
 			// Set Image To Game Button Html
 			setHtml(game) {
 				if (game === 'none') {
-					$(`.transfer-input-${this.type}`).text(this.$t('common.please_select'));
+					$(`.wallet-${this.type}`).text(this.$t('common.please_select'));
 				} else if (game === 'main') {
-					$(`.transfer-input-${this.type}`).html(
-						`<img class="transfer-game-img" src="/images/member/wallet/main.png" />
-	                    <span class="transfer-game-text">${this.$t('member.main_wallet')}</span>
-	                    `
+					$(`.wallet-${this.type}`).html(
+						`<img src="/images/member/wallet/main.png" alt="" /><span>${this.$t('member.main_wallet')}</span>`
 					);
 				} else {
-					$(`.transfer-input-${this.type}`).html(`<img class="transfer-game-img" src="/images/member/wallet/${game}.png" />`);
+					$(`.wallet-${this.type}`).html(`<img src="/images/member/wallet/${game}.png" alt="" />`);
 				}
 			},
 		},
 	};
 </script>
 <style lang="scss">
-	.transfer-input-wrapper {
+	.wallets-selector {
 		position: relative;
 		display: flex;
 		width: 100%;
@@ -109,7 +106,7 @@
 		border: 1px solid #cecece;
 		background: $color-white;
 
-		.transfer-game-input {
+		> button {
 			display: flex;
 			align-items: center;
 			width: 100%;
@@ -119,16 +116,16 @@
 			text-align: left;
 			padding-left: 10px;
 
-			.transfer-game-img {
+			> img {
 				width: 119px;
 			}
 
-			.transfer-game-text {
+			> span {
 				margin-left: -85px;
 			}
 		}
 
-		.transfer-down {
+		.icon-down {
 			width: 15px;
 			font-size: 20px;
 			color: $color-black;
@@ -136,7 +133,7 @@
 			margin-right: 8px;
 		}
 
-		.transfer-games-list {
+		> ul {
 			display: none;
 			position: absolute;
 			z-index: 10;
@@ -155,7 +152,7 @@
 				display: block;
 			}
 
-			.transfer-game-item {
+			> li {
 				position: relative;
 				display: flex;
 				justify-content: space-between;
@@ -168,16 +165,16 @@
 					display: none;
 				}
 
-				.transfer-game-img {
+				> img {
 					width: 119px;
 				}
 
-				.transfer-game-text {
+				.wallet-name {
 					position: absolute;
 					left: 45px;
 				}
 
-				.transfer-maintenance-text {
+				.maintenance-text {
 					margin-right: 15px;
 				}
 			}

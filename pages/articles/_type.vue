@@ -71,10 +71,14 @@
 </script>
 <style lang="scss">
 	.article-wrapper {
-		min-height: calc(100vh - 100px);
-		background-image: $background_img;
+		width: 100%;
+		height: 100%;
+		min-height: calc(100vh - 110px);
+		font-size: 12px;
+		font-family: $font-family;
+		background: $background_img;
 		background-size: cover;
-		overflow: auto;
+		padding-bottom: 90px;
 
 		> h2 {
 			width: 100%;
@@ -88,10 +92,10 @@
 		.article-html {
 			font-family: $font-family;
 			font-size: 16px;
-			margin: 35px 20px 90px 20px;
+			margin: 35px 20px 0 20px;
 
-			h4,
-			h3 {
+			h3,
+			h4 {
 				font-weight: bold;
 				font-size: 20px;
 				text-align: center;

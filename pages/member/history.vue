@@ -59,18 +59,18 @@
 					<!-- Statement Title Bar -->
 					<ul class="title-bar statement-bar">
 						<li class="title-type">{{ $t('history.type') }}</li>
-						<li class="title-turnover">{{ $t('history.turnover') }}</li>
+						<li class="title-stake">{{ $t('history.stake') }}</li>
 						<li class="title-winloss">{{ $t('history.winloss') }}</li>
-						<li class="title-active_bet">{{ $t('history.active_bet') }}</li>
+						<li class="title-active">{{ $t('history.active') }}</li>
 					</ul>
 
 					<!-- Statement Data List -->
 					<ul class="data-list statement-list">
 						<li v-for="(item, index) in statementData" :key="`statement-${index}`">
 							<span class="item-type">{{ item.type }}</span>
-							<span class="item-turnover">{{ item.turnover }}</span>
+							<span class="item-stake">{{ item.stake }}</span>
 							<span class="item-winloss">{{ item.winloss }}</span>
-							<span class="item-active_bet">{{ item.active_bet }}</span>
+							<span class="item-active">{{ item.active }}</span>
 						</li>
 					</ul>
 				</div>

@@ -10,7 +10,7 @@
 				:key="`deposit-bank-${index}`"
 				@click.stop="selectDepositBank(item.accountNumber, item.name, item.bank)"
 			>
-				<img :src="`/images/member/bank/${item.bank}.png`" :alt="item.bank" />
+				<img :src="`/images/member/bank/${item.bank.toLowerCase()}.png`" :alt="item.bank" />
 			</li>
 		</ul>
 
@@ -81,7 +81,7 @@
 			// Select Deposit Bank
 			selectDepositBank(accountNumber, name, bank) {
 				if (bank) {
-					$('.bank-input-wrapper > button').html(`<img class="bank-img" src="/images/member/bank/${bank}.png" alt="${bank}" />`);
+					$('.bank-input-wrapper > button').html(`<img src="/images/member/bank/${bank}.png" alt="${bank}" />`);
 				} else {
 					$('.bank-input-wrapper > button').text(this.$t('common.please_select'));
 				}
@@ -93,7 +93,7 @@
 			// Select Withdrawal Bank
 			selectWithdrawalBank(code) {
 				if (code) {
-					$('.bank-input-wrapper > button').html(`<img class="bank-img" src="/images/member/bank/${code}.png" alt="${code}" />`);
+					$('.bank-input-wrapper > button').html(`<img src="/images/member/bank/${code}.png" alt="${code}" />`);
 				} else {
 					$('.bank-input-wrapper > button').text(this.$t('common.please_select'));
 				}

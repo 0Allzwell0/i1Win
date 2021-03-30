@@ -15,18 +15,18 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border-radius: 10px;
+		border-radius: 5px;
 		background: $color-white;
-		box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
-		margin: 30vh 14% 0 14%;
-		padding: 60px 10px 30px 10px;
+		box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.5);
+		margin: 35vh 14% 0 14%;
+		padding: 40px 10px 10px 10px;
 
 		.modal-close {
 			position: absolute;
 			right: 15px;
 			top: 10px;
 			color: $color-black;
-			font-size: 26px;
+			font-size: 20px;
 		}
 
 		> ul {

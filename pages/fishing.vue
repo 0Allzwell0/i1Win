@@ -3,21 +3,16 @@
 		<!-- Message Modal -->
 		<modal-message ref="child"></modal-message>
 
-		<!-- Banner -->
-		<img src="/images/fishing/banner.jpg" alt />
-
 		<!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
 		<the-game-nav-bar></the-game-nav-bar>
 
 		<!-- Content -->
-		<div class="fishing-container">
-			<ul>
-				<li v-for="(item, index) in gameList" :key="`fishing-${index}`" @click="openGame(item[0], item[1])">
-					<img :src="`/images/fishing/${item[1]}.png`" :alt="item[2]" />
-					<button type="button">{{ $t('common.play_now') }}</button>
-				</li>
-			</ul>
-		</div>
+		<ul class="fishing-container">
+			<li v-for="(item, index) in gameList" :key="`fishing-${index}`" @click="openGame(item[0], item[1])">
+				<img :src="`/images/fishing/${item[1]}.png`" :alt="item[2]" />
+				<button type="button">{{ $t('common.play_now') }}</button>
+			</li>
+		</ul>
 	</main>
 </template>
 <script>
@@ -48,16 +43,16 @@
 		},
 		methods: {
 			// Open Fishing Games
-			openGame(gameID, productCode) {
+			openGame(game_id, product_code) {
 				// Show Loading Animation
 				this.$nuxt.$loading.start();
 
 				if (this.isLogined) {
 					this.$store
 						.dispatch('game/getGameURL', {
-							category: 'Fishing',
-							productCode,
-							gameID,
+							category: 'slot',
+							product_code,
+							game_id,
 						})
 						.then(() => {
 							// Hide Loading Animation
@@ -68,10 +63,11 @@
 								window.open(this.gameURL);
 							} else if (this.httpStatus === 403) {
 								$('.msg-list').append(`<li>${this.$t('common.error_403')}</li>`);
+								$('#modalMessage').modal('show');
 							} else {
 								$('.msg-list').append(`<li>${this.errorMsg}</li>`);
+								$('#modalMessage').modal('show');
 							}
-							$('#modalMessage').modal('show');
 						});
 				} else {
 					this.$router.push(this.$i18n.path('login'));
@@ -84,45 +80,37 @@
 	.fishing-wrapper {
 		width: 100%;
 		height: 100%;
+		min-height: calc(100vh - 110px);
 		font-size: 12px;
 		font-family: $font-family;
-
-		> img {
-			width: 100%;
-		}
+		background: url('../static/images/bg_black.jpg');
+		background-size: cover;
+		padding-bottom: 90px;
 
 		.fishing-container {
+			display: flex;
+			flex-wrap: wrap;
 			width: 100%;
-			min-height: 62vh;
-			background: url('../static/images/fishing/bg.jpg');
-			background-size: cover;
-			padding-bottom: 70px;
+			height: 100%;
+			padding: 10px 10px 0 10px;
 
-			> ul {
+			> li {
 				display: flex;
-				flex-wrap: wrap;
-				width: 100%;
-				height: 100%;
-				padding: 10px 10px 0 10px;
+				flex-direction: column;
+				align-items: center;
+				width: 50%;
+				margin-bottom: 5%;
 
-				> li {
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					width: 50%;
-					margin-bottom: 5%;
+				> img {
+					width: 100%;
+				}
 
-					> img {
-						width: 100%;
-					}
-
-					> button {
-						width: 54%;
-						background: linear-gradient(to bottom, #f6c200, #ce5700);
-						border-radius: 0 0 20px 20px;
-						padding: 3px 0;
-						margin-top: -15%;
-					}
+				> button {
+					width: 54%;
+					background: linear-gradient(to bottom, #f6c200, #ce5700);
+					border-radius: 0 0 20px 20px;
+					padding: 3px 0;
+					margin-top: -15%;
 				}
 			}
 		}

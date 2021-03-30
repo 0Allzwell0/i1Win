@@ -1,26 +1,22 @@
-import { Base64 } from 'js-base64';
-import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import WalletService from '~/service/wallet'
 
 // Set Timestamp
 function getExpTimestamp() {
-    return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
+    let exp = Math.floor(Date.now() / 1000)
+    localStorage.setItem('EXP', exp)
+    return Math.floor(exp) + 600 // 10 min
 }
 
-// Get CUI (Base64_Encode([website_id, account_id]))
+// Get CUI
 function getCUI() {
-    let json = JSON.stringify({
-        website_id: WEBSITE_ID
-    })
-
     let cui = null
     if (localStorage.getItem('userData')) {
         let userData = localStorage.getItem('userData')
         cui = JSON.parse(userData).cui
     }
 
-    return cui || Base64.encode(json)
+    return cui
 }
 
 const actions = {
@@ -113,10 +109,33 @@ const actions = {
 
         commit(types.REQUEST_DWT)
         const response = await WalletService.deposit(payload, formData)
-        if (response.status === 204) {
-            commit(types.DWT_SUCCESS, { data: response.data, status: response.status })
+        if (response.status) {
+            if (response.status === 204 || response.status === 200) {
+                commit(types.DWT_SUCCESS, response.status)
+            } else {
+                commit(types.DWT_FAIL, { data: response.data, status: response.status })
+            }
         } else {
-            commit(types.DWT_FAIL, { data: response.data, status: response.status })
+            commit(types.NETWORK_ERROR)
+        }
+    },
+
+    // Thirdparty Payment
+    async thirdpartyPayment({ commit }, { method, amount, bonus }) {
+        const exp = getExpTimestamp()
+        const cui = getCUI()
+        const payload = { exp, amount, bonus, cui }
+
+        commit(types.REQUEST_DWT)
+        const response = await WalletService.thirdpartyPayment(payload, method)
+        if (response.status) {
+            if (response.status === 204 || response.status === 200) {
+                commit(types.THIRDPARTY_PAYMENT_SUCCESS, { data: response.data, status: response.status })
+            } else {
+                commit(types.THIRDPARTY_PAYMENT_FAIL, { data: response.data, status: response.status })
+            }
+        } else {
+            commit(types.NETWORK_ERROR)
         }
     },
 
@@ -127,10 +146,14 @@ const actions = {
         const payload = { cui, toBank, accountNumber, amount, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.withdrawal(payload)
-        if (response.status === 204) {
-            commit(types.DWT_SUCCESS, response.status)
+        if (response.status) {
+            if (response.status === 204 || response.status === 200) {
+                commit(types.DWT_SUCCESS, response.status)
+            } else {
+                commit(types.DWT_FAIL, { data: response.data, status: response.status })
+            }
         } else {
-            commit(types.DWT_FAIL, { data: response.data, status: response.status })
+            commit(types.NETWORK_ERROR)
         }
     },
 
@@ -141,10 +164,14 @@ const actions = {
         const payload = { cui, from, amount, to, exp }
         commit(types.REQUEST_DWT)
         const response = await WalletService.transfer(payload)
-        if (response.status === 204) {
-            commit(types.DWT_SUCCESS, response.status)
+        if (response.status) {
+            if (response.status === 204 || response.status === 200) {
+                commit(types.DWT_SUCCESS, response.status)
+            } else {
+                commit(types.DWT_FAIL, { data: response.data, status: response.status })
+            }
         } else {
-            commit(types.DWT_FAIL, { data: response.data, status: response.status })
+            commit(types.NETWORK_ERROR)
         }
     }
 }

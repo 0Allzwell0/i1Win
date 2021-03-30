@@ -14,7 +14,7 @@
 			<!-- Available Balance -->
 			<h3>{{ $t('member.available_balance') }}</h3>
 			<div class="form-wrapper">
-				<input type="text" :value="`THB ${availableBalance}`" :placeholder="$t('member.available_balance')" />
+				<input type="text" :value="`THB ${mainWallet}`" :placeholder="$t('member.available_balance')" disabled />
 			</div>
 
 			<!-- Transfer From -->
@@ -28,7 +28,7 @@
 			<!-- Amount -->
 			<h3>{{ $t('member.amount') }} (THB)</h3>
 			<div class="form-wrapper">
-				<input class="form-amount" type="text" v-model="amount" :placeholder="$t('member.amount')" :disabled="!isEnough" />
+				<input class="form-amount" type="text" v-model="amount" :placeholder="$t('member.amount')" />
 			</div>
 
 			<!-- Transfer Button -->
@@ -44,11 +44,14 @@
 	import BaseWalletSelector from '@/components/member/BaseWalletSelector';
 
 	export default {
+		inject: ['reload'],
 		computed: {
 			...mapGetters('wallet', {
 				httpStatus: 'GetHttpStatus',
 				responseMsg: 'GetResponseMsg',
+				networkError: 'GetNetworkError',
 				wallets: 'GetWallets',
+				mainWallet: 'GetMainWallet',
 				balance: 'GetBalance',
 			}),
 		},
@@ -60,25 +63,14 @@
 		},
 		data() {
 			return {
-				availableBalance: 0,
 				fromGame: null,
 				fromGameOK: false,
 				toGame: null,
 				toGameOK: false,
 				amount: null,
-				amountOK: false,
 				isEnough: false,
 				isDisabled: true,
 			};
-		},
-		beforeMount() {
-			this.availableBalance = this.balance;
-		},
-		mounted() {
-			// Check Amount
-			$('.form-amount').keyup(() => {
-				this.checkAmount();
-			});
 		},
 		methods: {
 			// Get From Game
@@ -87,13 +79,11 @@
 				if (this.fromGame === 'none') {
 					this.fromGameOK = false;
 					this.amount = null;
-					this.checkAmount();
 					this.checkInfo();
 				} else {
 					this.fromGameOK = true;
 					this.$store.dispatch('wallet/getBalance', game).then(() => {
 						this.amount = this.balance;
-						this.checkAmount();
 						this.checkInfo();
 					});
 				}
@@ -110,26 +100,9 @@
 				this.checkInfo();
 			},
 
-			// Check Amount
-			checkAmount() {
-				if (this.amount) {
-					if (this.amount > 0 && this.amount <= this.availableBalance) {
-						this.isEnough = true;
-						this.amountOK = true;
-					} else {
-						this.isEnough = false;
-						this.amountOK = false;
-					}
-				} else {
-					this.isEnough = false;
-					this.amountOK = false;
-				}
-				this.checkInfo();
-			},
-
 			// Check information to allow "Deposit" button
 			checkInfo() {
-				if (this.fromGameOK && this.toGameOK && this.amountOK) {
+				if (this.fromGameOK && this.toGameOK) {
 					this.isDisabled = false;
 				} else {
 					this.isDisabled = true;
@@ -153,24 +126,43 @@
 						// Hide Loading Animation
 						this.$nuxt.$loading.finish();
 
-						if (this.httpStatus === 422) {
-							let msgArray = [];
-							$('.msg-list').html('');
-							for (let i in this.responseMsg) {
-								msgArray.push(this.responseMsg[i]);
+						this.isDisabled = false;
+
+						$('.msg-list').html('');
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 204 || this.httpStatus === 200) {
+								this.reload();
+							} else if (this.httpStatus === 403) {
+								$('.msg-list').html(`<li>${this.responseMsg}</li>`);
+								$('#modalMessage').modal('show');
+							} else if (this.httpStatus === 422) {
+								this.showErrorMessage();
+								$('#modalMessage').modal('show');
 							}
-							for (let j = 0; j < msgArray.length; j++) {
-								$('.msg-list').append(`<li>${msgArray[j]}</li>`);
-							}
-						} else if (this.httpStatus === 403) {
-							$('.msg-list').html(`<li>${this.responseMsg}</li>`);
-						} else if (this.httpStatus === 204) {
-							$('.msg-list').html(`<li>${this.$t('transfer.success_msg')}</li>`);
 						} else {
-							$('.msg-list').html(`<li>${this.$t('transfer.error_msg')}</li>`);
+							$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
+							$('#modalMessage').modal('show');
 						}
-						$('#modalMessage').modal('show');
 					});
+			},
+
+			// Sort And Display Error Messages
+			showErrorMessage() {
+				let msgArray = [];
+				for (let error of this.responseMsg) {
+					if (error.from) {
+						msgArray.push(error.from[0]);
+					}
+					if (error.to) {
+						msgArray.push(error.to[0]);
+					}
+					if (error.wallet) {
+						msgArray.push(error.wallet[0]);
+					}
+				}
+				for (let j = 0; j < msgArray.length; j++) {
+					$('.msg-list').append(`<li>${msgArray[j]}</li>`);
+				}
 			},
 		},
 	};

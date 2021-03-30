@@ -18,10 +18,11 @@
 				<li>
 					<img src="/images/download/plt.png" alt="Playtech" />
 					<div class="login-id-wrapper">
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('download.login_id') }} :</span>
 							<span>{{ pltAccount }}</span>
 						</div>
+						<p v-else>{{ $t('download.please_login') }}</p>
 					</div>
 					<button type="button" @click="openDownloadURL('plt')">
 						<img src="/images/download/android.png" alt="Android" />
@@ -32,10 +33,11 @@
 				<li>
 					<img src="/images/download/ag.png" alt="Asia Gaming" />
 					<div class="login-id-wrapper">
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('download.login_id') }} :</span>
 							<span>{{ agAccount }}</span>
 						</div>
+						<p v-else>{{ $t('download.please_login') }}</p>
 					</div>
 					<button type="button" @click="openDownloadURL('ag')">
 						<img src="/images/download/android.png" alt="Android" />
@@ -47,10 +49,11 @@
 				<li>
 					<img src="/images/download/dg.png" alt="Dream Gaming" />
 					<div class="login-id-wrapper">
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('download.login_id') }} :</span>
 							<span>{{ dgAccount }}</span>
 						</div>
+						<p v-else>{{ $t('download.please_login') }}</p>
 					</div>
 					<button type="button" @click="openDownloadURL('dg')">
 						<img src="/images/download/android.png" alt="Android" />
@@ -86,14 +89,16 @@
 
 			if (this.isLogined) {
 				this.$store.dispatch('user/getDownload').then(() => {
-					if (this.downloadData.plt) {
-						this.pltAccount = this.downloadData.plt.account;
-					}
-					if (this.downloadData.ag) {
-						this.agAccount = this.downloadData.ag.account;
-					}
-					if (this.downloadData.dg) {
-						this.dgAccount = this.downloadData.dg.account;
+					for (let i = 0; i < this.downloadData.length; i++) {
+						if (this.downloadData[i].product === 'plt') {
+							this.pltAccount = this.downloadData[i].account;
+						}
+						if (this.downloadData[i].product === 'ag') {
+							this.agAccount = this.downloadData[i].account;
+						}
+						if (this.downloadData[i].product === 'dg') {
+							this.dgAccount = this.downloadData[i].account;
+						}
 					}
 				});
 			}

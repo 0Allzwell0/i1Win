@@ -5,24 +5,28 @@ import { API_DOMAIN } from '~/environment'
 
 class GameService {
     // Get Slot Games. Before Login
-    static async getGamesBefore(payload, productCode) {
+    static async getGamesBefore(productCode, type) {
         let response = null
-        let accessToken = JWT.sign(payload)
 
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: `res/before/slots/${productCode}`,
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`,
                     'Accept-Language': LANGUAGE.getLanguage()
+                },
+                params: {
+                    tab: type,
+                    is_mobile: 1,
+                    lang: LANGUAGE.getLanguage()
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -36,7 +40,7 @@ class GameService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: `res/slots/${productCode}`,
                 baseURL: API_DOMAIN,
                 headers: {
@@ -46,7 +50,33 @@ class GameService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
+        }
+
+        return response
+    }
+
+    // Search Slots Games
+    static async searchGames(payload, gameName) {
+        let response = null
+        let accessToken = JWT.sign(payload)
+
+        try {
+            response = await axios({
+                method: 'GET',
+                timeout: 15000,
+                url: `/res/slots/name/${gameName}`,
+                baseURL: API_DOMAIN,
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept-Language': LANGUAGE.getLanguage()
+                }
+            })
+        } catch (error) {
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -60,7 +90,7 @@ class GameService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'api/entrance',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -70,7 +100,8 @@ class GameService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response

@@ -18,10 +18,11 @@
 				<li>
 					<img src="/images/download/plt.png" alt="Playtech" />
 					<div class="login-id-wrapper">
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('download.login_id') }} :</span>
 							<span>{{ pltAccount }}</span>
 						</div>
+						<p v-else>{{ $t('download.please_login') }}</p>
 					</div>
 					<button type="button" @click="openDownloadURL('plt')">
 						<img src="/images/download/android.png" alt="Android" />
@@ -32,10 +33,11 @@
 				<li>
 					<img src="/images/download/joker.png" alt="Joker" />
 					<div class="login-id-wrapper">
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('download.login_id') }} :</span>
 							<span>{{ jokAccount }}</span>
 						</div>
+						<p v-else>{{ $t('download.please_login') }}</p>
 					</div>
 					<button type="button" @click="openDownloadURL('jok')">
 						<img src="/images/download/android.png" alt="Android" />
@@ -47,17 +49,15 @@
 				<li>
 					<img src="/images/download/918kiss.png" alt="918Kiss" />
 					<div class="login-id-wrapper">
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('download.login_id') }} :</span>
 							<span>{{ kis918Account }}</span>
 						</div>
-						<div class="login-id-container">
+						<div class="login-id-container" v-if="isLogined">
 							<span>{{ $t('common.password') }} :</span>
-							<span>
-								Y3c
-								<em>Password</em>
-							</span>
+							<span> i1win <<em>Password</em>> </span>
 						</div>
+						<p v-else>{{ $t('download.please_login') }}</p>
 					</div>
 					<button type="button" @click="openDownloadURL('9kis918')">
 						<img src="/images/download/android.png" alt="Android" />
@@ -93,14 +93,16 @@
 
 			if (this.isLogined) {
 				this.$store.dispatch('user/getDownload').then(() => {
-					if (this.downloadData.plt) {
-						this.pltAccount = this.downloadData.plt.account;
-					}
-					if (this.downloadData.jok) {
-						this.jokAccount = this.downloadData.jok.account;
-					}
-					if (this.downloadData.kis918) {
-						this.kis918Account = this.downloadData.kis918.account;
+					for (let i = 0; i < this.downloadData.length; i++) {
+						if (this.downloadData[i].product === 'plt') {
+							this.pltAccount = this.downloadData[i].account;
+						}
+						if (this.downloadData[i].product === 'jok') {
+							this.jokAccount = this.downloadData[i].account;
+						}
+						if (this.downloadData[i].product === 'ks9') {
+							this.kis918Account = this.downloadData[i].account;
+						}
 					}
 				});
 			}

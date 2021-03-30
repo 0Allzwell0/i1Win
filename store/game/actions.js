@@ -1,20 +1,15 @@
-import { Base64 } from 'js-base64';
-import { WEBSITE_ID, ACCOUNT_ID } from '~/environment'
 import * as types from './type'
 import GameService from '~/service/game'
 
 // Set Timestamp
 function getExpTimestamp() {
-    return Math.floor(Date.now() / 1000) + (60 * 1) // 1 min
+    let exp = Math.floor(Date.now() / 1000)
+    localStorage.setItem('EXP', exp)
+    return Math.floor(exp) + 600 // 10 min
 }
 
-// Get CUI (Base64_Encode([website_id, account_id]))
+// Get CUI
 function getCUI() {
-    let json = JSON.stringify({
-        website_id: WEBSITE_ID,
-        account_id: ACCOUNT_ID
-    })
-
     let cui = null
     if (localStorage.getItem('userData')) {
         let userData = localStorage.getItem('userData')
@@ -27,16 +22,7 @@ function getCUI() {
 const actions = {
     // Get Games List. Before Login
     async getGamesBefore({ commit }, { productCode, tab }) {
-        const exp = getExpTimestamp()
-        const cui = getCUI()
-        const payload = {
-            cui,
-            tab,
-            is_mobile: 1,
-            lang: localStorage.getItem('LANGUAGE') || 'en',
-            exp
-        }
-        const response = await GameService.getGamesBefore(payload, 'Playtech')
+        const response = await GameService.getGamesBefore(productCode, tab)
         if (response.status === 200) {
             commit(types.GET_GAMES_LIST_SUCCESS, { data: response.data.games, status: response.status })
         } else {
@@ -52,10 +38,23 @@ const actions = {
             cui,
             tab,
             is_mobile: 1,
-            lang: localStorage.getItem('LANGUAGE') || 'en',
+            lang: localStorage.getItem('LANGUAGE'),
             exp
         }
-        const response = await GameService.getGamesAfter(payload, 'Playtech')
+        const response = await GameService.getGamesAfter(payload, productCode)
+        if (response.status === 200) {
+            commit(types.GET_GAMES_LIST_SUCCESS, { data: response.data.games, status: response.status })
+        } else {
+            commit(types.GET_GAMES_LIST_FAIL, response.status)
+        }
+    },
+
+    // Search Slots Games
+    async searchGames({ commit }, gameName) {
+        const exp = getExpTimestamp()
+        const cui = getCUI()
+        const payload = { cui, gameName, is_mobile: 1, exp }
+        const response = await GameService.searchGames(payload, gameName)
         if (response.status === 200) {
             commit(types.GET_GAMES_LIST_SUCCESS, { data: response.data.games, status: response.status })
         } else {
@@ -64,15 +63,19 @@ const actions = {
     },
 
     // Get Game URL
-    async getGameURL({ commit }, { category, productCode, gameID }) {
+    async getGameURL({ commit }, { category, product_code, game_id }) {
         const exp = getExpTimestamp()
         const cui = getCUI()
-        const payload = { cui, category, productCode, gameID, is_mobile: 1, exp }
+        const payload = { cui, category, product_code, game_id, is_mobile: 1, exp }
         const response = await GameService.getGameURL(payload)
-        if (response.status === 200) {
-            commit(types.GET_GAME_URL_SUCCESS, { data: response.data, status: response.status })
+        if (response.status) {
+            if (response.status === 200) {
+                commit(types.GET_GAME_URL_SUCCESS, { data: response.data, status: response.status })
+            } else {
+                commit(types.GET_GAME_URL_FAIL, { data: response.data, status: response.status })
+            }
         } else {
-            commit(types.GET_GAME_URL_FAIL, { data: response.data, status: response.status })
+            commit(types.NETWORK_ERROR)
         }
     }
 }

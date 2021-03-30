@@ -60,6 +60,7 @@
 				<!-- Mobile Number -->
 				<div class="input-container">
 					<img class="mobile-img" src="/images/mobile_img.png" :alt="$t('register.mobile_number')" />
+					<span>66</span>
 					<input id="inputMobile" type="number" :placeholder="$t('register.mobile_number')" v-model="myMobile" />
 				</div>
 				<div class="error-msg error-mobile"></div>
@@ -96,9 +97,11 @@
 		computed: {
 			...mapGetters('auth', {
 				isLogined: 'GetLogined',
-				isUsed: 'GetIsUsed',
+				isRegister: 'GetIsRegister',
+				isExisted: 'GetIsExisted',
 				httpStatus: 'GetHttpStatus',
 				regErrorMsg: 'GetRegErrorMsg',
+				networkError: 'GetNetworkError',
 			}),
 		},
 		data() {
@@ -214,10 +217,8 @@
 
 				let inputValue = $(elTarget).val(); // Get input Value
 				let inputOK = inputValue.search(/[-~!@#$%^&*(){}_+*/`\[\];',.]/); // Determine Have Special Characters ?
-				if ((inputOK = !-1)) {
-					$(errorEl).html(`<li class="error-msg">${this.$t('register.special_symbols')}</li>`);
-					$(errorEl).addClass('is-invalid');
-					$(elTarget).addClass('is-invalid');
+				if (inputOK != -1) {
+					this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.special_symbols'));
 				} else if (inputValue.length <= 0) {
 					$(errorEl).removeClass('is-valid is-invalid');
 					$(elTarget).removeClass('is-valid is-invalid');
@@ -227,28 +228,16 @@
 						if (inputValue.length >= 6 && inputValue.length <= 10) {
 							this.checkUsername(elTarget, errorEl);
 						} else {
-							$(errorEl).text(this.$t('register.username_error1'));
-							$(errorEl).removeClass('is-valid');
-							$(errorEl).addClass('is-invalid');
-							$(elTarget).removeClass('is-valid');
-							$(elTarget).addClass('is-invalid');
+							this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.username_error1'));
 						}
 					}
 
 					// Password
 					if (elementID === 'inputPassword') {
 						if (inputValue.length >= 6 && inputValue.length <= 12) {
-							$(errorEl).text(this.$t('register.password_ok'));
-							$(errorEl).removeClass('is-invalid');
-							$(errorEl).addClass('is-valid');
-							$(elTarget).removeClass('is-invalid');
-							$(elTarget).addClass('is-valid');
+							this.modifyStatus(elTarget, errorEl, 'Correct', this.$t('register.password_ok'));
 						} else {
-							$(errorEl).text(this.$t('register.password_error'));
-							$(errorEl).removeClass('is-valid');
-							$(errorEl).addClass('is-invalid');
-							$(elTarget).removeClass('is-valid');
-							$(elTarget).addClass('is-invalid');
+							this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.password_error'));
 						}
 
 						let confirmInput = $('#inputConfirmPSW').val();
@@ -270,17 +259,9 @@
 						let passwordInput = $('#inputPassword').val();
 						if (inputValue.length > 0) {
 							if (inputValue === passwordInput) {
-								$(errorEl).text(this.$t('register.confirm_psw_ok'));
-								$(errorEl).removeClass('is-invalid');
-								$(errorEl).addClass('is-valid');
-								$(elTarget).removeClass('is-invalid');
-								$(elTarget).addClass('is-valid');
+								this.modifyStatus(elTarget, errorEl, 'Correct', this.$t('register.confirm_psw_ok'));
 							} else if (inputValue !== passwordInput) {
-								$(errorEl).text(this.$t('register.confirm_psw_error'));
-								$(errorEl).removeClass('is-valid');
-								$(errorEl).addClass('is-invalid');
-								$(elTarget).removeClass('is-valid');
-								$(elTarget).addClass('is-invalid');
+								this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.confirm_psw_error'));
 							}
 						}
 					}
@@ -288,24 +269,20 @@
 					// Fullname
 					if (elementID === 'inputFullname') {
 						if (inputValue.length > 0) {
-							$(errorEl).text(this.$t('register.fullname_ok'));
-							$(errorEl).removeClass('is-invalid');
-							$(errorEl).addClass('is-valid');
-							$(elTarget).removeClass('is-invalid');
-							$(elTarget).addClass('is-valid');
+							this.modifyStatus(elTarget, errorEl, 'Correct', this.$t('register.fullname_ok'));
 						}
 					}
 
 					// Mobile
 					if (elementID === 'inputMobile') {
 						if (inputValue.length >= 9 && inputValue.length <= 10) {
-							this.checkMobile(elTarget, errorEl);
+							if (inputValue.indexOf(0) !== -1) {
+								this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.mobile_error3'));
+							} else {
+								this.checkMobile(elTarget, errorEl);
+							}
 						} else {
-							$(errorEl).text(this.$t('register.mobile_error1'));
-							$(errorEl).removeClass('is-valid');
-							$(errorEl).addClass('is-invalid');
-							$(elTarget).removeClass('is-valid');
-							$(elTarget).addClass('is-invalid');
+							this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.mobile_error1'));
 						}
 					}
 
@@ -320,39 +297,44 @@
 			// Check Username Had Be Used
 			checkUsername(elTarget, errorEl) {
 				this.$store.dispatch('auth/checkUsername', this.myUsername).then(() => {
-					if (this.isUsed) {
-						$(errorEl).text(this.$t('register.username_error2'));
-						$(errorEl).removeClass('is-valid');
-						$(errorEl).addClass('is-invalid');
-						$(elTarget).removeClass('is-valid');
-						$(elTarget).addClass('is-invalid');
+					if (typeof this.isRegister === 'boolean' && !this.isRegister) {
+						this.modifyStatus(elTarget, errorEl, 'Correct', this.$t('register.username_ok'));
+					} else if (typeof this.isRegister === 'boolean' && this.isRegister) {
+						this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.username_error2'));
 					} else {
-						$(errorEl).text(this.$t('register.username_ok'));
-						$(errorEl).removeClass('is-invalid');
-						$(errorEl).addClass('is-valid');
-						$(elTarget).removeClass('is-invalid');
-						$(elTarget).addClass('is-valid');
+						this.modifyStatus(elTarget, errorEl, 'Error', this.$t('common.network_error'));
 					}
 				});
 			},
 
 			// Check Mobile Had Be Used
 			checkMobile(elTarget, errorEl) {
-				this.$store.dispatch('auth/checkMobile', this.myMobile).then(() => {
-					if (this.isUsed) {
-						$(errorEl).text(this.$t('register.mobile_ok'));
-						$(errorEl).removeClass('is-invalid');
-						$(errorEl).addClass('is-valid');
-						$(elTarget).removeClass('is-invalid');
-						$(elTarget).addClass('is-valid');
+				this.$store.dispatch('auth/checkMobile', `66${this.myMobile}`).then(() => {
+					if (typeof this.isExisted === 'boolean' && !this.isExisted) {
+						this.modifyStatus(elTarget, errorEl, 'Correct', this.$t('register.mobile_ok'));
+					} else if (typeof this.isExisted === 'boolean' && this.isExisted) {
+						this.modifyStatus(elTarget, errorEl, 'Error', this.$t('register.mobile_error2'));
 					} else {
-						$(errorEl).text(this.$t('register.mobile_error2'));
-						$(errorEl).removeClass('is-valid');
-						$(errorEl).addClass('is-invalid');
-						$(elTarget).removeClass('is-valid');
-						$(elTarget).addClass('is-invalid');
+						this.modifyStatus(elTarget, errorEl, 'Error', this.$t('common.network_error'));
 					}
 				});
+			},
+
+			// Show Message & Modify Class Name
+			modifyStatus(elTarget, errorEl, type, msg) {
+				$(errorEl).text(msg);
+
+				if (type === 'Correct') {
+					$(errorEl).removeClass('is-invalid');
+					$(errorEl).addClass('is-valid');
+					$(elTarget).removeClass('is-invalid');
+					$(elTarget).addClass('is-valid');
+				} else if (type === 'Error') {
+					$(errorEl).removeClass('is-valid');
+					$(errorEl).addClass('is-invalid');
+					$(elTarget).removeClass('is-valid');
+					$(elTarget).addClass('is-invalid');
+				}
 			},
 
 			// Show or Hidden Password
@@ -397,21 +379,23 @@
 						// Hide Loading Animation
 						this.$nuxt.$loading.finish();
 
-						// If Register Success, Go To "Home" Page.
-						if (this.isLogined) {
-							this.$router.push(this.$i18n.path(''));
-						}
+						$('.input-container > input, .error-msg').removeClass('is-valid is-invalid');
 
-						// If Register Fail, Show Error Message
-						if (this.httpStatus && this.httpStatus !== 200) {
-							this.showErrorMessage(this.httpStatus);
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 200 && this.isLogined) {
+								this.$router.push(this.$i18n.path(''));
+							} else {
+								this.showErrorMessage(this.httpStatus);
+							}
+						} else {
+							$('.error-username').text(this.$t('common.network_error'));
+							$('#inputUsername, .error-username').addClass('is-invalid');
 						}
 					});
 			},
 
 			// Sort And Display Error Messages
 			showErrorMessage(status) {
-				$('.error-msg').removeClass('is-valid is-invalid');
 				if (status === 422) {
 					if (this.regErrorMsg.username) {
 						$('.error-username').text(this.regErrorMsg.username);
@@ -436,6 +420,11 @@
 					if (this.regErrorMsg.mobile) {
 						$('.error-mobile').text(this.regErrorMsg.mobile);
 						$('#inputMobile, .error-mobile').addClass('is-invalid');
+					}
+				} else {
+					if (this.regErrorMsg.others) {
+						$('.error-username').text(this.regErrorMsg.others);
+						$('#inputUsername, .error-username').addClass('is-invalid');
 					}
 				}
 			},
@@ -512,6 +501,20 @@
 						height: 26px;
 					}
 
+					> span {
+						position: absolute;
+						left: 40px;
+						top: auto;
+						display: flex;
+						align-items: center;
+						height: 100%;
+						font-size: 16px;
+						color: #000000;
+						font-family: sans-serif;
+						padding: 0 10px 0 5px;
+						border-right: 1px solid rgba(0, 0, 0, 0.4);
+					}
+
 					> input {
 						width: 100%;
 						height: 43px;
@@ -522,6 +525,10 @@
 						border: 1.5px solid $color-black;
 						border-radius: 6px;
 						padding-left: 44px;
+
+						&#inputMobile {
+							padding-left: 80px;
+						}
 
 						&:focus {
 							border: 1.5px solid #fead07;

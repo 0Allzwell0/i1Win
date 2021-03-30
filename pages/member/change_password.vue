@@ -60,6 +60,7 @@
 			...mapGetters('user', {
 				httpStatus: 'GetHttpStatus',
 				changePSWErrorMsg: 'GetChangePSWErrorMsg',
+				networkError: 'GetNetworkError',
 			}),
 		},
 		data() {
@@ -86,22 +87,22 @@
 
 			// Change Password Submit
 			changePassword() {
-				if (this.currentPSW && this.newPSW && this.confirmPSW) {
-					// Show Loading Animation
-					this.$nuxt.$loading.start();
+				// Show Loading Animation
+				this.$nuxt.$loading.start();
 
-					this.$store
-						.dispatch('user/changePassword', {
-							password: this.currentPSW,
-							new_password: this.newPSW,
-							new_password_confirmation: this.confirmPSW,
-						})
-						.then(() => {
-							// Hide Loading Animation
-							this.$nuxt.$loading.finish();
+				this.$store
+					.dispatch('user/changePassword', {
+						password: this.currentPSW,
+						new_password: this.newPSW,
+						new_password_confirmation: this.confirmPSW,
+					})
+					.then(() => {
+						// Hide Loading Animation
+						this.$nuxt.$loading.finish();
 
-							$('.msg-list').html('');
-							if (this.httpStatus === 204) {
+						$('.msg-list').html('');
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 204 || this.httpStatus === 200) {
 								$('.msg-list').append(`<li>${this.$t('change_psw.success_msg')}</li>`);
 							} else {
 								if (this.changePSWErrorMsg.password) $('.msg-list').append(`<li>${this.changePSWErrorMsg.password}</li>`);
@@ -112,8 +113,11 @@
 								if (this.changePSWErrorMsg.others) $('.msg-list').append(`<li>${this.changePSWErrorMsg.others}</li>`);
 							}
 							$('#modalMessage').modal('show');
-						});
-				}
+						} else {
+							$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
+							$('#modalMessage').modal('show');
+						}
+					});
 			},
 		},
 	};

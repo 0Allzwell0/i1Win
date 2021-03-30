@@ -1,7 +1,7 @@
 import axios from '~/plugins/axios'
 import LANGUAGE from '~/middleware/getLanguage'
 import JWT from '~/middleware/jwt'
-import { API_DOMAIN } from '~/environment'
+import { API_DOMAIN, THIRDPARTY } from '~/environment'
 
 class WalletService {
     // Get Wallets
@@ -22,7 +22,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -46,7 +47,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -70,7 +72,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -94,7 +97,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -118,7 +122,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -142,7 +147,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -167,7 +173,33 @@ class WalletService {
                 data: formData
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
+        }
+
+        return response
+    }
+
+    // Thirdparty Payment
+    static async thirdpartyPayment(payload, method) {
+        let response = null
+        let accessToken = JWT.sign(payload)
+
+        try {
+            response = await axios({
+                method: 'POST',
+                timeout: 15000,
+                url: method === 'qr' ? `api/member/quickpay/${THIRDPARTY}/qr` : `api/member/quickpay/${THIRDPARTY}/bank`,
+                baseURL: API_DOMAIN,
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept-Language': LANGUAGE.getLanguage()
+                },
+            })
+        } catch (error) {
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -181,7 +213,7 @@ class WalletService {
         try {
             response = await axios({
                 method: 'POST',
-                timeout: 5000,
+                timeout: 15000,
                 url: `api/member/withdraw`,
                 baseURL: API_DOMAIN,
                 headers: {
@@ -191,7 +223,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -205,7 +238,7 @@ class WalletService {
         try {
             response = await axios({
                 method: 'POST',
-                timeout: 5000,
+                timeout: 15000,
                 url: `api/member/transfer`,
                 baseURL: API_DOMAIN,
                 headers: {
@@ -215,7 +248,8 @@ class WalletService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response

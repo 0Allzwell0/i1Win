@@ -43,7 +43,7 @@
 
 				<!-- Download -->
 				<li class="download-wrapper">
-					<nuxt-link :to="$i18n.path('download_casino')">
+					<nuxt-link :to="$i18n.path('download_slots')">
 						<span class="title-text">{{ $t('menu.download') }}</span>
 						<img src="/images/menu/download.png" :alt="$t('menu.download')" />
 					</nuxt-link>
@@ -98,10 +98,7 @@
 
 		mounted() {
 			let _this = this;
-			$('.menu-head').click(function (event) {
-				event.stopPropagation();
-			});
-			$('.menu-wrapper > li').click(function (event) {
+			$('.menu-head, .menu-wrapper > ul > li').click(function (event) {
 				event.stopPropagation();
 			});
 
@@ -124,25 +121,19 @@
 				let url = null;
 
 				window.localStorage.setItem('LANGUAGE', chooseLanguage);
-
-				// If the language selected is the current language  => Dont move
-				if (chooseLanguage === currentLocale) {
-					return;
-				}
+				_this.$store.commit('LANGUAGE', chooseLanguage);
 
 				// If the selected language is the default language
 				if (chooseLanguage !== currentLocale && chooseLanguage === fallbackLocale) {
-					_this.$store.commit('LANGUAGE', chooseLanguage);
 					url = window.location.pathname.replace(`/${currentLocale}`, '');
-					_this.$router.push(url);
 				}
 
 				// If the selected language is not the default language
 				if (chooseLanguage !== currentLocale && chooseLanguage !== fallbackLocale) {
-					_this.$store.commit('LANGUAGE', chooseLanguage);
 					url = `/${chooseLanguage}${window.location.pathname}`;
-					_this.$router.push(url);
 				}
+
+				_this.$router.push(url);
 			});
 		},
 
@@ -160,7 +151,7 @@
 			closeMenu() {
 				$('.menu-wrapper').removeClass('show-menu');
 				setTimeout(() => {
-					$('.menu-background').css('display', 'none');
+					$('.menu-background').hide();
 				}, 200);
 				$('html, body').removeClass('freezePage');
 			},
@@ -232,7 +223,7 @@
 
 			> ul {
 				width: 280px;
-				min-height: calc(100% - 49px);
+				min-height: calc(100% - 54px);
 				background: $color-black;
 
 				.title-text {

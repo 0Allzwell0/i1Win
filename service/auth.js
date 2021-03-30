@@ -12,7 +12,7 @@ class AuthService {
         try {
             response = await axios({
                 method: 'POST',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'api/login',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -22,7 +22,8 @@ class AuthService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -35,7 +36,7 @@ class AuthService {
         try {
             response = await axios({
                 method: 'POST',
-                timeout: 5000,
+                timeout: 15000,
                 url: 'api/register',
                 baseURL: API_DOMAIN,
                 headers: {
@@ -45,7 +46,8 @@ class AuthService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -59,7 +61,7 @@ class AuthService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
+                timeout: 15000,
                 url: `api/check/username/${username}`,
                 baseURL: API_DOMAIN,
                 headers: {
@@ -69,7 +71,8 @@ class AuthService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response
@@ -83,8 +86,8 @@ class AuthService {
         try {
             response = await axios({
                 method: 'GET',
-                timeout: 5000,
-                url: `api/check/mobile/:${mobile}`,
+                timeout: 15000,
+                url: `api/check/mobile/${mobile}`,
                 baseURL: API_DOMAIN,
                 headers: {
                     'Accept': 'application/json',
@@ -93,7 +96,8 @@ class AuthService {
                 }
             })
         } catch (error) {
-            return error.response
+            if (error.response) return error.response
+            else return error
         }
 
         return response

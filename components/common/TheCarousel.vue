@@ -1,19 +1,21 @@
 <template>
 	<section class="carousel-wrapper">
-		<div class="carousel-container swiper-container">
-			<ul class="carousel-list swiper-wrapper">
-				<li class="carousel-item-wrapper swiper-slide" v-for="(item, index) in bannersList" :key="`banner-${index}`">
-					<nuxt-link class="carousel-item" :to="$i18n.path('promotions')">
-						<img class="carousel-item-img swiper-lazy" :src="item.image_mobile" />
+		<div class="swiper-container">
+			<ul class="swiper-wrapper">
+				<li class="swiper-slide" v-for="(item, index) in bannersList" :key="`banner-${index}`">
+					<nuxt-link :to="$i18n.path('promotions')">
+						<img class="swiper-lazy" :src="item.image" />
 						<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 					</nuxt-link>
 				</li>
 			</ul>
-			<div class="carousel-dots-wrapper swiper-container"></div>
+			<div class="swiper-pagination"></div>
 		</div>
 	</section>
 </template>
 <script>
+	import Swiper from 'swiper/bundle';
+	import SwiperCore, { Navigation, Pagination } from 'swiper/core'; // core version + navigation, pagination modules:
 	import { mapGetters } from 'vuex';
 
 	export default {
@@ -23,32 +25,32 @@
 			}),
 		},
 		mounted() {
+			// configure Swiper to use modules
+			SwiperCore.use([Navigation, Pagination]);
+
 			// Get Banners
 			this.$store.dispatch('user/getBanners').then(() => {
-				// 開始輪播
-				this.runCarousel();
+				if (this.bannersList) {
+					this.runCarousel();
+				}
 			});
 		},
 		methods: {
 			// Run Carousel
 			runCarousel() {
 				// Carouesl Setting
-				let mySwiper = new Swiper('.carousel-container', {
+				const bannerCarousel = new Swiper('.swiper-container', {
 					// Index Banner
 					autoplay: {
-						delay: 4000,
+						delay: 5000,
 					},
 					loop: true,
 					pagination: {
-						el: '.carousel-dots-wrapper',
-						bulletElement: 'li',
-						renderBullet: function (index, className) {
-							return '<li class="' + className + '"></li>';
-						},
-						clickable: true,
+						el: '.swiper-pagination',
 					},
 					// Disable preloading of all images
 					preloadImages: false,
+
 					// Enable lazy loading
 					lazy: {
 						loadPrevNext: true,
@@ -60,29 +62,43 @@
 	};
 </script>
 <style lang="scss">
+	@import 'swiper/swiper-bundle.css';
+
 	.carousel-wrapper {
 		width: 100%;
 
-		.carousel-item {
-			display: block;
-		}
-
-		.carousel-item-img {
+		.swiper-container {
 			width: 100%;
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-size: cover;
-			text-align: center;
+
+			> ul {
+				width: 100%;
+
+				> li {
+					width: 100%;
+
+					> a {
+						display: block;
+						width: 100%;
+
+						> img {
+							width: 100%;
+							background-repeat: no-repeat;
+							background-position: center center;
+							background-size: cover;
+							text-align: center;
+						}
+					}
+				}
+			}
 		}
 
-		.carousel-dots-wrapper {
+		.swiper-pagination {
 			bottom: 0;
-			margin-top: -18px;
 			text-align: center;
 
 			.swiper-pagination-bullet {
-				width: 8px;
-				height: 8px;
+				width: 10px;
+				height: 10px;
 				opacity: 0.5;
 				margin: 0 4px 4px 4px;
 			}

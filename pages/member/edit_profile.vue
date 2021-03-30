@@ -10,25 +10,13 @@
 			<!-- Full Name -->
 			<h3>{{ $t('member.fullname') }}</h3>
 			<div class="form-wrapper">
-				<input
-					class="form-fullname"
-					type="text"
-					v-model="myFullname"
-					:placeholder="$t('edit_profile.fullname')"
-					:disabled="fullnameDisabled"
-				/>
+				<input class="form-fullname" type="text" v-model="myFullname" :placeholder="$t('edit_profile.fullname')" />
 			</div>
 
 			<!-- Mobile Number -->
 			<h3>{{ $t('edit_profile.mobile_number') }}</h3>
 			<div class="form-wrapper">
-				<input
-					class="form-mobile"
-					type="number"
-					v-model="myMobile"
-					:placeholder="$t('edit_profile.mobile_number')"
-					:disabled="mobileDisabled"
-				/>
+				<input class="form-mobile" type="number" v-model="myMobile" :placeholder="$t('edit_profile.mobile_number')" />
 			</div>
 
 			<!-- Line ID -->
@@ -75,6 +63,7 @@
 			...mapGetters('user', {
 				httpStatus: 'GetHttpStatus',
 				profileErrorMsg: 'GetProfileErrorMsg',
+				networkError: 'GetNetworkError',
 			}),
 		},
 		data() {
@@ -85,8 +74,6 @@
 				myEmail: null,
 				myBirthday: null,
 				myGender: 1,
-				fullnameDisabled: false,
-				mobileDisabled: false,
 			};
 		},
 		beforeMount() {
@@ -103,16 +90,16 @@
 
 			// If "fullname" has a value, set "input" to "disabled", otherwise cancel "disabled
 			if (!this.myFullname) {
-				this.fullnameDisabled = false;
+				$('.form-fullname').attr('disabled', false);
 			} else {
-				this.fullnameDisabled = true;
+				$('.form-fullname').attr('disabled', true);
 			}
 
 			// If "mobile" has a value, set "input" to "disabled", otherwise cancel "disabled
 			if (!this.myMobile) {
-				this.mobileDisabled = false;
+				$('.form-mobile').attr('disabled', false);
 			} else {
-				this.mobileDisabled = true;
+				$('.form-mobile').attr('disabled', true);
 			}
 		},
 		methods: {
@@ -149,6 +136,7 @@
 
 				this.$store
 					.dispatch('user/editProfile', {
+						fullname: this.myFullname,
 						line_id: this.myLineID,
 						email: this.myEmail,
 						birthday: this.myBirthday,
@@ -159,12 +147,17 @@
 						this.$nuxt.$loading.finish();
 
 						$('.msg-list').html('');
-						if (this.httpStatus === 204) {
-							$('.msg-list').append(`<li>${this.$t('edit_profile.success_msg')}</li>`);
+						if (this.httpStatus && !this.networkError) {
+							if (this.httpStatus === 204 || this.httpStatus === 200) {
+								$('.msg-list').append(`<li>${this.$t('edit_profile.success_msg')}</li>`);
+							} else {
+								$('.msg-list').append(`<li>${this.profileErrorMsg}</li>`);
+							}
+							$('#modalMessage').modal('show');
 						} else {
-							$('.msg-list').append(`<li>${this.profileErrorMsg}</li>`);
+							$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
+							$('#modalMessage').modal('show');
 						}
-						$('#modalMessage').modal('show');
 					});
 			},
 		},

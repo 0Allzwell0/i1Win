@@ -1,286 +1,350 @@
 <template>
-	<main class="slots-game-wrapper">
+	<main class="slots-wrapper">
 		<!-- Message Modal -->
 		<modal-message></modal-message>
-
-		<!-- Carousel -->
-		<the-carousel></the-carousel>
-
-		<!-- Announcement -->
-		<the-announcement></the-announcement>
 
 		<!-- Game types Navigation Bar => "Live Casino"、"Sports"、"Slots"、"Lottery"、"Finishing" -->
 		<the-game-nav-bar></the-game-nav-bar>
 
 		<!-- Games -->
-		<div class="slots-game-container">
-			<ul>
-				<!-- Game Vendor Selecter -->
-				<li class="selector-vendor">
-					<button type="button" @click.stop="showVendorList()"></button>
-					<fa :icon="['fas', 'caret-down']" class="icon-down" />
-					<ul>
-						<li v-for="(vendor, index) in vendorList" :key="`vendor_${index}`">
-							<nuxt-link :to="$i18n.path(`slots/${vendor}`)">
-								<img :src="`/images/member/wallet/${vendor}.png`" />
-							</nuxt-link>
-						</li>
-					</ul>
-				</li>
+		<div class="slots-container" :class="{ 'is-pgsl': productCode === 'pgsl' }">
+			<div class="black-content">
+				<!-- Vendor Navigation Bar -->
+				<ul class="vendor-navbar">
+					<li
+						v-for="(item, index) in vendorList"
+						:key="`slots-${index}`"
+						:class="[`vendor-${item[0]}`, { active: productCode === item[0] }]"
+					>
+						<nuxt-link :to="$i18n.path(`slots/${item[0]}`)">
+							<img :src="`/images/slots/gm_${item[0]}.png`" alt="" />
+						</nuxt-link>
+					</li>
+				</ul>
 
-				<!-- Game Type Selecter -->
-				<li class="selector-type">
-					<button type="button" @click.stop="showTypeList()">{{ $t('slots.all') }}</button>
-					<fa :icon="['fas', 'caret-down']" class="icon-down" />
-					<ul>
-						<li :class="`type-${type}`" v-for="(type, index) in typeList" :key="`type_${index}`" @click="selectType(type)">
-							{{ $t(`slots.${type}`) }}
-						</li>
-					</ul>
-				</li>
-			</ul>
+				<!-- Type Navigation Bar -->
+				<ul class="type-navbar" :class="{ disabled: productCode === 'pgsl' }">
+					<li
+						:class="[`type-${type}`, { active: selectedType === type }]"
+						v-for="(type, index) in typeList"
+						:key="`type-${index}`"
+						@click="selectType(type)"
+					>
+						{{ $t(`slots.${type}`) }}
+					</li>
+				</ul>
+
+				<!-- Search -->
+				<div class="search-form" :class="{ disabled: productCode === 'pgsl' }">
+					<div class="form-wrapper">
+						<img class="icon-search" src="/images/slots/icon_search.svg" alt="" />
+						<input
+							class="form-search"
+							type="text"
+							v-model="gameName"
+							:placeholder="$t('slots.search_msg')"
+							minlength="3"
+							maxlength="8"
+						/>
+					</div>
+				</div>
+			</div>
+
+			<!-- PGSL Content -->
+			<div class="pgsl-content" v-show="productCode === 'pgsl'">
+				<button type="button" @click="openPGSL()">
+					<img src="/images/slots/pgsl_banner.jpg" alt="PGSL" />
+				</button>
+			</div>
 
 			<!-- Games List -->
-			<the-slots-game-list ref="child" :selected-type="selectedType" :product-code="productCode"></the-slots-game-list>
+			<the-slots-game-list
+				v-show="productCode !== 'pgsl'"
+				ref="child"
+				:selectedType="selectedType"
+				:product-code="productCode"
+			></the-slots-game-list>
 		</div>
 	</main>
 </template>
 <script>
-	import { mapGetters } from 'vuex';
+	import { SLOTS } from '~/environment';
 	import ModalMessage from '@/components/modal/ModalMessage';
-	import TheCarousel from '@/components/common/TheCarousel';
-	import TheAnnouncement from '@/components/common/TheAnnouncement';
 	import TheGameNavBar from '@/components/common/TheGameNavBar';
 	import TheSlotsGameList from '@/components/common/TheSlotsGameList';
 
 	export default {
 		components: {
-			TheCarousel,
-			TheAnnouncement,
 			TheGameNavBar,
 			TheSlotsGameList,
 			ModalMessage,
 		},
 		data() {
 			return {
-				vendorList: ['ygg', 'spg', 'jili', 'bng', 'plt', 'gpi', 'cq9', 'jok', 'mg', 'dt', 'ifun', 'ks9', 'sp', 'maja', 'pplay'],
-				typeList: ['all', 'popular', 'new', 'jackpot', 'table'],
-				productCode: null,
+				vendorList: SLOTS,
+				typeList: ['all', 'popular', 'favorite', 'new', 'jackpot', 'table'],
+				productCode: this.$route.params.vendor ? this.$route.params.vendor : SLOTS[0][0],
 				selectedType: 'all',
-				showVendor: false,
-				showType: false,
+				gameName: null,
 			};
 		},
+		beforeMount() {
+			let currentState = history.state;
+			if (!this.$route.params.vendor) {
+				history.pushState(currentState, null, `${this.$route.path}/${this.vendorList[0][0]}`);
+			}
+		},
 		mounted() {
-			this.productCode = this.$route.params.vendor;
+			$('.vendor-navbar').animate(
+				{
+					scrollLeft: $('.vendor-navbar > li.active').offset().left - 20,
+				},
+				0
+			);
 
-			// Show Tthe Vendor's Image Of The Selected Game
-			$('.selector-vendor > button').html(`<img src="/images/member/wallet/${this.productCode}.png" alt />`);
-
-			// Set Game Tab CSS
-			$('.type-all').addClass('active');
-
-			// When Touch Others Places, Close "Vendor" List or "Yype" List
-			$(document).click(() => {
-				if (this.showVendor) {
-					this.showVendor = false;
-					$('.selector-vendor > ul').removeClass('show');
+			// When Input Click Event Is "Enter" => Search Game
+			$('.form-search').keydown((e) => {
+				if (e.keyCode == 13 /* Enter or Tab */) {
+					if (this.gameName.indexOf(' ') !== -1) {
+						this.gameName = this.gameName.substring(0, this.gameName.indexOf(' '));
+					}
+					this.$refs.child.searchGames(this.gameName);
 				}
+			});
 
-				if (this.showType) {
-					this.showType = false;
-					$('.selector-type > ul').removeClass('show');
+			// Search
+			$('.icon-search').click(() => {
+				if (this.gameName.indexOf(' ') !== -1) {
+					this.gameName = this.gameName.substring(0, this.gameName.indexOf(' '));
 				}
+				this.$refs.child.searchGames(this.gameName);
 			});
 		},
 		methods: {
-			// Show or Hidden Game Vendor List
-			showVendorList() {
-				this.showType = false;
-				$('.selector-type > ul').removeClass('show');
-
-				if (!this.showVendor) {
-					$('.selector-vendor > ul').addClass('show');
-				} else {
-					$('.selector-vendor > ul').removeClass('show');
-				}
-
-				this.showVendor = !this.showVendor;
-			},
-
-			// Show or Hidden Game Type List
-			showTypeList() {
-				this.showVendor = false;
-				$('.selector-vendor > ul').removeClass('show');
-
-				if (!this.showType) {
-					$('.selector-type > ul').addClass('show');
-				} else {
-					$('.selector-type > ul').removeClass('show');
-				}
-
-				this.showType = !this.showType;
-			},
-
-			// Select Game Type
+			// Selete Slots Types
 			selectType(type) {
-				$('.selector-type > button').text(this.$t(`slots.${type}`));
-				$('.selector-type > ul > li').removeClass('active');
-				$(`.type-${type}`).addClass('active');
+				$('.type-navbar > li').removeClass('active');
+				$(`.type-navbar > li.type-${type}`).addClass('active');
 				this.selectedType = type;
-				this.$refs.child.loadGames();
+				this.$refs.child.loadGames(this.selectedType);
+			},
+
+			// Open PGSL Game
+			openPGSL() {
+				if (this.isLogined) {
+					// Show Loading Animation
+					this.$nuxt.$loading.start();
+
+					this.$store
+						.dispatch('game/getGameURL', {
+							category: 'slot',
+							product_code: 'pgsl',
+						})
+						.then(() => {
+							// Hide Loading Animation
+							this.$nuxt.$loading.finish();
+
+							$('.msg-list').html('');
+							if (this.httpStatus && !this.networkError) {
+								if (this.httpStatus === 200) {
+									window.open(this.gameURL);
+								} else {
+									if (this.httpStatus === 403) {
+										$('.msg-list').append(`<li>${this.$t('common.error_403')}</li>`);
+									} else {
+										$('.msg-list').append(`<li>${this.errorMsg}</li>`);
+									}
+
+									$('#modalMessage').modal('show');
+								}
+							} else {
+								$('.msg-list').append(`<li>${this.$t('common.network_error')}</li>`);
+								$('#modalMessage').modal('show');
+							}
+						});
+				} else {
+					$('.msg-list').html('');
+					$('.msg-list').append(`<li>${this.$t('common.please_login')}</li>`);
+					$('#modalMessage').modal('show');
+				}
 			},
 		},
 	};
 </script>
 <style lang="scss">
-	.slots-game-wrapper {
+	.slots-wrapper {
 		width: 100%;
 		height: 100%;
+		min-height: calc(100vh - 110px);
 		font-size: 12px;
 		font-family: $font-family;
+		background: $background_img;
+		background-size: cover;
 
-		.slots-game-container {
+		.slots-container {
 			width: 100%;
-			min-height: 62vh;
-			background: $background_img;
-			background-size: cover;
-			padding: 18px 18px 70px 18px;
+			background: $color-black;
+			padding-bottom: 90px;
 
-			> ul {
+			.black-content {
 				display: flex;
-				justify-content: space-between;
+				flex-direction: column;
 				align-items: center;
 				width: 100%;
+				background: $color-black;
+				padding: 0 4%;
 
-				> li {
-					.icon-down {
-						font-size: 20px;
-						color: $color-black;
-						margin: 0 10px 0 0;
-					}
-				}
+				.vendor-navbar {
+					display: inline-block;
+					width: 100%;
+					white-space: nowrap;
+					overflow-x: scroll;
+					background: $color-black;
+					padding: 20px 0;
 
-				.selector-vendor {
-					position: relative;
-					display: flex;
-					align-items: center;
-					width: 160px;
-					min-height: 40px;
-					border-radius: 5px;
-					box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-					border: 1px solid rgba(25, 25, 25, 0.6);
-					background: $color-white;
+					> li {
+						display: inline-block;
+						width: 50px;
+						height: 50px;
+						border-radius: 50%;
+						box-shadow: 2px 2px 4px 0 rgb(0 0 0 / 10%);
+						border: solid 2px rgba(217, 217, 217, 0.1);
+						background-color: #0b131f;
+						margin-right: 10px;
 
-					> button {
-						width: 100%;
-						min-height: 40px;
-						border-radius: 5px;
-						background: transparent;
-						text-align: left;
-						padding: 0 0 0 10px;
-
-						> img {
-							width: 100%;
-						}
-					}
-
-					> ul {
-						position: absolute;
-						z-index: -1;
-						top: 41px;
-						left: -1px;
-						width: 101%;
-						height: 0;
-						border-radius: 5px;
-						box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-						border: 1px solid rgba(25, 25, 25, 0.6);
-						background-color: #f8f8f8;
-						overflow-y: scroll;
-
-						transition: z-index 0.4s, height 0.4s;
-						-webkit-transition: z-index 0.4s, height 0.4s;
-						-moz-transition: z-index 0.4s, height 0.4s;
-						-o-transition: z-index 0.4s, height 0.4s;
-
-						&.show {
-							z-index: 10;
-							height: 180px;
+						&.active {
+							border: 2px solid #f1cc50;
 						}
 
-						> li {
+						> a {
+							display: block;
 							width: 100%;
-							border-bottom: 1px solid rgba(25, 25, 25, 0.6);
+							height: 100%;
 
+							> img {
+								width: 100%;
+							}
+						}
+
+						&.vendor-all {
 							> a {
-								> img {
-									width: 90%;
-									padding: 5px 0 5px 10px;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								color: $color-white;
+							}
+
+							&.active {
+								> a {
+									color: #f1cc50;
 								}
 							}
 						}
 					}
 				}
 
-				.selector-type {
-					position: relative;
-					display: flex;
-					align-items: center;
-					width: 110px;
-					min-height: 40px;
-					border-radius: 5px;
-					box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-					border: 1px solid rgba(25, 25, 25, 0.6);
-					background: #f8f8f8;
+				.type-navbar {
+					display: inline-block;
+					width: 100%;
+					overflow-x: auto;
+					white-space: nowrap;
+					background: $color-black;
+					padding-bottom: 5px;
 
-					> button {
-						width: 100%;
-						min-height: 40px;
-						font-size: 16px;
-						font-weight: bold;
-						border-radius: 5px;
-						background-color: transparent;
-						text-align: left;
-						padding: 0 0 0 10px;
+					&.disabled {
+						pointer-events: none;
+						filter: brightness(0.4);
 					}
 
-					> ul {
-						position: absolute;
-						top: 41px;
-						left: 0;
-						z-index: -1;
-						width: 101%;
-						height: 0;
-						border-radius: 5px;
-						box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-						border: 1px solid rgba(25, 25, 25, 0.6);
-						background-color: #f8f8f8;
-						overflow-y: scroll;
+					> li {
+						display: inline-block;
+						width: 16%;
+						min-width: 47px;
+						max-width: 63px;
+						color: $color-white;
+						font-size: 15px;
+						line-height: 24px;
+						border-bottom: 1.5px solid transparent;
+						text-align: center;
+						margin: 0 5px;
+						padding-bottom: 5px;
 
-						transition: z-index 0.4s, height 0.4s;
-						-webkit-transition: z-index 0.4s, height 0.4s;
-						-moz-transition: z-index 0.4s, height 0.4s;
-						-o-transition: z-index 0.4s, height 0.4s;
+						&.active {
+							color: rgb(253, 214, 9);
+							border-bottom: 1.5px solid rgb(253, 214, 9);
+						}
+					}
+				}
 
-						&.show {
-							z-index: 10;
-							height: 162px;
+				.search-form {
+					display: flex;
+					justify-content: center;
+					width: 100%;
+					background: #040911;
+					padding: 15px 0;
+
+					&.disabled {
+						pointer-events: none;
+						filter: brightness(0.4);
+					}
+
+					.form-wrapper {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 90%;
+						max-width: 394px;
+						background: $color-white;
+						border-radius: 30px;
+
+						> img {
+							width: 60px;
+							padding: 0 15px 0 20px;
 						}
 
-						> li {
+						> input {
+							flex: 1;
 							width: 100%;
+							font-size: 18px;
 							color: $color-black;
-							font-weight: bold;
-							font-size: 15px;
-							padding: 7px 0 7px 10px;
+							min-height: 40px;
+							border-radius: 30px 0 0 30px;
+							background: 0 0;
 
-							&.active {
-								width: 100%;
-								opacity: 0.9;
-								box-shadow: inset -5px 5px 8px 0 rgba(0, 0, 0, 0.1);
-								background: $color-yellow;
+							&::-webkit-input-placeholder {
+								/* WebKit browsers */
+								font-size: 14px;
+							}
+
+							&:-moz-placeholder {
+								/* Mozilla Firefox 4 to 18 */
+								font-size: 14px;
+							}
+
+							&::-moz-placeholder {
+								/* Mozilla Firefox 19+ */
+								font-size: 14px;
+							}
+
+							&:-ms-input-placeholder {
+								/* Internet Explorer 10+ */
+								font-size: 14px;
 							}
 						}
+					}
+				}
+			}
+
+			.pgsl-content {
+				width: 100%;
+				min-height: calc(100vh - 463px);
+				background: $color-black;
+
+				> button {
+					width: 100%;
+
+					> img {
+						width: 100%;
 					}
 				}
 			}

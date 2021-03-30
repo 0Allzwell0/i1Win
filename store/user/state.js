@@ -1,4 +1,5 @@
 const state = () => ({
+    networkError: null,
     httpStatus: null,
     profileData: {
         birthday: null,
@@ -14,6 +15,7 @@ const state = () => ({
         others: null
     },
     downloadData: null,
+    popupData: null,
     banners: null,
     announcements: null,
     jackpot: parseFloat(1830082162),

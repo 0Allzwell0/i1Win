@@ -73,8 +73,8 @@
 				> span {
 					font-weight: bold;
 					color: $color-gray;
+					line-height: 26px;
 					text-align: center;
-					margin: 2.5px 0;
 				}
 			}
 
